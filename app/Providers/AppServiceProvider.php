@@ -8,198 +8,311 @@ use App\Models\Content;
 
 class AppServiceProvider extends ServiceProvider
 {
-        /**
-         * Register any application services.
-         */
-        public function register(): void
-        {
-                //
-        }
+    /**
+     * Register any application services.
+     */
+    public function register(): void
+    {
+        //
+    }
 
-        function slug($key)
-        {
-                return $slug = strtolower(str_replace(' ', '-', $key));
-        }
+    function slug($key)
+    {
+        return $slug = strtolower(str_replace(' ', '-', $key));
+    }
 
-        /**
-         * Bootstrap any application services.
-         */
-        public function boot(): void
-        {
-             $contents = [
+    /**
+     * Bootstrap any application services.
+     */
+    public function boot(): void
+    {
+        $contents = [
 
-                        'hero' => [
-                                'title'      => ['label' => 'Title', 'required' => true],
-                                'name'       => ['label' => 'Section Name', 'required' => true],
-                                'short'      => ['label' => 'Short Description', 'required' => true],
-                                'img_path'   => ['label' => 'Image', 'required' => false],
-                                'img_paths'  => ['label' => 'Images', 'required' => false],
-                                'video_path' => ['label' => 'Background Video', 'required' => false],
-                                'status'     => ['label' => 'Status', 'required' => true],
-                        ],
-                        // About page
-                        'our-history' => [
-                                'title'            => ['label' => 'Main Title', 'required' => true],
-                                'body'             => ['label' => 'History Description Part 1', 'required' => true],
-                                'body_2'           => ['label' => 'History Description Part 2', 'required' => false],
-                                'short'            => ['label' => 'Stat — Established Years (e.g. 50+)', 'required' => true],
-                                'location'         => ['label' => 'Stat — Completed Projects (e.g. 150+)', 'required' => true],
-                                'extra'            => ['label' => 'Stat — Business Concerns (e.g. 17+)', 'required' => true],
-                                'body_3'           => ['label' => 'Stat — Industries Served (e.g. 5+)', 'required' => true],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
+            'hero' => [
+                'title'             => ['label' => 'Title', 'required' => true],
+                'name'              => ['label' => 'Section Name', 'required' => true],
+                'short'             => ['label' => 'Short Description', 'required' => false],
+                'img_path'          => ['label' => 'Image Background', 'required' => false],
+                'img_paths'         => ['label' => 'Images', 'required' => false],
+                'video_path'        => ['label' => 'Video', 'required' => false],
+                'body'              => ['label' => 'Paragraph 1','required' => false],
+                'body_2'            => ['label' => 'Paragraph 2','required' => false],
+                'meta_title'        => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'  => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'     => ['label' => 'Meta Keywords', 'required' => false],
+                'status'            => ['label' => 'Status', 'required' => true],
+            ],
+            'building-dreams-for-decades' => [
+                'title'             => ['label' => 'Title',              'required' => true],
+                'short'             => ['label' => 'Description',        'required' => true],
+                'url'               => ['label' => 'Button URL',         'required' => false],
+                'img_path'          => ['label' => 'Main Center Image',  'required' => false],
+                'img_paths'         => ['label' => 'Other Images (Top Right, Bottom Left, Middle)', 'required' => false],
+                'meta_title'        => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'  => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'     => ['label' => 'Meta Keywords', 'required' => false],
+                'status'            => ['label' => 'Status','required' => true],
+            ],
+            'project' => [
+                'title'            => ['label' => 'Project Name', 'required' => true],
+                'short'            => ['label' => 'Project Type (Residential/Commercial)','required' => true],
+                'location'         => ['label' => 'Location/Address', 'required' => true],
+                'body'             => ['label' => 'Description', 'required' => false],
+                'body_2'           => ['label' => 'Description Box 2', 'required' => false],
+                'img_path'         => ['label' => 'Thumbnail Image',  'required' => true],
+                'extra'            => ['label' => 'Extra (JSON: status, featured, map_url)','required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords','required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            'years-of-expertise' => [
+                'title'              => ['label' => 'Top Title ', 'required' => true],
+                'name'               => ['label' => 'Section Heading','required' => true],
+                'body'               => ['label' => 'Left Description', 'required' => true],
+                'body_2'             => ['label' => 'Right Description', 'required' => true],
+                'img_path'           => ['label' => 'Top Center Image', 'required' => false],
+                'img_paths'          => ['label' => 'Other Images (Left Bottom, Right)', 'required' => false],
+                'short'              => ['label' => 'Left BG Text (e.g. Quality Construction)', 'required' => false],
+                'location'           => ['label' => 'Right BG Text (e.g. Timely)','required' => false],
+                'meta_title'         => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'   => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'      => ['label' => 'Meta Keywords', 'required' => false],
+                'status'             => ['label' => 'Status', 'required' => true],
+            ],
+            'stories-of-satisfaction' => [
+                'title'              => ['label' => 'Section Title (e.g. The stories of satisfaction)', 'required' => true],
+                'body'               => ['label' => 'Bottom Left Description','required' => false],
+                'img_path'           => ['label' => 'Bottom Left Image','required' => false],
+                'img_paths'          => ['label' => 'Bottom Right Image ([0])','required' => false],
+                'meta_title'         => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'   => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'      => ['label' => 'Meta Keywords', 'required' => false],
+                'status'             => ['label' => 'Status','required' => true],
+            ],
 
-                        'our-mission-vision' => [
-                                'title'            => ['label' => 'Mission Title (e.g. Our Mission)', 'required' => true],
-                                'body'             => ['label' => 'Mission Description', 'required' => true],
-                                'short'            => ['label' => 'Vision Title (e.g. Our Vision)', 'required' => true],
-                                'body_2'           => ['label' => 'Vision Description', 'required' => true],
-                                'img_path'         => ['label' => 'Center Building Image', 'required' => false],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
-
-                        'our-founder' => [
-                                'title'            => ['label' => 'Section Title (e.g. This is our Founder)', 'required' => true],
-                                'short'            => ['label' => 'Founder Name & Role', 'required' => true],
-                                'body'             => ['label' => 'Founder Quote / Description', 'required' => true],
-                                'img_path'         => ['label' => 'Founder Image', 'required' => true],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
-
-                        'our-members' => [
-                                'title'            => ['label' => 'Member Name', 'required' => true],
-                                'short'            => ['label' => 'Member Role (e.g. Chairman)', 'required' => true],
-                                'body'             => ['label' => 'Description', 'required' => true],
-                                'img_path'         => ['label' => 'Member Image', 'required' => true],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
-
-                        // News and Gallery page
-                        'news-article' => [
-                                'title'            => ['label' => 'Section Title (e.g. Latest News & Articles)', 'required' => true],
-                                'short'            => ['label' => 'Section Subtitle', 'required' => false],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
-
-                        'news' => [
-                                'title'            => ['label' => 'News Title', 'required' => true],
-                                'img_path'         => ['label' => 'News Image', 'required' => true],
-                                'body'             => ['label' => 'News Content', 'required' => true],
-                                'short'            => ['label' => 'Read Time (e.g. 5)', 'required' => false],
-                                'start_date'       => ['label' => 'Publish Date', 'required' => false],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
+            'stories-item' => [
+                'title'              => ['label' => 'Client Name (e.g. Md. Abu Nasar Ahmed)', 'required' => true],
+                'name'               => ['label' => 'Designation (e.g. Job Holder)','required' => true],
+                'body'               => ['label' => 'Testimonial Text','required' => true],
+                'img_path'           => ['label' => 'Client Photo','required' => false],
+                'meta_title'         => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'   => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'      => ['label' => 'Meta Keywords', 'required' => false],
+                'status'             => ['label' => 'Status', 'required' => true],
+            ],
+            'news' => [
+                'title'            => ['label' => 'News Title', 'required' => true],
+                'img_path'         => ['label' => 'News Image', 'required' => false],
+                'body'             => ['label' => 'News Content', 'required' => false],
+                'short'            => ['label' => 'Read Time (e.g. 5)', 'required' => false],
+                'start_date'       => ['label' => 'Publish Date', 'required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
 
 
-                        'events' => [
-                                'title'      => ['label' => 'Title', 'required' => true],
-                                'name'       => ['label' => 'Slug', 'required' => true],
-                                'location'   => ['label' => 'Location', 'required' => true],
-                                'extra'      => ['label' => 'Map Link', 'required' => true],
-                                'start_date' => ['label' => 'Start Date', 'required' => false],
-                                'end_date'   => ['label' => 'End Date', 'required' => false],
-                                'img_path'   => ['label' => 'Thumbnail', 'required' => true],
-                                'img_paths'  => ['label' => 'Events Photos', 'required' => false],
-                                'body'       => ['label' => 'Details', 'required' => true],
-                                'body_2'     => ['label' => 'Details box 2', 'required' => false],
-                                'status'     => ['label' => 'Status', 'required' => true],
-                        ],
+            'events' => [
+                'title'            => ['label' => 'Title', 'required' => true],
+                'name'             => ['label' => 'Slug', 'required' => true],
+                'location'         => ['label' => 'Location', 'required' => false],
+                'extra'            => ['label' => 'Map Link', 'required' => false],
+                'start_date'       => ['label' => 'Start Date', 'required' => false],
+                'end_date'         => ['label' => 'End Date', 'required' => false],
+                'img_path'         => ['label' => 'Thumbnail', 'required' => true],
+                'img_paths'        => ['label' => 'Events Photos', 'required' => false],
+                'body'             => ['label' => 'Details', 'required' => false],
+                'body_2'           => ['label' => 'Details box 2', 'required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
+            'partners' => [
+                'title'            => ['label' => 'Section Title (e.g. Be a partner, be a patron)', 'required' => true],
+                'body'             => ['label' => 'Landowner Box Description',                       'required' => true],
+                'body_2'           => ['label' => 'Customer Box Description',                        'required' => true],
+                'short'            => ['label' => 'Landowner Box Label (e.g. Contact as Landowner)', 'required' => true],
+                'location'         => ['label' => 'Customer Box Label (e.g. Contact as Customer)',   'required' => true],
+                'url'              => ['label' => 'Landowner Button URL (e.g. /contact-landowner)',  'required' => true],
+                'extra'            => ['label' => 'Customer Button URL (e.g. /contact-customer)',    'required' => true],
+                'img_path'         => ['label' => 'Customer Box Background Image',                   'required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status',                                          'required' => true],
+            ],
 
-                        'brand' => [
-                                'title'    => ['label' => 'Title', 'required' => true],
-                                'img_path' => ['label' => 'Image', 'required' => true],
-                                'status'   => ['label' => 'Status', 'required' => true],
-                        ],
+            // About page
+            'mission_vision' => [
+                'title'            => ['label' => 'Center Title (e.g. Building dreams, creating spaces.)', 'required' => true],
+                'body'             => ['label' => 'Mission Description','required' => true],
+                'body_2'           => ['label' => 'Vision Description', 'required' => true],
+                'name'             => ['label' => 'Mission Label (e.g. Mission)', 'required' => false],
+                'short'            => ['label' => 'Vision Label (e.g. Vision)','required' => false],
+                'img_path'         => ['label' => 'Left Image', 'required' => false],
+                'img_paths'        => ['label' => 'Other Images ([0] Top Right, [1] Bottom Right)', 'required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            'history-timeline' => [
+                'title'            => ['label' => 'Section Title (e.g. History Timeline)', 'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
 
-                        'albums' => [
-                                'title'            => ['label' => 'Title', 'required' => true],
-                                'body'             => ['label' => 'Details', 'required' => true],
-                                'start_date'       => ['label' => 'Date', 'required' => true],
-                                'img_path'         => ['label' => 'Thumbnail', 'required' => true],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
+            'timeline-item' => [
+                'title'            => ['label' => 'Year (e.g. 1972)','required' => true],
+                'name'             => ['label' => 'Heading (e.g. Bhaiya Group)', 'required' => true],
+                'body'             => ['label' => 'Description','required' => true],
+                'img_path'         => ['label' => 'Year Image','required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            'leaders-message' => [
+                'title'            => ['label' => 'Section Title (e.g. Message from leaders)', 'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
 
-                        'gallery' => [
-                                'img_path' => ['label' => 'Thumbnail', 'required' => true],
-                                'parent'   => ['label' => 'Select Parent', 'required' => true],
-                                'status'   => ['label' => 'Status', 'required' => true],
-                        ],
+            'leaders-message-item' => [
+                'title'            => ['label' => 'Leader Name',        'required' => true],
+                'name'             => ['label' => 'Designation',        'required' => true],
+                'body'             => ['label' => 'Message',            'required' => true],
+                'img_path'         => ['label' => 'Leader Photo',       'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status',             'required' => true],
+            ],
+            'visionaries' => [
+                'title'            => ['label' => 'Section Title (e.g. Meet the Visionaries)', 'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
 
-                        'blogs' => [
-                                'title'            => ['label' => 'Title', 'required' => true],
-                                'name'             => ['label' => 'Slug', 'required' => true],
-                                'short'            => ['label' => 'Short Description', 'required' => true],
-                                'img_path'         => ['label' => 'Images', 'required' => true],
-                                'body'             => ['label' => 'Description 1', 'required' => false],
-                                'body_2'           => ['label' => 'Description 2', 'required' => false],
-                                'body_3'           => ['label' => 'Description 3', 'required' => false],
-                                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
-                                'meta_description' => ['label' => 'Meta Description', 'required' => false],
-                                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                                'status'           => ['label' => 'Status', 'required' => true],
-                        ],
+            'visionaries-item' => [
+                'title'            => ['label' => 'Name',        'required' => true],
+                'name'             => ['label' => 'Designation', 'required' => true],
+                'img_path'         => ['label' => 'Photo',       'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status',      'required' => true],
+            ],
+            'about-bhaiya' => [
+                'title'            => ['label' => 'Title (e.g. About Bhaiya Housing)',  'required' => true],
+                'body'             => ['label' => 'Paragraph 1','required' => true],
+                'body_2'           => ['label' => 'Paragraph 2','required' => false],
+                'img_path'         => ['label' => 'Left Image','required' => false],
+                'img_paths'        => ['label' => 'Other Images ([0] Right)','required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            'about-bhaiya-group' => [
+                'title'            => ['label' => 'Title (e.g. About Bhaiya Housing Group)', 'required' => true],
+                'body'             => ['label' => 'Paragraph 1','required' => true],
+                'body_2'           => ['label' => 'Paragraph 2','required' => false],
+                'img_path'         => ['label' => 'Cover Image','required' => false],
+                'img_paths'        => ['label' => 'Other Images ([0] Overflow image)','required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
 
-                        'pages' => [
-                                'title'  => ['label' => 'Title', 'required' => true],
-                                'name'   => ['label' => 'Slug', 'required' => true],
-                                'body'   => ['label' => 'Description', 'required' => true],
-                                'status' => ['label' => 'Status', 'required' => true],
-                        ],
 
-                        'social' => [
-                                'url'    => ['label' => 'Social Link', 'required' => true],
-                                'name'   => ['label' => 'Icon Code - FontAwesome', 'required' => true],
-                                'status' => ['label' => 'Status', 'required' => true],
-                        ],
+            'brand' => [
+                'title'    => ['label' => 'Title', 'required' => true],
+                'img_path' => ['label' => 'Image', 'required' => true],
+                'status'   => ['label' => 'Status', 'required' => true],
+            ],
 
-                        'settings' => [
-                                'title'    => ['label' => 'Site Name', 'required' => true],
-                                'name'     => ['label' => 'Slogan', 'required' => false],
-                                'img_path' => ['label' => 'Logo', 'required' => false],
-                                'extra'    => ['label' => 'Hotline Number', 'required' => false],
-                                'short'    => ['label' => 'Email', 'required' => false],
-                                'location' => ['label' => 'Hospital Address', 'required' => false],
-                                'body'     => ['label' => 'Head Office Address', 'required' => false],
-                                'body_2'   => ['label' => 'Corporate Office Address', 'required' => false],
-                                'url'      => ['label' => 'Google Map Embed Link', 'required' => false],
-                                'status'   => ['label' => 'Status', 'required' => true],
-                        ],
-                        'location_map' => [
-                                'title'  => ['label' => 'Title', 'required' => true],
-                                'short'  => ['label' => 'Google Map Embed Link', 'required' => true],
-                                'status' => ['label' => 'Status', 'required' => true],
-                        ],
+            'albums' => [
+                'title'            => ['label' => 'Title', 'required' => true],
+                'body'             => ['label' => 'Details', 'required' => true],
+                'start_date'       => ['label' => 'Date', 'required' => true],
+                'img_path'         => ['label' => 'Thumbnail', 'required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
 
-                ];
+            'gallery' => [
+                'img_path' => ['label' => 'Thumbnail', 'required' => true],
+                'parent'   => ['label' => 'Select Parent', 'required' => true],
+                'status'   => ['label' => 'Status', 'required' => true],
+            ],
 
-                $setting = Content::where('type', 'settings')->where('status', 1)->latest()->first();
-                $socials = Content::where('type', 'social')->where('status', 1)->latest()->get();
-                $pages = Content::where('type', 'pages')->where('status', 1)->get();
+            'blogs' => [
+                'title'            => ['label' => 'Title', 'required' => true],
+                'name'             => ['label' => 'Slug', 'required' => true],
+                'short'            => ['label' => 'Short Description', 'required' => true],
+                'img_path'         => ['label' => 'Images', 'required' => true],
+                'body'             => ['label' => 'Description 1', 'required' => false],
+                'body_2'           => ['label' => 'Description 2', 'required' => false],
+                'body_3'           => ['label' => 'Description 3', 'required' => false],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
 
-                View::share('contents', $contents);
-                View::share('setting', $setting);
-                View::share('socials', $socials);
-                View::share('pages', $pages);
-        }
+            'pages' => [
+                'title'  => ['label' => 'Title', 'required' => true],
+                'name'   => ['label' => 'Slug', 'required' => true],
+                'body'   => ['label' => 'Description', 'required' => true],
+                'status' => ['label' => 'Status', 'required' => true],
+            ],
+
+            'social' => [
+                'url'    => ['label' => 'Social Link', 'required' => true],
+                'name'   => ['label' => 'Icon Code - Name', 'required' => true],
+                'status' => ['label' => 'Status', 'required' => true],
+            ],
+
+            'settings' => [
+                'title'    => ['label' => 'Site Name', 'required' => true],
+                'name'     => ['label' => 'Slogan', 'required' => false],
+                'img_path' => ['label' => 'Logo', 'required' => false],
+                'extra'    => ['label' => 'Hotline Number', 'required' => false],
+                'short'    => ['label' => 'Email', 'required' => false],
+                'location' => ['label' => '', 'required' => false],
+                'body'     => ['label' => 'Head Office Address', 'required' => false],
+                'body_2'   => ['label' => 'Corporate Office Address', 'required' => false],
+                'url'      => ['label' => 'Google Map Embed Link', 'required' => false],
+                'status'   => ['label' => 'Status', 'required' => true],
+            ],
+            'location_map' => [
+                'title'  => ['label' => 'Title', 'required' => true],
+                'short'  => ['label' => 'Google Map Embed Link', 'required' => true],
+                'status' => ['label' => 'Status', 'required' => true],
+            ],
+
+        ];
+
+        $setting = Content::where('type', 'settings')->where('status', 1)->latest()->first();
+        $socials = Content::where('type', 'social')->where('status', 1)->latest()->get();
+        $pages = Content::where('type', 'pages')->where('status', 1)->get();
+
+        View::share('contents', $contents);
+        View::share('setting', $setting);
+        View::share('socials', $socials);
+        View::share('pages', $pages);
+    }
 }
