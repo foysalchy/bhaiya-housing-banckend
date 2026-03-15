@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+/* 1. Register EVERYTHING in @theme so Tailwind v4 understands them */
+@theme {
+  --font-outfit: "Outfit", sans-serif;
+  --font-clash: "ClashDisplay", sans-serif;
+
+  /* Use the --color-* prefix so Tailwind creates bg-brand-primary, border-brand-primary, etc. */
+  --color-brand-primary: #0088CD;
+  --color-brand-secondary: #1e40af;
+  --color-brand-tertiary: #eef2ff;
+  --color-brand-accent: #a855f7;
+  --color-dark: #07080f;
+}
+
+/* 2. Fonts (Keep these outside of layers) */
+@font-face {
+  font-family: 'ClashDisplay';
+  src: url('../fonts/ClashDisplay-Medium.otf') format('opentype');
+  font-weight: 500 900;
+  font-display: swap;
+}
+
+/* 3. Base Styles */
+@layer base {
+  body {
+    font-family: var(--font-outfit);
+    @apply antialiased overflow-x-hidden bg-white text-gray-900;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-clash), sans-serif;
+  }
+
+  /* FIX: Use var() instead of theme() for scrollbars */
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { background: var(--color-brand-tertiary); }
+  ::-webkit-scrollbar-thumb {
+    background: #0f172b;
+    border-radius: 6px;
+    border: 2px solid var(--color-brand-tertiary);
+  }
+}
+
+/* 4. Components */
+@layer components {
+  /* FIX: Do not use @apply group. Put 'group' directly in your HTML tags instead. */
+  
+  .site-header {
+    @apply sticky top-0 z-50 bg-white border-b-2 transition-shadow duration-300;
+    border-color: var(--color-brand-tertiary);
+  }
+
+  .nav-item {
+    font-family: var(--font-clash);
+    @apply px-5 no-underline;
+  }
+
+  .btn-appointment {
+    @apply relative px-4 py-2 rounded-lg font-medium text-white no-underline transition-opacity duration-200;
+    background: linear-gradient(90deg, var(--color-brand-primary) 0%, var(--color-brand-accent) 100%);
+  }
+
+  .btn-appointment:hover { opacity: 0.88; }
+
+  .invest-pill-btn {
+    @apply relative flex items-center cursor-pointer rounded-full py-[15px] pr-6 pl-16 transition-all duration-500 no-underline;
+    background-color: var(--color-brand-accent);
+  }
+}

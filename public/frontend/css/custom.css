@@ -1,0 +1,247 @@
+
+/* ─────────────────────────────────────────
+   CSS VARIABLES
+───────────────────────────────────────── */
+:root {
+  --blue:   #0088CD;
+  --purple: #a855f7;
+  --dark:   #07080f;
+}
+
+/* ─────────────────────────────────────────
+   BASE
+───────────────────────────────────────── */
+@layer base {
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply font-outfit antialiased overflow-x-hidden bg-white text-gray-900;
+  }
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #eef2ff; }
+  ::-webkit-scrollbar-thumb { background: #0f172a; border-radius: 6px; }
+
+  h1,h2,h3,h4,h5,h6 { font-family: 'Outfit', sans-serif; }
+}
+
+/* ─────────────────────────────────────────
+   COMPONENTS
+───────────────────────────────────────── */
+@layer components {
+
+  /* ── Gradient text ── */
+  .grad-text {
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* ── Pill CTA button ── */
+  .pill {
+    @apply inline-flex items-center gap-2 font-bold text-white rounded-full cursor-pointer
+           no-underline transition-all duration-300;
+    background: var(--purple);
+    padding: 9px 22px 9px 9px;
+    font-size: 13px;
+  }
+  .pill:hover {
+    background: var(--blue);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(168, 85, 247, 0.4);
+  }
+  .pill .p-dot {
+    @apply flex items-center justify-center rounded-full flex-shrink-0;
+    width: 26px; height: 26px;
+    background: rgba(255,255,255,.2);
+    font-size: 13px;
+  }
+  .pill-sm { font-size: 11px; padding: 7px 16px 7px 7px; }
+  .pill-sm .p-dot { width: 20px; height: 20px; font-size: 11px; }
+
+  /* ── Nav buttons ── */
+  .nbtn-book {
+    @apply font-bold text-white rounded-lg no-underline transition-opacity duration-200;
+    background: linear-gradient(90deg, var(--blue), var(--purple));
+    font-size: 11px; padding: 7px 14px;
+  }
+  .nbtn-book:hover { opacity: .85; }
+  .nbtn-inv {
+    @apply font-bold text-white rounded-lg no-underline transition-all duration-200;
+    background: var(--purple);
+    font-size: 11px; padding: 7px 14px;
+  }
+  .nbtn-inv:hover { background: var(--blue); }
+
+  /* ── Shine overlay ── */
+  .shine { @apply relative overflow-hidden; }
+  .shine::before {
+    content: '';
+    @apply absolute top-0 h-full;
+    left: -80%; width: 45%;
+    transform: skewX(12deg);
+    background: linear-gradient(to right, transparent, rgba(255,255,255,.28), transparent);
+    animation: shine 3.5s ease-in-out infinite;
+  }
+
+  /* ── Hero ── */
+  .hero-h1 {
+    font-size: clamp(28px, 4.2vw, 54px);
+    @apply font-black leading-tight text-[#0a0a14];
+  }
+  .opening-yr {
+    font-size: clamp(72px, 14vw, 152px);
+    @apply font-black text-primary leading-none;
+    letter-spacing: -6px;
+  }
+  .sky-strip {
+    background: linear-gradient(180deg, #7ecef0 0%, #b8e8f8 55%, #d9f3fd 100%);
+    @apply relative overflow-hidden;
+  }
+
+  /* ── Invest section ── */
+  .inv-bg {
+    background: var(--dark);
+    @apply relative overflow-hidden;
+  }
+  .inv-bg::before {
+    content: ''; @apply absolute inset-0 pointer-events-none;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 38px, rgba(0,136,205,.055) 39px),
+      repeating-linear-gradient(90deg, transparent, transparent 38px, rgba(0,136,205,.055) 39px);
+  }
+  .inv-bg::after {
+    content: ''; @apply absolute inset-0 pointer-events-none;
+    background:
+      radial-gradient(ellipse at 25% 45%, rgba(0,136,205,.13) 0%, transparent 55%),
+      radial-gradient(ellipse at 75% 65%, rgba(168,85,247,.10) 0%, transparent 55%);
+  }
+
+  /* ── Invest stat bars ── */
+  .stat-bar-l {
+    border-left: 3px solid var(--blue);
+    @apply pl-4;
+  }
+  .stat-bar-r {
+    border-right: 3px solid var(--purple);
+    @apply pr-4 text-right;
+  }
+  .stat-lbl {
+    @apply block text-[10px] font-bold uppercase tracking-widest mb-1;
+    color: var(--blue);
+  }
+  .stat-val { @apply text-2xl font-black text-white; }
+  .stat-desc {
+    @apply text-[11px] mt-1.5 leading-relaxed;
+    color: rgba(255,255,255,.45);
+  }
+  .stat-bar-r .stat-lbl { color: var(--purple); }
+
+  /* ── Tilt investor cards ── */
+  .tcard {
+    border: 1.5px solid rgba(168,85,247,.52);
+    @apply rounded-2xl flex flex-col justify-end gap-1 cursor-pointer relative;
+    background: rgba(168,85,247,.07);
+    backdrop-filter: blur(8px);
+    padding: 18px 14px 14px;
+    width: 140px; min-height: 110px;
+    color: #fff; font-size: 12px; font-weight: 700;
+    transition: transform .35s, background .3s, box-shadow .3s;
+  }
+  .tcard:hover {
+    background: rgba(168,85,247,.22);
+    box-shadow: 0 16px 40px rgba(168,85,247,.3);
+    transform: translateY(-10px) !important;
+  }
+  .tcard .ti { font-size: 20px; margin-bottom: 8px; }
+  .tcard .ts { font-size: 10px; color: rgba(255,255,255,.45); font-weight: 400; margin-top: 2px; }
+
+  /* ── About photo strip ── */
+  .pgrid { @apply flex gap-2; height: 200px; }
+  .pgrid img {
+    @apply rounded-xl object-cover cursor-pointer;
+    flex: 1; min-width: 0;
+    transition: flex .4s ease, box-shadow .3s;
+  }
+  .pgrid img:hover { flex: 2.8; box-shadow: 0 8px 32px rgba(0,0,0,.2); }
+
+  /* ── Department cards ── */
+  .dept-card {
+    @apply relative rounded-2xl overflow-hidden cursor-pointer;
+    transition: transform .35s;
+  }
+  .dept-card:hover { transform: scale(1.015); }
+  .dept-card > img { @apply w-full h-full object-cover; }
+  .dept-overlay {
+    @apply absolute inset-0;
+    background: linear-gradient(to top, rgba(5,5,20,.93) 0%, rgba(5,5,20,.3) 55%, transparent 100%);
+  }
+  .dept-content { @apply absolute bottom-0 left-0 right-0 p-6; }
+  .dept-content h3 { @apply text-lg font-black text-white leading-snug; }
+  .dept-content p  { @apply text-[11px] mt-1.5 leading-relaxed; color: rgba(255,255,255,.55); }
+  .dbtn {
+    @apply inline-flex items-center gap-1.5 text-white font-bold rounded-full
+           no-underline mt-3 transition-all duration-200;
+    background: var(--blue); font-size: 10px; padding: 5px 13px;
+  }
+  .dbtn:hover { background: var(--purple); }
+
+  /* ── Dept tab buttons ── */
+  .dtab-btn {
+    @apply text-[11px] font-bold rounded-full cursor-pointer border transition-all duration-200 whitespace-nowrap;
+    border-color: rgba(255,255,255,.2);
+    background: transparent; color: rgba(255,255,255,.5);
+    padding: 5px 16px;
+  }
+  .dtab-btn.active, .dtab-btn:hover {
+    background: var(--blue);
+    border-color: var(--blue);
+    color: #fff;
+  }
+
+  /* ── Testimonial cards ── */
+  .test-card {
+    @apply bg-white rounded-2xl p-7 border border-slate-100 transition-transform duration-300;
+    box-shadow: 0 4px 32px rgba(0,0,0,.09);
+  }
+  .test-card:hover { transform: translateY(-6px); }
+  .qmark { font-size: 60px; color: var(--blue); line-height: .75; font-family: Georgia, serif; }
+
+  /* ── CTA dark ── */
+  .cta-bg {
+    background: linear-gradient(135deg, #190530 0%, #0b0b1a 45%, #190530 100%);
+    @apply relative overflow-hidden;
+  }
+  .cta-title {
+    font-size: clamp(32px, 5vw, 64px);
+    @apply font-black text-white leading-tight;
+    text-decoration: underline;
+    text-underline-offset: 8px;
+    text-decoration-thickness: 3px;
+  }
+
+  /* ── Footer ── */
+  .ftit  { @apply text-[13px] font-black text-gray-900 mb-3.5; }
+  .fh    { @apply text-[10px] font-bold uppercase tracking-widest mb-1; color:#999; }
+  .fval  { @apply text-[11px] text-gray-500 mb-3 leading-relaxed; }
+  .fl    { @apply block text-[11px] text-gray-500 mb-1.5 no-underline transition-colors duration-200; }
+  .fl:hover, .fl.on { color: var(--blue); }
+  .fl.on { @apply font-bold; }
+
+  /* ── Dept number pagination ── */
+  .dept-num {
+    @apply text-xs font-black px-3 py-1 rounded-full border border-gray-300 text-gray-400
+           cursor-pointer transition-all duration-200;
+  }
+  .dept-num.active {
+    color: #fff; border-color: var(--blue);
+    background: var(--blue);
+  }
+}
+
+/* ─────────────────────────────────────────
+   UTILITIES
+───────────────────────────────────────── */
+@layer utilities {
+  .text-balance { text-wrap: balance; }
+}
