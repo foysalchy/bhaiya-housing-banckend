@@ -162,7 +162,7 @@ class WebController extends Controller
             'jobPositions',
             'jobList',
             ));
-        ));
+    
 
     }
     public function jobDetail($slug)
