@@ -36,5 +36,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 Route::get('/', [WebController::class, 'index'])->name('front.home');
+Route::get('/about', [WebController::class, 'about'])->name('front.about');
 
 

@@ -103,6 +103,46 @@ class WebController extends Controller
             ->with('contact_success', 'Thank you! We will get back to you shortly.');
     }
 
+    public function about()
+    {
+        $about = Content::where('type', 'hero')
+                        ->where('name', 'about-hero')
+                        ->where('status', 1)
+                        ->first();
+        $missionVision = Content::where('type', 'mission_vision')
+                            ->where('status', 1)
+                            ->first();
+        $historyTimeline = Content::where('type', 'history-timeline')->where('status', 1)->first();
+        $timelineItems = Content::where('type', 'timeline-item')->where('status', 1)->oldest()->get();
+
+        $leadersMessage = $this->fetchContent('leaders-message', 1);
+        $leaders = Content::where('type', 'leaders-message-item')->where('status', 1)->get();
+        $visionaries     = Content::where('type', 'visionaries-item')->where('status', 1)->get();
+        $aboutBhaiya     = Content::where('type', 'about-bhaiya')->where('status', 1)->first();
+        $aboutBhaiyaGroup = Content::where('type', 'about-bhaiya-group')->where('status', 1)->first();
+
+        $timelineData = $timelineItems->map(function($item) {
+            return [
+                'year'  => $item->title,
+                'title' => $item->name,
+                'desc'  => $item->short,
+                'img'   => $item->img_path ? asset($item->img_path) : '',
+            ];
+        })->values()->toArray();
+
+        return view('frontend.about', compact(
+            'about',
+            'missionVision',
+            'historyTimeline',
+            'timelineItems',
+            'timelineData',
+            'leadersMessage',
+            'leaders',
+            'visionaries',
+            'aboutBhaiya',
+            'aboutBhaiyaGroup',
+        ));
+    }
 
 
     public function pageShow($slug)

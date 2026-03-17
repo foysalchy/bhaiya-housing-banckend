@@ -150,8 +150,8 @@ class AppServiceProvider extends ServiceProvider
                 'body_2'           => ['label' => 'Vision Description', 'required' => true],
                 'name'             => ['label' => 'Mission Label (e.g. Mission)', 'required' => false],
                 'short'            => ['label' => 'Vision Label (e.g. Vision)','required' => false],
-                'img_path'         => ['label' => 'Left Image', 'required' => false],
-                'img_paths'        => ['label' => 'Other Images ([0] Top Right, [1] Bottom Right)', 'required' => false],
+                'img_path'         => ['label' => 'Bg Image', 'required' => false],
+                'img_paths'        => ['label' => 'Other Images', 'required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
@@ -168,7 +168,7 @@ class AppServiceProvider extends ServiceProvider
             'timeline-item' => [
                 'title'            => ['label' => 'Year (e.g. 1972)','required' => true],
                 'name'             => ['label' => 'Heading (e.g. Bhaiya Group)', 'required' => true],
-                'body'             => ['label' => 'Description','required' => true],
+                'short'             => ['label' => 'Description','required' => true],
                 'img_path'         => ['label' => 'Year Image','required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
@@ -177,6 +177,7 @@ class AppServiceProvider extends ServiceProvider
             ],
             'leaders-message' => [
                 'title'            => ['label' => 'Section Title (e.g. Message from leaders)', 'required' => true],
+                'img_path'         => ['label' => 'Image Background','required' => true],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
@@ -212,8 +213,8 @@ class AppServiceProvider extends ServiceProvider
             ],
             'about-bhaiya' => [
                 'title'            => ['label' => 'Title (e.g. About Bhaiya Housing)',  'required' => true],
-                'body'             => ['label' => 'Paragraph 1','required' => true],
-                'body_2'           => ['label' => 'Paragraph 2','required' => false],
+                'short'             => ['label' => 'Paragraph 1','required' => true],
+                'extra'           => ['label' => 'Paragraph 2','required' => false],
                 'img_path'         => ['label' => 'Left Image','required' => false],
                 'img_paths'        => ['label' => 'Other Images ([0] Right)','required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],

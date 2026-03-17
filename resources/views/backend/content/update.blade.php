@@ -38,6 +38,20 @@
                             <input type="file" class="form-control" id="{{ $field }}" name="{{ $field }}">
 
                         @elseif($field == 'img_paths')
+                        @if($content->$field)
+                            @php
+                                $images = is_array($content->$field)
+                                    ? $content->$field
+                                    : json_decode($content->$field, true) ?? [];
+                            @endphp
+                            <div class="mb-2 d-flex gap-2 flex-wrap">
+                                @foreach($images as $img)
+                                <div class="position-relative">
+                                    <img width="100px" src="{{ asset('/') }}{{ $img }}" alt="" class="border rounded p-1">
+                                </div>
+                                @endforeach
+                            </div>
+                        @endif
                             <input type="file" multiple class="form-control" id="{{ $field }}" name="{{ $field }}[]" {{ $isRequired }}>
 
                         @elseif($field == 'parent')
