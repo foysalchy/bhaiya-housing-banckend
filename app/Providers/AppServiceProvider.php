@@ -252,14 +252,31 @@ class AppServiceProvider extends ServiceProvider
                 'status'           => ['label' => 'Status','required' => true],
             ],
             //career
-            'other-intro' => [
+            'career-overview' => [
                 'title'            => ['label' => 'Title', 'required' => false],
-                'short'            => ['label' => 'Paragraph 1','required' => true],
-                'body'             => ['label' => 'Paragraph 2','required' => true],
+                'short'            => ['label' => 'Paragraph 1', 'required' => true],
+                'body'             => ['label' => 'Paragraph 2', 'required' => false],
+                'body_2'           => ['label' => 'Bottom Paragraph', 'required' => false],
+                'img_path'         => ['label' => 'Left Small Image', 'required' => false],
+                'img_paths'        => ['label' => 'Right Large Image', 'required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                'status'           => ['label' => 'Status','required' => true],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
+            'job-position' => [
+                'title'             => ['label' => 'Job Title (e.g. Sales Executive)', 'required' => true],
+                'name'              => ['label' => 'Slug (e.g. sales-executive)', 'required' => true],
+                'short'             => ['label' => 'Job Description', 'required' => true],
+                'body'              => ['label' => 'Full Details (Summary, Responsibilities, Qualifications, Benefits)', 'required' => false],
+                'extra'             => ['label' => 'Department', 'required' => false],
+                'location'          => ['label' => 'Location', 'required' => false],
+                'body_2'            => ['label' => 'Job Type (e.g. Full Time)', 'required' => false],
+                'body_3'            => ['label' => 'Experience (e.g. 2+ years)', 'required' => false],
+                'meta_title'        => ['label' => 'Meta Title', 'required' => false],
+                'meta_description'  => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'     => ['label' => 'Meta Keywords', 'required' => false],
+                'status'            => ['label' => 'Status', 'required' => true],
             ],
 
             'brand' => [

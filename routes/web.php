@@ -37,5 +37,8 @@ Route::middleware(['auth'])->group(function () {
 
 Route::get('/', [WebController::class, 'index'])->name('front.home');
 Route::get('/about', [WebController::class, 'about'])->name('front.about');
+Route::get('/career', [WebController::class, 'career'])->name('career');
+Route::get('/career/{slug}', [WebController::class, 'jobDetail'])->name('job.details');
+Route::post('/career/apply', [WebController::class, 'applyJob'])->name('job.apply');
 
 

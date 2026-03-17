@@ -143,6 +143,50 @@ class WebController extends Controller
             'aboutBhaiyaGroup',
         ));
     }
+    public function career()
+    {
+         $career = Content::where('type', 'hero')
+                        ->where('name', 'career-hero')
+                        ->where('status', 1)
+                        ->first();
+
+        $careerOverview = Content::where('type', 'career-overview')->where('status', 1)->first();
+        $jobPositions = Content::where('type', 'job-position')->where('status', 1)->latest()->get();
+
+
+        return view('frontend.career',compact(
+            'career',
+            'careerOverview',
+            'jobPositions',
+            ));
+    }
+    public function jobDetail($slug)
+    {
+        $job = Content::where('type', 'job-position')
+                    ->where('name', $slug)
+                    ->where('status', 1)
+                    ->firstOrFail();
+
+        return view('frontend.careerDetails', compact('job'));
+    }
+
+    public function applyJob(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|max:100',
+            'phone'   => 'required|string|max:20',
+            'email'   => 'required|email|max:100',
+            'subject' => 'required|string|max:200',
+            'resume'  => 'required|file|mimes:pdf|max:2048',
+        ]);
+
+        $resumePath = $request->file('resume')->store('resumes', 'public');
+
+        // Save to DB or send email
+        // JobApplication::create([...]);
+
+        return back()->with('success', 'Application submitted successfully!');
+    }
 
 
     public function pageShow($slug)
