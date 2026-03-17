@@ -103,6 +103,90 @@ class WebController extends Controller
             ->with('contact_success', 'Thank you! We will get back to you shortly.');
     }
 
+    public function about()
+    {
+        $about = Content::where('type', 'hero')
+                        ->where('name', 'about-hero')
+                        ->where('status', 1)
+                        ->first();
+        $missionVision = Content::where('type', 'mission_vision')
+                            ->where('status', 1)
+                            ->first();
+        $historyTimeline = Content::where('type', 'history-timeline')->where('status', 1)->first();
+        $timelineItems = Content::where('type', 'timeline-item')->where('status', 1)->oldest()->get();
+
+        $leadersMessage = $this->fetchContent('leaders-message', 1);
+        $leaders = Content::where('type', 'leaders-message-item')->where('status', 1)->get();
+        $visionaries     = Content::where('type', 'visionaries-item')->where('status', 1)->get();
+        $aboutBhaiya     = Content::where('type', 'about-bhaiya')->where('status', 1)->first();
+        $aboutBhaiyaGroup = Content::where('type', 'about-bhaiya-group')->where('status', 1)->first();
+
+        $timelineData = $timelineItems->map(function($item) {
+            return [
+                'year'  => $item->title,
+                'title' => $item->name,
+                'desc'  => $item->short,
+                'img'   => $item->img_path ? asset($item->img_path) : '',
+            ];
+        })->values()->toArray();
+
+        return view('frontend.about', compact(
+            'about',
+            'missionVision',
+            'historyTimeline',
+            'timelineItems',
+            'timelineData',
+            'leadersMessage',
+            'leaders',
+            'visionaries',
+            'aboutBhaiya',
+            'aboutBhaiyaGroup',
+        ));
+    }
+    public function career()
+    {
+         $career = Content::where('type', 'hero')
+                        ->where('name', 'career-hero')
+                        ->where('status', 1)
+                        ->first();
+
+        $careerOverview = Content::where('type', 'career-overview')->where('status', 1)->first();
+        $jobPositions = Content::where('type', 'job-position')->where('status', 1)->latest()->get();
+
+
+        return view('frontend.career',compact(
+            'career',
+            'careerOverview',
+            'jobPositions',
+            ));
+    }
+    public function jobDetail($slug)
+    {
+        $job = Content::where('type', 'job-position')
+                    ->where('name', $slug)
+                    ->where('status', 1)
+                    ->firstOrFail();
+
+        return view('frontend.careerDetails', compact('job'));
+    }
+
+    public function applyJob(Request $request)
+    {
+        $request->validate([
+            'name'    => 'required|string|max:100',
+            'phone'   => 'required|string|max:20',
+            'email'   => 'required|email|max:100',
+            'subject' => 'required|string|max:200',
+            'resume'  => 'required|file|mimes:pdf|max:2048',
+        ]);
+
+        $resumePath = $request->file('resume')->store('resumes', 'public');
+
+        // Save to DB or send email
+        // JobApplication::create([...]);
+
+        return back()->with('success', 'Application submitted successfully!');
+    }
 
 
     public function pageShow($slug)
