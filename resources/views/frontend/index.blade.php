@@ -1,0 +1,688 @@
+ @extends('layouts.front')
+ @section('title',  'Home page')
+ @section('content')
+
+ <!-- ===== HERO ===== -->
+ <section id="home" class=" relative h-screen w-full overflow-hidden">
+     <!-- Background -->
+     <div class="absolute inset-0">
+         <img src="/assets/images/hero-bg.jpg" alt="Bhaiya Housing Building"
+             class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
+         <div class="absolute inset-0"
+             style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%);">
+         </div>
+     </div>
+
+     <!-- Content -->
+     <div class="relative z-10 h-full flex flex-col justify-center items-end">
+         <div class="container mx-auto">
+             <div class="max-w-3xl mt-20">
+                 <span
+                     class="block text-[11px] tracking-[4px] uppercase text-green-400 mb-5 opacity-0 animate-[fadeUp_0.7s_0.2s_ease_forwards]">
+                     Luxury Living · Dhaka
+                 </span>
+                 <h1
+                     class="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
+                     We <em class="italic text-bh-green-light">transform</em> your<br />
+                     <em class="italic text-bh-green-light">dreams</em> into addresses
+                 </h1>
+             </div>
+
+             <div class="mt-28 max-w-xl opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
+                 <p class="opacity-80 text-sm md:text-base leading-relaxed font-light">
+                     Immerse yourself in the artistry of exceptional spaces with Bhaiya Housing, where each project is a
+                     harmonious blend of prestige, elegance, and refined sophistication. Beyond constructing buildings, we
+                     meticulously create residential and commercial environments to reflect your aspirations.
+                 </p>
+             </div>
+
+             <div class="mt-9 flex gap-3 opacity-0 animate-[fadeUp_0.7s_0.70s_ease_forwards]">
+                 <button
+                     class="px-7 py-3 bg-green-500 hover:bg-green-600 text-black text-[11px] font-medium tracking-[2px] uppercase transition-all">
+                     Explore Projects
+                 </button>
+                 <button
+                     class="px-7 py-3 border border-white/30 hover:border-white/60 hover:bg-white/10 text-[11px] tracking-[2px] uppercase transition-all">
+                     Learn More
+                 </button>
+             </div>
+         </div>
+     </div>
+
+     <!-- Scroll indicator -->
+     <div class="absolute bottom-10 left-6 md:left-16 z-20 animate-bounce">
+         <div
+             class="w-14 h-14 rounded-full border border-white/30 hover:border-white/60 flex items-center justify-center transition-colors cursor-pointer">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
+                 stroke-opacity="0.7">
+                 <polyline points="6 9 12 15 18 9"></polyline>
+             </svg>
+         </div>
+     </div>
+
+     <!-- Video card -->
+     <div
+         class="absolute bottom-8 right-6 md:right-16 z-20 w-[320px] flex border border-white/10 bg-black/50 backdrop-blur-md cursor-pointer hover:border-white/25 transition-all opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]">
+         <div class="w-[150px] flex-shrink-0 relative overflow-hidden">
+             <img src="/images/kazi-kuthi.jpg" alt="Kazi Kuthi" class="w-full h-full object-cover" />
+             <div class="absolute inset-0 bg-black/30"></div>
+             <div class="absolute top-2 left-2 text-[9px] tracking-[2px] uppercase bg-black/50 px-2 py-1">Apartment Project
+             </div>
+             <div class="absolute bottom-2 left-2 right-2 bg-black/60 px-2 py-1.5">
+                 <strong class="block text-[11px] font-medium">Kazi Kuthi</strong>
+                 <span class="text-[10px] text-white/60 font-light">North Badda</span>
+             </div>
+         </div>
+         <div class="flex-1 p-3 flex flex-col justify-between">
+             <div class="flex items-center justify-end gap-2">
+                 <span class="text-[10px] tracking-[1px] text-white/60">View</span>
+                 <div class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center flex-shrink-0">
+                     <svg width="10" height="12" viewBox="0 0 12 14" fill="none">
+                         <path d="M12 7L0 14V0L12 7Z" fill="white" />
+                     </svg>
+                 </div>
+             </div>
+             <p class="text-base font-light tracking-wide">Watch our video</p>
+         </div>
+     </div>
+ </section>
+
+
+ <section class=" py-20 overflow-hidden bg-[#FFFDFA]" style="padding-top: 100px;">
+     <div class=" mx-auto px-6  lg:px-10">
+
+         <!-- Row 1 -->
+         <div class="relative flex flex-wrap items-start">
+
+             <!-- ── Col 1: Heading ── -->
+             <div class="w-full h-full md:w-1/4 pt-6 z-10 fade-in delay-1">
+                 <h2 class="font-display text-5xl lg:text-6xl font-light leading-tight text-gray-900 text-center">
+                     Building<br />dreams for<br />
+                     <em class="italic font-light" style="color:#1a1a1a;">decades</em>
+                 </h2>
+
+                 <!-- Small outdoor image below heading -->
+                 <div class="mt-8 float-down fade-in delay-2" style="position:relative; left:-60px;">
+                     <img src="/assets/images/side.jpg" alt="Outdoor space" class="img-shadow rounded-sm object-cover"
+                         style="width:400px; height:300px; object-position:center;"
+                         onerror="this.style.background='#d6cfc5'; this.removeAttribute('src');" />
+                 </div>
+             </div>
+
+             <!-- ── Col 2: Big Center Image ── -->
+             <div class="w-full md:w-5/12 relative fade-in delay-2" style="margin-left:2%;">
+                 <div class="img-shadow rounded-sm overflow-hidden" style="height:800px;">
+                     <img src="/assets/images/main.avif" alt="Modern building" class="w-full h-full object-cover"
+                         onerror="this.style.background='#c5bdb5'; this.style.height='100%'; this.removeAttribute('src');" />
+                 </div>
+             </div>
+
+             <!-- ── Col 3: Right side – small interior image + text + CTA ── -->
+             <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3" style="margin-left:4%;">
+
+                 <!-- Small interior image top-right -->
+                 <div class="float-up mb-8 self-end">
+                     <img src="/assets/images/right-side.jpg" alt="Interior" class="img-shadow rounded-sm object-cover"
+                         style="width:400px; height:300px; object-position:center;"
+                         onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
+                 </div>
+
+                 <!-- Description text -->
+                 <p class="text-sm leading-relaxed fade-in delay-3 mb-8" style="color:#555; max-width:280px; line-height:1.9;">
+                     Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern
+                     infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite
+                     homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly
+                     adapt to the evolving rhythms of modern life.
+                 </p>
+
+                 <!-- Circular CTA button -->
+                 <div class="fade-in delay-4">
+                     <a href="about.html" class="circle-btn">Learn More</a>
+                 </div>
+             </div>
+
+         </div><!-- /Row 1 -->
+
+         <!-- Row 2: bottom images -->
+         <div class="relative flex flex-wrap items-center">
+
+             <!-- Bottom-left image -->
+             <div class="absolute z-20 fade-in delay-3 float-down" style="left:20%; bottom: 0px">
+                 <img src="/assets/images/sub.jpg" alt="Property" class="img-shadow rounded-sm object-cover"
+                     style="width:400px; height:400px; object-position:center;"
+                     onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
+             </div>
+
+             <!-- Decorative stone dot -->
+             <div class="w-8 h-8 rounded-full float-up opacity-60 mt-10"
+                 style="background:radial-gradient(circle at 35% 35%,#c9b99a,#8a7560); width:44px; height:44px; margin-top:20px; margin-left:10px;">
+             </div>
+
+         </div><!-- /Row 2 -->
+
+     </div>
+ </section>
+
+ <!-- ===== FEATURED PROJECTS ===== -->
+ <section class="relative w-full overflow-hidden"
+     style="height: 100vh; min-height: 600px;padding-bottom: 100px;padding-top: 100px;">
+
+     <!-- Background Video -->
+     <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
+         <source src="/assets/video/1.mp4" type="video/mp4" />
+     </video>
+
+     <!-- Dark Overlay -->
+     <div class="absolute inset-0"
+         style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%);">
+     </div>
+
+     <!-- Top-right: Learn More circle button -->
+     <div class="absolute top-6 right-8 z-20">
+         <a href="#"
+             class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white text-sm tracking-widest transition-all duration-300 hover:bg-white hover:text-black"
+             style="width:120px; height:120px; font-family:'Jost',sans-serif; font-weight:400; letter-spacing:0.1em; font-size:13px;">
+             Learn More
+         </a>
+     </div>
+
+     <!-- Bottom-left: Title + Address -->
+     <div class="absolute z-20 text-white" style=" left: 32px;">
+         <h2 id="heroTitle" class="font-display text-5xl font-light mb-2"
+             style="font-family:'Cormorant Garamond',serif; font-weight:300;">
+             Kazi Kuthi
+         </h2>
+         <p id="heroAddress" class="text-sm tracking-wide opacity-80"
+             style="font-family:'Jost',sans-serif; font-weight:300; letter-spacing:0.05em;">
+             296, Sadhinota Soroni, North Badda, Dhaka-1212
+         </p>
+     </div>
+
+     <!-- Bottom Thumbnails Strip -->
+     <div class="absolute bottom-10 left-10 z-20 flex gap-1 p-4">
+         <div class="thumb-item active cursor-pointer overflow-hidden"
+             style="width:70px; height:56px; border:2px solid rgba(255,255,255,0.8);" data-video="/assets/video/1.mp4"
+             data-title="Kazi Kuthi" data-address="296, Sadhinota Soroni, North Badda, Dhaka-1212"
+             onclick="switchVideo(this)">
+             <img src="/assets/images/video-thumb1.jpg" alt="thumb1"
+                 class="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity duration-200"
+                 onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+         </div>
+
+         <div class="thumb-item cursor-pointer overflow-hidden"
+             style="width:70px; height:56px; border:2px solid rgba(255,255,255,0.3);" data-video="/assets/video/1.mp4"
+             data-title="Sunrise Residency" data-address="14, Gulshan Avenue, Gulshan-1, Dhaka-1212"
+             onclick="switchVideo(this)">
+             <img src="/assets/images//video-thumb2.jpg" alt="thumb2"
+                 class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-200"
+                 onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+         </div>
+
+         <div class="thumb-item cursor-pointer overflow-hidden"
+             style="width:70px; height:56px; border:2px solid rgba(255,255,255,0.3);" data-video="/assets/video/1.mp4"
+             data-title="Green Valley Tower" data-address="88, Bashundhara R/A, Block-C, Dhaka-1229"
+             onclick="switchVideo(this)">
+             <img src="/assets/images//video-thumb3.jpg" alt="thumb3"
+                 class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-200"
+                 onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+         </div>
+
+         <div class="thumb-item cursor-pointer overflow-hidden"
+             style="width:70px; height:56px; border:2px solid rgba(255,255,255,0.3);" data-video="/assets/video/1.mp4"
+             data-title="Horizon Heights" data-address="52, Dhanmondi Road 27, Dhaka-1209" onclick="switchVideo(this)">
+             <img src="/assets/images//video-thumb4.jpg" alt="thumb4"
+                 class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-200"
+                 onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+         </div>
+
+         <div class="thumb-item cursor-pointer overflow-hidden"
+             style="width:70px; height:56px; border:2px solid rgba(255,255,255,0.3);" data-video="/assets/video/1.mp4"
+             data-title="Pearl Garden" data-address="21, Mirpur Road, Shyamoli, Dhaka-1207" onclick="switchVideo(this)">
+             <img src="/assets/images//video-thumb5.jpg" alt="thumb5"
+                 class="w-full h-full object-cover opacity-70 hover:opacity-100 transition-opacity duration-200"
+                 onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+         </div>
+     </div>
+
+ </section>
+
+ <!-- ===== QUALITY / EXCELLENCE ===== -->
+ <section class="w-full overflow-hidden relative" style="background: rgb(21, 32, 24); padding-bottom: 15vw;">
+     <div class="bg-image absolute inset-0 w-full h-full overflow-hidden" style="z-index:0;">
+         <img id="qualityBg" class="absolute w-full" src="/assets/images/quality-bg.png" alt="image"
+             style="top:-20%; left:0; height:140%; object-fit:cover; will-change:transform;" />
+     </div>
+     <!-- ── Part 1: 12+ years hero ── -->
+     <div class="relative w-full flex flex-col items-center justify-center text-center overflow-hidden"
+         style="padding: 80px 20px 0;">
+
+         <!-- Ghost text background -->
+         <span class="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
+             style="font-family:'Cormorant Garamond',serif; font-size:clamp(100px,18vw,260px); font-weight:700; color:rgba(255,255,255,0.04); letter-spacing:0.05em; white-space:nowrap; user-select:none;">
+             EVERY
+         </span>
+
+         <!-- Headline -->
+         <div class="relative z-10">
+             <h2 class="text-white font-light mb-1"
+                 style="font-family:'Jost',sans-serif; font-size:clamp(28px,4vw,56px); font-weight:300; letter-spacing:0.01em;">
+                 12+ years of expertise.
+             </h2>
+             <div class="flex items-center justify-center gap-3 mb-2">
+                 <span class="block w-px bg-white opacity-40" style="height:28px;"></span>
+             </div>
+             <p class="text-white opacity-60 tracking-widest uppercase text-xs mb-2" style="letter-spacing:0.2em;">Excellence
+                 in</p>
+             <h3 class="text-white font-light"
+                 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,7vw,96px); font-weight:300;">
+                 Every detail
+             </h3>
+         </div>
+
+         <!-- Center architectural image -->
+         <div class="relative z-10 mt-10 w-full" style="max-width:900px; height:clamp(300px,45vw,520px); overflow:hidden;">
+             <img src="/assets/images/quality-top.jpg" alt="Architectural detail" class="w-full h-full object-cover"
+                 onerror="this.parentElement.style.background='#1e2e20'; this.style.display='none';" />
+         </div>
+     </div>
+
+     <!-- ── Part 2: Two columns with hover-expand images ── -->
+     <div class="relative w-full overflow-hidden" style="margin-top:0;">
+
+         <!-- Ghost text background -->
+         <div
+             class="absolute inset-0 flex flex-col justify-start pt-4 pl-4 select-none pointer-events-none overflow-hidden"
+             style="z-index:0;">
+             <span
+                 style="font-family:'Cormorant Garamond',serif; font-size:clamp(60px,12vw,180px); font-weight:700; color:rgba(255,255,255,0.04); white-space:nowrap; line-height:1;">
+                 quality
+             </span>
+             <span
+                 style="font-family:'Cormorant Garamond',serif; font-size:clamp(60px,12vw,180px); font-weight:700; color:rgba(255,255,255,0.04); white-space:nowrap; line-height:1;">
+                 construction
+             </span>
+         </div>
+
+         <!-- Two Columns -->
+         <div class="relative z-10 flex flex-col md:flex-row w-full" style="border-top:1px solid rgba(255,255,255,0.08);">
+
+             <!-- Col 1 -->
+             <div class="w-full md:w-1/2 flex flex-col"
+                 style="border-right:1px solid rgba(255,255,255,0.08); padding:50px 40px 60px;">
+                 <p class="text-white text-sm leading-relaxed mb-10 opacity-80"
+                     style="max-width:480px; line-height:1.9; font-weight:300;">
+                     We deliver exceptional construction using first-rate materials and innovative
+                     techniques. Every project is built with precision and care, ensuring unmatched
+                     durability, stunning aesthetics, and spaces that exceed expectations and
+                     endure over time.
+                 </p>
+
+                 <!-- Hover Expand Image -->
+                 <div class="expand-img-wrap overflow-hidden cursor-pointer" style="height:420px; position:relative;">
+                     <img src="/assets/images/q1.jpg" alt="Lobby interior"
+                         class="expand-img w-full h-full object-cover transition-transform duration-700 ease-in-out"
+                         style="transform-origin:center center; transform:scale(1);"
+                         onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
+                     <!-- Overlay on hover -->
+                     <div class="expand-overlay absolute inset-0 transition-opacity duration-500"
+                         style="background:rgba(21,32,24,0.35); opacity:0;"></div>
+                 </div>
+             </div>
+
+             <!-- Col 2 -->
+             <div class="w-full md:w-1/2 flex flex-col" style="padding:50px 40px 60px;">
+                 <p class="text-white text-sm leading-relaxed mb-10 opacity-80"
+                     style="max-width:480px; line-height:1.9; font-weight:300;">
+                     We guarantee on-schedule completion, respecting your
+                     timelines without compromise. Projects are executed with
+                     careful planning and efficiency, giving you a smooth, hassle-free
+                     experience as you prepare to step into your perfectly completed space.
+                 </p>
+
+                 <!-- Hover Expand Image -->
+                 <div class="expand-img-wrap overflow-hidden cursor-pointer" style="height:420px; position:relative;">
+                     <img src="/assets/images/q2.jpg" alt="Bathroom interior"
+                         class="expand-img w-full h-full object-cover transition-transform duration-700 ease-in-out"
+                         style="transform-origin:center center; transform:scale(1);"
+                         onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
+                     <div class="expand-overlay absolute inset-0 transition-opacity duration-500"
+                         style="background:rgba(21,32,24,0.35); opacity:0;"></div>
+                 </div>
+             </div>
+
+         </div>
+     </div>
+
+ </section>
+
+ <!-- ===== TESTIMONIALS ===== -->
+ <section class="w-full relative overflow-hidden pt-16 pb-0 px-5" style="background:#F6F6F6; ">
+     <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
+         <!-- Decorative stone/dot elements -->
+         <div class="absolute left-8 pointer-events-none" style="top:52%; z-index:2;">
+             <img src="/assets/images/overview-stone.png" alt="" style="width:56px; opacity:0.7;"
+                 onerror="this.style.display='none'" />
+         </div>
+
+         <div>
+
+             <!-- Heading -->
+             <h2 class="mb-10 font-light text-gray-900"
+                 style="font-size:clamp(32px,5vw,64px); font-family:'Jost',sans-serif; font-weight:300; letter-spacing:-0.01em;">
+                 The stories of <em
+                     style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">satisfaction</em>
+             </h2>
+
+             <!-- Testimonial Content Row -->
+             <div class="flex flex-col md:flex-row items-start gap-10 mb-0 relative">
+
+                 <!-- Left: Avatar + Name -->
+                 <div class="w-full md:w-1/4 flex flex-col gap-3">
+                     <div class="rounded-full overflow-hidden border border-gray-200" style="width:64px; height:64px;">
+                         <img id="testimonialAvatar" src="/assets/images/4.jpeg" alt="avatar"
+                             class="w-full h-full object-cover transition-opacity duration-500"
+                             onerror="this.src=''; this.parentElement.style.background='#d6cfc5';" />
+                     </div>
+                     <div>
+                         <p id="testimonialName" class="font-medium text-gray-900 text-lg transition-opacity duration-500"
+                             style="font-family:'Jost',sans-serif; font-weight:500;">Md. Mamun Molla</p>
+                         <p id="testimonialRole" class="text-gray-500 text-sm mt-0.5 transition-opacity duration-500"
+                             style="font-weight:300;">Professor</p>
+                     </div>
+                 </div>
+
+                 <!-- Right: Quote -->
+                 <div class="w-full md:w-3/4 relative  ml-auto">
+                     <!-- Quote mark -->
+                     <span class="absolute -left-4 -top-2 text-gray-400 select-none"
+                         style="font-size:52px; font-family:'Georgia',serif; line-height:1; opacity:0.6;">&ldquo;</span>
+
+                     <p id="testimonialText" class="text-gray-700 leading-relaxed pl-8 transition-opacity duration-500"
+                         style="font-size:clamp(14px,1.3vw,17px); font-weight:300; line-height:1.95; max-width:780px;">
+                         I've always wanted a quiet and safe place, and this project gave me just that. The construction is
+                         excellent, and
+                         the attention to detail shows. I also love the amenities available, and the community here is welcoming.
+                         It's
+                         been a really good investment.
+                     </p>
+
+                     <!-- Prev / Next arrows — right aligned -->
+                     <div class="flex gap-3 justify-end mt-6">
+                         <button onclick="changeTestimonial(-1); resetAutoPlay()"
+                             class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                             style="width:44px; height:44px;">
+                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                 class="group-hover:stroke-white transition-colors duration-300">
+                                 <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                     stroke-linejoin="round" class="group-hover:stroke-white" />
+                             </svg>
+                         </button>
+                         <button onclick="changeTestimonial(1); resetAutoPlay()"
+                             class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                             style="width:44px; height:44px;">
+                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                 class="group-hover:stroke-white transition-colors duration-300">
+                                 <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                     stroke-linejoin="round" class="group-hover:stroke-white" />
+                             </svg>
+                         </button>
+                     </div>
+                 </div>
+
+             </div>
+         </div>
+
+         <!-- Fixed Bottom Images — always same, full width -->
+         <div class="flex w-full mt-10" style="height:clamp(320px,45vw,560px);">
+             <div class="w-1/2 overflow-hidden">
+                 <img src="/assets/images/test1.avif" alt="Interior" class="w-full  object-cover"
+                     onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
+                 <p class="text-black font-body font-light leading-relaxed text-sm md:text-base">
+                     Bhaiya Housing is devoted to designing inspiring residential and commercial spaces that transcend
+                     expectations.
+                     With a focus on modern aesthetics, impeccable craftsmanship, and an unwavering commitment to integrity, we
+                     create environments that harmoniously balance sophistication and purpose, delivering timeless value.
+                 </p>
+             </div>
+
+             <div class="w-1/2 overflow-hidden" style="margin-left:2px;">
+                 <img src="/assets/images/test2.avif" alt="Interior" class="w-full h-full object-cover"
+                     onerror="this.parentElement.style.background='#bab4ac'; this.style.display='none';" />
+             </div>
+         </div>
+     </div>
+ </section>
+
+
+
+
+ <!-- ===== NEWS & EVENTS ===== -->
+ <section class="py-20 px-6 md:px-12 lg:px-24 overflow-hidden  relative"
+     style="background-color:#f2ede6 ;color: #2a2825;">
+
+     <div class="container mx-auto flex flex-col md:flex-row gap-12 lg:gap-24" style="padding-top: 100px;">
+
+         <!-- Left Side: Title & Button -->
+         <div class="w-full md:w-[30%] flex flex-col items-center justify-between min-h-[500px] relative z-10">
+
+             <!-- Rotated Text Container -->
+             <!-- Rotated heading -->
+             <div
+                 style="writing-mode: vertical-rl; transform: rotate(180deg); white-space:nowrap; display:flex; align-items:center; gap:4px;">
+                 <span
+                     style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
+                     News
+                 </span>
+                 <em
+                     style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(32px,4vw,58px); color:#3a3a3a; margin:0 4px;">
+                     &amp;
+                 </em>
+                 <span
+                     style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
+                     Events
+                 </span>
+             </div>
+             <!-- View All circle -->
+             <a href="#" class="flex items-center justify-center rounded-full mt-8"
+                 style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0; transition: background 0.3s, color 0.3s;"
+                 onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
+                 onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
+                 View All
+             </a>
+
+
+
+         </div>
+
+         <!-- Right Side: News & Events List -->
+         <div class="w-full md:w-[70%] flex flex-col mt-12 md:mt-0 relative z-10">
+
+             <!-- List Item 1 -->
+             <!-- Border (#ccc3b6) and Hover (#e3dbcf) updated -->
+             <div
+                 class="border-t border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <!-- Category Color (#54504a) -->
+                     <p class="text-xl text-[#54504a] font-medium mb-1">Events</p>
+                     <!-- Date Color (#857f77) -->
+                     <p class="text-sm text-[#857f77]">04 July 2025</p>
+                 </div>
+                 <div class="flex-1">
+                     <!-- Title Color (#2a2825) -->
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Upcoming Property Showcase: Discover Your Dream Home
+                     </h3>
+                 </div>
+             </div>
+
+             <!-- List Item 2 -->
+             <div
+                 class="border-t border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <p class="text-xl text-[#54504a] font-medium mb-1">News</p>
+                     <p class="text-sm text-[#857f77]">03 February 2025</p>
+                 </div>
+                 <div class="flex-1">
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Bhaiya Housing's Latest Project Completion: A New Era of Living
+                     </h3>
+                 </div>
+             </div>
+
+             <!-- List Item 3 -->
+             <div
+                 class="border-t border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <p class="text-xl text-[#54504a] font-medium mb-1">Events</p>
+                     <p class="text-sm text-[#857f77]">02 September 2025</p>
+                 </div>
+                 <div class="flex-1">
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Upcoming Property Showcase
+                     </h3>
+                 </div>
+             </div>
+
+             <!-- List Item 4 -->
+             <div
+                 class="border-t border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <p class="text-xl text-[#54504a] font-medium mb-1">Events</p>
+                     <p class="text-sm text-[#857f77]">01 July 2025</p>
+                 </div>
+                 <div class="flex-1">
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Bhaiya Housing's Latest Project Completion
+                     </h3>
+                 </div>
+             </div>
+
+             <!-- List Item 5 -->
+             <div
+                 class="border-t border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <p class="text-xl text-[#54504a] font-medium mb-1">Events</p>
+                     <p class="text-sm text-[#857f77]">04 July 2025</p>
+                 </div>
+                 <div class="flex-1 relative">
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Upcoming Property Showcase: Discover Your Dream Home
+                     </h3>
+                 </div>
+             </div>
+
+             <!-- List Item 6 -->
+             <div
+                 class="border-t border-b border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer">
+                 <div class="w-40 flex-shrink-0">
+                     <p class="text-xl text-[#54504a] font-medium mb-1">News</p>
+                     <p class="text-sm text-[#857f77]">03 February 2025</p>
+                 </div>
+                 <div class="flex-1">
+                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                         Bhaiya Housing's Latest Project Completion: A New Era of Living
+                     </h3>
+                 </div>
+             </div>
+
+         </div>
+     </div>
+ </section>
+ <!-- ===== PARTNERS / CTA ===== -->
+ <section class="relative w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#f2ede6;">
+
+     <!-- Map Background Image (left half) -->
+     <div class="absolute inset-y-0 left-0 w-1/2 pointer-events-none" style="z-index:0;">
+         <img src="/assets/images/partners-bg.png" alt="map" class="w-full object-cover opacity-50" style="height:550px;"
+             onerror="this.style.display='none';" />
+     </div>
+
+     <!-- Content -->
+     <div class="relative z-10 px-6 md:px-16 lg:px-24">
+
+         <!-- Heading -->
+         <h2 class="mb-16 font-light leading-tight text-gray-900" style="font-size:clamp(32px,4.5vw,64px);">
+             <span class="font-normal" style="font-family:'Jost',sans-serif;">Be a </span>
+             <em class="font-light italic" style="font-family:'Cormorant Garamond',serif;">partner</em>
+             <span class="font-normal" style="font-family:'Jost',sans-serif;">,</span><br />
+             <span class="font-normal" style="font-family:'Jost',sans-serif;">be a </span>
+             <em class="font-light italic" style="font-family:'Cormorant Garamond',serif;">patron</em>
+         </h2>
+
+         <!-- Two Cards Row -->
+         <div class="flex flex-col md:flex-row gap-4 items-stretch md:ml-[28%]">
+
+             <!-- Card 1: Landowner -->
+             <div
+                 class="relative flex flex-col justify-between flex-1 cursor-pointer group border rounded-none p-6 min-h-[520px] transition-all duration-300"
+                 style="border-color:#c8bfb0; background:rgba(242,237,230,0.6);"
+                 onmouseover="this.style.borderColor='#8a7a60';" onmouseout="this.style.borderColor='#c8bfb0';">
+
+                 <!-- Arrow top right -->
+                 <div class="flex justify-end">
+                     <div
+                         class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 group-hover:bg-gray-900 group-hover:border-gray-900">
+                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                             <path d="M3 11L11 3M11 3H5M11 3V9" class="transition-all duration-300 group-hover:stroke-white"
+                                 stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                         </svg>
+                     </div>
+                 </div>
+
+                 <!-- Bottom text -->
+                 <div class="mt-auto pt-8">
+                     <h3 class="text-gray-900 font-normal mb-2"
+                         style="font-family:'Jost',sans-serif; font-size:clamp(18px,1.8vw,24px);">
+                         Contact as Landowner
+                     </h3>
+                     <p class="text-sm font-light leading-relaxed text-gray-500 max-w-xs" style="font-family:'Jost',sans-serif;">
+                         Partner with us to transform your property into a landmark development.
+                     </p>
+                 </div>
+
+             </div>
+
+             <!-- Card 2: Customer -->
+             <div
+                 class="relative flex flex-col justify-between flex-1 cursor-pointer group overflow-hidden min-h-[520px] p-6">
+
+                 <!-- Background image -->
+                 <img src="/assets/images/customer.png" alt="room"
+                     class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0"
+                     onerror="this.parentElement.style.background='#1a2a2a'; this.style.display='none';" />
+
+                 <!-- Dark overlay -->
+                 <div class="absolute inset-0 z-[1]"
+                     style="background:linear-gradient(to top, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.25) 100%);"></div>
+
+                 <!-- Arrow top right -->
+                 <div class="relative z-10 flex justify-end">
+                     <div
+                         class="w-9 h-9 rounded-full border border-white flex items-center justify-center transition-all duration-300 group-hover:bg-white">
+                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                             <path d="M3 11L11 3M11 3H5M11 3V9" class="transition-all duration-300 group-hover:stroke-gray-900"
+                                 stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                         </svg>
+                     </div>
+                 </div>
+
+                 <!-- Bottom text -->
+                 <div class="relative z-10 mt-auto pt-8">
+                     <h3 class="text-white font-normal mb-2"
+                         style="font-family:'Jost',sans-serif; font-size:clamp(18px,1.8vw,24px);">
+                         Contact as Customer
+                     </h3>
+                     <p class="text-sm font-light leading-relaxed text-white/80 max-w-xs" style="font-family:'Jost',sans-serif;">
+                         Get in touch to find your dream home with Bhaiya Housing.
+                     </p>
+                 </div>
+
+             </div>
+
+         </div>
+
+     </div>
+
+ </section>
+
+ @endsection
