@@ -1,0 +1,200 @@
+ @extends('layouts.front')
+ @section('title', 'Home page')
+ @section('content')
+
+ {{-- ===== HERO ===== --}}
+ <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
+     <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
+         alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
+     <div class="absolute inset-0 bg-black/50"></div>
+     <div class="absolute inset-0 flex items-center px-10 md:px-20">
+         <h2 class="text-white font-light" style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
+             {{ $contactHero?->title ?? "We're here to assist you,with any inquiries"}}
+
+         </h2>
+     </div>
+ </section>
+
+ {{-- ── Top Bar ── --}}
+ <div class="w-full h-40 flex flex-wrap items-center gap-6 py-4"
+     style="background:#152018; padding-left:100px; padding-right:100px;">
+
+     <p class="text-white font-medium text-2xl mr-auto">Let's talk!</p>
+
+     @if($setting?->body)
+     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+             <circle cx="12" cy="10" r="3" />
+         </svg>
+         <span>{!! $setting->body !!}</span>
+     </div>
+     @endif
+
+     @if($setting?->extra)
+     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.19 1.22 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+         </svg>
+         <span>{{ $setting->extra }}</span>
+     </div>
+     @endif
+
+     @if($setting?->short)
+     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
+         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+             <polyline points="22,6 12,13 2,6" />
+         </svg>
+         <span>{{ $setting->short }}</span>
+     </div>
+     @endif
+
+ </div>
+
+ {{-- ── Main Section ── --}}
+ <section class="relative w-full overflow-hidden py-20" style="background:#f2ede6;">
+
+     <div class="absolute right-8 inset-y-0 flex flex-col justify-center pointer-events-none select-none overflow-hidden" style="z-index:0;">
+         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Get</span>
+         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">In</span>
+         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
+     </div>
+
+     <div class="relative z-10 container mx-auto px-6 lg:px-14">
+         <div class="flex flex-col md:flex-row gap-16 items-start">
+
+             <!-- ── Left: Images ── -->
+             <div class="w-full md:w-5/12 relative" style="height:360px; flex-shrink:0;">
+
+                 <!-- Image 1: back-left -->
+                 <div class="absolute overflow-hidden shadow-xl"
+                     style="width:260px; height:310px; left:0; top:30px; z-index:1;">
+                     <img src="{{ $contactImages[0]->img_path ?? asset('assets/images/contact-bottom.jpg') }}"
+                         alt="{{ $contactImages[0]->title ?? 'Interior' }}"
+                         class="w-full h-full object-cover"
+                         onerror="this.parentElement.style.background='#b8b0a8'; this.style.display='none';" />
+                 </div>
+
+                 <!-- Image 2: front-right -->
+                 <div class="absolute overflow-hidden shadow-2xl"
+                     style="width:260px; height:310px; left:180px; top:0; z-index:2;">
+                     <img src="{{ $contactImages[1]->img_path ?? asset('assets/images/contact-top.jpg') }}"
+                         alt="{{ $contactImages[1]->title ?? 'Dining' }}"
+                         class="w-full h-full object-cover"
+                         onerror="this.parentElement.style.background='#9a9290'; this.style.display='none';" />
+                 </div>
+
+             </div>
+
+             <!-- ── Right: Contact Form ── -->
+             <div class="w-full md:flex-1 pt-2">
+
+                 {{-- ── Success Message ── --}}
+                 @if(session('success'))
+                 <div id="successMsg"
+                     class="flex items-center gap-3 mb-6 px-5 py-4 text-sm font-light"
+                     style="background:#e6f0e7; border-left:3px solid #152018; color:#152018;">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                         <polyline points="20 6 9 17 4 12" />
+                     </svg>
+                     {{ session('success') }}
+                 </div>
+                 @endif
+
+                 <form id="contactForm" action="{{ route('landowner.store') }}" method="POST" novalidate>
+                     @csrf
+
+                     {{-- Name --}}
+                     <div class="mb-6" style="border-bottom:1px solid {{ $errors->has('name') ? '#c0392b' : '#b8b0a8' }};">
+                         <input type="text" name="name" value="{{ old('name') }}" placeholder="Name *"
+                             class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                         @error('name')
+                         <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                         @enderror
+                     </div>
+
+                     {{-- Email + Phone --}}
+                     <div class="flex gap-6 mb-6">
+                         <div class="flex-1" style="border-bottom:1px solid {{ $errors->has('email') ? '#c0392b' : '#b8b0a8' }};">
+                             <input type="email" name="email" value="{{ old('email') }}" placeholder="Email "
+                                 class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                             @error('email')
+                             <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                             @enderror
+                         </div>
+                         <div class="flex-1" style="border-bottom:1px solid {{ $errors->has('phone') ? '#c0392b' : '#b8b0a8' }};">
+                             <input type="tel" name="phone" value="{{ old('phone') }}" placeholder="Contact Number *"
+                                 class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                             @error('phone')
+                             <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                             @enderror
+                         </div>
+                     </div>
+
+                     {{-- Locality --}}
+                     <div class="mb-6" style="border-bottom:1px solid {{ $errors->has('locality') ? '#c0392b' : '#b8b0a8' }};">
+                         <input type="text" name="locality" value="{{ old('locality') }}" placeholder="Locality *"
+                             class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                         @error('locality')
+                         <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                         @enderror
+                     </div>
+
+                     {{-- Address --}}
+                     <div class="mb-6" style="border-bottom:1px solid #b8b0a8;">
+                         <input type="text" name="address" value="{{ old('address') }}" placeholder="Address"
+                             class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                     </div>
+
+                     {{-- Land Category --}}
+                     <div class="mb-6" style="border-bottom:1px solid {{ $errors->has('land_category') ? '#c0392b' : '#b8b0a8' }};">
+                         <input type="text" name="land_category" value="{{ old('land_category') }}" placeholder="Land Category *"
+                             class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400" />
+                         @error('land_category')
+                         <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                         @enderror
+                     </div>
+
+                     {{-- Message --}}
+                     <div class="mb-8" style="border-bottom:1px solid {{ $errors->has('message') ? '#c0392b' : '#b8b0a8' }};">
+                         <textarea rows="3" name="message" placeholder="Message *"
+                             class="w-full bg-transparent text-sm font-light text-gray-700 py-3 outline-none placeholder-gray-400 resize-none">{{ old('message') }}</textarea>
+                         @error('message')
+                         <p class="text-xs mt-1" style="color:#c0392b;">{{ $message }}</p>
+                         @enderror
+                     </div>
+
+                     {{-- Submit --}}
+                     <button type="submit"
+                         class="px-10 py-3 text-sm font-light tracking-widest text-white transition-all duration-300 hover:opacity-80"
+                         style="background:#152018; letter-spacing:0.08em;">
+                         Submit Message
+                     </button>
+
+                 </form>
+             </div>
+         </div>
+     </div>
+ </section>
+
+ @if($errors->any() || session('success'))
+ <script>
+     document.addEventListener('DOMContentLoaded', function() {
+         const form = document.getElementById('contactForm');
+         if (form) {
+             form.scrollIntoView({
+                 behavior: 'smooth',
+                 block: 'start'
+             });
+         }
+     });
+ </script>
+ @endif
+
+
+
+
+
+
+ @endsection
