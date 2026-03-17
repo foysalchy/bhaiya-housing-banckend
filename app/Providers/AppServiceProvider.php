@@ -232,7 +232,34 @@ class AppServiceProvider extends ServiceProvider
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
                 'status'           => ['label' => 'Status','required' => true],
             ],
-
+            //others concern
+            'other-concern' => [
+                'title'            => ['label' => 'Title', 'required' => false],
+                'short'            => ['label' => 'Paragraph 1','required' => true],
+                'body'             => ['label' => 'Paragraph 2','required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            'other-logo' => [
+                'title'            => ['label' => 'Title', 'required' => false],
+                'img_path'         => ['label' => 'Image','required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
+            //career
+            'other-intro' => [
+                'title'            => ['label' => 'Title', 'required' => false],
+                'short'            => ['label' => 'Paragraph 1','required' => true],
+                'body'             => ['label' => 'Paragraph 2','required' => true],
+                'meta_title'       => ['label' => 'Meta Title', 'required' => false],
+                'meta_description' => ['label' => 'Meta Description', 'required' => false],
+                'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
+                'status'           => ['label' => 'Status','required' => true],
+            ],
 
             'brand' => [
                 'title'    => ['label' => 'Title', 'required' => true],
