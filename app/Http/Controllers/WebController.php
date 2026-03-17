@@ -106,12 +106,12 @@ class WebController extends Controller
     public function about()
     {
         $about = Content::where('type', 'hero')
-                        ->where('name', 'about-hero')
-                        ->where('status', 1)
-                        ->first();
+            ->where('name', 'about-hero')
+            ->where('status', 1)
+            ->first();
         $missionVision = Content::where('type', 'mission_vision')
-                            ->where('status', 1)
-                            ->first();
+            ->where('status', 1)
+            ->first();
         $historyTimeline = Content::where('type', 'history-timeline')->where('status', 1)->first();
         $timelineItems = Content::where('type', 'timeline-item')->where('status', 1)->oldest()->get();
 
@@ -121,7 +121,7 @@ class WebController extends Controller
         $aboutBhaiya     = Content::where('type', 'about-bhaiya')->where('status', 1)->first();
         $aboutBhaiyaGroup = Content::where('type', 'about-bhaiya-group')->where('status', 1)->first();
 
-        $timelineData = $timelineItems->map(function($item) {
+        $timelineData = $timelineItems->map(function ($item) {
             return [
                 'year'  => $item->title,
                 'title' => $item->name,
@@ -145,27 +145,27 @@ class WebController extends Controller
     }
     public function career()
     {
-         $career = Content::where('type', 'hero')
-                        ->where('name', 'career-hero')
-                        ->where('status', 1)
-                        ->first();
+        $career = Content::where('type', 'hero')
+            ->where('name', 'career-hero')
+            ->where('status', 1)
+            ->first();
 
         $careerOverview = Content::where('type', 'career-overview')->where('status', 1)->first();
         $jobPositions = Content::where('type', 'job-position')->where('status', 1)->latest()->get();
 
 
-        return view('frontend.career',compact(
+        return view('frontend.career', compact(
             'career',
             'careerOverview',
             'jobPositions',
-            ));
+        ));
     }
     public function jobDetail($slug)
     {
         $job = Content::where('type', 'job-position')
-                    ->where('name', $slug)
-                    ->where('status', 1)
-                    ->firstOrFail();
+            ->where('name', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
 
         return view('frontend.careerDetails', compact('job'));
     }
@@ -374,6 +374,33 @@ class WebController extends Controller
         Contact::create(array_merge($validated, ['type' => 'landowner']));
 
         return back()
-            ->with('success', 'আপনার message পাঠানো হয়েছে। আমরা শীঘ্রই যোগাযোগ করব।');
+            ->with('success', 'Your message has been sent. We will contact you soon.')->withInput(['_scrollTo' => 'contactForm']);
+    }
+
+    public function concerns()
+    {
+        $concern = $this->fetchContent('other-concern', 1);
+        $logos = $this->fetchContent('other-logo');
+
+        $logos   = Content::where('type', 'other-logo')->where('status', 1)->get();
+
+        $concernHero = Content::where('type', 'hero')
+            ->where('name', 'concerns')
+            ->where('status', 1)
+            ->first();
+
+        $rows    = [];
+        $items   = $logos->values();
+        $i       = 0;
+        $rowNum  = 1;
+
+        while ($i < count($items)) {
+            $chunkSize = ($rowNum % 2 === 1) ? 5 : 4;
+            $rows[]    = $items->slice($i, $chunkSize)->values();
+            $i        += $chunkSize;
+            $rowNum++;
+        }
+
+        return view('frontend.concerns', compact('concern', 'rows', 'concernHero'));
     }
 }

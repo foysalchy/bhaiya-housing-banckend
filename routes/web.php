@@ -47,5 +47,6 @@ Route::get('/customer-contact',        [WebController::class, 'customerContact']
 Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store');
 Route::get('/landowner-contact',        [WebController::class, 'landowner'])->name('landowner');
 Route::post('/landowner-contact/store', [WebController::class, 'landownerStore'])->name('landowner.store');
+Route::get('/concerns', [WebController::class, 'concerns'])->name('concerns');
 
 

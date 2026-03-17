@@ -84,7 +84,7 @@
                         ['href' => '/projects', 'label' => 'Projects',        'img' => asset('assets/images/m2.jpg')],
                         ['href' => '/concerns', 'label' => 'Other Concerns',  'img' => asset('assets/images/m3.jpg')],
                         ['href' => '/career',   'label' => 'Career',          'img' => asset('assets/images/m1.jpg')],
-                        ['href' => '/news',     'label' => 'News & Events',   'img' => asset('assets/images/m2.jpg')],
+                        ['href' => '/events',     'label' => 'News & Events',   'img' => asset('assets/images/m2.jpg')],
                     ];
                 @endphp
 
