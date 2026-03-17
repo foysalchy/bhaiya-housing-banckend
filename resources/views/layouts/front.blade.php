@@ -22,10 +22,12 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
 
     <!-- Local CSS (Tailwind compiled output) -->
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/custom.css">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <script src="{{ asset('frontend/js/main.js') }}" defer></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     {{-- CSS --}}
