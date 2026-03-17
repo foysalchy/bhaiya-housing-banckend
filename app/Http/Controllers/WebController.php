@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\Content;
 use App\Models\EventRegistration;
 use App\Models\InvestorForm;
+use App\Models\JobApplication;
 use Illuminate\Support\Facades\Validator;
 
 
@@ -152,13 +153,17 @@ class WebController extends Controller
 
         $careerOverview = Content::where('type', 'career-overview')->where('status', 1)->first();
         $jobPositions = Content::where('type', 'job-position')->where('status', 1)->latest()->get();
+        $jobList = Content::where('type', 'job-position')->where('status', 1)->latest()->get();
 
 
         return view('frontend.career', compact(
             'career',
             'careerOverview',
             'jobPositions',
+            'jobList',
+            ));
         ));
+
     }
     public function jobDetail($slug)
     {
@@ -173,17 +178,30 @@ class WebController extends Controller
     public function applyJob(Request $request)
     {
         $request->validate([
-            'name'    => 'required|string|max:100',
-            'phone'   => 'required|string|max:20',
-            'email'   => 'required|email|max:100',
-            'subject' => 'required|string|max:200',
-            'resume'  => 'required|file|mimes:pdf|max:2048',
+            'name'       => 'required|string|max:100',
+            'phone'      => 'required|string|max:20',
+            'email'      => 'required|email|max:100',
+            'subject'    => 'required|string|max:200',
+            'resume'     => 'required|file|mimes:pdf|max:2048',
+            'content_id' => 'required|exists:contents,id',
         ]);
 
-        $resumePath = $request->file('resume')->store('resumes', 'public');
+        if ($request->hasFile('resume')) {
+            $file = $request->file('resume');
+            $fileName = time() . '_' . rand(1000, 9999) . '.' . $file->getClientOriginalExtension();
 
-        // Save to DB or send email
-        // JobApplication::create([...]);
+            $file->move(public_path('uploads/resumes'), $fileName);
+            $finalPath = 'uploads/resumes/' . $fileName;
+        }
+
+        JobApplication::create([
+            'content_id' => $request->content_id,
+            'name'       => $request->name,
+            'phone'      => $request->phone,
+            'email'      => $request->email,
+            'subject'    => $request->subject,
+            'resume'     => $finalPath,
+        ]);
 
         return back()->with('success', 'Application submitted successfully!');
     }

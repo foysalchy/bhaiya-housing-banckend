@@ -135,7 +135,7 @@
                         <p class="text-lg font-light text-gray-500 leading-loose mb-6">
                             {!! $job->short ??'' !!}
                         </p>
-                        <a href="{{ route('job.detail', $job->name) }}"
+                        <a href="{{ route('job.details', $job->name) }}"
                         class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-md font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900">
                             Apply Now
                         </a>
@@ -152,97 +152,99 @@
     </section>
 
     <!-- Apply For A Role Section -->
+    <section class="relative w-full overflow-hidden py-20" style="background:#1B281F;">
 
-    <section class="relative w-full overflow-hidden py-20" style="background:#1B281F; ">
-
-    <!-- Ghost BG text -->
-    <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
-    <img
-        src="/assets/images/form-bg.png"
-        alt=""
-        class="w-full h-full object-cover opacity-20"
-        onerror="this.style.display='none';"
-    />
-    </div>
-
-    <div class="relative z-10 container mx-auto px-6 lg:px-14">
-
-        <!-- Heading -->
-        <h2 class="text-white font-semibold mb-14" style="font-size:clamp(36px,6vw,80px); font-weight:600; letter-spacing:-0.01em;">
-        Apply For A Role
-        </h2>
-
-        <!-- Form -->
-        <div class="space-y-10">
-
-        <!-- Row 1: Full Name + Mobile -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-
-            <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-            <input type="text" placeholder="Your Full Name*"
-                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40"
-                    style="font-family:'Jost',sans-serif;"/>
-            </div>
-
-            <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-            <input type="tel" placeholder="Your Mobile Number*"
-                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40"
-                    style="font-family:'Jost',sans-serif;"/>
-            </div>
-
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <img src="{{ asset('images/form-bg.png') }}" alt=""
+                class="w-full h-full object-cover opacity-20"
+                onerror="this.style.display='none';">
         </div>
 
-        <!-- Row 2: Email + Subject -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+        <div class="relative z-10 container mx-auto px-6 lg:px-14">
 
-            <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-            <input type="email" placeholder="Your Email Address*"
-                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40"
-                    style="font-family:'Jost',sans-serif;"/>
+            <h2 class="text-white font-semibold mb-14"
+                style="font-size:clamp(36px,6vw,80px); font-weight:600; letter-spacing:-0.01em;">
+                Apply For A Role
+            </h2>
+
+            @if(session('success'))
+            <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded mb-8">
+                {{ session('success') }}
             </div>
+            @endif
 
-            <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-            <input type="text" placeholder="Write Your Subject*"
-                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40"
-                    style="font-family:'Jost',sans-serif;"/>
-            </div>
+            <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data"
+                class="space-y-10">
+                @csrf
 
+                <!-- Row 1: Full Name + Mobile -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                        <input type="text" name="name" placeholder="Your Full Name*"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                        <input type="tel" name="phone" placeholder="Your Mobile Number*"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                </div>
+
+                <!-- Row 2: Email + Subject -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                        <input type="email" name="email" placeholder="Your Email Address*"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                        <input type="text" name="subject" placeholder="Write Your Subject*"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                </div>
+
+                <!-- Row 3: Job Select -->
+                <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                    <select name="content_id"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none appearance-none cursor-pointer"
+                            style="background-color: transparent;">
+                        <option value="" class="bg-[#1B281F] text-white/40">Select a Position*</option>
+                        @foreach($jobList as $job)
+                        <option value="{{ $job->id }}" class="bg-[#1B281F] text-white">
+                            {{ $job->title }}
+                        </option>
+                        @endforeach
+                    </select>
+                </div>
+
+                <!-- Row 4: Upload Resume -->
+                <div>
+                    <div class="flex items-center gap-4 mb-4">
+                        <p class="text-white text-sm font-normal">Upload Your Resume</p>
+                        <p class="text-white/40 text-xs font-light">PDF Files Only || Max 2MB</p>
+                    </div>
+                    <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
+                        <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center transition-all duration-300 hover:border-white hover:bg-white/10">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
+                                <polyline points="17 8 12 3 7 8"/>
+                                <line x1="12" y1="3" x2="12" y2="15"/>
+                            </svg>
+                        </div>
+                        <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
+                    </label>
+                    <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
+                        onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
+                </div>
+
+                <!-- Submit -->
+                <div class="pt-2">
+                    <button type="submit"
+                            class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
+                        Apply Now
+                    </button>
+                </div>
+
+            </form>
         </div>
-
-        <!-- Row 3: Upload Resume -->
-        <div>
-            <div class="flex items-center gap-4 mb-4">
-            <p class="text-white text-sm font-normal">Upload Your Resume</p>
-            <p class="text-white/40 text-xs font-light">PDF Files Only || Max 2MB</p>
-            </div>
-
-            <!-- File upload trigger -->
-            <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
-            <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center transition-all duration-300 hover:border-white hover:bg-white/10">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                <polyline points="17 8 12 3 7 8"/>
-                <line x1="12" y1="3" x2="12" y2="15"/>
-                </svg>
-            </div>
-            <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
-            </label>
-
-            <input type="file" id="resumeUpload" accept=".pdf" class="hidden"
-                onchange="handleFile(this)"/>
-        </div>
-
-        <!-- Submit Button -->
-        <div class="pt-2">
-            <button class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900"
-                    style="font-family:'Jost',sans-serif; letter-spacing:0.1em;">
-            Apply Now
-            </button>
-        </div>
-
-        </div>
-    </div>
-
     </section>
 
 
