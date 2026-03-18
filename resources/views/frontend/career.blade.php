@@ -1,11 +1,164 @@
 @extends('layouts.front')
 
-@section('title', 'Career')
+@section('title', 'Career Opportunities')
+@section('meta')
+@php
+$pageTitle = 'Career Opportunities – ' . ($setting->title ?? 'Bhaiya Housing Ltd.');
+
+// Create a compelling SEO description for the career page
+$pageDesc = isset($careerOverview->short) && !empty($careerOverview->short)
+? Str::limit(strip_tags($careerOverview->short), 160)
+: 'Join the dynamic team at Bhaiya Housing Ltd. Explore available job positions, build your career, and shape the future of real estate development in Bangladesh.';
+
+$pageUrl = url()->current();
+$pageImage = isset($career->img_path) ? asset($career->img_path) : asset('assets/images/career-hero.jpg');
+
+// Safe fallback for socials
+$socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+$schema = [
+"page" => [
+"description" => $pageDesc,
+"keywords" => implode(', ', [
+'Bhaiya Housing careers',
+'real estate jobs Bangladesh',
+'property development jobs Dhaka',
+'Bhaiya Group job circular',
+'hiring real estate professionals BD',
+'construction jobs Bangladesh',
+'corporate careers Dhaka'
+]),
+"robots" => "index, follow, max-image-preview:large",
+"canonical" => $pageUrl,
+],
+"openGraph" => [
+"type" => "website",
+"title" => $pageTitle,
+"description" => $pageDesc,
+"url" => $pageUrl,
+"site_name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+"image" => $pageImage,
+"locale" => "en_US",
+],
+"twitter" => [
+"card" => "summary_large_image",
+"title" => $pageTitle,
+"description" => $pageDesc,
+"image" => $pageImage,
+],
+"organization" => [
+"@context" => "https://schema.org",
+"@type" => ["RealEstateBuilder", "Organization"],
+"@id" => url('/') . '#organization',
+"name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+"url" => url('/'),
+"logo" => [
+"@type" => "ImageObject",
+"url" => asset('assets/images/logo.png'),
+"width" => 200,
+"height" => 60,
+],
+"sameAs" => $socialLinks,
+],
+"webPage" => [
+"@context" => "https://schema.org",
+"@type" => "WebPage",
+"@id" => $pageUrl . '#webpage',
+"name" => $pageTitle,
+"description" => $pageDesc,
+"url" => $pageUrl,
+"inLanguage" => "en-US",
+"isPartOf" => ["@id" => url('/') . '#website'],
+"about" => ["@id" => url('/') . '#organization'],
+"breadcrumb" => [
+"@type" => "BreadcrumbList",
+"itemListElement" => [
+["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+["@type" => "ListItem", "position" => 2, "name" => "Career", "item" => $pageUrl],
+],
+],
+]
+];
+
+// Generate JobPosting schemas for Google Jobs optimization
+$jobSchemas = [];
+if(isset($jobPositions) && count($jobPositions) > 0) {
+foreach($jobPositions as $job) {
+$jobSchemas[] = [
+"@context" => "https://schema.org",
+"@type" => "JobPosting",
+"title" => $job->title ?? 'Real Estate Professional',
+"description" => isset($job->short) ? strip_tags($job->short) : 'Join the team at Bhaiya Housing Ltd.',
+"datePosted" => isset($job->created_at) ? $job->created_at->toIso8601String() : now()->toIso8601String(),
+"employmentType" => "FULL_TIME",
+"hiringOrganization" => [
+"@type" => "Organization",
+"name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+"sameAs" => url('/'),
+"logo" => asset('assets/images/logo.png')
+],
+"jobLocation" => [
+"@type" => "Place",
+"address" => [
+"@type" => "PostalAddress",
+"addressLocality" => "Dhaka",
+"addressCountry" => "BD"
+]
+],
+];
+}
+}
+@endphp
+
+{{-- META --}}
+<meta name="description" content="{{ $schema['page']['description'] }}">
+<meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+<meta name="robots" content="{{ $schema['page']['robots'] }}">
+<link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+{{-- OPEN GRAPH --}}
+<meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+<meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+<meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+<meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+<meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+<meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+<meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+{{-- TWITTER --}}
+<meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+<meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+<meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+<meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+{{-- SCHEMAS --}}
+<script type="application/ld+json">
+    {
+        !!json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+    }
+</script>
+
+<script type="application/ld+json">
+    {
+        !!json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+    }
+</script>
+
+@if(!empty($jobSchemas))
+@foreach($jobSchemas as $jobSchema)
+<script type="application/ld+json">
+    {
+        !!json_encode($jobSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+    }
+</script>
+@endforeach
+@endif
+@endsection
 
 @section('content')
 
- <main class="">
-  <!-- ===== HERO ===== -->
+<main class="">
+    <!-- ===== HERO ===== -->
     <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
 
         <!-- Background Image -->
@@ -36,70 +189,70 @@
         <div class="overview mb-10">
             @php
             $overviewImages = is_array($careerOverview?->img_paths)
-                ? $careerOverview->img_paths
-                : json_decode($careerOverview?->img_paths ?? '[]', true);
+            ? $careerOverview->img_paths
+            : json_decode($careerOverview?->img_paths ?? '[]', true);
             $rightImg = $overviewImages[0] ?? null;
-        @endphp
+            @endphp
 
-        <div class="relative z-10 container mx-auto px-6 lg:px-20">
+            <div class="relative z-10 container mx-auto px-6 lg:px-20">
 
-            <!-- Row 1: Two text columns -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
-                <div class="text-lg font-normal text-gray-700 leading-relaxed">
-                    {!! $careerOverview?->short ?? '' !!}
-                </div>
-                <div class="text-md font-normal text-gray-700 leading-relaxed">
-                    {!! $careerOverview?->body ?? '' !!}
-                </div>
-            </div>
-
-            <!-- Row 2: Left small image + Right large image -->
-            <div class="flex flex-col md:flex-row gap-10 items-start">
-
-                <!-- Left image container with Stones -->
-                <div class="relative w-full md:w-4/12 flex-shrink-0">
-                    <!-- Main Image -->
-                    @if($careerOverview?->img_path)
-                    <div class="relative z-10">
-                        <img src="{{ asset($careerOverview->img_path) }}" alt="Career"
-                            class="w-full object-cover shadow-sm"
-                            style="height: 450px;">
+                <!-- Row 1: Two text columns -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
+                    <div class="text-lg font-normal text-gray-700 leading-relaxed">
+                        {!! $careerOverview?->short ?? '' !!}
                     </div>
-                    @endif
-
-                    <!-- Gold Splash Image (contact-stone-bg.png) - ছবির নিচে এবং বামে থাকবে -->
-                    <img src="{{ asset('images/contact-stone-bg.png') }}" alt=""
-                        class="absolute pointer-events-none"
-                        style="width: 140px; bottom: -40px; left: -60px; z-index: 5;"
-                        onerror="this.style.display='none';">
-
-                    <!-- Black Stone Image (mission-stone.png) - একদম কোণায় উপরে থাকবে -->
-                    <img src="{{ asset('images/mission-stone.png') }}" alt=""
-                        class="absolute pointer-events-none"
-                        style="width: 80px; bottom: -10px; left: -20px; z-index: 20;"
-                        onerror="this.style.display='none';">
+                    <div class="text-md font-normal text-gray-700 leading-relaxed">
+                        {!! $careerOverview?->body ?? '' !!}
+                    </div>
                 </div>
 
-                <!-- Right large image -->
-                <div class="w-full md:w-8/12">
-                    @if($rightImg)
-                    <img src="{{ asset($rightImg) }}" alt="Office"
-                        class="w-full object-cover"
-                        style="height: 450px;">
-                    @endif
+                <!-- Row 2: Left small image + Right large image -->
+                <div class="flex flex-col md:flex-row gap-10 items-start">
+
+                    <!-- Left image container with Stones -->
+                    <div class="relative w-full md:w-4/12 flex-shrink-0">
+                        <!-- Main Image -->
+                        @if($careerOverview?->img_path)
+                        <div class="relative z-10">
+                            <img src="{{ asset($careerOverview->img_path) }}" alt="Career"
+                                class="w-full object-cover shadow-sm"
+                                style="height: 450px;">
+                        </div>
+                        @endif
+
+                        <!-- Gold Splash Image (contact-stone-bg.png) - ছবির নিচে এবং বামে থাকবে -->
+                        <img src="{{ asset('images/contact-stone-bg.png') }}" alt=""
+                            class="absolute pointer-events-none"
+                            style="width: 140px; bottom: -40px; left: -60px; z-index: 5;"
+                            onerror="this.style.display='none';">
+
+                        <!-- Black Stone Image (mission-stone.png) - একদম কোণায় উপরে থাকবে -->
+                        <img src="{{ asset('images/mission-stone.png') }}" alt=""
+                            class="absolute pointer-events-none"
+                            style="width: 80px; bottom: -10px; left: -20px; z-index: 20;"
+                            onerror="this.style.display='none';">
+                    </div>
+
+                    <!-- Right large image -->
+                    <div class="w-full md:w-8/12">
+                        @if($rightImg)
+                        <img src="{{ asset($rightImg) }}" alt="Office"
+                            class="w-full object-cover"
+                            style="height: 450px;">
+                        @endif
+                    </div>
                 </div>
+
+                <!-- Row 3: Bottom paragraph - Align with the second image -->
+                @if($careerOverview?->body_2)
+                <div class="mt-12 md:ml-[36%] lg:ml-[35%]">
+                    <div class="text-[15px] font-normal text-gray-700 leading-relaxed max-w-[750px]">
+                        {!! $careerOverview->body_2 !!}
+                    </div>
+                </div>
+                @endif
+
             </div>
-
-            <!-- Row 3: Bottom paragraph - Align with the second image -->
-            @if($careerOverview?->body_2)
-            <div class="mt-12 md:ml-[36%] lg:ml-[35%]">
-                <div class="text-[15px] font-normal text-gray-700 leading-relaxed max-w-[750px]">
-                    {!! $careerOverview->body_2 !!}
-                </div>
-            </div>
-            @endif
-
-        </div>
         </div>
         <!-- Available Job Positions -->
         <div class="job-position">
@@ -136,7 +289,7 @@
                             {!! $job->short ??'' !!}
                         </p>
                         <a href="{{ route('job.details', $job->name) }}"
-                        class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-md font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900">
+                            class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-md font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900">
                             Apply Now
                         </a>
                     </div>
@@ -205,8 +358,8 @@
                 <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
                     <label for="job_position" class="sr-only">Select a Position</label>
                     <select id="job_position" name="content_id"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none appearance-none cursor-pointer"
-                            style="background-color: transparent;">
+                        class="w-full bg-transparent text-white text-sm font-light py-3 outline-none appearance-none cursor-pointer"
+                        style="background-color: transparent;">
                         <option value="" class="bg-[#1B281F] text-white/40">Select a Position*</option>
                         @foreach($jobList as $job)
                         <option value="{{ $job->id }}" class="bg-[#1B281F] text-white">
@@ -225,9 +378,9 @@
                     <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
                         <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center transition-all duration-300 hover:border-white hover:bg-white/10">
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
+                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" y1="3" x2="12" y2="15" />
                             </svg>
                         </div>
                         <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
@@ -239,7 +392,7 @@
                 <!-- Submit -->
                 <div class="pt-2">
                     <button type="submit"
-                            class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
+                        class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
                         Apply Now
                     </button>
                 </div>
@@ -249,13 +402,13 @@
     </section>
 
 
- </main>
+</main>
 
 @endsection
 
 @push('scripts')
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
 
         if (typeof fbq !== 'undefined') {
             fbq('track', 'ViewContent', {
@@ -269,10 +422,10 @@
 @endpush
 
 @push('pixel_events')
-    @if(session('success'))
-        fbq('track', 'Lead', {
-            content_name: 'Job Application',
-            content_category: 'Career',
-        });
-    @endif
+@if(session('success'))
+fbq('track', 'Lead', {
+content_name: 'Job Application',
+content_category: 'Career',
+});
+@endif
 @endpush

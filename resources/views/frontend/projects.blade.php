@@ -195,7 +195,6 @@
          <!-- Filters -->
          <div class="flex flex-col md:flex-row gap-0 mb-12" style="border-bottom:1px solid #c8c0b4;">
 
-<<<<<<< HEAD
             <!-- Status -->
             <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
                 <label for="filterStatus" class="sr-only">Filter by Status</label>
@@ -248,7 +247,6 @@
                     </svg>
                 </div>
             </div>
-=======
              <!-- Status -->
              <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
                  <select id="filterStatus" onchange="applyFilters()"
@@ -298,9 +296,64 @@
                      </svg>
                  </div>
              </div>
->>>>>>> origin/main
 
          </div>
+
+    <div class="flex flex-col md:flex-row gap-0 mb-12"
+    style="border-bottom:1px solid #c8c0b4; border-top:1px solid #c8c0b4;">
+
+    <!-- Status -->
+    <div class="flex-1 relative border-b border-[#c8c0b4] md:border-b-0 md:border-r md:border-[#c8c0b4]">
+        <select id="filterStatus" onchange="applyFilters()"
+            class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pl-4 md:pl-0 pr-10 cursor-pointer outline-none"
+            style="font-family:'Jost',sans-serif; border:none;">
+            <option value="all">All Status</option>
+            <option value="upcoming">Upcoming</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="complete">Complete</option>
+        </select>
+        <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Type -->
+    <div class="flex-1 relative border-b border-[#c8c0b4] md:border-b-0 md:border-r md:border-[#c8c0b4]">
+        <select id="filterType" onchange="applyFilters()"
+            class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pl-4 md:pl-6 pr-10 cursor-pointer outline-none"
+            style="font-family:'Jost',sans-serif; border:none;">
+            <option value="all">All Types</option>
+            <option value="residential">Residential</option>
+            <option value="commercial">Commercial</option>
+        </select>
+        <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
+
+    <!-- Location -->
+    <div class="flex-1 relative">
+        <select id="filterLocation" onchange="applyFilters()"
+            class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pl-4 md:pl-6 pr-10 cursor-pointer outline-none"
+            style="font-family:'Jost',sans-serif; border:none;">
+            <option value="all">All Locations</option>
+            @foreach($projectLocations as $loc)
+            <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
+            @endforeach
+        </select>
+        <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+        </div>
+    </div>
+
+</div>
+
 
          <!-- Projects Grid -->
          <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12"></div>
@@ -406,14 +459,11 @@
          renderGrid();
      }
 
-<<<<<<< HEAD
     // ── Page load-এ প্রথমবার render ──
     renderGrid();
 </script>
  @endsection
-=======
      // ── Page load-এ প্রথমবার render ──
      renderGrid();
  </script>
  @endsection
->>>>>>> origin/main

@@ -114,13 +114,13 @@
                 </a>
 
                 <div class="flex items-center gap-10 pl-1" style="margin-top:-4px;">
-                    <a href="/contact-landowner"
+                    <a href="/landowner-contact"
                         class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
                         style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
                         <span class="block w-6 h-px bg-white/40"></span>
                         As A Landowner
                     </a>
-                    <a href="/contact-customer"
+                    <a href="/customer-contact"
                         class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
                         style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
                         <span class="block w-6 h-px bg-white/40"></span>
