@@ -61,7 +61,7 @@
             <div class="w-1/2 bg-white"></div>
             <div class="w-1/2 relative bg-white">
                 @if($missionVision?->img_path)
-                <img src="{{ asset($missionVision->img_path) }}" class="w-full h-full object-cover">
+                <img src="{{ asset($missionVision->img_path) }}" alt="Mission Vision Background" class="w-full h-full object-cover">
                 @endif
             </div>
         </div>
@@ -83,7 +83,7 @@
                 <!-- Left Vertical Image -->
                 <div class="md:col-span-4 relative -mt-10 md:-mt-44 z-10" data-aos="fade-up" data-aos-duration="1000">
                     @if($leftImg)
-                    <img src="{{ asset($leftImg) }}" class="w-full h-auto object-cover shadow-sm">
+                    <img src="{{ asset($leftImg) }}" alt="Left Image" class="w-full h-auto object-cover shadow-sm">
                     @endif
                 </div>
 
@@ -94,11 +94,11 @@
                     @if($topRightImg)
                     <div class="w-full md:w-[85%] lg:w-[75%] self-end relative z-10 -mt-10 md:-mt-44"
                         data-aos="fade-left" data-aos-duration="1200">
-                        <img src="{{ asset($topRightImg) }}" class="w-full h-auto object-cover shadow-sm">
+                        <img src="{{ asset($topRightImg) }}" alt="right image top" class="w-full h-auto object-cover shadow-sm">
                         <div class="absolute -bottom-6 -left-6 w-20 h-20">
-                            <img src="{{ asset('images/mission-stone.png') }}" class="w-full h-full object-contain">
+                            <img src="{{ asset('images/mission-stone.png') }}" alt="mission-stone"  class="w-full h-full object-contain">
                             <div class="w-12 h-12">
-                                <img src="{{asset('images/stone-bg.svg')}}" class="w-full h-full object-contain">
+                                <img src="{{asset('images/stone-bg.svg')}}" alt="stone-bg"  class="w-full h-full object-contain">
                             </div>
                         </div>
                     </div>
@@ -116,9 +116,9 @@
                     <div class="w-full md:w-[50%] lg:w-[45%] self-end mt-12 md:mt-16 relative z-20 mb-16 md:mb-20"
                         data-aos="fade-up" data-aos-duration="1200">
                         <div class="relative">
-                            <img src="{{ asset($bottomRightImg) }}" class="w-full h-auto object-cover shadow-sm">
+                            <img src="{{ asset($bottomRightImg) }}" alt="right bottom image"  class="w-full h-auto object-cover shadow-sm">
                             <div class="absolute -bottom-8 -right-6 w-16 h-16">
-                                <img src="{{ asset('images/mission-stone-bottom.png') }}" class="w-full h-full object-contain">
+                                <img src="{{ asset('images/mission-stone-bottom.png') }}" alt="mission-stone-bottom"  class="w-full h-full object-contain">
                             </div>
 
                         </div>
@@ -204,9 +204,9 @@
 
             <!-- Description -->
             <div id="content-wrap" class="relative z-30 mt-12 md:mt-40 md:ml-40 lg:ml-60 max-w-lg transition-all duration-500">
-                <h3 id="timeline-title" class="text-3xl md:text-5xl font-semibold mb-6 text-white leading-tight">
+                <h2 id="timeline-title" class="text-3xl md:text-5xl font-semibold mb-6 text-white leading-tight">
                     {!! nl2br(e($timelineItems->first()?->name ?? '')) !!}
-                </h3>
+                </h2>
                 <p id="timeline-desc" class="text-gray-400 text-base md:text-lg leading-relaxed">
                     {!! $timelineItems->first()?->short !!}
                 </p>
@@ -219,7 +219,8 @@
                 <div id="progress-line" class="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-700 shadow-[0_0_15px_white]"></div>
 
                 @foreach($timelineItems as $index => $item)
-                <button onclick="changeTimeline({{ $index }})"
+               <button onclick="changeTimeline({{ $index }})"
+                    aria-label="Go to timeline {{ $item->title }}"
                     class="nav-dot relative z-10 w-6 h-6 rounded-full outline-none transition-all
                         {{ $index === 0 ? 'bg-white ring-8 ring-white/10 shadow-[0_0_15px_white]' : 'bg-gray-600 hover:bg-gray-400' }}">
                 </button>
@@ -337,7 +338,7 @@
                             alt="{{ $member->title }}"
                             class="w-full h-full object-cover group-hover:grayscale-0 transition-all duration-700">
                     </div>
-                    <h6 class="text-2xl font-bold text-gray-800">{{ $member->title }}</h6>
+                    <p class="text-2xl font-bold text-gray-800">{{ $member->title }}</p>
                     <p class="text-lg text-gray-500 font-medium">{{ $member->name }}</p>
                 </div>
                 @endforeach
@@ -426,7 +427,7 @@
             <div class="absolute top-[-8%] left-[6%] z-20"
                 data-aos="fade-down" data-aos-duration="1200" data-aos-easing="ease-out-back">
                 <div class="absolute -top-6 -left-12 w-12 h-12 md:w-16 md:h-16 z-30">
-                    <img src="{{ asset('images/stone-bg.svg') }}" class="w-full h-full object-contain">
+                    <img src="{{ asset('images/stone-bg.svg') }}" alt="stone-bg" class="w-full h-full object-contain">
                 </div>
                 <img src="{{ asset($groupOverflowImg) }}"
                     alt="Building"

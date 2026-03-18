@@ -49,9 +49,10 @@
         </a>
         <!-- Close -->
         <button onclick="closeMenu()"
+            aria-label="Close menu"
             class="text-white opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
             <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white"
-                stroke-width="1.5" stroke-linecap="round">
+                stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
                 <line x1="4" y1="4" x2="24" y2="24" />
                 <line x1="24" y1="4" x2="4" y2="24" />
             </svg>
@@ -99,7 +100,7 @@
                 </a>
                 @endforeach
 
-           
+
 
             </nav>
 

@@ -203,7 +203,8 @@
 
                 <!-- Row 3: Job Select -->
                 <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-                    <select name="content_id"
+                    <label for="job_position" class="sr-only">Select a Position</label>
+                    <select id="job_position" name="content_id"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none appearance-none cursor-pointer"
                             style="background-color: transparent;">
                         <option value="" class="bg-[#1B281F] text-white/40">Select a Position*</option>
