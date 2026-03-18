@@ -90,16 +90,16 @@
                 ];
                 @endphp
 
-                @foreach($staticLinks as $link)
-                <a href="{{ $link['href'] }}"
-                    class="menu-link block text-white transition-opacity duration-300"
-                    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
-                    data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
-                    onmouseover="hoverLink(this)"
-                    onmouseout="unhoverLink(this)">
-                    {{ $link['label'] }}
-                </a>
-                @endforeach
+      @foreach($staticLinks as $link)
+<a href="{{ $link['href'] }}"
+    class="menu-link block text-white opacity-50 transition-opacity duration-300 hover:opacity-100"
+    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25;"
+    data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
+    onmouseover="hoverLink(this)"
+    onmouseout="unhoverLink(this)">
+    {{ $link['label'] }}
+</a>
+@endforeach
 
 
 
