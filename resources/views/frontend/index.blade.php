@@ -1,6 +1,259 @@
- @extends('layouts.front')
- @section('title', 'Home page')
- @section('content')
+@extends('layouts.front')
+
+@section('title', ($setting->title ?? 'Bhaiya Housing') . ' – We transform your dreams into addresses')
+
+@section('meta')
+@php
+$pageTitle = ($setting->title ?? 'Bhaiya Housing') . ' – Premium Real Estate & Property Developers in Bangladesh';
+$pageDesc = $setting->short ?? 'Since 2012, Bhaiya Housing crafts exquisite residential and commercial spaces in Bangladesh. Partner with us as a landowner or find your dream luxury property.';
+$pageUrl = url('/');
+$pageImage = asset('frontend/images/logo.svg'); 
+
+// Safe fallback for socials if not globally shared
+$socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+$schema = [  
+    "page" => [
+        "description" => $pageDesc,
+        "keywords" => implode(', ', [
+            $setting->title ?? 'Bhaiya Housing',
+            'real estate Bangladesh',
+            'property developer Dhaka',
+            'buy luxury apartments Dhaka',
+            'commercial spaces Bangladesh',
+            'landowner joint venture',
+            'real estate company in BD',
+            'Bhaiya Group',
+        ]),
+        "robots" => "index, follow, max-image-preview:large",
+        "canonical" => $pageUrl,
+    ],
+    "openGraph" => [
+        "type" => "website",
+        "title" => $pageTitle,
+        "description" => $pageDesc,
+        "url" => $pageUrl,
+        "site_name" => $setting->title ?? 'Bhaiya Housing',
+        "image" => $pageImage,
+        "locale" => "en_US",
+    ],
+    "twitter" => [
+        "card" => "summary_large_image",
+        "title" => $pageTitle,
+        "description" => $pageDesc,
+        "image" => $pageImage,
+    ],
+    "organization" => [
+        "@context" => "https://schema.org",
+        "@type" => ["RealEstateBuilder", "LocalBusiness", "Organization"],
+        "@id" => url('/') . '#organization',
+        "name" => $setting->title ?? 'Bhaiya Housing',
+        "alternateName" => $setting->name ?? 'Bhaiya Housing Ltd.',
+        "url" => url('/'),
+        "logo" => [
+            "@type" => "ImageObject",
+            "url" => $pageImage,
+            "width" => 200,
+            "height" => 60,
+        ],
+        "image" => $pageImage,
+        "description" => $pageDesc,
+        "telephone" => $setting->extra ?? '',
+        "email" => $setting->location ?? '',
+        "address" => [
+            "@type" => "PostalAddress",
+            "streetAddress" => $setting->short ?? 'Dhaka',
+            "addressLocality" => "Dhaka",
+            "addressCountry" => "BD",
+        ],
+        "geo" => [
+            "@type" => "GeoCoordinates",
+            "latitude" => "23.8103", // Update with your actual coordinates
+            "longitude" => "90.4125",
+        ],
+        "hasMap" => "https://maps.google.com/?q=" . urlencode($setting->short ?? 'Dhaka Bangladesh'),
+        "priceRange" => "$$$$",
+        "openingHours" => "Su-Th 09:00-18:00",
+        "sameAs" => $socialLinks,
+        "contactPoint" => [
+            "@type" => "ContactPoint",
+            "telephone" => $setting->extra ?? '',
+            "contactType" => "customer service",
+            "availableLanguage" => ["English", "Bengali"],
+            "areaServed" => "BD",
+        ],
+    ],
+    "webSite" => [
+        "@context" => "https://schema.org",
+        "@type" => "WebSite",
+        "@id" => url('/') . '#website',
+        "name" => $setting->title ?? 'Bhaiya Housing',
+        "url" => url('/'),
+        "description" => $pageDesc,
+        "inLanguage" => "en-US",
+        "publisher" => ["@id" => url('/') . '#organization'],
+        "potentialAction" => [
+            "@type" => "SearchAction",
+            "target" => [
+                "@type" => "EntryPoint",
+                "urlTemplate" => url('/projects') . '?search={search_term_string}',
+            ],
+            "query-input" => "required name=search_term_string",
+        ],
+    ],
+    "webPage" => [
+        "@context" => "https://schema.org",
+        "@type" => "WebPage",
+        "@id" => url('/') . '#webpage',
+        "name" => $pageTitle,
+        "description" => $pageDesc,
+        "url" => url('/'),
+        "inLanguage" => "en-US",
+        "isPartOf" => ["@id" => url('/') . '#website'],
+        "about" => ["@id" => url('/') . '#organization'],
+        "mainEntityOfPage" => ["@id" => url('/') . '#webpage'],
+        "breadcrumb" => [
+            "@type" => "BreadcrumbList",
+            "itemListElement" => [
+                ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+            ],
+        ],
+    ],
+    "projectListing" => [
+        "@context" => "https://schema.org",
+        "@type" => "ItemList",
+        "name" => "Featured Real Estate Projects",
+        "url" => url('/projects'),
+        "numberOfItems" => isset($featuredProjects) ? $featuredProjects->count() : 0,
+        "itemListElement" => isset($featuredProjects) ? $featuredProjects->map(fn($project, $i) => [
+            "@type" => "ListItem",
+            "position" => $i + 1,
+            "item" => [
+                "@type" => "ApartmentComplex",
+                "name" => $project->title ?? '',
+                "url" => url('/projects/' . $project->id),
+                "image" => $project->img_path ? asset($project->img_path) : $pageImage,
+                "address" => [
+                    "@type" => "PostalAddress",
+                    "addressLocality" => $project->location ?? 'Bangladesh'
+                ],
+            ],
+        ])->values()->toArray() : [],
+    ],
+    "newsEventList" => [
+        "@context" => "https://schema.org",
+        "@type" => "ItemList",
+        "name" => "News and Events",
+        "url" => url('/events'),
+        "itemListElement" => isset($newsEvents) ? collect($newsEvents)->map(fn($item, $i) => [
+            "@type" => "ListItem",
+            "position" => $i + 1,
+            "item" => [
+                "@type" => $item->type === 'events' ? "Event" : "Article",
+                "name" => $item->title ?? '',
+                "url" => url('/' . ($item->type === 'events' ? 'events/' : 'news/') . $item->id),
+                "startDate" => $item->start_date ?? null,
+            ],
+        ])->values()->toArray() : [],
+    ],
+    "faq" => [
+        "@context" => "https://schema.org",
+        "@type" => "FAQPage",
+        "mainEntity" => [
+            [
+                "@type" => "Question",
+                "name" => "What type of properties does " . ($setting->title ?? 'Bhaiya Housing') . " build?",
+                "acceptedAnswer" => [
+                    "@type" => "Answer",
+                    "text" => "We specialize in constructing exquisite residential homes, luxury apartments, and modern commercial spaces across Bangladesh, blending prestige and elegance.",
+                ],
+            ],
+            [
+                "@type" => "Question",
+                "name" => "How long has Bhaiya Housing been in the real estate industry?",
+                "acceptedAnswer" => [
+                    "@type" => "Answer",
+                    "text" => "Since 2012, Bhaiya Housing—a proud part of the Bhaiya Group—has been redefining modern infrastructure with over a decade of expertise.",
+                ],
+            ],
+            [
+                "@type" => "Question",
+                "name" => "Can landowners partner with Bhaiya Housing for development?",
+                "acceptedAnswer" => [
+                    "@type" => "Answer",
+                    "text" => "Yes! We partner with landowners through joint ventures to transform properties into landmark developments. Visit our Landowner Contact page to get started.",
+                ],
+            ],
+            [
+                "@type" => "Question",
+                "name" => "Does Bhaiya Housing ensure on-time project handover?",
+                "acceptedAnswer" => [
+                    "@type" => "Answer",
+                    "text" => "Absolutely. We guarantee on-schedule completion, respecting your timelines without compromising on quality or premium materials.",
+                ],
+            ],
+        ],
+    ],
+];
+@endphp
+
+{{-- META --}}
+<meta name="description" content="{{ $schema['page']['description'] }}">
+<meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+<meta name="robots" content="{{ $schema['page']['robots'] }}">
+<link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+{{-- OPEN GRAPH --}}
+<meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+<meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+<meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+<meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+<meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+<meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+<meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+{{-- TWITTER --}}
+<meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+<meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+<meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+<meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+{{-- ORGANIZATION SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+
+{{-- WEBSITE SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['webSite'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+
+{{-- WEBPAGE SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+
+@if(isset($featuredProjects) && $featuredProjects->isNotEmpty())
+{{-- PROJECT LISTING SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['projectListing'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endif
+
+@if(isset($newsEvents) && count($newsEvents) > 0)
+{{-- NEWS & EVENTS LIST SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['newsEventList'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endif
+
+{{-- FAQ SCHEMA --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['faq'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endsection
+
+@section('content')
 
  <!-- ===== HERO ===== -->
  <section id="home" class=" relative h-screen w-full overflow-hidden">
@@ -468,7 +721,7 @@
      <div class="container mx-auto flex flex-col md:flex-row gap-12 lg:gap-24" style="padding-top:100px;">
 
          <!-- Left Side: Title & Button -->
-         <div class="w-full md:w-[30%] flex flex-col items-center justify-between min-h-[500px] relative z-10">
+         <div class="w-full md:w-[30%] flex flex-row items-center justify-between min-h-[500px] relative z-10">
 
              <!-- Rotated heading -->
              <div style="writing-mode:vertical-rl; transform:rotate(180deg); white-space:nowrap; display:flex; align-items:center; gap:4px;">
@@ -484,7 +737,7 @@
              </div>
 
              <!-- View All circle -->
-             <a href="/news-events"
+             <a href="/events"
                  class="flex items-center justify-center rounded-full mt-8"
                  style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0; transition:background 0.3s, color 0.3s;"
                  onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
@@ -551,7 +804,7 @@
          <!-- Heading -->
          <h2 class="mb-16 font-light leading-tight text-gray-900" style="font-size:clamp(32px,4.5vw,64px);">
              @php
-             // "Be a partner, be a patron" → দুই লাইনে split করা
+          
              $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
              $titleParts = explode(',', $partnerTitle); // comma দিয়ে split
              @endphp
@@ -576,7 +829,7 @@
          <div class="flex flex-col md:flex-row gap-4 items-stretch md:ml-[28%]">
 
              <!-- Card 1: Landowner -->
-             <a href="{{ $partners->url ?? '/contact-landowner' }}"
+             <a href="{{ $partners->url ?? '/landowner-contact' }}"
                  class="relative flex flex-col justify-between flex-1 cursor-pointer group border rounded-none p-6 min-h-[520px] transition-all duration-300"
                  style="border-color:#c8bfb0; background:rgba(242,237,230,0.6); text-decoration:none;"
                  onmouseover="this.style.borderColor='#8a7a60';"
@@ -607,7 +860,7 @@
              </a>
 
              <!-- Card 2: Customer -->
-             <a href="{{ $partners->extra ?? '/contact-customer' }}"
+             <a href="{{ $partners->extra ?? '/customer-contact' }}"
                  class="relative flex flex-col justify-between flex-1 cursor-pointer group overflow-hidden min-h-[520px] p-6"
                  style="text-decoration:none;">
 
