@@ -175,7 +175,6 @@ class AppServiceProvider extends ServiceProvider
                 'name'             => ['label' => 'Heading (e.g. Bhaiya Group)', 'required' => true],
                 'short'             => ['label' => 'Description', 'required' => true],
                 'img_path'         => ['label' => 'Year Image', 'required' => false],
-                'body'             => ['label' => 'Description', 'required' => true],
                 'img_path'         => ['label' => 'Year Image', 'required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],

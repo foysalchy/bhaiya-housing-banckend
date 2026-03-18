@@ -352,89 +352,137 @@ $schema = [
  </section>
 
 
- <section class="py-20 overflow-hidden bg-[#FFFDFA]" style="padding-top: 100px;">
-     <div class="mx-auto px-6 lg:px-10">
+<section class="py-16 md:py-24 overflow-hidden bg-[#FFFDFA]" style="padding-top: 80px;">
+    <div class="mx-auto px-4 sm:px-6 lg:px-10">
 
-         @php
-         $extraImages = json_decode($dreams->img_paths ?? '[]', true);
-         @endphp
+        @php
+        $extraImages = json_decode($dreams->img_paths ?? '[]', true);
+        @endphp
 
-         <!-- Row 1 -->
-         <div class="relative flex flex-wrap items-start">
+        <!-- ══════════════════════════════════
+             MOBILE LAYOUT (flex-col, < md)
+        ══════════════════════════════════ -->
+        <div class="flex flex-col gap-8 md:hidden">
 
-             <!-- ── Col 1: Heading ── -->
-             <div class="w-full h-full md:w-1/4 pt-6 z-10 fade-in delay-1">
-                 <h2 class="font-display text-5xl lg:text-6xl font-light leading-tight text-gray-900 text-center">
-                     {!! nl2br(e($dreams->title ?? "Building\ndreams for\ndecades")) !!}
-                 </h2>
+            <!-- Heading -->
+            <h2 class="font-display text-4xl sm:text-5xl font-light leading-tight text-gray-900 text-center">
+                {!! nl2br(e($dreams->title ?? "Building\ndreams for\ndecades")) !!}
+            </h2>
 
-                 <!-- Small outdoor image below heading -->
-                 <div class="mt-8 float-down fade-in delay-2" style="position:relative; left:-60px;">
-                     <img src="{{ $extraImages[1] ?? asset('assets/images/side.jpg') }}"
-                         alt="Outdoor space"
-                         class="img-shadow rounded-sm object-cover"
-                         style="width:400px; height:300px; object-position:center;"
-                         onerror="this.style.background='#d6cfc5'; this.removeAttribute('src');" />
-                 </div>
-             </div>
+            <!-- Big center image -->
+            <div class="img-shadow rounded-sm overflow-hidden w-full fade-in delay-2">
+                <img src="{{ $dreams->img_path ?? asset('assets/images/main.avif') }}"
+                    alt="Modern building"
+                    class="w-full h-[400px] sm:h-[520px] object-cover"
+                    onerror="this.style.background='#c5bdb5'; this.removeAttribute('src');" />
+            </div>
 
-             <!-- ── Col 2: Big Center Image ── -->
-             <div class="w-full md:w-5/12 relative fade-in delay-2" style="margin-left:2%;">
-                 <div class="img-shadow rounded-sm overflow-hidden" style="height:800px;">
-                     <img src="{{ $dreams->img_path ?? asset('assets/images/main.avif') }}"
-                         alt="Modern building"
-                         class="w-full h-full object-cover"
-                         onerror="this.style.background='#c5bdb5'; this.style.height='100%'; this.removeAttribute('src');" />
-                 </div>
-             </div>
+            <!-- Side images row -->
+            <div class="grid grid-cols-2 gap-4 fade-in delay-2">
+                <img src="{{ $extraImages[1] ?? asset('assets/images/side.jpg') }}"
+                    alt="Outdoor space"
+                    class="img-shadow rounded-sm object-cover w-full h-[180px] sm:h-[220px]"
+                    onerror="this.style.background='#d6cfc5'; this.removeAttribute('src');" />
+                <img src="{{ $extraImages[2] ?? asset('assets/images/right-side.jpg') }}"
+                    alt="Interior"
+                    class="img-shadow rounded-sm object-cover w-full h-[180px] sm:h-[220px]"
+                    onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
+            </div>
 
-             <!-- ── Col 3: Right side – small interior image + text + CTA ── -->
-             <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3" style="margin-left:4%;">
+            <!-- Bottom image -->
+            <div class="fade-in delay-3">
+                <img src="{{ $extraImages[0] ?? asset('assets/images/sub.jpg') }}"
+                    alt="Property"
+                    class="img-shadow rounded-sm object-cover w-full h-[260px] sm:h-[320px]"
+                    onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
+            </div>
 
-                 <!-- Small interior image top-right -->
-                 <div class="float-up mb-8 self-end">
-                     <img src="{{ $extraImages[2] ?? asset('assets/images/right-side.jpg') }}"
-                         alt="Interior"
-                         class="img-shadow rounded-sm object-cover"
-                         style="width:400px; height:300px; object-position:center;"
-                         onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
-                 </div>
+            <!-- Description + CTA -->
+            <div class="flex flex-col items-start gap-6">
+                <p class="text-sm leading-relaxed fade-in delay-3" style="color:#555; line-height:1.9;">
+                    {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
+                </p>
+                <div class="fade-in delay-4">
+                    <a href="{{ $dreams->url ?? 'about.html' }}" class="circle-btn">Learn More</a>
+                </div>
+            </div>
 
-                 <!-- Description text -->
-                 <p class="text-sm leading-relaxed fade-in delay-3 mb-8"
-                     style="color:#555; max-width:280px; line-height:1.9;">
-                     {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
-                 </p>
+        </div>
 
-                 <!-- Circular CTA button -->
-                 <div class="fade-in delay-4">
-                     <a href="{{ $dreams->url ?? 'about.html' }}" class="circle-btn">Learn More</a>
-                 </div>
-             </div>
+        <!-- ══════════════════════════════════
+             DESKTOP LAYOUT (≥ md), original
+        ══════════════════════════════════ -->
 
-         </div><!-- /Row 1 -->
+        <!-- Row 1 -->
+        <div class="hidden md:flex relative flex-wrap items-start">
 
-         <!-- Row 2: bottom images -->
-         <div class="relative flex flex-wrap items-center">
+            <!-- Col 1: Heading -->
+            <div class="w-full h-full md:w-1/4 pt-6 z-10 fade-in delay-1">
+                <h2 class="font-display text-5xl lg:text-6xl font-light leading-tight text-gray-900 text-center">
+                    {!! nl2br(e($dreams->title ?? "Building\ndreams for\ndecades")) !!}
+                </h2>
 
-             <!-- Bottom-left image -->
-             <div class="absolute z-20 fade-in delay-3 float-down" style="left:20%; bottom: 0px">
-                 <img src="{{ $extraImages[0] ?? asset('assets/images/sub.jpg') }}"
-                     alt="Property"
-                     class="img-shadow rounded-sm object-cover"
-                     style="width:400px; height:400px; object-position:center;"
-                     onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
-             </div>
+                <div class="mt-8 float-down fade-in delay-2" style="position:relative; left:-60px;">
+                    <img src="{{ $extraImages[1] ?? asset('assets/images/side.jpg') }}"
+                        alt="Outdoor space"
+                        class="img-shadow rounded-sm object-cover"
+                        style="width:400px; height:300px; object-position:center;"
+                        onerror="this.style.background='#d6cfc5'; this.removeAttribute('src');" />
+                </div>
+            </div>
 
-             <!-- Decorative stone dot -->
-             <div class="w-8 h-8 rounded-full float-up opacity-60 mt-10"
-                 style="background:radial-gradient(circle at 35% 35%,#c9b99a,#8a7560); width:44px; height:44px; margin-top:20px; margin-left:10px;">
-             </div>
+            <!-- Col 2: Big Center Image -->
+            <div class="w-full md:w-5/12 relative fade-in delay-2" style="margin-left:2%;">
+                <div class="img-shadow rounded-sm overflow-hidden" style="height:800px;">
+                    <img src="{{ $dreams->img_path ?? asset('assets/images/main.avif') }}"
+                        alt="Modern building"
+                        class="w-full h-full object-cover"
+                        onerror="this.style.background='#c5bdb5'; this.style.height='100%'; this.removeAttribute('src');" />
+                </div>
+            </div>
 
-         </div><!-- /Row 2 -->
+            <!-- Col 3: Right side -->
+            <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3" style="margin-left:4%;">
 
-     </div>
- </section>
+                <div class="float-up mb-8 self-end">
+                    <img src="{{ $extraImages[2] ?? asset('assets/images/right-side.jpg') }}"
+                        alt="Interior"
+                        class="img-shadow rounded-sm object-cover"
+                        style="width:400px; height:300px; object-position:center;"
+                        onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
+                </div>
+
+                <p class="text-sm leading-relaxed fade-in delay-3 mb-8"
+                    style="color:#555; max-width:280px; line-height:1.9;">
+                    {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
+                </p>
+
+                <div class="fade-in delay-4">
+                    <a href="{{ $dreams->url ?? 'about.html' }}" class="circle-btn">Learn More</a>
+                </div>
+            </div>
+
+        </div><!-- /Row 1 desktop -->
+
+        <!-- Row 2: bottom images (desktop only) -->
+        <div class="hidden md:flex relative flex-wrap items-center">
+
+            <div class="absolute z-20 fade-in delay-3 float-down" style="left:20%; bottom:0px;">
+                <img src="{{ $extraImages[0] ?? asset('assets/images/sub.jpg') }}"
+                    alt="Property"
+                    class="img-shadow rounded-sm object-cover"
+                    style="width:400px; height:400px; object-position:center;"
+                    onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
+            </div>
+
+            <div class="w-8 h-8 rounded-full float-up opacity-60 mt-10"
+                style="background:radial-gradient(circle at 35% 35%,#c9b99a,#8a7560); width:44px; height:44px; margin-top:20px; margin-left:10px;">
+            </div>
+
+        </div><!-- /Row 2 desktop -->
+
+    </div>
+</section>
 
  @if($featuredProjects->isNotEmpty())
  @php $first = $featuredProjects->first(); @endphp
@@ -720,57 +768,30 @@ $schema = [
 
 
  <!-- ===== NEWS & EVENTS ===== -->
- <section class="py-20 px-6 md:px-12 lg:px-24 overflow-hidden relative"
-     style="background-color:#f2ede6; color:#2a2825;">
+<section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative"
+    style="background-color:#f2ede6; color:#2a2825;">
 
-     <div class="container mx-auto flex flex-col md:flex-row gap-12 lg:gap-24" style="padding-top:100px;">
+    <div class="container mx-auto flex flex-col md:flex-row gap-8 lg:gap-24 pt-12 md:pt-[100px]">
 
-         <!-- Left Side: Title & Button -->
-         <div class="w-full md:w-[30%] flex flex-row items-center justify-between min-h-[500px] relative z-10">
+        <!-- Left Side: Title & Button -->
+        <div class="w-full md:w-[30%] relative z-10">
 
-             <!-- Rotated heading -->
-             <div style="writing-mode:vertical-rl; transform:rotate(180deg); white-space:nowrap; display:flex; align-items:center; gap:4px;">
-                 <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
-                     News
-                 </span>
-                 <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(32px,4vw,58px); color:#3a3a3a; margin:0 4px;">
-                     &amp;
-                 </em>
-                 <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
-                     Events
-                 </span>
-             </div>
+            <!-- MOBILE: horizontal heading + button in a row -->
+            <div class="flex md:hidden items-center justify-between mb-2">
+                <h2 style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(32px,8vw,52px); color:#1a1a1a; letter-spacing:-0.01em; line-height:1;">
+                    News
+                    <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:0.85em; color:#3a3a3a; margin:0 4px;">&amp;</em>
+                    Events
+                </h2>
 
-             <!-- View All circle -->
-             <a href="/events"
-                 class="flex items-center justify-center rounded-full mt-8"
-                 style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0; transition:background 0.3s, color 0.3s;"
-                 onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
-                 onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
-                 View All
-             </a>
-         </div>
-
-         <!-- Right Side: News & Events List -->
-         <div class="w-full md:w-[70%] flex flex-col mt-12 md:mt-0 relative z-10">
-
-             @forelse($newsEvents as $loop => $item)
-             @php
-             $isLast = $loop === count($newsEvents) - 1;
-             $type = ucfirst($item->type); // news → News, events → Events
-             $date = $item->start_date
-             ? \Carbon\Carbon::parse($item->start_date)->format('d F Y')
-             : null;
-
-             // Detail page URL
-             $url = $item->type === 'events'
-             ? '/events/' . $item->id
-             : '/news/' . $item->id;
-             @endphp
-
-             <a href="{{ $url }}"
-                 class="border-t {{ $isLast ? 'border-b' : '' }} border-[#ccc3b6] py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-4 -mx-4 cursor-pointer"
-                 style="text-decoration:none;">
+                <a href="/events"
+                    class="flex items-center justify-center rounded-full flex-shrink-0"
+                    style="width:90px; height:90px; border:1.5px solid #1a1a1a; font-size:11px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; transition:background 0.3s, color 0.3s;"
+                    onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
+                    onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
+                    View All
+                </a>
+            </div>
 
                  <div class="w-40 flex-shrink-0">
                      <p class="text-xl text-[#54504a] font-medium mb-1">{{ $type }}</p>
@@ -778,21 +799,72 @@ $schema = [
                      <p class="text-sm text-[#5c5650]">{{ $date }}</p>
                      @endif
                  </div>
+            <!-- DESKTOP: rotated vertical heading + circle button stacked -->
+            <div class="hidden md:flex flex-row items-center justify-between min-h-[500px]">
 
-                 <div class="flex-1">
-                     <h3 class="text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
-                         {{ $item->title }}
-                     </h3>
-                 </div>
+                <div style="writing-mode:vertical-rl; transform:rotate(180deg); white-space:nowrap; display:flex; align-items:center; gap:4px;">
+                    <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
+                        News
+                    </span>
+                    <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(32px,4vw,58px); color:#3a3a3a; margin:0 4px;">
+                        &amp;
+                    </em>
+                    <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">
+                        Events
+                    </span>
+                </div>
 
-             </a>
-             @empty
-             <p class="text-[#857f77] py-10 text-center">কোনো News বা Events পাওয়া যায়নি।</p>
-             @endforelse
+                <a href="/events"
+                    class="flex items-center justify-center rounded-full mt-8"
+                    style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0; transition:background 0.3s, color 0.3s;"
+                    onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
+                    onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
+                    View All
+                </a>
+            </div>
 
-         </div>
-     </div>
- </section>
+        </div>
+
+        <!-- Right Side: News & Events List -->
+        <div class="w-full md:w-[70%] flex flex-col relative z-10">
+
+            @forelse($newsEvents as $loop => $item)
+            @php
+            $isLast = $loop === count($newsEvents) - 1;
+            $type = ucfirst($item->type);
+            $date = $item->start_date
+                ? \Carbon\Carbon::parse($item->start_date)->format('d F Y')
+                : null;
+            $url = $item->type === 'events'
+                ? '/events/' . $item->id
+                : '/news/' . $item->id;
+            @endphp
+
+            <a href="{{ $url }}"
+                class="border-t {{ $isLast ? 'border-b' : '' }} border-[#ccc3b6] py-5 md:py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-3 sm:px-4 -mx-3 sm:-mx-4 cursor-pointer"
+                style="text-decoration:none;">
+
+                <div class="w-full sm:w-40 flex sm:flex-col flex-row gap-2 sm:gap-0 flex-shrink-0">
+                    <p class="text-base md:text-xl text-[#54504a] font-medium">{{ $type }}</p>
+                    @if($date)
+                    <p class="text-xs md:text-sm text-[#857f77] sm:mt-1">{{ $date }}</p>
+                    @endif
+                </div>
+
+                <div class="flex-1">
+                    <h3 class="text-base md:text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                        {{ $item->title }}
+                    </h3>
+                </div>
+
+            </a>
+            @empty
+            <p class="text-[#857f77] py-10 text-center">কোনো News বা Events পাওয়া যায়নি।</p>
+            @endforelse
+
+        </div>
+    </div>
+</section>
  <!-- ===== PARTNERS / CTA ===== -->
  <section class="relative w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#f2ede6;">
 
@@ -811,7 +883,7 @@ $schema = [
              @php
 
              $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
-             $titleParts = explode(',', $partnerTitle); // comma দিয়ে split
+             $titleParts = explode(',', $partnerTitle); 
              @endphp
 
              @if(count($titleParts) >= 2)
