@@ -6,7 +6,7 @@
  <section id="home" class=" relative h-screen w-full overflow-hidden">
      <!-- Background -->
      <div class="absolute inset-0">
-         <img src="{{ $hero->img_path ?? asset('assets/images/hero-bg.jpg') }}" class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
+         <img src="{{ $hero->img_path ?? asset('assets/images/hero-bg.jpg') }}" alt="hero-bg" class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
          <div class="absolute inset-0"
              style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%);">
          </div>
@@ -16,7 +16,7 @@
      <div class="relative z-10 h-full flex flex-col justify-center items-end">
          <div class="container mx-auto">
              <div class="max-w-3xl mt-5">
-          
+
                  <h1
                      class="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
                    {{$hero->titlle ?? 'We transform your dreams into addresses'}}
@@ -396,7 +396,7 @@
                              {{ $storiesItems->first()->title ?? 'Md. Mamun Molla' }}
                          </p>
                          <p id="testimonialRole"
-                             class="text-gray-500 text-sm mt-0.5 transition-opacity duration-500"
+                             class="text-gray-600 text-sm mt-0.5 transition-opacity duration-500"
                              style="font-weight:300;">
                              {{ $storiesItems->first()->name ?? 'Professor' }}
                          </p>
@@ -417,23 +417,28 @@
                      <!-- Prev / Next arrows -->
                      <div class="flex gap-3 justify-end mt-6">
                          <button onclick="changeTestimonial(-1); resetAutoPlay()"
-                             class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
-                             style="width:44px; height:44px;">
-                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                 class="group-hover:stroke-white transition-colors duration-300">
-                                 <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
-                                     stroke-linejoin="round" class="group-hover:stroke-white" />
-                             </svg>
-                         </button>
-                         <button onclick="changeTestimonial(1); resetAutoPlay()"
-                             class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
-                             style="width:44px; height:44px;">
-                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                 class="group-hover:stroke-white transition-colors duration-300">
-                                 <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
-                                     stroke-linejoin="round" class="group-hover:stroke-white" />
-                             </svg>
-                         </button>
+                            aria-label="Previous testimonial"
+                            class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                            style="width:44px; height:44px;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                aria-hidden="true"
+                                class="group-hover:stroke-white transition-colors duration-300">
+                                <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="group-hover:stroke-white" />
+                            </svg>
+                        </button>
+
+                        <button onclick="changeTestimonial(1); resetAutoPlay()"
+                            aria-label="Next testimonial"
+                            class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                            style="width:44px; height:44px;">
+                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                aria-hidden="true"
+                                class="group-hover:stroke-white transition-colors duration-300">
+                                <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                    stroke-linejoin="round" class="group-hover:stroke-white" />
+                            </svg>
+                        </button>
                      </div>
                  </div>
              </div>
@@ -517,7 +522,7 @@
                  <div class="w-40 flex-shrink-0">
                      <p class="text-xl text-[#54504a] font-medium mb-1">{{ $type }}</p>
                      @if($date)
-                     <p class="text-sm text-[#857f77]">{{ $date }}</p>
+                     <p class="text-sm text-[#5c5650]">{{ $date }}</p>
                      @endif
                  </div>
 
@@ -682,7 +687,7 @@
 
      resetAutoPlay();
 
-     
+
  </script>
  @endif
  <script>

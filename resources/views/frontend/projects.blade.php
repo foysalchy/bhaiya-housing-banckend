@@ -58,6 +58,7 @@
 
             <!-- Status -->
             <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
+                <label for="filterStatus" class="sr-only">Filter by Status</label>
                 <select id="filterStatus" onchange="applyFilters()"
                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-0 cursor-pointer outline-none"
                     style="font-family:'Jost',sans-serif; border:none;">
@@ -75,6 +76,7 @@
 
             <!-- Type -->
             <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
+               <label for="filterType" class="sr-only">Filter by Type</label>
                 <select id="filterType" onchange="applyFilters()"
                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
                     style="font-family:'Jost',sans-serif; border:none;">
@@ -91,6 +93,7 @@
 
             <!-- Location  -->
             <div class="flex-1 relative">
+                <label for="filterLocation" class="sr-only">Filter by Location</label>
                 <select id="filterLocation" onchange="applyFilters()"
                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
                     style="font-family:'Jost',sans-serif; border:none;">
