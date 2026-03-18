@@ -1,5 +1,151 @@
  @extends('layouts.front')
- @section('title', 'Home page')
+ @section('title', 'Our Ventures & Concerns')
+
+ @section('meta')
+ @php
+ $pageTitle = 'Our Ventures & Concerns – ' . ($setting->title ?? 'Bhaiya Housing Ltd.');
+
+ // Use the short description from the DB, fallback to a strong SEO description
+ $pageDesc = isset($concern->short) && !empty($concern->short)
+ ? strip_tags($concern->short)
+ : 'Explore the sister concerns and other ventures of Bhaiya Group. Expanding excellence beyond real estate into diverse industries and businesses across Bangladesh.';
+
+ $pageUrl = url()->current();
+ $pageImage = isset($concernHero->img_path) ? asset($concernHero->img_path) : asset('assets/images/concern.jpg');
+
+ // Safe fallback for socials
+ $socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+ // Flatten the $rows array/collection to get all brand logos easily for the schema
+ $allBrands = isset($rows) ? collect($rows)->flatten() : collect([]);
+
+ $schema = [
+ "page" => [
+ "description" => Str::limit($pageDesc, 160),
+ "keywords" => implode(', ', [
+ 'Bhaiya Group',
+ 'Bhaiya Housing sister concerns',
+ 'our ventures',
+ 'Bhaiya Group companies',
+ 'business ventures Bangladesh',
+ 'corporate profile',
+ 'expanding excellence'
+ ]),
+ "robots" => "index, follow, max-image-preview:large",
+ "canonical" => $pageUrl,
+ ],
+ "openGraph" => [
+ "type" => "website",
+ "title" => $pageTitle,
+ "description" => Str::limit($pageDesc, 160),
+ "url" => $pageUrl,
+ "site_name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "image" => $pageImage,
+ "locale" => "en_US",
+ ],
+ "twitter" => [
+ "card" => "summary_large_image",
+ "title" => $pageTitle,
+ "description" => Str::limit($pageDesc, 160),
+ "image" => $pageImage,
+ ],
+ "organization" => [
+ "@context" => "https://schema.org",
+ "@type" => ["Organization", "RealEstateBuilder"],
+ "@id" => url('/') . '#organization',
+ "name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "parentOrganization" => [
+ "@type" => "Organization",
+ "name" => "Bhaiya Group"
+ ],
+ "url" => url('/'),
+ "logo" => [
+ "@type" => "ImageObject",
+ "url" => asset('assets/images/logo.png'),
+ "width" => 200,
+ "height" => 60,
+ ],
+ "sameAs" => $socialLinks,
+ ],
+ "webPage" => [
+ "@context" => "https://schema.org",
+ "@type" => "AboutPage",
+ "@id" => $pageUrl . '#webpage',
+ "name" => $pageTitle,
+ "description" => Str::limit($pageDesc, 160),
+ "url" => $pageUrl,
+ "inLanguage" => "en-US",
+ "isPartOf" => ["@id" => url('/') . '#website'],
+ "about" => ["@id" => url('/') . '#organization'],
+ "breadcrumb" => [
+ "@type" => "BreadcrumbList",
+ "itemListElement" => [
+ ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+ ["@type" => "ListItem", "position" => 2, "name" => "Our Concerns", "item" => $pageUrl],
+ ],
+ ],
+ ],
+ "brandList" => [
+ "@context" => "https://schema.org",
+ "@type" => "ItemList",
+ "name" => "Sister Concerns & Ventures of Bhaiya Group",
+ "url" => $pageUrl,
+ "numberOfItems" => $allBrands->count(),
+ "itemListElement" => $allBrands->map(fn($brand, $i) => [
+ "@type" => "ListItem",
+ "position" => $i + 1,
+ "item" => [
+ "@type" => "Brand",
+ "name" => $brand->title ?? 'Bhaiya Group Venture',
+ "image" => isset($brand->img_path) ? asset($brand->img_path) : $pageImage,
+ ],
+ ])->values()->toArray(),
+ ],
+ ];
+ @endphp
+
+ {{-- META --}}
+ <meta name="description" content="{{ $schema['page']['description'] }}">
+ <meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+ <meta name="robots" content="{{ $schema['page']['robots'] }}">
+ <link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+ {{-- OPEN GRAPH --}}
+ <meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+ <meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+ <meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+ <meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+ <meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+ <meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+ <meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+ {{-- TWITTER --}}
+ <meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+ <meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+ <meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+ <meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+ {{-- SCHEMAS --}}
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+
+ @if($allBrands->count() > 0)
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['brandList'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+ @endif
+ @endsection
  @section('content')
 
  {{-- ===== HERO ===== --}}
@@ -28,9 +174,9 @@
              <p class="text-sm font-light leading-loose text-gray-600">
                  {{ $concern?->short ?? '' }}
              </p>
-            <div class="text-sm font-light leading-loose text-gray-600 prose prose-sm max-w-none">
-        {!! $concern?->body ?? '' !!}
-    </div>
+             <div class="text-sm font-light leading-loose text-gray-600 prose prose-sm max-w-none">
+                 {!! $concern?->body ?? '' !!}
+             </div>
          </div>
 
      </div>

@@ -151,7 +151,7 @@ class AppServiceProvider extends ServiceProvider
                 'body'             => ['label' => 'Mission Description', 'required' => true],
                 'body_2'           => ['label' => 'Vision Description', 'required' => true],
                 'name'             => ['label' => 'Mission Label (e.g. Mission)', 'required' => false],
-                'short'            => ['label' => 'Vision Label (e.g. Vision)','required' => false],
+                'short'            => ['label' => 'Vision Label (e.g. Vision)', 'required' => false],
                 'img_path'         => ['label' => 'Bg Image', 'required' => false],
                 'img_paths'        => ['label' => 'Other Images', 'required' => false],
                 'short'            => ['label' => 'Vision Label (e.g. Vision)', 'required' => false],
@@ -173,8 +173,8 @@ class AppServiceProvider extends ServiceProvider
             'timeline-item' => [
                 'title'            => ['label' => 'Year (e.g. 1972)', 'required' => true],
                 'name'             => ['label' => 'Heading (e.g. Bhaiya Group)', 'required' => true],
-                'short'             => ['label' => 'Description','required' => true],
-                'img_path'         => ['label' => 'Year Image','required' => false],
+                'short'             => ['label' => 'Description', 'required' => true],
+                'img_path'         => ['label' => 'Year Image', 'required' => false],
                 'body'             => ['label' => 'Description', 'required' => true],
                 'img_path'         => ['label' => 'Year Image', 'required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
@@ -184,7 +184,7 @@ class AppServiceProvider extends ServiceProvider
             ],
             'leaders-message' => [
                 'title'            => ['label' => 'Section Title (e.g. Message from leaders)', 'required' => true],
-                'img_path'         => ['label' => 'Image Background','required' => true],
+                'img_path'         => ['label' => 'Image Background', 'required' => true],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
@@ -220,10 +220,10 @@ class AppServiceProvider extends ServiceProvider
             ],
             'about-bhaiya' => [
                 'title'            => ['label' => 'Title (e.g. About Bhaiya Housing)',  'required' => true],
-                'short'             => ['label' => 'Paragraph 1','required' => true],
-                'extra'           => ['label' => 'Paragraph 2','required' => false],
-                'img_path'         => ['label' => 'Left Image','required' => false],
-                'img_paths'        => ['label' => 'Other Images ([0] Right)','required' => false],
+                'short'             => ['label' => 'Paragraph 1', 'required' => true],
+                'extra'           => ['label' => 'Paragraph 2', 'required' => false],
+                'img_path'         => ['label' => 'Left Image', 'required' => false],
+                'img_paths'        => ['label' => 'Other Images ([0] Right)', 'required' => false],
                 'body'             => ['label' => 'Paragraph 1', 'required' => true],
                 'body_2'           => ['label' => 'Paragraph 2', 'required' => false],
                 'img_path'         => ['label' => 'Left Image', 'required' => false],
@@ -247,20 +247,20 @@ class AppServiceProvider extends ServiceProvider
             //others concern
             'other-concern' => [
                 'title'            => ['label' => 'Title', 'required' => false],
-                'short'            => ['label' => 'Paragraph 1','required' => true],
-                'body'             => ['label' => 'Paragraph 2','required' => true],
+                'short'            => ['label' => 'Paragraph 1', 'required' => true],
+                'body'             => ['label' => 'Paragraph 2', 'required' => true],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                'status'           => ['label' => 'Status','required' => true],
+                'status'           => ['label' => 'Status', 'required' => true],
             ],
             'other-logo' => [
                 'title'            => ['label' => 'Title', 'required' => false],
-                'img_path'         => ['label' => 'Image','required' => true],
+                'img_path'         => ['label' => 'Image', 'required' => true],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
                 'meta_description' => ['label' => 'Meta Description', 'required' => false],
                 'meta_keywords'    => ['label' => 'Meta Keywords', 'required' => false],
-                'status'           => ['label' => 'Status','required' => true],
+                'status'           => ['label' => 'Status', 'required' => true],
             ],
             //career
             'career-overview' => [
@@ -357,9 +357,15 @@ class AppServiceProvider extends ServiceProvider
                 'short'  => ['label' => 'Google Map Embed Link', 'required' => true],
                 'status' => ['label' => 'Status', 'required' => true],
             ],
+            'menu-image' => [
+                'name'   => ['label' => 'Page Key (about, projects, concerns, career, events, contact)', 'required' => true],
+                'img_path' => ['label' => 'Hover Image', 'required' => true],
+                'status'   => ['label' => 'Status', 'required' => true],
+            ],
 
         ];
-
+        $menuImages = Content::where('type', 'menu-image')->where('status', 1)->orderBy('id')->get()->keyBy('name');
+        View::share('menuImages', $menuImages);
         $setting = Content::where('type', 'settings')->where('status', 1)->latest()->first();
         $socials = Content::where('type', 'social')->where('status', 1)->latest()->get();
         $pages = Content::where('type', 'pages')->where('status', 1)->get();

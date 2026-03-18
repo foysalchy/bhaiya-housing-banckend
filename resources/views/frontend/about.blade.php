@@ -4,7 +4,7 @@
 
 @section('content')
 
- <main class="">
+<main class="">
     <!-- HERO ABOUT SECTION -->
     <section class="relative min-h-[500px] flex items-center py-24 overflow-hidden">
 
@@ -20,17 +20,20 @@
             <!-- Heading Animated -->
             <h2 data-aos="fade-up" data-aos-duration="1000"
                 class="text-5xl sm:text-6xl lg:text-[9vh] font-bold text-white leading-tight">
-              {!! $about->title ?? '' !!}
+                {!! $about->title ?? '' !!}
             </h2>
 
             <!-- Two Column Text Animated -->
-           @if($about->body || $about->body_2)
+            @if($about->body || $about->body_2)
             <div class="flex font-medium text-lg" style="gap: 35px; padding-top: 60px; padding-left: 100px;">
                 @if($about->body)
                 <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200"
                     style="color: white !important;">
                     <style>
-                        .about-body-1, .about-body-1 * { color: white !important; }
+                        .about-body-1,
+                        .about-body-1 * {
+                            color: white !important;
+                        }
                     </style>
                     <div class="about-body-1 leading-relaxed">
                         {!! $about->body !!}
@@ -40,7 +43,10 @@
                 @if($about->body_2)
                 <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                     <style>
-                        .about-body-2, .about-body-2 * { color: white !important; }
+                        .about-body-2,
+                        .about-body-2 * {
+                            color: white !important;
+                        }
                     </style>
                     <div class="about-body-2 leading-relaxed">
                         {!! $about->body_2 !!}
@@ -67,12 +73,12 @@
         </div>
 
         @php
-            $mvImages = is_array($missionVision?->img_paths)
-                ? $missionVision->img_paths
-                : json_decode($missionVision?->img_paths ?? '[]', true);
-            $leftImg        = $mvImages[2] ?? null;
-            $topRightImg    = $mvImages[1] ?? null;
-            $bottomRightImg = $mvImages[0] ?? null;
+        $mvImages = is_array($missionVision?->img_paths)
+        ? $missionVision->img_paths
+        : json_decode($missionVision?->img_paths ?? '[]', true);
+        $leftImg = $mvImages[2] ?? null;
+        $topRightImg = $mvImages[1] ?? null;
+        $bottomRightImg = $mvImages[0] ?? null;
         @endphp
 
         <div class="relative w-full" style="padding-left:0; padding-right:8%;">
@@ -96,9 +102,9 @@
                         data-aos="fade-left" data-aos-duration="1200">
                         <img src="{{ asset($topRightImg) }}" alt="right image top" class="w-full h-auto object-cover shadow-sm">
                         <div class="absolute -bottom-6 -left-6 w-20 h-20">
-                            <img src="{{ asset('images/mission-stone.png') }}" alt="mission-stone"  class="w-full h-full object-contain">
+                            <img src="{{ asset('images/mission-stone.png') }}" alt="mission-stone" class="w-full h-full object-contain">
                             <div class="w-12 h-12">
-                                <img src="{{asset('images/stone-bg.svg')}}" alt="stone-bg"  class="w-full h-full object-contain">
+                                <img src="{{asset('images/stone-bg.svg')}}" alt="stone-bg" class="w-full h-full object-contain">
                             </div>
                         </div>
                     </div>
@@ -116,9 +122,9 @@
                     <div class="w-full md:w-[50%] lg:w-[45%] self-end mt-12 md:mt-16 relative z-20 mb-16 md:mb-20"
                         data-aos="fade-up" data-aos-duration="1200">
                         <div class="relative">
-                            <img src="{{ asset($bottomRightImg) }}" alt="right bottom image"  class="w-full h-auto object-cover shadow-sm">
+                            <img src="{{ asset($bottomRightImg) }}" alt="right bottom image" class="w-full h-auto object-cover shadow-sm">
                             <div class="absolute -bottom-8 -right-6 w-16 h-16">
-                                <img src="{{ asset('images/mission-stone-bottom.png') }}" alt="mission-stone-bottom"  class="w-full h-full object-contain">
+                                <img src="{{ asset('images/mission-stone-bottom.png') }}" alt="mission-stone-bottom" class="w-full h-full object-contain">
                             </div>
 
                         </div>
@@ -219,7 +225,7 @@
                 <div id="progress-line" class="absolute left-0 top-0 h-full w-0 bg-white transition-all duration-700 shadow-[0_0_15px_white]"></div>
 
                 @foreach($timelineItems as $index => $item)
-               <button onclick="changeTimeline({{ $index }})"
+                <button onclick="changeTimeline({{ $index }})"
                     aria-label="Go to timeline {{ $item->title }}"
                     class="nav-dot relative z-10 w-6 h-6 rounded-full outline-none transition-all
                         {{ $index === 0 ? 'bg-white ring-8 ring-white/10 shadow-[0_0_15px_white]' : 'bg-gray-600 hover:bg-gray-400' }}">
@@ -231,7 +237,7 @@
     </section>
 
 
-   <!-- ===== MESSAGE FROM LEADERS SECTION ===== -->
+    <!-- ===== MESSAGE FROM LEADERS SECTION ===== -->
     <section class="relative w-full py-20 md:py-32 bg-[#05100a] text-white overflow-hidden">
 
         <!-- Background -->
@@ -347,10 +353,10 @@
 
         <!-- ===== ABOUT BHAIYA HOUSING ===== -->
         @php
-            $aboutImages = is_array($aboutBhaiya?->img_paths)
-                ? $aboutBhaiya->img_paths
-                : json_decode($aboutBhaiya?->img_paths ?? '[]', true);
-            $aboutRightImg = $aboutImages[0] ?? null;
+        $aboutImages = is_array($aboutBhaiya?->img_paths)
+        ? $aboutBhaiya->img_paths
+        : json_decode($aboutBhaiya?->img_paths ?? '[]', true);
+        $aboutRightImg = $aboutImages[0] ?? null;
         @endphp
 
         <div class="container mx-auto px-6 md:px-6 lg:px-20 mb-10">
@@ -386,10 +392,10 @@
 
         <!-- ===== ABOUT BHAIYA HOUSING GROUP ===== -->
         @php
-            $groupImages = is_array($aboutBhaiyaGroup?->img_paths)
-                ? $aboutBhaiyaGroup->img_paths
-                : json_decode($aboutBhaiyaGroup?->img_paths ?? '[]', true);
-            $groupOverflowImg = $groupImages[0] ?? null;
+        $groupImages = is_array($aboutBhaiyaGroup?->img_paths)
+        ? $aboutBhaiyaGroup->img_paths
+        : json_decode($aboutBhaiyaGroup?->img_paths ?? '[]', true);
+        $groupOverflowImg = $groupImages[0] ?? null;
         @endphp
 
         <div class="container mx-auto px-6 md:px-12 lg:px-20">
@@ -439,11 +445,13 @@
     </section>
 
 
- </main>
+</main>
 
 @endsection
 <script>
-    const timelineData = {!! json_encode($timelineData) !!};
+    const timelineData = {
+        !!json_encode($timelineData) !!
+    };
 
     const total = timelineData.length;
 
@@ -451,9 +459,9 @@
         const data = timelineData[index];
 
         document.getElementById('timeline-year').textContent = data.year;
-        document.getElementById('timeline-title').innerHTML  = data.title.replace(/\n/g, '<br>');
-        document.getElementById('timeline-desc').innerHTML   = data.desc;
-        document.getElementById('timeline-img').src          = data.img;
+        document.getElementById('timeline-title').innerHTML = data.title.replace(/\n/g, '<br>');
+        document.getElementById('timeline-desc').innerHTML = data.desc;
+        document.getElementById('timeline-img').src = data.img;
 
         const percent = total > 1 ? (index / (total - 1)) * 100 : 0;
         document.getElementById('progress-line').style.width = percent + '%';

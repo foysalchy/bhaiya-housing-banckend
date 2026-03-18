@@ -1,5 +1,130 @@
  @extends('layouts.front')
- @section('title', 'Home page')
+ @section('title', 'Contact Us & Landowner Joint Venture')
+ @section('meta')
+ @php
+ $pageTitle = 'Contact Us & Landowner Joint Venture – ' . ($setting->title ?? 'Bhaiya Housing Ltd.');
+ $pageDesc = 'Get in touch with Bhaiya Housing Ltd. for real estate inquiries or landowner joint venture opportunities in Bangladesh. Partner with us to transform your property into a landmark.';
+ $pageUrl = url()->current();
+ $pageImage = isset($contactHero->img_path) ? asset($contactHero->img_path) : asset('assets/images/contact-customer.jpg');
+
+ // Safe fallback for socials
+ $socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+ $schema = [
+ "page" => [
+ "description" => $pageDesc,
+ "keywords" => implode(', ', [
+ 'Contact Bhaiya Housing',
+ 'landowner joint venture Bangladesh',
+ 'real estate developer contact Dhaka',
+ 'property development partnership',
+ 'sell land to developer BD',
+ 'Bhaiya Group contact number',
+ 'real estate inquiries'
+ ]),
+ "robots" => "index, follow, max-image-preview:large",
+ "canonical" => $pageUrl,
+ ],
+ "openGraph" => [
+ "type" => "website",
+ "title" => $pageTitle,
+ "description" => $pageDesc,
+ "url" => $pageUrl,
+ "site_name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "image" => $pageImage,
+ "locale" => "en_US",
+ ],
+ "twitter" => [
+ "card" => "summary_large_image",
+ "title" => $pageTitle,
+ "description" => $pageDesc,
+ "image" => $pageImage,
+ ],
+ "organization" => [
+ "@context" => "https://schema.org",
+ "@type" => ["RealEstateBuilder", "Organization", "LocalBusiness"],
+ "@id" => url('/') . '#organization',
+ "name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "url" => url('/'),
+ "logo" => [
+ "@type" => "ImageObject",
+ "url" => asset('assets/images/logo.png'),
+ "width" => 200,
+ "height" => 60,
+ ],
+ "telephone" => $setting->extra ?? '',
+ "email" => $setting->body ?? '', // Assuming $setting->body holds email based on your UI
+ "address" => [
+ "@type" => "PostalAddress",
+ "streetAddress" => $setting->short ?? 'Dhaka, Bangladesh',
+ "addressLocality" => "Dhaka",
+ "addressCountry" => "BD"
+ ],
+ "contactPoint" => [
+ "@type" => "ContactPoint",
+ "telephone" => $setting->extra ?? '',
+ "contactType" => "customer service",
+ "email" => $setting->body ?? '',
+ "availableLanguage" => ["English", "Bengali"]
+ ],
+ "sameAs" => $socialLinks,
+ ],
+ "webPage" => [
+ "@context" => "https://schema.org",
+ "@type" => "ContactPage",
+ "@id" => $pageUrl . '#webpage',
+ "name" => $pageTitle,
+ "description" => $pageDesc,
+ "url" => $pageUrl,
+ "inLanguage" => "en-US",
+ "isPartOf" => ["@id" => url('/') . '#website'],
+ "about" => ["@id" => url('/') . '#organization'],
+ "breadcrumb" => [
+ "@type" => "BreadcrumbList",
+ "itemListElement" => [
+ ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+ ["@type" => "ListItem", "position" => 2, "name" => "Contact Us", "item" => $pageUrl],
+ ],
+ ],
+ ]
+ ];
+ @endphp
+
+ {{-- META --}}
+ <meta name="description" content="{{ $schema['page']['description'] }}">
+ <meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+ <meta name="robots" content="{{ $schema['page']['robots'] }}">
+ <link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+ {{-- OPEN GRAPH --}}
+ <meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+ <meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+ <meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+ <meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+ <meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+ <meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+ <meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+ {{-- TWITTER --}}
+ <meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+ <meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+ <meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+ <meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+ {{-- SCHEMAS --}}
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+ @endsection
+
  @section('content')
 
  {{-- ===== HERO ===== --}}
