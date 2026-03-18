@@ -334,8 +334,10 @@ class AppServiceProvider extends ServiceProvider
             ],
 
             'social' => [
+                'title'  => ['label' => 'Platform Name (e.g. WhatsApp)', 'required' => true],
                 'url'    => ['label' => 'Social Link', 'required' => true],
-                'name'   => ['label' => 'Icon Code - Name', 'required' => true],
+                'short'   => ['label' => 'SVG Icon Code', 'required' => true],
+                'extra'  => ['label' => 'Background Color (e.g. #25D366)', 'required' => false],
                 'status' => ['label' => 'Status', 'required' => true],
             ],
 
