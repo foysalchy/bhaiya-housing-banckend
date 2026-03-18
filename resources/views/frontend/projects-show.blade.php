@@ -469,12 +469,7 @@
                     class="w-full h-full object-cover block"
                     onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
 
-                <!-- View Details Circle -->
-                <div class="details-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500">
-                    <div class="w-16 h-16 lg:w-20 lg:h-20 bg-black/70 text-white rounded-full flex items-center justify-center text-[10px] lg:text-xs uppercase tracking-widest text-center px-2 font-medium">
-                        View Details
-                    </div>
-                </div>
+               
             </div>
             @endforeach
         </div>
