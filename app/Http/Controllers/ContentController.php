@@ -26,7 +26,7 @@ class ContentController extends Controller
         }
         // Video Upload Logic
         $video_path = null;
-        if($request->hasFile('video_path')){
+        if ($request->hasFile('video_path')) {
             $video_path = $this->uploadVideo($request->file('video_path'));
         }
 
@@ -83,10 +83,10 @@ class ContentController extends Controller
             $paths = $content->img_paths ?? null; // keep old images if no new upload
         }
         // Video Update Logic
-        if($request->hasFile('video_path')){
+        if ($request->hasFile('video_path')) {
             $video_path = $this->uploadVideo($request->file('video_path'));
             // Delete old video if exists
-            if($content->video_path && file_exists(public_path($content->video_path))){
+            if ($content->video_path && file_exists(public_path($content->video_path))) {
                 unlink(public_path($content->video_path));
             }
         } else {
@@ -131,11 +131,20 @@ class ContentController extends Controller
     }
     public function edit($type, $id)
     {
-        $content = Content::find($id);
+        $content = Content::findOrFail($id);
+
+        if ($type === 'project') {
+            return view('backend.content.edit-project', compact('content', 'type'));
+        }
+
         return view('backend.content.update', compact('content', 'type'));
     }
     public function create($type)
     {
+        if ($type === 'project') {
+            return view('backend.content.project', compact('type'));
+        }
+
         return view('backend.content.create', compact('type'));
     }
     public function index($type)
@@ -157,8 +166,8 @@ class ContentController extends Controller
     }
     public function uploadVideo($video)
     {
-        $videoName = time().rand(9999,99999).'.'.$video->getClientOriginalExtension();
+        $videoName = time() . rand(9999, 99999) . '.' . $video->getClientOriginalExtension();
         $video->move(public_path('videos'), $videoName);
-        return 'videos/'.$videoName;
+        return 'videos/' . $videoName;
     }
 }
