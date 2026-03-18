@@ -463,7 +463,5 @@
     renderGrid();
 </script>
  @endsection
-     // ── Page load-এ প্রথমবার render ──
-     renderGrid();
- </script>
- @endsection
+    
+
