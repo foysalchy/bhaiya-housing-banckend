@@ -314,7 +314,7 @@ $setting->title ?? 'Bhaiya Housing',
         <!-- Left: Video autoplay (silent preview) -->
         <div class="w-[150px] flex-shrink-0 relative overflow-hidden">
             <video class="w-full h-full object-cover" autoplay muted loop playsinline>
-                <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
+                <source src="{{ $hero?->video_path ?? asset('videos/home.mp4') }}" type="video/mp4" />
             </video>
             <div class="absolute inset-0 bg-black/30"></div>
         </div>

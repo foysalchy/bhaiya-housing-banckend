@@ -575,10 +575,9 @@ $schema = [
 </main>
 
 @endsection
+@push('scripts')
 <script>
-    const timelineData = {
-        !!json_encode($timelineData) !!
-    };
+    const timelineData = {!! json_encode($timelineData) !!};
 
     const total = timelineData.length;
 
@@ -602,3 +601,4 @@ $schema = [
         });
     }
 </script>
+@endpush
