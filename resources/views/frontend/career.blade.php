@@ -253,3 +253,26 @@
 
 @endsection
 
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'ViewContent', {
+                content_name: 'Career Page',
+                content_category: 'Career',
+            });
+        }
+
+    });
+</script>
+@endpush
+
+@push('pixel_events')
+    @if(session('success'))
+        fbq('track', 'Lead', {
+            content_name: 'Job Application',
+            content_category: 'Career',
+        });
+    @endif
+@endpush

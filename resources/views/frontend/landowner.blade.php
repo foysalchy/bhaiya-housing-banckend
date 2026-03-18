@@ -1,5 +1,6 @@
  @extends('layouts.front')
  @section('title', 'Home page')
+
  @section('content')
 
  {{-- ===== HERO ===== --}}
@@ -198,3 +199,22 @@
 
 
  @endsection
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'ViewContent', {
+                content_name: 'Landowner Page',
+                content_category: 'Landowner'
+            });
+        }
+    });
+</script>
+@endpush
+
+@push('pixel_events')
+    @if(session('success'))
+        fbq('track', 'Lead');
+        fbq('track', 'Contact');
+    @endif
+@endpush
