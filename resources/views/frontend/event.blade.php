@@ -1,5 +1,141 @@
  @extends('layouts.front')
- @section('title', 'Home page')
+ @section('title', 'News & Events')
+
+ @section('meta')
+ @php
+ $pageTitle = 'News & Events – ' . ($setting->title ?? 'Bhaiya Housing Ltd.');
+ $pageDesc = 'Stay informed with the latest updates, press releases, and upcoming events from Bhaiya Housing Ltd. Discover our continuous journey in shaping modern real estate in Bangladesh.';
+ $pageUrl = url()->current();
+ $pageImage = isset($eventHero->img_path) ? asset($eventHero->img_path) : asset('assets/images/event.jpg');
+
+ // Safe fallback for socials
+ $socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+ $schema = [
+ "page" => [
+ "description" => $pageDesc,
+ "keywords" => implode(', ', [
+ 'Bhaiya Housing news',
+ 'real estate events Bangladesh',
+ 'property development updates Dhaka',
+ 'Bhaiya Group press release',
+ 'upcoming housing events BD',
+ 'real estate latest news',
+ ]),
+ "robots" => "index, follow, max-image-preview:large",
+ "canonical" => $pageUrl,
+ ],
+ "openGraph" => [
+ "type" => "website",
+ "title" => $pageTitle,
+ "description" => $pageDesc,
+ "url" => $pageUrl,
+ "site_name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "image" => $pageImage,
+ "locale" => "en_US",
+ ],
+ "twitter" => [
+ "card" => "summary_large_image",
+ "title" => $pageTitle,
+ "description" => $pageDesc,
+ "image" => $pageImage,
+ ],
+ "organization" => [
+ "@context" => "https://schema.org",
+ "@type" => ["RealEstateBuilder", "Organization"],
+ "@id" => url('/') . '#organization',
+ "name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+ "url" => url('/'),
+ "logo" => [
+ "@type" => "ImageObject",
+ "url" => asset('assets/images/logo.png'),
+ "width" => 200,
+ "height" => 60,
+ ],
+ "sameAs" => $socialLinks,
+ ],
+ "webPage" => [
+ "@context" => "https://schema.org",
+ "@type" => "CollectionPage",
+ "@id" => $pageUrl . '#webpage',
+ "name" => $pageTitle,
+ "description" => $pageDesc,
+ "url" => $pageUrl,
+ "inLanguage" => "en-US",
+ "isPartOf" => ["@id" => url('/') . '#website'],
+ "about" => ["@id" => url('/') . '#organization'],
+ "breadcrumb" => [
+ "@type" => "BreadcrumbList",
+ "itemListElement" => [
+ ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+ ["@type" => "ListItem", "position" => 2, "name" => "News & Events", "item" => $pageUrl],
+ ],
+ ],
+ ],
+ "newsEventList" => [
+ "@context" => "https://schema.org",
+ "@type" => "ItemList",
+ "name" => "Bhaiya Housing News and Events",
+ "url" => $pageUrl,
+ "numberOfItems" => isset($newsEvents) ? count($newsEvents) : 0,
+ "itemListElement" => isset($newsEvents) ? collect($newsEvents)->map(fn($item, $i) => [
+ "@type" => "ListItem",
+ "position" => $i + 1,
+ "item" => [
+ // Dynamically set schema type based on item type
+ "@type" => (isset($item['type']) && $item['type'] === 'events') ? "Event" : "NewsArticle",
+ "headline" => $item['title'] ?? ($item->title ?? ''),
+ "url" => $item['url'] ?? url('/' . ($item['type'] ?? 'news') . '/' . ($item['id'] ?? '')),
+ "datePublished" => $item['date'] ?? ($item->start_date ?? null),
+ "publisher" => ["@id" => url('/') . '#organization']
+ ],
+ ])->values()->toArray() : [],
+ ],
+ ];
+ @endphp
+
+ {{-- META --}}
+ <meta name="description" content="{{ $schema['page']['description'] }}">
+ <meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+ <meta name="robots" content="{{ $schema['page']['robots'] }}">
+ <link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+ {{-- OPEN GRAPH --}}
+ <meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+ <meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+ <meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+ <meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+ <meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+ <meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+ <meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+ {{-- TWITTER --}}
+ <meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+ <meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+ <meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+ <meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+ {{-- SCHEMAS --}}
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+
+ @if(isset($newsEvents) && count($newsEvents) > 0)
+ <script type="application/ld+json">
+     {
+         !!json_encode($schema['newsEventList'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!
+     }
+ </script>
+ @endif
+ @endsection
  @section('content')
 
  <!-- ===== HERO ===== -->

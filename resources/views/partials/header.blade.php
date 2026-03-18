@@ -66,7 +66,7 @@
         <div class="hidden md:block w-5/12 flex-shrink-0 pr-16">
             <div class="overflow-hidden" style="height:clamp(280px,42vw,500px);" id="menuImageWrap">
                 <img id="menuImage"
-                    src="{{ asset('assets/images/1.jpeg') }}"
+                    src="{{ asset('assets/images/m3.jpg') }}"
                     alt="nav image"
                     class="w-full h-full object-cover transition-all duration-500"
                     style="transform:scale(1.05);"
@@ -80,27 +80,53 @@
 
                 {{-- Static fixed links --}}
                 @php
-                    $staticLinks = [
-                        ['href' => '/about',    'label' => 'About Us',        'img' => asset('assets/images/m1.jpg')],
-                        ['href' => '/projects', 'label' => 'Projects',        'img' => asset('assets/images/m2.jpg')],
-                        ['href' => '/concerns', 'label' => 'Other Concerns',  'img' => asset('assets/images/m3.jpg')],
-                        ['href' => '/career',   'label' => 'Career',          'img' => asset('assets/images/m1.jpg')],
-                        ['href' => '/events',     'label' => 'News & Events',   'img' => asset('assets/images/m2.jpg')],
-                    ];
+                $staticLinks = [
+                ['href' => '/', 'label' => 'Home', 'key' => 'home'],
+                ['href' => '/about', 'label' => 'About Us', 'key' => 'about'],
+                ['href' => '/projects', 'label' => 'Projects', 'key' => 'projects'],
+                ['href' => '/concerns', 'label' => 'Other Concerns', 'key' => 'concerns'],
+                ['href' => '/career', 'label' => 'Career', 'key' => 'career'],
+                ['href' => '/events', 'label' => 'News & Events', 'key' => 'events'],
+                ];
                 @endphp
 
                 @foreach($staticLinks as $link)
                 <a href="{{ $link['href'] }}"
                     class="menu-link block text-white transition-opacity duration-300"
                     style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
-                    data-img="{{ $link['img'] }}"
+                    data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
                     {{ $link['label'] }}
                 </a>
                 @endforeach
 
+    
 
+                <!-- Contact Us -->
+                <a href="/contact"
+                    class="menu-link block text-white transition-opacity duration-300"
+                    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
+                    data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
+                    onmouseover="hoverLink(this)"
+                    onmouseout="unhoverLink(this)">
+                    Contact Us
+                </a>
+
+                <div class="flex items-center gap-10 pl-1" style="margin-top:-4px;">
+                    <a href="/contact-landowner"
+                        class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
+                        <span class="block w-6 h-px bg-white/40"></span>
+                        As A Landowner
+                    </a>
+                    <a href="/contact-customer"
+                        class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
+                        <span class="block w-6 h-px bg-white/40"></span>
+                        As A Customer
+                    </a>
+                </div>
 
             </nav>
 
