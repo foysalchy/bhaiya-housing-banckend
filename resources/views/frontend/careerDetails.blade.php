@@ -1,5 +1,155 @@
 @extends('layouts.front')
-@section('title', $job->title)
+@section('title', $job->title ?? 'Career Opportunity')
+@section('meta')
+@php
+    $jobTitle = $job->title ?? 'Career Opportunity';
+    $pageTitle = $jobTitle . ' – ' . ($setting->title ?? 'Bhaiya Housing Ltd.');
+    
+    // Create an SEO description from the job short description or body
+    $pageDesc = isset($job->short) && !empty($job->short) 
+        ? strip_tags($job->short) 
+        : Str::limit(strip_tags($job->body ?? 'Join Bhaiya Housing Ltd. and shape the future of real estate in Bangladesh.'), 160);
+    
+    $pageUrl = url()->current();
+    // Default career image or logo
+    $pageImage = asset('assets/images/career-hero.jpg');
+
+    // Safe fallback for socials
+    $socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
+
+    // Attempt to map employment type for Google Jobs (FULL_TIME, PART_TIME, CONTRACTOR, INTERN)
+    $rawEmpType = strtoupper(str_replace(['-', ' '], '_', strip_tags($job->body_2 ?? 'FULL_TIME')));
+    $validEmpTypes = ['FULL_TIME', 'PART_TIME', 'CONTRACTOR', 'TEMPORARY', 'INTERN', 'VOLUNTEER', 'PER_DIEM', 'OTHER'];
+    $employmentType = in_array($rawEmpType, $validEmpTypes) ? $rawEmpType : 'FULL_TIME';
+
+    $schema = [
+        "page" => [
+            "description" => $pageDesc,
+            "keywords" => implode(', ', array_filter([
+                $jobTitle,
+                'jobs at Bhaiya Housing',
+                isset($job->location) ? "jobs in {$job->location}" : null,
+                isset($job->extra) ? "{$job->extra} department jobs" : null,
+                'real estate career Bangladesh',
+                'property developer jobs Dhaka'
+            ])),
+            "robots" => "index, follow, max-image-preview:large",
+            "canonical" => $pageUrl,
+        ],
+        "openGraph" => [
+            "type" => "article",
+            "title" => $pageTitle,
+            "description" => $pageDesc,
+            "url" => $pageUrl,
+            "site_name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+            "image" => $pageImage,
+            "locale" => "en_US",
+        ],
+        "twitter" => [
+            "card" => "summary_large_image",
+            "title" => $pageTitle,
+            "description" => $pageDesc,
+            "image" => $pageImage,
+        ],
+        "organization" => [
+            "@context" => "https://schema.org",
+            "@type" => ["RealEstateBuilder", "Organization"],
+            "@id" => url('/') . '#organization',
+            "name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+            "url" => url('/'),
+            "logo" => [
+                "@type" => "ImageObject",
+                "url" => asset('assets/images/logo.png'),
+                "width" => 200,
+                "height" => 60,
+            ],
+            "sameAs" => $socialLinks,
+        ],
+        "webPage" => [
+            "@context" => "https://schema.org",
+            "@type" => "ItemPage",
+            "@id" => $pageUrl . '#webpage',
+            "name" => $pageTitle,
+            "description" => $pageDesc,
+            "url" => $pageUrl,
+            "inLanguage" => "en-US",
+            "isPartOf" => ["@id" => url('/') . '#website'],
+            "about" => ["@id" => url('/') . '#organization'],
+            "breadcrumb" => [
+                "@type" => "BreadcrumbList",
+                "itemListElement" => [
+                    ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
+                    ["@type" => "ListItem", "position" => 2, "name" => "Career", "item" => route('career')],
+                    ["@type" => "ListItem", "position" => 3, "name" => $jobTitle, "item" => $pageUrl],
+                ],
+            ],
+        ],
+        "jobPosting" => [
+            "@context" => "https://schema.org",
+            "@type" => "JobPosting",
+            "title" => $jobTitle,
+            // Google prefers HTML for the JobPosting description
+            "description" => !empty($job->body) ? $job->body : $pageDesc,
+            "datePosted" => isset($job->created_at) ? $job->created_at->toIso8601String() : now()->toIso8601String(),
+            "validThrough" => isset($job->created_at) ? $job->created_at->addMonths(2)->toIso8601String() : now()->addMonths(2)->toIso8601String(),
+            "employmentType" => $employmentType,
+            "hiringOrganization" => [
+                "@type" => "Organization",
+                "name" => $setting->title ?? 'Bhaiya Housing Ltd.',
+                "sameAs" => url('/'),
+                "logo" => asset('assets/images/logo.png')
+            ],
+            "jobLocation" => [
+                "@type" => "Place",
+                "address" => [
+                    "@type" => "PostalAddress",
+                    "addressLocality" => $job->location ?? 'Dhaka',
+                    "addressCountry" => "BD"
+                ]
+            ],
+        ]
+    ];
+    
+    // Add optional experience requirements if available
+    if(isset($job->body_3)) {
+        $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
+    }
+@endphp
+
+{{-- META --}}
+<meta name="description" content="{{ $schema['page']['description'] }}">
+<meta name="keywords" content="{{ $schema['page']['keywords'] }}">
+<meta name="robots" content="{{ $schema['page']['robots'] }}">
+<link rel="canonical" href="{{ $schema['page']['canonical'] }}">
+
+{{-- OPEN GRAPH --}}
+<meta property="og:type" content="{{ $schema['openGraph']['type'] }}">
+<meta property="og:title" content="{{ $schema['openGraph']['title'] }}">
+<meta property="og:description" content="{{ $schema['openGraph']['description'] }}">
+<meta property="og:url" content="{{ $schema['openGraph']['url'] }}">
+<meta property="og:site_name" content="{{ $schema['openGraph']['site_name'] }}">
+<meta property="og:image" content="{{ $schema['openGraph']['image'] }}">
+<meta property="og:locale" content="{{ $schema['openGraph']['locale'] }}">
+
+{{-- TWITTER --}}
+<meta name="twitter:card" content="{{ $schema['twitter']['card'] }}">
+<meta name="twitter:title" content="{{ $schema['twitter']['title'] }}">
+<meta name="twitter:description" content="{{ $schema['twitter']['description'] }}">
+<meta name="twitter:image" content="{{ $schema['twitter']['image'] }}">
+
+{{-- SCHEMAS --}}
+<script type="application/ld+json">
+    {!! json_encode($schema['organization'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+
+<script type="application/ld+json">
+    {!! json_encode($schema['webPage'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+
+<script type="application/ld+json">
+    {!! json_encode($schema['jobPosting'], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT) !!}
+</script>
+@endsection
 @section('content')
 
 <!-- HERO -->
