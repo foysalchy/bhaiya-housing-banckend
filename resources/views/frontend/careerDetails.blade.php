@@ -51,11 +51,11 @@
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
 
             <!-- Left: Job Details -->
-            <div class="text-gray-700 text-sm leading-relaxed">
+            <div class="text-gray-700 text-sm leading-relaxed job-body">
                 {!! $job->body !!}
 
                 <a href="{{ route('career') }}"
-                   class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-sm font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white">
+                class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-sm font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white">
                     Go Back
                 </a>
             </div>
@@ -115,7 +115,7 @@
                         </label>
                         <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
                                onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
-                        <p class="text-white/40 text-xs mt-2">PDF Files Only || Max 2MB</p>
+                        <p class="text-white/60 text-xs mt-2">PDF Files Only || Max 2MB</p>
                     </div>
 
                     <button type="submit"
@@ -123,7 +123,7 @@
                         Apply Now
                     </button>
 
-                    <p class="text-white/30 text-xs">
+                    <p class="text-white/60 text-xs">
                         By applying for this job listing, you agree to our Data Privacy Policy for recruitment and job applications.
                     </p>
                 </form>

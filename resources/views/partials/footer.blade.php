@@ -59,8 +59,9 @@
         <div class="flex items-center gap-5">
           @foreach($socials as $social)
           <a href="{{ $social->url }}" target="_blank" rel="noopener"
+            aria-label="{{ $social->title ?? $social->name }}"
             class="text-white opacity-60 hover:opacity-100 transition-opacity duration-200">
-   
+
           </a>
           @endforeach
         </div>
@@ -86,7 +87,7 @@
           <a href="/news" class="text-white text-sm font-light opacity-75 hover:opacity-100 transition-opacity duration-200 no-underline">Events &amp; News</a>
           <a href="/contact" class="text-white text-sm font-light opacity-75 hover:opacity-100 transition-opacity duration-200 no-underline">Contacts</a>
 
-       
+
         </nav>
 
       </div>
@@ -97,10 +98,10 @@
   <!-- ── Bottom Bar ── -->
   <div class="border-t border-white border-opacity-10">
     <div class="max-w-screen-xl mx-auto px-6 lg:px-14 py-5 flex items-center justify-between flex-wrap gap-3">
-      <p class="text-white text-xs font-light opacity-40">
+      <p class="text-white text-xs font-light">
         &copy; {{ date('Y') }} {{ $setting?->title ?? 'Bhaiya Housing Ltd.' }}
       </p>
-      <p class="flex items-center gap-2 text-white text-xs font-light opacity-40">
+      <p class="flex items-center gap-2 text-white text-xs font-light">
         Site by Dcastalia
         <span class="w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center">
           <svg width="6" height="6" viewBox="0 0 10 10" fill="white">
