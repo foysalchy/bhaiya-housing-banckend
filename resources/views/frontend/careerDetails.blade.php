@@ -134,3 +134,31 @@
 </section>
 
 @endsection
+
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'ViewContent', {
+                content_name: '{{ addslashes($job->title) }}',
+                content_category: 'Job Position',
+                content_ids: ['{{ $job->id }}'],
+                content_type: 'job'
+            });
+        }
+
+    });
+</script>
+@endpush
+
+@push('pixel_events')
+    @if(session('success'))
+        fbq('track', 'Lead', {
+            content_name: '{{ addslashes($job->title) }}',
+            content_category: 'Job Application',
+            content_ids: ['{{ $job->id }}'],
+        });
+    @endif
+@endpush

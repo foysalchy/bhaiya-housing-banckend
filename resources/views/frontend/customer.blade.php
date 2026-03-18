@@ -1,4 +1,6 @@
  @extends('layouts.front')
+ @section('title', 'Home page')
+
  @section('title', 'Contact Us & Customer Inquirie')
  @section('meta')
  @php
@@ -319,3 +321,24 @@
 
 
  @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+
+        if (typeof fbq !== 'undefined') {
+            fbq('track', 'ViewContent', {
+                content_name: 'Contact Page',
+                content_category: 'Customer Support'
+            });
+        }
+
+    });
+</script>
+@endpush
+
+@push('pixel_events')
+    @if(session('success'))
+        fbq('track', 'Contact');
+    @endif
+@endpush
