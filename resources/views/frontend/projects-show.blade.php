@@ -166,7 +166,7 @@
 
              <!-- Left: Content -->
              <div class="w-full md:w-1/2">
-                 <p class="text-xs font-light text-gray-400 mb-6 tracking-wide">
+                 <p class="text-xs font-light text-gray-500 mb-6 tracking-wide">
                      {{ $project->title }}
                  </p>
                  <h2 class="font-light text-gray-700 mb-12"
@@ -469,7 +469,7 @@
                     class="w-full h-full object-cover block"
                     onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
 
-               
+
             </div>
             @endforeach
         </div>
@@ -482,13 +482,18 @@
         </div>
 
         <div class="flex gap-4 ml-8">
-            <button onclick="moveSlide(-1)" class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-600 group-hover:text-white">
+           <button onclick="moveSlide(-1)" aria-label="Previous slide"
+                class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    aria-hidden="true" class="text-gray-600 group-hover:text-white">
                     <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-            <button onclick="moveSlide(1)" class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-600 group-hover:text-white">
+
+            <button onclick="moveSlide(1)" aria-label="Next slide"
+                class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    aria-hidden="true" class="text-gray-600 group-hover:text-white">
                     <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
@@ -632,10 +637,12 @@ document.addEventListener('DOMContentLoaded', function() {
      <div class="flex-1 relative">
          @if(!empty($extra['map_url']))
          <iframe src="{{ $extra['map_url'] }}"
-             class="w-full h-full border-0"
-             allowfullscreen="" loading="lazy"
-             referrerpolicy="no-referrer-when-downgrade">
-         </iframe>
+            title="Project Location Map"
+            class="w-full h-full border-0"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
          @else
          <div class="w-full h-full flex items-center justify-center bg-gray-200">
              <p class="text-gray-500 text-sm">Map unavailable</p>
