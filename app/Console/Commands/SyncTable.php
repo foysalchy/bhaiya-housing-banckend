@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\File;
 class SyncTable extends Command
 {
     protected $signature = 'db:merge {file} {table?}';
-    protected $description = 'Merge SQL dump into existing table with new IDs, skipping existing types';
+    protected $description = 'Merge SQL dump into existing table with new IDs';
 
     public function handle()
     {
@@ -58,7 +58,6 @@ class SyncTable extends Command
 
         $inserted = 0;
         $errors   = 0;
-        $skipped  = 0;
 
         foreach ($allMatches as $match) {
 
@@ -75,14 +74,6 @@ class SyncTable extends Command
                 $columns = array_values($columns);
             }
 
-            // Find 'type' column and get existing types from DB
-            $typeIndex = array_search('type', $columns);
-            $existingTypes = [];
-            
-            if ($typeIndex !== false) {
-                $existingTypes = DB::table($table)->pluck('type')->toArray();
-            }
-
             $columnList = '`' . implode('`, `', $columns) . '`';
 
             // Extract each (value, value, ...) group
@@ -94,50 +85,44 @@ class SyncTable extends Command
 
             foreach ($valueGroups[0] as $valueGroup) {
 
-                $inner  = substr($valueGroup, 1, -1); // strip outer ()
+                $inner  = substr($valueGroup, 1, -1); 
                 $values = $this->splitValues($inner);
 
-                // Drop the id value at the same index
                 if ($idIndex !== false && isset($values[$idIndex])) {
                     unset($values[$idIndex]);
                     $values = array_values($values);
                 }
 
-                // --- MISMATCH DEBUGGING ---
                 if (count($values) !== count($columns)) {
-                    $this->warn("Mismatch! Skipping row.");
-                    $this->warn("Expected Columns (" . count($columns) . "): " . implode(', ', $columns));
-                    $this->warn("Found Values (" . count($values) . "): " . implode(', ', $values));
-                    $this->newLine();
+                    $this->warn("Column/value count mismatch, skipping row.");
                     $errors++;
                     continue;
-                }
-                // ---------------------------
-
-                // Check if 'type' already exists in DB
-                if ($typeIndex !== false && isset($values[$typeIndex])) {
-                    $typeValue = trim($values[$typeIndex], "'\""); // Remove quotes
-                    
-                    if (in_array($typeValue, $existingTypes)) {
-                        $skipped++;
-                        continue; 
-                    }
-                    $existingTypes[] = $typeValue; 
                 }
 
                 $valueSql = '(' . implode(', ', $values) . ')';
 
                 try {
+                    $typeIndex = array_search('type', $columns);
+
+                    if ($typeIndex !== false) {
+                        $typeValue = trim($values[$typeIndex], "'\"");
+                        $exists = DB::table($table)->where('type', $typeValue)->exists();
+                        if ($exists) {
+                            $this->line("Skipped (type '{$typeValue}' already exists).");
+                            continue;
+                        }
+                    }
+
                     DB::unprepared("INSERT INTO `{$table}` ({$columnList}) VALUES {$valueSql};");
                     $inserted++;
                 } catch (\Exception $e) {
-                    $this->warn("DB Error - Row skipped: " . $e->getMessage());
+                    $this->warn("Row skipped: " . $e->getMessage());
                     $errors++;
                 }
             }
         }
 
-        $this->info("Done — {$inserted} row(s) inserted, {$skipped} skipped (type exists), {$errors} errors.");
+        $this->info("Done — {$inserted} row(s) inserted, {$errors} skipped.");
         return 0;
     }
 
@@ -185,8 +170,9 @@ class SyncTable extends Command
             }
         }
 
-        // Always push the last remaining part as a column value
-        $values[] = trim($current);
+        if (trim($current) !== '') {
+            $values[] = trim($current);
+        }
 
         return $values;
     }

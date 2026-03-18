@@ -16,33 +16,19 @@
      <div class="relative z-10 h-full flex flex-col justify-center items-end">
          <div class="container mx-auto">
              <div class="max-w-3xl mt-5">
-                 <span
-                     class="block text-[11px] tracking-[4px] uppercase text-green-400 mb-5 opacity-0 animate-[fadeUp_0.7s_0.2s_ease_forwards]">
-                     Luxury Living · Dhaka
-                 </span>
+          
                  <h1
                      class="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
-                     We <em class="italic text-bh-green-light">transform</em> your<br />
-                     <em class="italic text-bh-green-light">dreams</em> into addresses
+                   {{$hero->titlle ?? 'We transform your dreams into addresses'}}
                  </h1>
              </div>
 
              <div class="mt-28 max-w-xl opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
-                 <p class="opacity-80 text-sm md:text-base leading-relaxed font-light px-10">
+                 <p class="ml-10 opacity-80 text-sm md:text-base leading-relaxed font-light px-10">
                      {{$hero->short ?? 'Immerse yourself in the artistry of exceptional spaces with Bhaiya Housing, where each project is a harmonious blend of prestige, elegance, and refined sophistication. Beyond constructing buildings, we meticulously create residential and commercial environments to reflect your aspirations.'}}
                  </p>
              </div>
 
-             <div class="mt-9 flex gap-3 opacity-0 animate-[fadeUp_0.7s_0.70s_ease_forwards]">
-                 <button
-                     class="px-7 py-3 bg-green-500 hover:bg-green-600 text-black text-[11px] font-medium tracking-[2px] uppercase transition-all">
-                     Explore Projects
-                 </button>
-                 <button
-                     class="px-7 py-3 border border-white/30 hover:border-white/60 hover:bg-white/10 text-[11px] tracking-[2px] uppercase transition-all">
-                     Learn More
-                 </button>
-             </div>
          </div>
      </div>
 
@@ -57,31 +43,59 @@
          </div>
      </div>
 
-     <!-- Video card -->
-     <div
-         class="absolute bottom-8 right-6 md:right-16 z-20 w-[320px] flex border border-white/10 bg-black/50 backdrop-blur-md cursor-pointer hover:border-white/25 transition-all opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]">
-         <div class="w-[150px] flex-shrink-0 relative overflow-hidden">
-             <img src="/images/kazi-kuthi.jpg" alt="Kazi Kuthi" class="w-full h-full object-cover" />
-             <div class="absolute inset-0 bg-black/30"></div>
-             <div class="absolute top-2 left-2 text-[9px] tracking-[2px] uppercase bg-black/50 px-2 py-1">Apartment Project
-             </div>
-             <div class="absolute bottom-2 left-2 right-2 bg-black/60 px-2 py-1.5">
-                 <strong class="block text-[11px] font-medium">Kazi Kuthi</strong>
-                 <span class="text-[10px] text-white/60 font-light">North Badda</span>
-             </div>
-         </div>
-         <div class="flex-1 p-3 flex flex-col justify-between">
-             <div class="flex items-center justify-end gap-2">
-                 <span class="text-[10px] tracking-[1px] text-white/60">View</span>
-                 <div class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center flex-shrink-0">
-                     <svg width="10" height="12" viewBox="0 0 12 14" fill="none">
-                         <path d="M12 7L0 14V0L12 7Z" fill="white" />
-                     </svg>
-                 </div>
-             </div>
-             <p class="text-base font-light tracking-wide">Watch our video</p>
-         </div>
-     </div>
+<!-- Video card -->
+<div class="absolute bottom-8 right-6 md:right-16 z-20 w-[320px]  flex border border-white/10 bg-black/50 backdrop-blur-md hover:border-white/25 transition-all opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]">
+
+    <!-- Left: Video autoplay (silent preview) -->
+    <div class="w-[150px] flex-shrink-0 relative overflow-hidden">
+        <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+            <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
+        </video>
+        <div class="absolute inset-0 bg-black/30"></div>
+    </div>
+
+    <!-- Right: Watch button -->
+    <div class="flex-1 p-3 flex flex-col justify-between">
+        <div class="flex items-center justify-end gap-2">
+            <span class="text-[10px] tracking-[1px] text-white/60">View</span>
+            <div class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center flex-shrink-0">
+                <svg width="10" height="12" viewBox="0 0 12 14" fill="none">
+                    <path d="M12 7L0 14V0L12 7Z" fill="white" />
+                </svg>
+            </div>
+        </div>
+        <p class="text-base font-light tracking-wide cursor-pointer hover:opacity-80 transition-opacity"
+            onclick="openVideoModal()">
+            Watch our video
+        </p>
+    </div>
+
+</div>
+
+<!-- ── Video Modal ── -->
+<div id="videoModal"
+    class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm"
+    style="display:none;"
+    onclick="closeVideoModal(event)">
+
+    <div class="relative w-full max-w-4xl mx-4" onclick="event.stopPropagation()">
+
+        <!-- Close -->
+        <button onclick="closeVideoModal()"
+            class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round">
+                <line x1="4" y1="4" x2="24" y2="24" />
+                <line x1="24" y1="4" x2="4" y2="24" />
+            </svg>
+        </button>
+
+        <!-- Video with sound -->
+        <video id="modalVideo" class="w-full" controls playsinline style="max-height:80vh;">
+            <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
+        </video>
+
+    </div>
+</div>
  </section>
 
 
@@ -667,6 +681,8 @@
      }
 
      resetAutoPlay();
+
+     
  </script>
  @endif
  <script>
@@ -693,6 +709,29 @@
          el.style.border = '2px solid rgba(255,255,255,0.8)';
          el.querySelector('img')?.classList.replace('opacity-70', 'opacity-90');
      }
+      function openVideoModal() {
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        modal.style.display = 'flex';
+        video.currentTime   = 0;
+        video.play();
+    }
+
+    function closeVideoModal(e) {
+        if (e && e.target !== document.getElementById('videoModal')) return;
+        const modal = document.getElementById('videoModal');
+        const video = document.getElementById('modalVideo');
+        video.pause();
+        video.currentTime = 0;
+        modal.style.display = 'none';
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Escape') {
+            document.getElementById('modalVideo').pause();
+            document.getElementById('videoModal').style.display = 'none';
+        }
+    });
  </script>
 
  @endsection
