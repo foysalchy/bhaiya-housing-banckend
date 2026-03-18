@@ -7,12 +7,12 @@
 $pageTitle = ($setting->title ?? 'Bhaiya Housing') . ' – Premium Real Estate & Property Developers in Bangladesh';
 $pageDesc = $setting->short ?? 'Since 2012, Bhaiya Housing crafts exquisite residential and commercial spaces in Bangladesh. Partner with us as a landowner or find your dream luxury property.';
 $pageUrl = url('/');
-$pageImage = asset('frontend/images/logo.svg'); 
+$pageImage = asset('frontend/images/logo.svg');
 
 // Safe fallback for socials if not globally shared
 $socialLinks = isset($socials) ? $socials->map(fn($s) => $s->url)->filter()->values()->toArray() : [];
 
-$schema = [  
+$schema = [
     "page" => [
         "description" => $pageDesc,
         "keywords" => implode(', ', [
@@ -521,7 +521,7 @@ $schema = [
              EVERY
          </span>
 
-         <!-- Headline -->
+         <!-- Headline --> 
          <div class="relative z-10">
              <h2 class="text-white font-light mb-1"
                  style="font-family:'Jost',sans-serif; font-size:clamp(28px,4vw,56px); font-weight:300; letter-spacing:0.01em;">
@@ -809,7 +809,7 @@ $schema = [
          <!-- Heading -->
          <h2 class="mb-16 font-light leading-tight text-gray-900" style="font-size:clamp(32px,4.5vw,64px);">
              @php
-          
+
              $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
              $titleParts = explode(',', $partnerTitle); // comma দিয়ে split
              @endphp
