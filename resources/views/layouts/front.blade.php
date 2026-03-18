@@ -2,14 +2,33 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@yield('title', 'Bhaiya Housing')</title>
 
-    <title>@yield('title', 'My Website')</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <!-- Facebook Pixel Code -->
+    @yield('meta')
+
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+    <!-- Swiper -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Vite (Tailwind + SCSS + JS) -->
+    @vite(['resources/css/app.css', 'resources/sass/app.scss', 'resources/js/app.js'])
+
+    <!-- Local overrides -->
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}">
+        <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Facebook Pixel -->
     <script>
         !function(f,b,e,v,n,t,s)
         {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -27,59 +46,21 @@
         <img height="1" width="1" style="display:none"
             src="https://www.facebook.com/tr?id=749680890686257&ev=PageView&noscript=1"/>
     </noscript>
-    <!-- End Facebook Pixel Code -->
-    <title>Bhaiya Housing</title>
-    {{-- All SEO meta, OG, Twitter, Schema injects here --}}
-    @yield('meta')
-
-    <!-- Outfit Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-
-    <!-- Outfit Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap"
-        rel="stylesheet" />
-    <!-- AOS -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css" />
-    <!-- FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-      <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-
-    <!-- Local CSS (Tailwind compiled output) -->
-    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
-    <script src="{{ asset('frontend/js/main.js') }}" defer></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    {{-- CSS --}}
-    @include('partials.header')
 
     @stack('styles')
-
 </head>
-<!DOCTYPE html>
-<html lang="en">
-
-
 
 <body>
 
+    @include('partials.header')
 
+    @yield('content')
 
-
-    {{-- Main Content --}}
-    <main>
-        @yield('content')
-    </main>
-    @include('partials.floating')
-    {{-- Footer --}}
     @include('partials.footer')
 
-    {{-- Scripts --}}
-    @include('partials.scripts')
+    <script src="{{ asset('frontend/js/main.js') }}" defer></script>
 
     @stack('scripts')
 
 </body>
-
 </html>

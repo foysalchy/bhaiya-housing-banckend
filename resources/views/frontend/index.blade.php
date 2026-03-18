@@ -778,7 +778,6 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 </section>
 
 
-
 <!-- ===== NEWS & EVENTS ===== -->
 <section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative"
     style="background-color:#f2ede6; color:#2a2825;">

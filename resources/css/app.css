@@ -1,3 +1,8 @@
-@import 'tailwindcss';
+@import "tailwindcss";
 
- 
+@source "../views";
+@source "../../resources/views";
+
+@utility container {
+  margin-inline: auto;
+}

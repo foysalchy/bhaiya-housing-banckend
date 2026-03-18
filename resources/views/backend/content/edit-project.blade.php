@@ -2,16 +2,15 @@
 @section('title', 'Edit Project')
 @section('content')
 
-@php
-$extra = json_decode($content->extra ?? '{}', true);
-$imgPaths = json_decode($content->img_paths ?? '[]', true);
-@endphp
+
 
 <div class="container mt-2">
     <form action="{{ route('content.update', [$type, $content->id]) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('post')
         <input type="hidden" name="type" value="project">
+        <input type="hidden" name="id" value="{{ $content->id }}">
+
 
         <div class="card card-success card-outline mb-4">
             <div class="card-header">
@@ -143,7 +142,7 @@ $imgPaths = json_decode($content->img_paths ?? '[]', true);
                         </div>
                         @endif
                         <input type="file" class="form-control" name="video_path" accept="video/mp4">
-                        <small class="text-muted">নতুন upload না করলে আগেরটা থাকবে</small>
+                        <small class="text-muted">If you don’t upload a new file, the previous one will remain.</small>
                     </div>
                 </div>
 
@@ -152,7 +151,7 @@ $imgPaths = json_decode($content->img_paths ?? '[]', true);
                     <label class="form-label fw-semibold">Multiple Images</label>
 
                     {{-- Current images --}}
-             @if(!empty($imgPaths) && count($imgPaths) > 0)
+                    @if(!empty($imgPaths) && count($imgPaths) > 0)
 
                     <div class="d-flex gap-2 flex-wrap mb-2">
                         @foreach($imgPaths as $i => $img)
@@ -166,8 +165,9 @@ $imgPaths = json_decode($content->img_paths ?? '[]', true);
                         </div>
                         @endforeach
                     </div>
-                    <small class="text-muted d-block mb-2">নতুন upload করলে সব replace হবে, না করলে আগেরগুলো থাকবে।</small>
-                    @endif
+                    <small class="text-muted d-block mb-2">
+                        If you upload new files, all existing ones will be replaced. If not, the previous ones will remain.
+                    </small> @endif
 
                     <input type="file" multiple class="form-control" name="img_paths[]" accept="image/*"
                         onchange="previewMultiple(this)">

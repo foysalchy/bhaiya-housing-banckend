@@ -1,13 +1,5 @@
-
-
-// Variables
-@import 'variables';
-
-// Bootstrap
-// @import 'bootstrap/scss/bootstrap';
-
-// Tailwind Directives
-@import "tailwindcss";
-
-
-
+// Remove @import "tailwindcss" from here
+// Keep only your existing custom sass below
+body {
+    // your styles...
+}

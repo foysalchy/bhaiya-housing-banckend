@@ -134,7 +134,11 @@ class ContentController extends Controller
         $content = Content::findOrFail($id);
 
         if ($type === 'project') {
-            return view('backend.content.edit-project', compact('content', 'type'));
+
+            $extra    = json_decode($content->extra ?? '{}', true) ?? [];
+            $imgPaths = json_decode($content->img_paths ?? '[]', true) ?? [];
+
+            return view('backend.content.edit-project', compact('content', 'type', 'extra', 'imgPaths'));
         }
 
         return view('backend.content.update', compact('content', 'type'));
