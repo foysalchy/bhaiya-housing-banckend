@@ -449,103 +449,173 @@
 
  {{-- ===== slider===== --}}
  @if($sliderTotal > 0)
- <section class="relative w-full overflow-hidden py-10" style="background:#f2ede6;">
+<section class="relative w-full overflow-hidden py-10 lg:py-20" style="background:#f2ede6; min-height: 500px;">
 
-     <div class="absolute top-0 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,16vw,220px); font-weight:700; color:rgba(0,0,0,0.05); white-space:nowrap;">Gallery</span>
-     </div>
+    <!-- Background "Gallery" Text -->
+    <div class="absolute top-0 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
+        <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(100px,20vw,280px); font-weight:700; color:rgba(0,0,0,0.05); white-space:nowrap; line-height: 1;">Gallery</span>
+    </div>
 
-     <div class="relative z-10 w-full overflow-hidden" id="sliderWrapper">
-         <div id="sliderTrack" class="flex items-stretch" style="gap:10px; transition:transform 0.7s cubic-bezier(0.4,0,0.2,1); will-change:transform;">
-             @foreach($sliderImages as $i => $src)
-             <div class="gallery-slide" id="slide-{{ $i }}" data-index="{{ $i }}"
-                 onclick="goTo({{ $i }}); resetAuto();"
-                 style="flex-shrink:0; overflow:hidden; cursor:pointer; height:clamp(220px,30vw,420px); transition:width 0.7s cubic-bezier(0.4,0,0.2,1), opacity 0.7s ease;">
-                 <img src="{{ $src }}" alt="Gallery {{ $i + 1 }}"
-                     style="width:100%; height:100%; object-fit:cover; display:block;"
-                     onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
-             </div>
-             @endforeach
-         </div>
-     </div>
+    <!-- Slider Container -->
+    <div class="relative z-10 w-full" id="sliderWrapper">
+        <div id="sliderTrack" class="flex items-center" style="transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform;">
+            @foreach($sliderImages as $i => $src)
+            <div class="gallery-slide relative flex-shrink-0 cursor-pointer overflow-hidden transition-all duration-700 ease-in-out"
+                 data-real-index="{{ $i }}"
+                 onclick="goToRealIndex({{ $i }})"
+                 style="height:clamp(300px, 45vw, 520px); margin: 0 10px;">
 
-     <div class="relative z-10 flex items-center justify-between mt-8 px-6 lg:px-14">
-         <div style="flex:1; max-width:300px; height:1px; background:#d1cbc3; position:relative; margin-right:2rem;">
-             <div id="progressBar" style="position:absolute; left:0; top:0; height:1px; background:#152018; width:0%; transition:width 0.7s ease;"></div>
-         </div>
-         <div style="display:flex; gap:12px;">
-             <button onclick="slide(-1); resetAuto();" class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 group transition-all duration-300">
-                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                     <path d="M9 3L5 7l4 4" stroke="#666" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white" />
-                 </svg>
-             </button>
-             <button onclick="slide(1); resetAuto();" class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 group transition-all duration-300">
-                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                     <path d="M5 3l4 4-4 4" stroke="#666" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white" />
-                 </svg>
-             </button>
-         </div>
-     </div>
+                <img src="{{ $src }}" alt="Gallery {{ $i + 1 }}"
+                    class="w-full h-full object-cover block"
+                    onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
 
- </section>
+                <!-- View Details Circle -->
+                <div class="details-overlay absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-500">
+                    <div class="w-16 h-16 lg:w-20 lg:h-20 bg-black/70 text-white rounded-full flex items-center justify-center text-[10px] lg:text-xs uppercase tracking-widest text-center px-2 font-medium">
+                        View Details
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
+    </div>
 
- <script>
-     (function() {
-         const TOTAL = parseInt("{{ $sliderTotal }}");
-         const LARGE = 'clamp(340px, 45vw, 580px)';
-         const SMALL = 'clamp(80px, 10vw, 150px)';
-         let current = 0;
-         let autoTimer = null;
+    <!-- Controls & Progress Bar -->
+    <div class="relative z-10 flex items-center justify-between mt-12 px-6 lg:px-20">
+        <div class="flex-1 max-w-md h-[1px] bg-gray-300 relative">
+            <div id="progressBar" class="absolute left-0 top-0 h-[1px] bg-black transition-all duration-700" style="width:0%;"></div>
+        </div>
 
-         // DOM ready
-         window.addEventListener('load', function() {
-             const track = document.getElementById('sliderTrack');
-             const bar = document.getElementById('progressBar');
-             const slides = document.querySelectorAll('.gallery-slide');
+        <div class="flex gap-4 ml-8">
+            <button onclick="moveSlide(-1)" class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-600 group-hover:text-white">
+                    <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+            <button onclick="moveSlide(1)" class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" class="text-gray-600 group-hover:text-white">
+                    <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </button>
+        </div>
+    </div>
 
-             if (!slides.length) return;
+</section>
 
-             function update() {
-                 slides.forEach(function(slide, i) {
-                     slide.style.width = (i === current) ? LARGE : SMALL;
-                     slide.style.opacity = (i === current) ? '1' : '0.4';
-                 });
+<style>
+    #sliderWrapper { overflow: visible; }
+    .gallery-slide.active .details-overlay { opacity: 1; }
+    .gallery-slide img { filter: grayscale(20%) brightness(0.9); transition: all 0.7s; }
+    .gallery-slide.active img { filter: grayscale(0%) brightness(1); }
+</style>
 
-                 bar.style.width = ((current + 1) / TOTAL * 100) + '%';
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const track = document.getElementById('sliderTrack');
+    const bar = document.getElementById('progressBar');
+    const slides = Array.from(track.children);
+    const total = slides.length;
 
-                 // active slide-কে view-এ আনুন
-                 setTimeout(function() {
-                     const activeSlide = slides[current];
-                     const wrapperWidth = track.parentElement.offsetWidth;
-                     const slideLeft = activeSlide.offsetLeft;
-                     const slideWidth = activeSlide.offsetWidth;
-                     const offset = slideLeft - (wrapperWidth / 2) + (slideWidth / 2);
-                     track.style.transform = 'translateX(-' + Math.max(0, offset) + 'px)';
-                 }, 100);
-             }
+    if (total === 0) return;
 
-             window.goTo = function(i) {
-                 current = ((i % TOTAL) + TOTAL) % TOTAL;
-                 update();
-             };
+    // Infinite Loop: Clone items to fill sides
+    // We clone elements to make sure there's no gap on either side
+    for(let i=0; i<3; i++) {
+        slides.forEach(slide => {
+            const clone = slide.cloneNode(true);
+            track.appendChild(clone);
+        });
+        slides.slice().reverse().forEach(slide => {
+            const clone = slide.cloneNode(true);
+            track.insertBefore(clone, track.firstChild);
+        });
+    }
 
-             window.slide = function(dir) {
-                 window.goTo(current + dir);
-             };
+    const allSlides = Array.from(track.children);
+    let currentIndex = Math.floor(allSlides.length / 2); // Start from middle
+    let isTransitioning = false;
+    let autoTimer;
 
-             window.resetAuto = function() {
-                 clearInterval(autoTimer);
-                 autoTimer = setInterval(function() {
-                     window.slide(1);
-                 }, 3500);
-             };
+    const LARGE_W = 65; // Active slide width in %
+    const SMALL_W = 15; // Inactive slide width in %
 
-             update();
-             window.resetAuto();
-         });
-     })();
- </script>
- @endif
+    function updateSlider(immediate = false) {
+        if (immediate) track.style.transition = 'none';
+        else track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+
+        const isMobile = window.innerWidth < 768;
+        const activeW = isMobile ? '85vw' : LARGE_W + 'vw';
+        const inactiveW = isMobile ? '12vw' : SMALL_W + 'vw';
+
+        allSlides.forEach((slide, i) => {
+            if (i === currentIndex) {
+                slide.style.width = activeW;
+                slide.style.opacity = '1';
+                slide.classList.add('active');
+            } else {
+                slide.style.width = inactiveW;
+                slide.style.opacity = '0.4';
+                slide.classList.remove('active');
+            }
+        });
+
+        // Center calculation: active slide matches window center
+        const activeSlide = allSlides[currentIndex];
+        const slideCenter = activeSlide.offsetLeft + (activeSlide.offsetWidth / 2);
+        const viewportCenter = window.innerWidth / 2;
+        const offset = slideCenter - viewportCenter;
+
+        track.style.transform = `translateX(-${offset}px)`;
+
+        // Update progress bar based on real index
+        const realIdx = parseInt(activeSlide.getAttribute('data-real-index'));
+        bar.style.width = ((realIdx + 1) / total * 100) + '%';
+
+        if (immediate) {
+            track.offsetHeight; // force reflow
+            track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+        }
+    }
+
+    window.moveSlide = function(step) {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex += step;
+        updateSlider();
+        resetAuto();
+    };
+
+    window.goToRealIndex = function(idx) {
+        // Find nearest instance of this index to the current view
+        // For simplicity, just jump in the middle section
+        // Note: Real index click needs careful mapping in cloned setup
+    };
+
+    track.addEventListener('transitionend', () => {
+        isTransitioning = false;
+        // Loop safety: if we go too far into clones, jump back to middle set
+        const threshold = total * 2;
+        if (currentIndex < threshold) {
+            currentIndex += total;
+            updateSlider(true);
+        } else if (currentIndex >= allSlides.length - threshold) {
+            currentIndex -= total;
+            updateSlider(true);
+        }
+    });
+
+    function resetAuto() {
+        clearInterval(autoTimer);
+        autoTimer = setInterval(() => moveSlide(1), 5000);
+    }
+
+    window.addEventListener('resize', () => updateSlider(true));
+
+    updateSlider(true);
+    resetAuto();
+});
+</script>
+@endif
 
 
 

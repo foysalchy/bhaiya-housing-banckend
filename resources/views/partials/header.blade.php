@@ -101,10 +101,10 @@
                 </a>
                 @endforeach
 
-    
+
 
                 <!-- Contact Us -->
-                <a href="/contact"
+                <a href="#"
                     class="menu-link block text-white transition-opacity duration-300"
                     style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
                     data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
