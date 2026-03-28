@@ -3,10 +3,10 @@
 
     <!-- Logo -->
     <a href="/" class="z-50 flex-shrink-0">
-        <img src="{{ $setting->img_path ?? asset('images/logo-white.png') }}"
-            alt="{{ $setting->title ?? 'Bhaiya Housing' }}"
-            class="h-10 w-auto"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
+        alt="{{ $setting->title ?? 'Bhaiya' }}"
+        class="h-10 w-auto"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
         <span class="hidden text-white font-semibold text-lg tracking-widest"
             style="font-family:'Jost',sans-serif;">
             {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
@@ -38,10 +38,10 @@
     <div class="relative z-10 flex items-center justify-between px-8 md:px-14 py-7 flex-shrink-0">
         <!-- Logo -->
         <a href="/">
-            <img src="{{ $setting->img_path ?? asset('images/logo-white.png') }}"
-                alt="{{ $setting->title ?? 'Bhaiya Housing' }}"
-                class="h-10 w-auto"
-                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+            <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
+            alt="{{ $setting->title ?? 'Bhaiya' }}"
+            class="h-10 w-auto"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
             <span class="hidden text-white font-semibold text-lg tracking-widest"
                 style="font-family:'Jost',sans-serif;">
                 {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
