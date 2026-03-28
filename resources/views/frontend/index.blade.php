@@ -831,7 +831,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             $isLast = $index === count($newsEvents) - 1;
             $type = ucfirst($item['type']);
             $date = $item['start_date'];
-            $url = $item['url'];
+            $url =  '/' . strtolower($item['type']) . '/' . $item['id'];
             @endphp
 
             <a href="{{ $url }}"
