@@ -415,7 +415,7 @@ $setting->title ?? 'Bhaiya Housing',
                     {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
                 </p>
                 <div class="fade-in delay-4">
-                    <a href="{{ $dreams->url ?? 'about.html' }}" class="circle-btn">Learn More</a>
+                    <a href="{{ route('front.about') }}" class="circle-btn">Learn More</a>
                 </div>
             </div>
 
@@ -470,7 +470,7 @@ $setting->title ?? 'Bhaiya Housing',
                 </p>
 
                 <div class="fade-in delay-4">
-                    <a href="{{ $dreams->url ?? 'about.html' }}" class="circle-btn">Learn More</a>
+                    <a href="{{route('front.about') }}" class="circle-btn">Learn More</a>
                 </div>
             </div>
 
@@ -830,7 +830,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             @php
             $isLast = $index === count($newsEvents) - 1;
             $type = ucfirst($item['type']);
-            $date = $item['date'];
+            $date = $item['start_date'];
             $url = $item['url'];
             @endphp
 
@@ -841,7 +841,9 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 <div class="w-full sm:w-40 flex-shrink-0 flex sm:flex-col flex-row gap-2 sm:gap-0">
                     <p class="text-base md:text-xl text-[#54504a] font-medium">{{ $type }}</p>
                     @if($date)
-                    <p class="text-xs md:text-sm text-[#857f77] sm:mt-1">{{ $date }}</p>
+                    <p class="text-xs md:text-sm text-[#857f77] sm:mt-1">
+                        {{ \Carbon\Carbon::parse($date)->format('d F Y') }}
+                    </p>
                     @endif
                 </div>
 

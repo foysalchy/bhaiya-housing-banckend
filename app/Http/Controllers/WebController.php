@@ -161,9 +161,7 @@ class WebController extends Controller
             'careerOverview',
             'jobPositions',
             'jobList',
-            ));
-    
-
+        ));
     }
     public function jobDetail($slug)
     {
@@ -315,7 +313,24 @@ class WebController extends Controller
             ])->values();
         return view('frontend.event', compact('eventHero', 'newsEvents'));
     }
+    public function show($id)
+    {
+        $item = Content::whereIn('type', ['news', 'events'])
+            ->where('status', 1)
+            ->findOrFail($id);
 
+        $imgPaths = json_decode($item->img_paths ?? '[]', true) ?? [];
+
+
+        $related = Content::where('type', $item->type)
+            ->where('status', 1)
+            ->where('id', '!=', $item->id)
+            ->orderBy('start_date', 'desc')
+            ->take(3)
+            ->get();
+
+        return view('frontend.news-event-detail', compact('item', 'imgPaths', 'related'));
+    }
     public function customerContact()
     {
         $contactHero = Content::where('type', 'hero')
