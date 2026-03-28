@@ -43,6 +43,8 @@ Route::post('/career/apply', [WebController::class, 'applyJob'])->name('job.appl
 Route::get('/projects', [WebController::class, 'projects'])->name('projects');
 Route::get('/projects/{id}', [WebController::class, 'showProject'])->name('projects.show');
 Route::get('/events', [WebController::class, 'events'])->name('events');
+Route::get('/news/{id}',   [WebController::class, 'show'])->name('news.show');
+Route::get('/events/{id}', [WebController::class, 'show'])->name('events.show');
 Route::get('/customer-contact',        [WebController::class, 'customerContact'])->name('contact');
 Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store');
 Route::get('/landowner-contact',        [WebController::class, 'landowner'])->name('landowner');
