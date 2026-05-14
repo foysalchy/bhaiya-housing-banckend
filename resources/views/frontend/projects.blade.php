@@ -169,11 +169,11 @@
 
  </section>
 
- <section class="relative w-full overflow-hidden py-16" style="background:#f2ede6; font-family:'Jost',sans-serif;">
+ <section class="relative w-full overflow-hidden py-16" style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
 
      <!-- Ghost BG text -->
      <div class="absolute top-6 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,200px); font-weight:700; color:rgba(0,0,0,0.055); white-space:nowrap; line-height:1;">
+         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,200px); font-weight:700; font-style:italic; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
              Signature
          </span>
      </div>
@@ -195,58 +195,58 @@
          <!-- Filters -->
          <div class="flex flex-col md:flex-row gap-0 mb-12" style="border-bottom:1px solid #c8c0b4;">
 
-            <!-- Status -->
-            <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
-                <label for="filterStatus" class="sr-only">Filter by Status</label>
-                <select id="filterStatus" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-0 cursor-pointer outline-none"
-                    style="font-family:'Jost',sans-serif; border:none;">
-                    <option value="all">All Status</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="complete">Complete</option>
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </div>
+             <!-- Status -->
+     <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
+    <label for="filterStatus" class="sr-only">Filter by Status</label>
+    <select id="filterStatus" onchange="applyFilters()"
+        class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
+        style="font-family:'Jost',sans-serif; border:none;">
+        <option value="all">All Status</option>
+        <option value="upcoming">Upcoming</option>
+        <option value="ongoing">Ongoing</option>
+        <option value="complete">Complete</option>
+    </select>
+    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    </div>
+</div>
 
-            <!-- Type -->
-            <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
-               <label for="filterType" class="sr-only">Filter by Type</label>
-                <select id="filterType" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-                    style="font-family:'Jost',sans-serif; border:none;">
-                    <option value="all">All Types</option>
-                    <option value="residential">Residential</option>
-                    <option value="commercial">Commercial</option>
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </div>
+             <!-- Type -->
+             <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
+                 <label for="filterType" class="sr-only">Filter by Type</label>
+                 <select id="filterType" onchange="applyFilters()"
+                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
+                     style="font-family:'Jost',sans-serif; border:none;">
+                     <option value="all">All Types</option>
+                     <option value="residential">Residential</option>
+                     <option value="commercial">Commercial</option>
+                 </select>
+                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                         <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                 </div>
+             </div>
 
-            <!-- Location  -->
-            <div class="flex-1 relative">
-                <label for="filterLocation" class="sr-only">Filter by Location</label>
-                <select id="filterLocation" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-                    style="font-family:'Jost',sans-serif; border:none;">
-                    <option value="all">All Locations</option>
-                    @foreach($projectLocations as $loc)
-                    <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
-                    @endforeach
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </div>
-            </div>
+             <!-- Location  -->
+             <div class="flex-1 relative">
+                 <label for="filterLocation" class="sr-only">Filter by Location</label>
+                 <select id="filterLocation" onchange="applyFilters()"
+                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
+                     style="font-family:'Jost',sans-serif; border:none;">
+                     <option value="all">All Locations</option>
+                     @foreach($projectLocations as $loc)
+                     <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
+                     @endforeach
+                 </select>
+                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                         <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                 </div>
+             </div>
 
 
          </div>
@@ -286,7 +286,7 @@
         <a href="${p.url}" style="text-decoration:none;">
             <div class="group cursor-pointer">
                 <!-- Image -->
-                <div class="overflow-hidden mb-4" style="height:clamp(220px,28vw,360px);">
+<div class="overflow-hidden mb-4" style="height:clamp(320px,85vw,500px);" >
                     <img src="${p.img}" alt="${p.title}"
                         class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                         onerror="this.parentElement.style.background='#c8bfb0'; this.style.display='none';" />
@@ -357,9 +357,7 @@
          renderGrid();
      }
 
-    // ── Page load-এ প্রথমবার render ──
-    renderGrid();
-</script>
+     // ── Page load-এ প্রথমবার render ──
+     renderGrid();
+ </script>
  @endsection
-    
-

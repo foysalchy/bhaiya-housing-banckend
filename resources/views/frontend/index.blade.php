@@ -268,103 +268,136 @@ $setting->title ?? 'Bhaiya Housing',
 @section('content')
 
 <!-- ===== HERO ===== -->
-<section id="home" class=" relative h-screen w-full overflow-hidden">
-    <!-- Background -->
+<section id="home" class="inertia-box relative h-screen w-full overflow-hidden" data-speed="1">
+ 
+    {{-- Background --}}
     <div class="absolute inset-0">
-        <img src="{{ $hero->img_path ?? asset('assets/images/hero-bg.jpg') }}" alt="hero-bg" class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
-        <div class="absolute inset-0"
-            style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%);">
-        </div>
+        <img
+            src="{{ $hero->img_path ?? asset('assets/images/hero-bg.jpg') }}"
+            alt="hero-bg"
+            class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]"
+        />
+        <div
+            class="absolute inset-0"
+            style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%)"
+        ></div>
     </div>
-
-    <!-- Content -->
+ 
+    {{-- Content --}}
     <div class="relative z-10 h-full flex flex-col justify-center items-end">
-        <div class="container mx-auto">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+ 
+            {{-- Heading --}}
             <div class="max-w-3xl mt-5">
-
-                <h1
-                    class="font-heading text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
-                    {{$hero->titlle ?? 'We transform your dreams into addresses'}}
+                <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
+                    {{ $hero->titlle ?? 'We transform your dreams into addresses' }}
                 </h1>
             </div>
-
-            <div class="mt-28 max-w-xl opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
-                <p class="ml-10 opacity-80 text-sm md:text-base leading-relaxed font-light px-10">
-                    {{$hero->short ?? 'Immerse yourself in the artistry of exceptional spaces with Bhaiya Housing, where each project is a harmonious blend of prestige, elegance, and refined sophistication. Beyond constructing buildings, we meticulously create residential and commercial environments to reflect your aspirations.'}}
+ 
+            {{-- Description --}}
+            <div class="mt-10 md:mt-28 max-w-xl opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
+                <p class="md:ml-10 opacity-80 text-sm md:text-base leading-relaxed font-light md:px-10">
+                    {{ $hero->short ?? 'Immerse yourself in the artistry of exceptional spaces with Bhaiya Housing, where each project is a harmonious blend of prestige, elegance, and refined sophistication. Beyond constructing buildings, we meticulously create residential and commercial environments to reflect your aspirations.' }}
                 </p>
             </div>
-
+ 
         </div>
     </div>
-
-    <!-- Scroll indicator -->
-    <div class="absolute bottom-10 left-6 md:left-16 z-20 animate-bounce">
-        <div
-            class="w-14 h-14 rounded-full border border-white/30 hover:border-white/60 flex items-center justify-center transition-colors cursor-pointer">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
-                stroke-opacity="0.7">
+ 
+    {{-- Scroll indicator --}}
+    <div class="absolute bottom-10 left-4 md:left-16 z-20 animate-bounce">
+        <div class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 hover:border-white/60 flex items-center justify-center transition-colors cursor-pointer">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.7">
                 <polyline points="6 9 12 15 18 9"></polyline>
             </svg>
         </div>
     </div>
-
-    <!-- Video card -->
-    <div class="absolute bottom-8 right-6 md:right-16 z-20 w-[320px]  flex border border-white/10 bg-black/50 backdrop-blur-md hover:border-white/25 transition-all opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]">
-
-        <!-- Left: Video autoplay (silent preview) -->
-        <div class="w-[150px] flex-shrink-0 relative overflow-hidden">
-            <video class="w-full h-full object-cover" autoplay muted loop playsinline>
+ 
+    {{-- Video card --}}
+    <div class="absolute p-3 md:p-4 bottom-6 md:bottom-8 right-4 md:right-16 z-20
+                flex border border-white/30 hover:border-white/40
+                transition-all duration-300 cursor-pointer group
+                opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]
+                w-[calc(100vw-2rem)] max-w-[360px] sm:max-w-[420px] md:max-w-[500px]
+                h-36 sm:h-40 md:h-48">
+ 
+        {{-- Left: Video thumb --}}
+        <div
+            class="w-[140px] sm:w-[180px] md:w-[250px] flex-shrink-0 relative overflow-hidden bg-neutral-900"
+            onclick="openVideoModal()"
+        >
+            <video
+                class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
+                autoplay
+                muted
+                loop
+                playsinline
+            >
                 <source src="{{ $hero?->video_path ?? asset('videos/home.mp4') }}" type="video/mp4" />
             </video>
-            <div class="absolute inset-0 bg-black/30"></div>
+            <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
         </div>
-
-        <!-- Right: Watch button -->
-        <div class="flex-1 p-3 flex flex-col justify-between">
-            <div class="flex items-center justify-end gap-2">
-                <span class="text-[10px] tracking-[1px] text-white/60">View</span>
-                <div class="w-8 h-8 rounded-full border border-white/30 flex items-center justify-center flex-shrink-0">
-                    <svg width="10" height="12" viewBox="0 0 12 14" fill="none">
-                        <path d="M12 7L0 14V0L12 7Z" fill="white" />
+ 
+        {{-- Right: Info --}}
+        <div class="flex-1 p-2 md:p-3 flex flex-col justify-between">
+ 
+            <div class="flex items-center justify-end gap-2" onclick="openVideoModal()">
+                <span class="text-[10px] tracking-[1.5px] uppercase text-white/50 group-hover:text-white/80 transition-colors duration-300 hidden sm:inline">
+                    View
+                </span>
+                <div class="w-7 h-7 md:w-8 md:h-8 rounded-full border border-white/30 bg-white/5
+                            group-hover:bg-white/15 group-hover:border-white/60 group-hover:scale-110
+                            flex items-center justify-center flex-shrink-0 transition-all duration-300">
+                    <svg width="9" height="11" viewBox="0 0 12 14" fill="none">
+                        <path d="M12 7L0 14V0L12 7Z" fill="white" fill-opacity="0.9" />
                     </svg>
                 </div>
             </div>
-            <p class="text-base font-light tracking-wide cursor-pointer hover:opacity-80 transition-opacity"
-                onclick="openVideoModal()">
-                Watch our video
-            </p>
+ 
+            <div class="flex justify-end">
+                <p
+                    class="text-sm md:text-base font-light tracking-wide text-white/90 group-hover:text-white transition-colors duration-300 leading-snug"
+                    onclick="openVideoModal()"
+                >
+                    Watch our video
+                </p>
+            </div>
+ 
         </div>
-
     </div>
-
-    <!-- ── Video Modal ── -->
-    <div id="videoModal"
-        class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm"
-        style="display:none;"
-        onclick="closeVideoModal(event)">
-
-        <div class="relative w-full max-w-4xl mx-4" onclick="event.stopPropagation()">
-
-            <!-- Close -->
-            <button onclick="closeVideoModal()"
-                class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity">
+ 
+    {{-- Video Modal --}}
+    <div
+        id="videoModal"
+        class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm px-4 md:px-10"
+        style="display: none"
+        onclick="closeVideoModal(event)"
+    >
+        <div class="relative w-full max-w-5xl mx-auto" onclick="event.stopPropagation()">
+ 
+            {{-- Close --}}
+            <button
+                onclick="closeVideoModal()"
+                class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity"
+            >
                 <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round">
                     <line x1="4" y1="4" x2="24" y2="24" />
                     <line x1="24" y1="4" x2="4" y2="24" />
                 </svg>
             </button>
-
-            <!-- Video with sound -->
-            <video id="modalVideo" class="w-full" controls playsinline style="max-height:80vh;">
+ 
+            {{-- Video with sound --}}
+            <video id="modalVideo" class="w-full" controls playsinline style="max-height: 80vh">
                 <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
             </video>
-
+ 
         </div>
     </div>
+ 
 </section>
 
 
-<section class="py-16 md:py-24 overflow-hidden bg-[#FFFDFA]" style="padding-top: 80px;">
+<section class="inertia-box py-16 md:py-24 overflow-hidden bg-[#FFFDFA] kinetic" style="padding-top: 80px;"  data-speed="3">
     <div class="mx-auto px-4 sm:px-6 lg:px-10">
 
         @php
@@ -377,7 +410,7 @@ $setting->title ?? 'Bhaiya Housing',
         <div class="flex flex-col gap-8 md:hidden">
 
             <!-- Heading -->
-            <h2 class="font-display text-4xl sm:text-5xl font-light leading-tight text-gray-900 text-center">
+            <h2 class="font-display  text-4xl sm:text-5xl font-light leading-tight text-gray-900 text-center p-[50px]">
                 {!! nl2br(e($dreams->title ?? "Building\ndreams for\ndecades")) !!}
             </h2>
 
@@ -496,70 +529,129 @@ $setting->title ?? 'Bhaiya Housing',
     </div>
 </section>
 
-@if($featuredProjects->isNotEmpty())
-@php $first = $featuredProjects->first(); @endphp
+@if ($featuredProjects->isNotEmpty())
+    @php $first = $featuredProjects->first(); @endphp
 
-<!-- ===== FEATURED PROJECTS ===== -->
-<section class="relative w-full overflow-hidden"
-    style="height: 100vh; min-height: 600px; padding-bottom: 100px; padding-top: 100px;">
+    {{-- ===== FEATURED PROJECTS ===== --}}
+    <section
+        class="inertia-box relative w-full overflow-hidden backdrop-blur-md"
+        style="height: 100vh; min-height: 600px; padding-bottom: 100px; padding-top: 100px"
+        data-speed="1"
+    >
+        {{-- Background Video --}}
+        <video
+            id="heroVideo"
+            class="absolute inset-0 w-full h-full object-cover"
+            autoplay
+            muted
+            loop
+            playsinline
+        >
+            <source
+                id="heroVideoSource"
+                src="{{ $first->video_path ?? asset('assets/video/1.mp4') }}"
+                type="video/mp4"
+            />
+        </video>
 
-    <!-- Background Video -->
-    <video id="heroVideo" class="absolute inset-0 w-full h-full object-cover" autoplay muted loop playsinline>
-        <source id="heroVideoSource"
-            src="{{ $first->video_path ?? asset('assets/video/1.mp4') }}"
-            type="video/mp4" />
-    </video>
+        {{-- Dark Overlay --}}
+        <div
+            class="absolute inset-0"
+            style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%)"
+        ></div>
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0"
-        style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%);">
-    </div>
-
-    <!-- Top-right: Learn More circle button -->
-    <div class="absolute top-6 right-8 z-20">
-        <a id="heroLearnMore" href="/projects/{{ $first->id }}"
-            class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white text-sm tracking-widest transition-all duration-300 hover:bg-white hover:text-black"
-            style="width:120px; height:120px; font-family:'Jost',sans-serif; font-weight:400; letter-spacing:0.1em; font-size:13px;">
-            Learn More
-        </a>
-    </div>
-
-    <!-- Bottom-left: Title + Address -->
-    <div class="absolute z-20 text-white" style="left: 32px;">
-        <h2 id="heroTitle" class="font-display text-5xl font-light mb-2"
-            style="font-family:'Cormorant Garamond',serif; font-weight:300;">
-            {{ $first->title }}
-        </h2>
-        <p id="heroAddress" class="text-sm tracking-wide opacity-80"
-            style="font-family:'Jost',sans-serif; font-weight:300; letter-spacing:0.05em;">
-            {{ $first->location }}
-        </p>
-    </div>
-
-    <!-- Bottom Thumbnails Strip -->
-    <div class="absolute bottom-10 left-10 z-20 flex gap-1 p-4">
-
-        @foreach($featuredProjects as $i => $project)
-        <div class="thumb-item {{ $i === 0 ? 'active' : '' }} cursor-pointer overflow-hidden"
-            style="width:70px; height:56px; border:2px solid {{ $i === 0 ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)' }};"
-            data-video="{{ $project->video_path ?? asset('assets/video/1.mp4') }}"
-            data-title="{{ $project->title }}"
-            data-address="{{ $project->location }}"
-            data-url="/projects/{{ $project->id }}"
-            onclick="switchVideo(this)">
-            <img src="{{ $project->img_path ?? asset('assets/images/video-thumb' . ($i+1) . '.jpg') }}"
-                alt="{{ $project->title }}"
-                class="w-full h-full object-cover {{ $i === 0 ? 'opacity-90' : 'opacity-70' }} hover:opacity-100 transition-opacity duration-200"
-                onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
+        {{-- Learn More circle button — desktop only --}}
+        <div class="hidden md:block absolute z-20" style="top: 200px; right: 350px">
+            <a
+                id="heroLearnMore"
+                href="/projects/{{ $first->id }}"
+                class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white tracking-widest transition-all duration-300 hover:bg-white hover:text-black"
+                style="width: 200px; height: 200px; font-family: 'Jost', sans-serif; font-weight: 400; letter-spacing: 0.1em; font-size: 13px"
+            >
+                Learn More
+            </a>
         </div>
-        @endforeach
 
-    </div>
+        {{-- Bottom-left: Title + Address --}}
+        <div class="absolute z-20 text-white left-4 md:left-[50px]" >
+            <p
+                class="text-xs tracking-[3px] uppercase text-white mb-3"
+                style="font-family: 'Jost', sans-serif; font-weight: 400"
+            >
+                Featured Project
+            </p>
+            <h2
+                id="heroTitle"
+                class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-2"
+                style="font-family: 'Cormorant Garamond', serif; font-weight: 300"
+            >
+                {{ $first->title }}
+            </h2>
+            <p
+                id="heroAddress"
+                class="text-sm tracking-wide"
+                style="font-family: 'Jost', sans-serif; font-weight: 300; letter-spacing: 0.05em"
+            >
+                {{ $first->location }}
+            </p>
 
+            {{-- Learn More — mobile only --}}
+            <a
+                id="heroLearnMoreMobile"
+                href="/projects/{{ $first->id }}"
+                class="md:hidden inline-block mt-4 text-xs tracking-[2px] uppercase border border-white/60 text-white px-5 py-2 hover:bg-white hover:text-black transition-all duration-300"
+                style="font-family: 'Jost', sans-serif; font-weight: 400"
+            >
+                Learn More
+            </a>
+        </div>
 
-    
-</section>
+        {{-- Bottom Thumbnails Strip --}}
+        <div class="absolute bottom-4 md:bottom-10 left-0 right-0 z-20 px-4 md:px-0 md:left-10">
+            <div class="flex gap-3 md:gap-5 overflow-x-auto scrollbar-hide pb-1 md:p-4 md:overflow-visible">
+
+                @foreach ($featuredProjects as $i => $project)
+                    <div
+                        class="thumb-item {{ $i === 0 ? 'active' : '' }} cursor-pointer overflow-visible relative flex-shrink-0"
+                        style="
+                            width: clamp(120px, 28vw, 200px);
+                            height: clamp(90px, 20vw, 150px);
+                            border: 2px solid {{ $i === 0 ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)' }};
+                        "
+                        data-video="{{ $project->video_path ?? asset('assets/video/1.mp4') }}"
+                        data-title="{{ $project->title }}"
+                        data-address="{{ $project->location }}"
+                        data-url="/projects/{{ $project->id }}"
+                        onclick="switchVideo(this)"
+                    >
+                        <img
+                            src="{{ $project->img_path ?? asset('assets/images/video-thumb' . ($i + 1) . '.jpg') }}"
+                            alt="{{ $project->title }}"
+                            class="w-full h-full object-cover {{ $i === 0 ? 'opacity-90' : 'opacity-70' }} hover:opacity-100 transition-opacity duration-200"
+                            onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';"
+                        />
+
+                        {{-- Progress Bar --}}
+                        <div
+                            class="progress-bar absolute left-0 h-[2px] bg-white z-10 {{ $i === 0 ? '' : 'hidden' }}"
+                            style="width: 0%; top: 100%; margin-top: 4px; transition: none"
+                        ></div>
+                    </div>
+                @endforeach
+
+            </div>
+        </div>
+
+    </section>
 @endif
+
+@push('styles')
+<style>
+    /* Hide scrollbar on thumbnail strip */
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+</style>
+@endpush
 
 <!-- ===== QUALITY / EXCELLENCE ===== -->
 @php
@@ -567,7 +659,7 @@ $expertiseImages = json_decode($expertise->img_paths ?? '[]', true);
 $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 @endphp
 
-<section class="w-full overflow-hidden relative" style="background: rgb(21, 32, 24); padding-bottom: 15vw;">
+<section class="inertia-box w-full overflow-hidden relative" style="background: rgb(21, 32, 24); padding-bottom: 15vw;">
     <div class="bg-image absolute inset-0 w-full h-full overflow-hidden" style="z-index:0;">
         <img id="qualityBg" class="absolute w-full" src="/assets/images/quality-bg.png" alt="image"
             style="top:-20%; left:0; height:140%; object-fit:cover; will-change:transform;" />
@@ -593,7 +685,7 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
                 <span class="block w-px bg-white opacity-40" style="height:28px;"></span>
             </div>
             <p class="text-white opacity-60 tracking-widest uppercase text-xs mb-2"
-                style="letter-spacing:0.2em;">Excellence in</p>
+                style="letter-spacing:0.2em;font-size:16px">Excellence in</p>
             <h3 class="text-white font-light"
                 style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,7vw,96px); font-weight:300;">
                 {{ $expertise->name ?? 'Every detail' }}
@@ -673,7 +765,8 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 @endphp
 
-<section class="w-full relative overflow-hidden pt-16 pb-0 px-5" style="background:#F6F6F6;">
+<section class="w-full relative overflow-hidden pt-16 pb-0 px-5"
+    style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
     <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
 
         <!-- Decorative stone/dot -->
@@ -782,7 +875,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
 <!-- ===== NEWS & EVENTS ===== -->
 <section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative"
-    style="background-color:#f2ede6; color:#2a2825;">
+    style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
 
     <div class="container mx-auto flex flex-col md:flex-row gap-8 lg:gap-24 pt-12 md:pt-[100px]">
 
@@ -831,7 +924,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             $isLast = $index === count($newsEvents) - 1;
             $type = ucfirst($item['type']);
             $date = $item['start_date'];
-            $url =  '/' . strtolower($item['type']) . '/' . $item['id'];
+            $url = '/' . strtolower($item['type']) . '/' . $item['id'];
             @endphp
 
             <a href="{{ $url }}"
@@ -1010,29 +1103,82 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 </script>
 @endif
 <script>
+    let progressInterval = null;
+
+    function startProgress(thumbEl) {
+        const video = document.getElementById('heroVideo');
+        const bar = thumbEl.querySelector('.progress-bar');
+        if (!bar) return;
+
+        bar.style.transition = 'none';
+        bar.style.width = '0%';
+        bar.classList.remove('hidden');
+
+        clearInterval(progressInterval);
+
+        progressInterval = setInterval(() => {
+            if (!video.duration) return;
+            const pct = (video.currentTime / video.duration) * 100;
+            bar.style.transition = 'width 0.3s linear';
+            bar.style.width = pct + '%';
+            if (pct >= 100) clearInterval(progressInterval);
+        }, 300);
+    }
+
     function switchVideo(el) {
-        // Video switch
         const video = document.getElementById('heroVideo');
         const source = document.getElementById('heroVideoSource');
+
+        // loop বন্ধ করো — শেষ হলে next যাবে
+        video.loop = false;
+
         source.src = el.dataset.video;
         video.load();
         video.play();
 
-        // Title & Address update
         document.getElementById('heroTitle').textContent = el.dataset.title;
         document.getElementById('heroAddress').textContent = el.dataset.address;
-
-        // Learn More URL update
         document.getElementById('heroLearnMore').href = el.dataset.url;
 
-        // Active thumbnail border toggle
         document.querySelectorAll('.thumb-item').forEach(t => {
             t.style.border = '2px solid rgba(255,255,255,0.3)';
             t.querySelector('img')?.classList.replace('opacity-90', 'opacity-70');
+            const b = t.querySelector('.progress-bar');
+            if (b) {
+                b.style.width = '0%';
+                b.classList.add('hidden');
+            }
         });
+
         el.style.border = '2px solid rgba(255,255,255,0.8)';
         el.querySelector('img')?.classList.replace('opacity-70', 'opacity-90');
+
+        video.addEventListener('loadedmetadata', () => startProgress(el), {
+            once: true
+        });
     }
+
+    function autoNext() {
+        const thumbs = Array.from(document.querySelectorAll('.thumb-item'));
+        const activeIndex = thumbs.findIndex(t => t.style.border.includes('0.8'));
+        const nextIndex = (activeIndex + 1) % thumbs.length;
+        switchVideo(thumbs[nextIndex]);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const video = document.getElementById('heroVideo');
+        video.loop = false;
+
+        // video শেষ হলে next-এ যাও
+        video.addEventListener('ended', autoNext);
+
+        const first = document.querySelector('.thumb-item.active');
+        if (first && video) {
+            video.addEventListener('loadedmetadata', () => startProgress(first), {
+                once: true
+            });
+        }
+    });
 
     function openVideoModal() {
         const modal = document.getElementById('videoModal');

@@ -1,17 +1,16 @@
 <!-- ── Header ── -->
-<header class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between">
-
-    <!-- Logo -->
-    <a href="/" class="z-50 flex-shrink-0">
-        <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between" style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0);"> <!-- Logo -->
+  <a href="/" class="z-50 flex-shrink-0">
+    <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
         alt="{{ $setting->title ?? 'Bhaiya' }}"
-        class="h-10 w-auto"
+        class="w-auto"
+        style="height: clamp(36px, 5vw, 64px);"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <span class="hidden text-white font-semibold text-lg tracking-widest"
-            style="font-family:'Jost',sans-serif;">
-            {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
-        </span>
-    </a>
+    <span class="hidden text-white font-semibold tracking-widest"
+        style="font-family:'Jost',sans-serif; font-size: clamp(16px, 2vw, 24px);">
+        {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
+    </span>
+</a>
 
     <!-- Hamburger -->
     <button id="menuToggle" onclick="openMenu()"
@@ -39,9 +38,9 @@
         <!-- Logo -->
         <a href="/">
             <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
-            alt="{{ $setting->title ?? 'Bhaiya' }}"
-            class="h-10 w-auto"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                alt="{{ $setting->title ?? 'Bhaiya' }}"
+                class="h-10 w-auto"
+                onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
             <span class="hidden text-white font-semibold text-lg tracking-widest"
                 style="font-family:'Jost',sans-serif;">
                 {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
@@ -89,51 +88,79 @@
                 ['href' => '/events', 'label' => 'News & Events', 'key' => 'events'],
                 ];
                 @endphp
-
-      @foreach($staticLinks as $link)
-<a href="{{ $link['href'] }}"
-    class="menu-link block text-white opacity-50 transition-opacity duration-300 hover:opacity-100"
-    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25;"
-    data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
-    onmouseover="hoverLink(this)"
-    onmouseout="unhoverLink(this)">
-    {{ $link['label'] }}
-</a>
-@endforeach
-
-
-
-                <!-- Contact Us -->
-                <a href="#"
-                    class="menu-link block text-white transition-opacity duration-300"
-                    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
-                    data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
+                @foreach($staticLinks as $link)
+                <a href="{{ $link['href'] }}"
+                    class="menu-link group block text-white opacity-50 transition-opacity duration-300 hover:opacity-100 flex items-center gap-4"
+                    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25;"
+                    data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
-                    Contact Us
+                    <span class="block h-px bg-white w-0 group-hover:w-24 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 flex-shrink-0"></span>
+                    <span>{{ $link['label'] }}</span>
                 </a>
+                @endforeach
 
-                <div class="flex items-center gap-10 pl-1" style="margin-top:-4px;">
-                    <a href="/landowner-contact"
-                        class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
-                        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
-                        <span class="block w-6 h-px bg-white/40"></span>
-                        As A Landowner
-                    </a>
-                    <a href="/customer-contact"
-                        class="text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
-                        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
-                        <span class="block w-6 h-px bg-white/40"></span>
-                        As A Customer
-                    </a>
-                </div>
+              <!-- Contact Us -->
+<a href="#"
+    class="menu-link block text-white transition-opacity duration-300"
+    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
+    data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
+    onmouseover="hoverLink(this)"
+    onmouseout="unhoverLink(this)">
+    Contact Us
+</a>
 
-            </nav>
-
-            <!-- Vertical line -->
-            <div class="self-stretch w-px ml-8 flex-shrink-0"
-                style="background:rgba(255,255,255,0.2);"></div>
+<div class="flex items-center gap-10 pl-1" style="margin-top:-4px;">
+    <a href="/landowner-contact"
+        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
+        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
+        As A Landowner
+    </a>
+    <a href="/customer-contact"
+        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
+        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
+        As A Customer
+    </a>
+</div>
         </div>
+
+        </nav>
+
+        <!-- Vertical line -->
+        <div class="self-stretch w-px ml-8 flex-shrink-0"
+            style="background:rgba(255,255,255,0.2);"></div>
     </div>
+</div>
 
 </div>
+
+<script>
+    (function() {
+        let lastScroll = 0;
+        const header = document.getElementById('site-header');
+
+        window.addEventListener('scroll', function() {
+            const current = window.scrollY;
+
+            if (current > 80 && current > lastScroll) {
+                // scroll down — hide
+                header.style.transform = 'translateY(-100%)';
+                header.style.background = 'transparent';
+            } else {
+                // scroll up — show with bg
+                header.style.transform = 'translateY(0)';
+                if (current > 80) {
+                    header.style.background = '#152018';
+                } else {
+                    header.style.background = 'transparent';
+                }
+            }
+
+            lastScroll = current;
+        }, {
+            passive: true
+        });
+    })();
+</script>

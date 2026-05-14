@@ -142,41 +142,44 @@
  </section>
 
  {{-- ── Top Bar ── --}}
- <div class="w-full h-40 flex flex-wrap items-center gap-6 py-4"
-     style="background:#152018; padding-left:100px; padding-right:100px;">
+<div class="w-full flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-8 md:py-0 md:h-40 px-6 sm:px-10 md:px-16 lg:px-[100px]"
+    style="background:#152018;">
 
-     <p class="text-white font-medium text-2xl mr-auto">Let's talk!</p>
+    <p class="text-white font-medium text-xl md:text-2xl md:mr-auto">Let's talk!</p>
 
-     @if($setting?->body)
-     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-             <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
-             <circle cx="12" cy="10" r="3" />
-         </svg>
-         <span>{!! $setting->body !!}</span>
-     </div>
-     @endif
+    <div class="flex flex-col sm:flex-row flex-wrap gap-4 md:gap-6">
 
-     @if($setting?->extra)
-     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-             <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.19 1.22 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
-         </svg>
-         <span>{{ $setting->extra }}</span>
-     </div>
-     @endif
+        @if($setting?->body)
+        <div class="flex items-center gap-2 text-white text-base md:text-xl font-light opacity-80">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+                <circle cx="12" cy="10" r="3" />
+            </svg>
+            <span>{!! $setting->body !!}</span>
+        </div>
+        @endif
 
-     @if($setting?->short)
-     <div class="flex items-center gap-2 text-white text-xl font-light opacity-80">
-         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-             <polyline points="22,6 12,13 2,6" />
-         </svg>
-         <span>{{ $setting->short }}</span>
-     </div>
-     @endif
+        @if($setting?->extra)
+        <div class="flex items-center gap-2 text-white text-base md:text-xl font-light opacity-80">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.19 1.22 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.09a16 16 0 006 6l.56-.56a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z" />
+            </svg>
+            <span>{{ $setting->extra }}</span>
+        </div>
+        @endif
 
- </div>
+        @if($setting?->short)
+        <div class="flex items-center gap-2 text-white text-base md:text-xl font-light opacity-80">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                <polyline points="22,6 12,13 2,6" />
+            </svg>
+            <span>{{ $setting->short }}</span>
+        </div>
+        @endif
+
+    </div>
+</div>
 
  {{-- ── Main Section ── --}}
  <section class="relative w-full overflow-hidden py-20" style="background:#f2ede6;">

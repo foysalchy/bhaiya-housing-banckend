@@ -182,54 +182,57 @@
     </div>
 
     <!-- Logo Grid -->
-    @if(count($rows) > 0)
-    <div class="w-full" style="border-top:1px solid #d8d0c8;">
+@if(count($rows) > 0)
+<div class="w-full" style="border-top:1px solid #d8d0c8;">
 
-        {{-- ── Desktop: original row/col grid ── --}}
-        <div class="hidden md:block">
-            @foreach($rows as $rowIndex => $row)
-            <div class="flex {{ $rowIndex > 0 ? 'border-t border-[#d8d0c8]' : '' }}">
+    {{-- ── Desktop: original row/col grid ── --}}
+    <div class="hidden md:block">
+        @foreach($rows as $rowIndex => $row)
+        <div class="flex {{ $rowIndex > 0 ? 'border-t border-[#d8d0c8]' : '' }}">
 
-                @foreach($row as $colIndex => $logo)
-                <div class="logo-cell flex-1 flex items-center justify-center p-8 lg:p-10 group cursor-pointer transition-all duration-300 hover:bg-white"
-                    style="{{ $colIndex < count($row) - 1 ? 'border-right:1px solid #d8d0c8;' : '' }} min-height:140px;">
-                    <img src="{{ asset($logo->img_path) }}"
-                        alt="{{ $logo->title ?? 'Brand' }}"
-                        class="max-h-14 lg:max-h-16 w-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                        onerror="this.style.display='none';" />
-                </div>
-                @endforeach
-
-                @php
-                $expectedCount = ($rowIndex % 2 === 0) ? 5 : 4;
-                $emptyCount = $expectedCount - count($row);
-                @endphp
-
-                @for($e = 0; $e < $emptyCount; $e++)
-                <div class="flex-1" style="min-height:140px; border-left:1px solid #d8d0c8;"></div>
-                @endfor
-
+            @foreach($row as $colIndex => $logo)
+            <div class="logo-cell flex-1 flex items-center justify-center p-8 lg:p-10 group cursor-pointer transition-all duration-300 hover:bg-white"
+                style="{{ $colIndex < count($row) - 1 ? 'border-right:1px solid #d8d0c8;' : '' }} min-height:200px;">
+                <img src="{{ asset($logo->img_path) }}"
+                    alt="{{ $logo->title ?? 'Brand' }}"
+                    class="w-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onerror="this.style.display='none';" />
             </div>
             @endforeach
-        </div>
 
-        {{-- ── Mobile: flat 2-column grid ── --}}
-        <div class="grid grid-cols-2 sm:grid-cols-3 md:hidden">
-            @foreach($rows as $row)
-                @foreach($row as $logo)
-                <div class="flex items-center justify-center p-6 border-b border-r border-[#d8d0c8] group cursor-pointer transition-all duration-300 hover:bg-white"
-                    style="min-height:110px;">
-                    <img src="{{ asset($logo->img_path) }}"
-                        alt="{{ $logo->title ?? 'Brand' }}"
-                        class="max-h-12 w-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
-                        onerror="this.style.display='none';" />
-                </div>
-                @endforeach
-            @endforeach
-        </div>
-
+            @php
+            $expectedCount = ($rowIndex % 2 === 0) ? 5 : 4;
+            $emptyCount = $expectedCount - count($row);
+            @endphp
+@if($emptyCount > 0)
+    @for($e = 0; $e < $emptyCount; $e++)
+    <div class="flex-1"
+        style="min-height:140px; {{ $rowIndex < count($rows) - 1 ? 'border-left:1px solid #d8d0c8;' : '' }}">
     </div>
-    @endif
+    @endfor
+@endif
+
+        </div>
+        @endforeach
+    </div>
+
+    {{-- ── Mobile: flat 2-column grid ── --}}
+    <div class="grid grid-cols-2 sm:grid-cols-3 md:hidden">
+        @foreach($rows as $row)
+            @foreach($row as $logo)
+            <div class="flex items-center justify-center p-6 border-b border-r border-[#d8d0c8] group cursor-pointer transition-all duration-300 hover:bg-white"
+                style="min-height:110px;">
+                <img src="{{ asset($logo->img_path) }}"
+                    alt="{{ $logo->title ?? 'Brand' }}"
+                    class="max-h-12 w-auto object-contain grayscale opacity-70 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-300"
+                    onerror="this.style.display='none';" />
+            </div>
+            @endforeach
+        @endforeach
+    </div>
+
+</div>
+@endif
 
 </section>
 
