@@ -153,50 +153,68 @@
 @section('content')
 
 <!-- HERO -->
-<section class="relative w-full overflow-hidden py-32" style="background:#1B281F;">
-    <div class="container mx-auto px-6 lg:px-14 relative z-10">
-        <div class="flex flex-col md:flex-row justify-between">
-            <div>
-                <h1 class="font-serif italic text-white mb-6"
-                    style="font-size:clamp(32px,5vw,72px); font-weight:300;">
-                    {{ $job->title }}
-                </h1>
-                <div style="border-top:1px solid rgba(255, 255, 255, 0.637); width:700px;"></div>
-            </div>
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden  h-[600px] md:h-[700px] lg:h-[800px]"
+    style="z-index:1; transform-origin:top center; will-change:transform;">
 
-            <!-- Meta Right -->
-            <div class="mt-8 md:mt-0 space-y-4 text-right">
-                @if($job->extra)
+    {{-- Background --}}
+    <div class="absolute inset-0" style="background:#1B281F;"></div>
+
+    {{-- Optional subtle texture/overlay --}}
+    <div class="absolute inset-0 opacity-20"
+        style="background: radial-gradient(ellipse at 70% 50%, #2d4a33, transparent 70%);"></div>
+
+    {{-- Content --}}
+    <div class="absolute inset-0 flex items-center">
+        <div class="container mx-auto px-6 lg:px-14">
+            <div class="flex flex-col md:flex-row justify-between items-end">
+
+                {{-- Left: Title --}}
                 <div>
-                    <p class="text-white/50 text-sm">Department</p>
-                    <p class="text-white font-medium">{{ $job->extra }}</p>
+                    <h1 class="font-serif italic text-white mb-6"
+                        style="font-size:clamp(28px,5vw,72px); font-weight:300;">
+                        {{ $job->title }}
+                    </h1>
+                    <div style="border-top:1px solid rgba(255,255,255,0.4); width:min(600px, 80vw);"></div>
                 </div>
-                @endif
-                @if($job->location)
-                <div>
-                    <p class="text-white/50 text-sm">Location</p>
-                    <p class="text-white font-medium">{{ $job->location }}</p>
+
+                {{-- Right: Meta --}}
+                <div class="mt-6 md:mt-0 space-y-3 text-right">
+                    @if($job->extra)
+                    <div>
+                        <p class="text-white/50 text-xs uppercase tracking-wider">Department</p>
+                        <p class="text-white font-medium text-sm">{{ $job->extra }}</p>
+                    </div>
+                    @endif
+                    @if($job->location)
+                    <div>
+                        <p class="text-white/50 text-xs uppercase tracking-wider">Location</p>
+                        <p class="text-white font-medium text-sm">{{ $job->location }}</p>
+                    </div>
+                    @endif
+                    @if($job->body_2)
+                    <div>
+                        <p class="text-white/50 text-xs uppercase tracking-wider">Job Type</p>
+                        <p class="text-white font-medium text-sm">{!! $job->body_2 !!}</p>
+                    </div>
+                    @endif
+                    @if($job->body_3)
+                    <div>
+                        <p class="text-white/50 text-xs uppercase tracking-wider">Experience</p>
+                        <p class="text-white font-medium text-sm">{!! $job->body_3 !!}</p>
+                    </div>
+                    @endif
                 </div>
-                @endif
-                @if($job->body_2)
-                <div>
-                    <p class="text-white/50 text-sm">Job Type</p>
-                    <p class="text-white font-medium">{!!  $job->body_2 !!}</p>
-                </div>
-                @endif
-                @if($job->body_3)
-                <div>
-                    <p class="text-white/50 text-sm">Experience</p>
-                    <p class="text-white font-medium">{!! $job->body_3 !!}</p>
-                </div>
-                @endif
+
             </div>
         </div>
     </div>
+
 </section>
+<div class="w-full pointer-events-none  h-[600px] md:h-[700px] lg:h-[800px]"></div>
+
 
 <!-- DETAIL + FORM -->
-<section class="relative w-full py-20 bg-white">
+<section class="relative z-10 w-full py-20 bg-white">
     <div class="container mx-auto px-6 lg:px-14">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
 

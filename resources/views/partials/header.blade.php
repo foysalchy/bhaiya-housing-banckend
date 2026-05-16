@@ -1,5 +1,5 @@
 <!-- ── Header ── -->
-<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between" style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0);"> <!-- Logo -->
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between" style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0);z-index: 50;"> <!-- Logo -->
   <a href="/" class="z-50 flex-shrink-0">
     <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
         alt="{{ $setting->title ?? 'Bhaiya' }}"
@@ -90,7 +90,7 @@
                 @endphp
                 @foreach($staticLinks as $link)
                 <a href="{{ $link['href'] }}"
-                    class="menu-link group block text-white opacity-50 transition-opacity duration-300 hover:opacity-100 flex items-center gap-4"
+                    class="menu-link group block text-white opacity-50 transition-opacity duration-300 hover:opacity-100 flex items-center gap-4 "
                     style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25;"
                     data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"

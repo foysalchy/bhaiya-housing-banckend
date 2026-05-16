@@ -141,44 +141,52 @@
  @endsection
  @section('content')
 
- <!-- ===== HERO ===== -->
- <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]"
+    style="z-index: 1; transform-origin: top center; will-change: transform;">
 
-     <!-- Background Image -->
-     <img src="{{ $projectHero->img_path ?? asset('assets/images/projectmain.jpg') }}"
-         alt="interior"
-         class="absolute inset-0 w-full h-full object-cover" />
+    <img src="{{ $projectHero->img_path ?? asset('assets/images/projectmain.jpg') }}"
+        alt="interior"
+        class="absolute inset-0 w-full h-full object-cover" />
 
-     <!-- Dark Overlay -->
-     <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute inset-0 bg-black/50"></div>
 
-     <!-- Text -->
-     <div class="absolute inset-0 flex items-center px-10 md:px-20">
-         <h2 class="text-white font-light"
-             style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
-             @if($projectHero?->title)
-             {!! $projectHero->title !!}
-             @else
-             <span style="font-family:'Jost',sans-serif; font-weight:400;">Where </span>
-             <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">innovation </em>
-             <span style="font-family:'Jost',sans-serif; font-weight:400;">meets </span>
-             <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">quality &amp; trust</em>
-             @endif
-         </h2>
-     </div>
+    <div class="absolute inset-0 flex items-center px-10 md:px-20">
+        <h2 class="text-white font-light"
+            style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
+            @if($projectHero?->title)
+                {!! $projectHero->title !!}
+            @else
+                <span style="font-family:'Jost',sans-serif; font-weight:400;">Where </span>
+                <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">innovation </em>
+                <span style="font-family:'Jost',sans-serif; font-weight:400;">meets </span>
+                <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">quality &amp; trust</em>
+            @endif
+        </h2>
+    </div>
 
- </section>
+</section>
 
- <section class="relative w-full overflow-hidden py-16" style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
+{{-- Spacer --}}
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 
-     <!-- Ghost BG text -->
+{{-- Project section --}}
+<section class="relative w-full overflow-hidden py-16"
+    style="z-index: 2;
+           background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;
+           box-shadow: 0 -12px 40px rgba(0,0,0,0.15);">
+
+
+
+     {{-- Ghost BG text --}}
      <div class="absolute top-6 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
          <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,200px); font-weight:700; font-style:italic; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
              Signature
          </span>
      </div>
 
-     <!-- BG decorative image -->
+     {{-- BG decorative image --}}
      <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
          <img src="/assets/images/bg-image.avif" alt="" class="w-full h-full object-cover opacity-10"
              onerror="this.style.display='none';" />
@@ -186,34 +194,34 @@
 
      <div class="relative z-10 container mx-auto px-6 lg:px-14">
 
-         <!-- Heading -->
+         {{-- Heading --}}
          <h2 class="mb-10 font-light text-gray-900" style="font-size:clamp(28px,4vw,56px); line-height:1.15;">
              <span style="font-family:'Jost',sans-serif; font-weight:400;">Discover Our </span>
              <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Signature Projects</em>
          </h2>
 
-         <!-- Filters -->
+         {{-- Filters --}}
          <div class="flex flex-col md:flex-row gap-0 mb-12" style="border-bottom:1px solid #c8c0b4;">
 
-             <!-- Status -->
-     <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
-    <label for="filterStatus" class="sr-only">Filter by Status</label>
-    <select id="filterStatus" onchange="applyFilters()"
-        class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-        style="font-family:'Jost',sans-serif; border:none;">
-        <option value="all">All Status</option>
-        <option value="upcoming">Upcoming</option>
-        <option value="ongoing">Ongoing</option>
-        <option value="complete">Complete</option>
-    </select>
-    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
-        </svg>
-    </div>
-</div>
+             {{-- Status --}}
+             <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
+                 <label for="filterStatus" class="sr-only">Filter by Status</label>
+                 <select id="filterStatus" onchange="applyFilters()"
+                     class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
+                     style="font-family:'Jost',sans-serif; border:none;">
+                     <option value="all">All Status</option>
+                     <option value="upcoming">Upcoming</option>
+                     <option value="ongoing">Ongoing</option>
+                     <option value="complete">Complete</option>
+                 </select>
+                 <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                     <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                         <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round" />
+                     </svg>
+                 </div>
+             </div>
 
-             <!-- Type -->
+             {{-- Type --}}
              <div class="flex-1 relative" style="border-right:1px solid #c8c0b4;">
                  <label for="filterType" class="sr-only">Filter by Type</label>
                  <select id="filterType" onchange="applyFilters()"
@@ -230,7 +238,7 @@
                  </div>
              </div>
 
-             <!-- Location  -->
+             {{-- Location --}}
              <div class="flex-1 relative">
                  <label for="filterLocation" class="sr-only">Filter by Location</label>
                  <select id="filterLocation" onchange="applyFilters()"
@@ -248,21 +256,18 @@
                  </div>
              </div>
 
-
          </div>
 
-
-
-         <!-- Projects Grid -->
+         {{-- Projects Grid --}}
          <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12"></div>
 
-         <!-- No results -->
+         {{-- No results --}}
          <p id="noResults" class="text-center text-gray-500 py-16 hidden"
              style="font-family:'Jost',sans-serif; font-weight:300;">
              No Projects Found
          </p>
 
-         <!-- Load More -->
+         {{-- Load More --}}
          <div class="flex justify-center mt-16" id="loadMoreWrap">
              <button onclick="loadMore()"
                  class="px-12 py-3 border border-gray-800 text-gray-800 text-sm font-light tracking-widest transition-all duration-300 hover:bg-gray-900 hover:text-white"
@@ -273,7 +278,6 @@
 
      </div>
  </section>
-
  <script>
      const ALL_PROJECTS = @json($allProjects);
      const PER_PAGE = 4;

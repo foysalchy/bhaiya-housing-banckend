@@ -197,7 +197,7 @@
             <li style="margin: 0;border-bottom: 1px solid var(--bs-border-color)"></li>
 
             <li class="nav-item">
-              <a href="/contact-list" class="nav-link">
+              <a href="{{route('contacts.index')}}" class="nav-link">
                 <i class="nav-icon bi bi-circle text-info"></i>
                 <p>Contact</p>
               </a>

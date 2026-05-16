@@ -1,4 +1,4 @@
-<footer class="w-full" style="background:#0f2018; font-family:'Jost',sans-serif;">
+<footer class="w-full relative z-10" style="background:#0f2018; font-family:'Jost',sans-serif;">
 
   <!-- Main Footer Content -->
   <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">

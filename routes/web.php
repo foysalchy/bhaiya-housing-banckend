@@ -4,6 +4,7 @@ use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 use App\Models\Content;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ContactController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
@@ -31,6 +32,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contents/store', [App\Http\Controllers\ContentController::class, 'store'])->name('content.store');
     Route::post('/contents/update', [App\Http\Controllers\ContentController::class, 'update'])->name('content.update');
     Route::delete('/contents/destroy/{type}/{id}', [App\Http\Controllers\ContentController::class, 'destroy'])->name('content.destroy');
+    Route::get('contacts',              [ContactController::class, 'index'])->name('contacts.index');
+    Route::patch('contacts/{contact}/toggle-read', [ContactController::class, 'toggleRead'])->name('contacts.toggle-read');
+    Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
 
 });
 

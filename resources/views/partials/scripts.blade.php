@@ -1,6 +1,9 @@
   <!-- SCRIPTS -->
   <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  <!-- GSAP -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
 
 
   <script>
@@ -177,6 +180,29 @@
         }
       });
     });
+  </script>
+  <script>
+window.addEventListener('load', function () {
+
+    const hero = document.querySelector('.hero-fixed, [data-hero-fixed]');
+    if (!hero) return;
+
+    function onScroll(scrollY) {
+        const heroH    = hero.offsetHeight;
+        const progress = Math.min(scrollY / heroH, 1);
+
+        // ✅ শুধু translateY — scale নেই
+        const translateY = progress * -30;
+        hero.style.transform = `translateY(${translateY}%)`;
+    }
+
+    if (window.innerWidth > 768 && typeof lenis !== 'undefined') {
+        lenis.on('scroll', ({ scroll }) => onScroll(scroll));
+    } else {
+        window.addEventListener('scroll', () => onScroll(window.scrollY));
+    }
+
+});
   </script>
   </body>
 

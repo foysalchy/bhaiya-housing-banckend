@@ -139,8 +139,9 @@
  @section('content')
 
  <!-- ===== HERO ===== -->
-<section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
-
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]"
+   >
     <!-- Background Image -->
     <img src="{{  asset('assets/images/event.jpg') }}" alt="interior"
         class="absolute inset-0 w-full h-full object-cover" />
@@ -161,7 +162,8 @@
     </div>
 
 </section>
-
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 @php
     $type = $item->type;
     $date = $item->start_date
@@ -174,7 +176,7 @@
     $shareTitle = urlencode($item->title);
 @endphp
 
-<section class="w-full min-h-screen py-20" style="background:#f2ede6; font-family:'Jost',sans-serif;">
+<section class="w-full min-h-screen py-20 relative z-10" style="background:#f2ede6; font-family:'Jost',sans-serif;">
     <div class="container mx-auto px-6 lg:px-14">
 
         <div class="flex flex-col md:flex-row gap-16 items-start">
@@ -222,18 +224,33 @@
 
                 <!-- Share -->
                 <div class="mt-2">
-                    <p class="text-xs text-gray-600 mb-3 tracking-widest uppercase">Share</p>
-                    <div class="flex items-center gap-3">
+    <p class="text-xs text-gray-600 mb-3 tracking-widest uppercase">Share</p>
+    <div class="flex items-center gap-3">
 
-                       @foreach($socials as $social)
-                        <a href="{{ $social->url }}" aria-label="{{ $social->title }}" target="_blank" rel="noopener"
-                        class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:border-gray-900 hover:bg-gray-900 transition-all duration-300 group">
-                            {!! $social->short !!}
-                        </a>
-                        @endforeach
+        {{-- Facebook Share --}}
+        <a href="https://www.facebook.com/sharer/sharer.php?u={{ urlencode(request()->url()) }}"
+            aria-label="Share on Facebook"
+            target="_blank"
+            rel="noopener"
+            class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:border-blue-600 hover:bg-blue-600 transition-all duration-300 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+            </svg>
+        </a>
 
-                    </div>
-                </div>
+        {{-- Twitter / X Share --}}
+        <a href="https://twitter.com/intent/tweet?url={{ urlencode(request()->url()) }}&text={{ urlencode($post->title ?? '') }}"
+            aria-label="Share on X (Twitter)"
+            target="_blank"
+            rel="noopener"
+            class="w-9 h-9 rounded-full border border-gray-300 flex items-center justify-center hover:border-black hover:bg-black transition-all duration-300 group">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-600 group-hover:text-white" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+        </a>
+
+    </div>
+</div>
 
             </div>
 

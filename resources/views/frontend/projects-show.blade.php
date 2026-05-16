@@ -147,7 +147,8 @@
  </script>
  @endsection
  @section('content')
- <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
+ <section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]">
      <img src="{{ $imgPaths[0] ?? asset('assets/images/d1.avif') }}"
          alt="{{ $project->title }}"
          class="absolute inset-0 w-full h-full object-cover" />
@@ -158,9 +159,11 @@
          </h2>
      </div>
  </section>
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 
  {{-- ===== AT A GLANCE ===== --}}
- <section class="relative w-full" style="background:#ffffff; font-family:'Jost',sans-serif;">
+ <section class="relative z-10 w-full" style="background:#ffffff; font-family:'Jost',sans-serif;">
      <div class="container mx-auto px-6 lg:px-14 py-20">
          <div class="flex flex-col md:flex-row gap-16 items-start">
 
@@ -236,7 +239,7 @@
 
  {{-- ===== GALLERY (2 images) ===== --}}
  @if(!empty($imgPaths[1]) || !empty($imgPaths[2]))
- <section class="relative w-full overflow-hidden py-16" style="background:#ffffff;">
+ <section class="relative z-10 w-full overflow-hidden py-16" style="background:#ffffff;">
      <div class="container mx-auto px-6 lg:px-14">
          <div class="relative flex flex-col md:flex-row gap-8 items-start">
 
@@ -268,7 +271,7 @@
      </div>
  </section>
  @endif
- <section class="relative w-full overflow-hidden" style="font-family:'Jost',sans-serif;">
+ <section class="relative z-10 w-full overflow-hidden" style="font-family:'Jost',sans-serif;">
 
      <!-- BG Image -->
      <div class="absolute inset-0" style="z-index:0;">
@@ -449,7 +452,7 @@
 
  {{-- ===== slider===== --}}
  @if($sliderTotal > 0)
-<section class="relative w-full overflow-hidden py-10 lg:py-20" style="background:#f2ede6; min-height: 500px;">
+<section class="relative z-10 w-full overflow-hidden py-10 lg:py-20" style="background:#f2ede6; min-height: 500px;">
 
     <!-- Background "Gallery" Text -->
     <div class="absolute top-0 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">

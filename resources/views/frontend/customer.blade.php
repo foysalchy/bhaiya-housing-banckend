@@ -129,8 +129,9 @@
  @section('content')
 
  {{-- ===== HERO ===== --}}
- <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
-     <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]"
+   >     <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
          alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
      <div class="absolute inset-0 bg-black/50"></div>
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
@@ -140,9 +141,11 @@
          </h2>
      </div>
  </section>
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 
  {{-- ── Top Bar ── --}}
-<div class="w-full flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-8 md:py-0 md:h-40 px-6 sm:px-10 md:px-16 lg:px-[100px]"
+<div class="w-full relative z-10 flex flex-col md:flex-row md:items-center gap-4 md:gap-6 py-8 md:py-0 md:h-40 px-6 sm:px-10 md:px-16 lg:px-[100px]"
     style="background:#152018;">
 
     <p class="text-white font-medium text-xl md:text-2xl md:mr-auto">Let's talk!</p>

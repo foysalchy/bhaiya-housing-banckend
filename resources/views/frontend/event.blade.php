@@ -139,8 +139,9 @@
  @section('content')
 
  <!-- ===== HERO ===== -->
-<section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
-
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]"
+   >
     <!-- Background Image -->
     <img src="{{ $eventHero->img_path ?? asset('assets/images/event.jpg') }}" alt="interior"
         class="absolute inset-0 w-full h-full object-cover" />
@@ -161,8 +162,10 @@
     </div>
 
 </section>
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 
-<section class="w-full min-h-screen relative overflow-hidden py-10 md:py-16"
+<section class="w-full min-h-screen relative z-10 overflow-hidden py-10 md:py-16"
     style="background:#FFFDFA;">
 
     <!-- BG texture -->

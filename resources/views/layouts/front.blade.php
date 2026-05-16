@@ -82,53 +82,111 @@
     <!-- Local JS -->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
-    <script>
-        let lenis;
-        let lastScroll = 0;
-        const header = document.querySelector('header');
+   <script>
+  let lastScroll = 0;
+  const header = document.querySelector('header');
 
-        window.addEventListener('load', function () {
+  window.addEventListener('load', function () {
 
-            // ── Lenis smooth scroll (desktop only) ──
-            if (window.innerWidth > 768) {
-                lenis = new Lenis({
-                    duration: 1.4,
-                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-                    smooth: true,
-                });
+    // ── GSAP ScrollTrigger register ──
+    gsap.registerPlugin(ScrollTrigger);
 
-                function raf(time) {
-                    lenis.raf(time);
-                    requestAnimationFrame(raf);
-                }
-                requestAnimationFrame(raf);
+    if (window.innerWidth > 768) {
 
-                // ── Header hide/show on Lenis scroll ──
-                lenis.on('scroll', ({ scroll }) => {
-                    if (scroll > lastScroll && scroll > 80) {
-                        header.classList.add('hide');
-                    } else {
-                        header.classList.remove('hide');
-                    }
-                    lastScroll = scroll;
-                });
+      // ── Lenis smooth scroll ──
+      const lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        smooth: true,
+      });
 
-            } else {
-                // ── Mobile: normal scroll header hide/show ──
-                window.addEventListener('scroll', () => {
-                    const currentScroll = window.scrollY;
-                    if (currentScroll > lastScroll && currentScroll > 80) {
-                        header.classList.add('hide');
-                    } else {
-                        header.classList.remove('hide');
-                    }
-                    lastScroll = currentScroll;
-                });
-            }
+      // ── Lenis + GSAP ticker sync ──
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
 
-        });
-    </script>
+      // ── ScrollTrigger + Lenis sync ──
+      lenis.on('scroll', ScrollTrigger.update);
 
+      // ── Header hide/show ──
+      lenis.on('scroll', ({ scroll }) => {
+        header.classList.toggle('hide', scroll > lastScroll && scroll > 80);
+        lastScroll = scroll;
+      });
+
+    } else {
+      // Mobile
+      window.addEventListener('scroll', () => {
+        const s = window.scrollY;
+        header.classList.toggle('hide', s > lastScroll && s > 80);
+        lastScroll = s;
+      });
+    }
+
+    // ── Parallax (data-speed attribute) ──
+    gsap.utils.toArray('[data-speed]').forEach(el => {
+      const speed = parseFloat(el.dataset.speed) || 1;
+      gsap.to(el, {
+        y: () => (1 - speed) * ScrollTrigger.maxScroll(window) * 0.3,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: true,
+        }
+      });
+    });
+
+    // ── Fade-in on scroll (data-aos alternative) ──
+    gsap.utils.toArray('[data-gsap="fade-up"]').forEach(el => {
+      gsap.from(el, {
+        y: 60,
+        opacity: 0,
+        duration: 1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: el,
+          start: 'top 85%',
+        }
+      });
+    });
+
+  });
+</script>
+<!-- <script>
+  // ── Parallax / Inertia Scroll (Lenis-based, replaces jquery-inertiaScroll) ──
+  window.addEventListener('load', function () {
+
+    const parallaxEls = document.querySelectorAll('[data-speed]');
+
+    // Store initial offsets
+    parallaxEls.forEach(el => {
+      el.dataset._originY = el.getBoundingClientRect().top + window.scrollY;
+    });
+
+    function applyParallax(scrollY) {
+      parallaxEls.forEach(el => {
+        const speed  = parseFloat(el.dataset.speed  ?? 1);
+        const margin = parseFloat(el.dataset.margin ?? 0);
+        // speed < 1 → slower than page (classic parallax)
+        // speed > 1 → faster (like jquery-inertiaScroll data-speed)
+        // Normalise: treat speed=1 as neutral, like the plugin does
+        const delta = (scrollY * (speed - 1) * 0.08) + margin;
+        el.style.transform = `translate3d(0, ${delta}px, 0)`;
+        el.style.willChange = 'transform';
+      });
+    }
+
+    if (window.innerWidth > 768 && lenis) {
+      // Hook into existing Lenis instance
+      lenis.on('scroll', ({ scroll }) => applyParallax(scroll));
+    } else {
+      // Mobile fallback
+      window.addEventListener('scroll', () => applyParallax(window.scrollY));
+    }
+
+  });
+</script> -->
     @stack('scripts')
 
 </body>

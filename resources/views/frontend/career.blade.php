@@ -159,8 +159,8 @@ $jobSchemas[] = [
 
 <main class="">
     <!-- ===== HERO ===== -->
-    <section class="relative w-full overflow-hidden" style="height: clamp(320px, 45vw, 560px);">
-
+ <section class="fixed hero-fixed  top-0 left-0 w-full z-0 overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]">
         <!-- Background Image -->
         <img src="{{ asset($career->img_path ?? '') }}"
             alt="interior"
@@ -177,9 +177,11 @@ $jobSchemas[] = [
         </div>
 
     </section>
+<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+    style="position: relative; z-index: 2;"></div>
 
     <!-- Career Section -->
-    <section class="relative w-full overflow-hidden py-16 bg-[#F6F6F6]">
+    <section class="relative z-10 w-full overflow-hidden py-16 bg-[#F6F6F6]">
 
         <!-- Background Decoration Image (Full width) -->
         <div class="absolute inset-0 pointer-events-none z-0">

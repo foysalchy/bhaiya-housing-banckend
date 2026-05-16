@@ -268,8 +268,8 @@ $setting->title ?? 'Bhaiya Housing',
 @section('content')
 
 <!-- ===== HERO ===== -->
-<section id="home" class="inertia-box relative h-screen w-full overflow-hidden" data-speed="1">
- 
+<section id="home" class="fixed hero-fixed  top-0 left-0 w-full h-screen z-0 overflow-hidden">
+
     {{-- Background --}}
     <div class="absolute inset-0">
         <img
@@ -282,28 +282,23 @@ $setting->title ?? 'Bhaiya Housing',
             style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%)"
         ></div>
     </div>
- 
+
     {{-- Content --}}
     <div class="relative z-10 h-full flex flex-col justify-center items-end">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
- 
-            {{-- Heading --}}
             <div class="max-w-3xl mt-5">
                 <h1 class="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
                     {{ $hero->titlle ?? 'We transform your dreams into addresses' }}
                 </h1>
             </div>
- 
-            {{-- Description --}}
             <div class="mt-10 md:mt-28 max-w-xl opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
                 <p class="md:ml-10 opacity-80 text-sm md:text-base leading-relaxed font-light md:px-10">
-                    {{ $hero->short ?? 'Immerse yourself in the artistry of exceptional spaces with Bhaiya Housing, where each project is a harmonious blend of prestige, elegance, and refined sophistication. Beyond constructing buildings, we meticulously create residential and commercial environments to reflect your aspirations.' }}
+                    {{ $hero->short ?? 'Immerse yourself in the artistry...' }}
                 </p>
             </div>
- 
         </div>
     </div>
- 
+
     {{-- Scroll indicator --}}
     <div class="absolute bottom-10 left-4 md:left-16 z-20 animate-bounce">
         <div class="w-12 h-12 md:w-14 md:h-14 rounded-full border border-white/30 hover:border-white/60 flex items-center justify-center transition-colors cursor-pointer">
@@ -312,7 +307,7 @@ $setting->title ?? 'Bhaiya Housing',
             </svg>
         </div>
     </div>
- 
+
     {{-- Video card --}}
     <div class="absolute p-3 md:p-4 bottom-6 md:bottom-8 right-4 md:right-16 z-20
                 flex border border-white/30 hover:border-white/40
@@ -320,31 +315,19 @@ $setting->title ?? 'Bhaiya Housing',
                 opacity-0 animate-[fadeUp_0.7s_0.9s_ease_forwards]
                 w-[calc(100vw-2rem)] max-w-[360px] sm:max-w-[420px] md:max-w-[500px]
                 h-36 sm:h-40 md:h-48">
- 
-        {{-- Left: Video thumb --}}
-        <div
-            class="w-[140px] sm:w-[180px] md:w-[250px] flex-shrink-0 relative overflow-hidden bg-neutral-900"
-            onclick="openVideoModal()"
-        >
-            <video
-                class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
-                autoplay
-                muted
-                loop
-                playsinline
-            >
+
+        <div class="w-[140px] sm:w-[180px] md:w-[250px] flex-shrink-0 relative overflow-hidden bg-neutral-900"
+            onclick="openVideoModal()">
+            <video class="w-full h-full object-cover scale-105 group-hover:scale-100 transition-transform duration-700"
+                autoplay muted loop playsinline>
                 <source src="{{ $hero?->video_path ?? asset('videos/home.mp4') }}" type="video/mp4" />
             </video>
             <div class="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors duration-500"></div>
         </div>
- 
-        {{-- Right: Info --}}
+
         <div class="flex-1 p-2 md:p-3 flex flex-col justify-between">
- 
             <div class="flex items-center justify-end gap-2" onclick="openVideoModal()">
-                <span class="text-[10px] tracking-[1.5px] uppercase text-white/50 group-hover:text-white/80 transition-colors duration-300 hidden sm:inline">
-                    View
-                </span>
+                <span class="text-[10px] tracking-[1.5px] uppercase text-white/50 group-hover:text-white/80 transition-colors duration-300 hidden sm:inline">View</span>
                 <div class="w-7 h-7 md:w-8 md:h-8 rounded-full border border-white/30 bg-white/5
                             group-hover:bg-white/15 group-hover:border-white/60 group-hover:scale-110
                             flex items-center justify-center flex-shrink-0 transition-all duration-300">
@@ -353,51 +336,39 @@ $setting->title ?? 'Bhaiya Housing',
                     </svg>
                 </div>
             </div>
- 
             <div class="flex justify-end">
-                <p
-                    class="text-sm md:text-base font-light tracking-wide text-white/90 group-hover:text-white transition-colors duration-300 leading-snug"
-                    onclick="openVideoModal()"
-                >
-                    Watch our video
-                </p>
+                <p class="text-sm md:text-base font-light tracking-wide text-white/90 group-hover:text-white transition-colors duration-300 leading-snug"
+                    onclick="openVideoModal()">Watch our video</p>
             </div>
- 
         </div>
     </div>
- 
-    {{-- Video Modal --}}
-    <div
-        id="videoModal"
-        class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm px-4 md:px-10"
-        style="display: none"
-        onclick="closeVideoModal(event)"
-    >
-        <div class="relative w-full max-w-5xl mx-auto" onclick="event.stopPropagation()">
- 
-            {{-- Close --}}
-            <button
-                onclick="closeVideoModal()"
-                class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity"
-            >
-                <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round">
-                    <line x1="4" y1="4" x2="24" y2="24" />
-                    <line x1="24" y1="4" x2="4" y2="24" />
-                </svg>
-            </button>
- 
-            {{-- Video with sound --}}
-            <video id="modalVideo" class="w-full" controls playsinline style="max-height: 80vh">
-                <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
-            </video>
- 
-        </div>
-    </div>
- 
+
 </section>
 
+<div class="h-screen w-full pointer-events-none"></div>
 
-<section class="inertia-box py-16 md:py-24 overflow-hidden bg-[#FFFDFA] kinetic" style="padding-top: 80px;"  data-speed="3">
+<div
+    id="videoModal"
+    class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm px-4 md:px-10"
+    style="display: none"
+    onclick="closeVideoModal(event)"
+>
+    <div class="relative w-full max-w-5xl mx-auto" onclick="event.stopPropagation()">
+        <button onclick="closeVideoModal()"
+            class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round">
+                <line x1="4" y1="4" x2="24" y2="24" />
+                <line x1="24" y1="4" x2="4" y2="24" />
+            </svg>
+        </button>
+        <video id="modalVideo" class="w-full" controls playsinline style="max-height: 80vh">
+            <source src="{{ $hero?->video_path ?? asset('assets/video/1.mp4') }}" type="video/mp4" />
+        </video>
+    </div>
+</div>
+
+
+<section class="relative z-10 py-16 md:py-24 overflow-hidden bg-[#FFFDFA] box" style="padding-top: 80px;">
     <div class="mx-auto px-4 sm:px-6 lg:px-10">
 
         @php
@@ -534,9 +505,9 @@ $setting->title ?? 'Bhaiya Housing',
 
     {{-- ===== FEATURED PROJECTS ===== --}}
     <section
-        class="inertia-box relative w-full overflow-hidden backdrop-blur-md"
+        class=" relative z-10 w-full overflow-hidden backdrop-blur-md"
         style="height: 100vh; min-height: 600px; padding-bottom: 100px; padding-top: 100px"
-        data-speed="1"
+      
     >
         {{-- Background Video --}}
         <video
@@ -659,42 +630,63 @@ $expertiseImages = json_decode($expertise->img_paths ?? '[]', true);
 $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 @endphp
 
-<section class="inertia-box w-full overflow-hidden relative" style="background: rgb(21, 32, 24); padding-bottom: 15vw;">
-    <div class="bg-image absolute inset-0 w-full h-full overflow-hidden" style="z-index:0;">
-        <img id="qualityBg" class="absolute w-full" src="/assets/images/quality-bg.png" alt="image"
+<section class="w-full overflow-hidden relative z-10" style="background: rgb(21, 32, 24);">
+
+    {{-- Background image --}}
+    <div class="absolute inset-0 w-full h-full overflow-hidden" style="z-index:0;">
+        <img id="qualityBg" class="absolute w-full"
+            src="/assets/images/quality-bg.png" alt=""
             style="top:-20%; left:0; height:140%; object-fit:cover; will-change:transform;" />
     </div>
 
-    <!-- ── Part 1: Hero ── -->
-    <div class="relative w-full flex flex-col items-center justify-center text-center overflow-hidden"
-        style="padding: 80px 20px 0;">
+    {{-- ── Part 1: Hero ── --}}
+    <div class="relative z-10 w-full flex flex-col items-center justify-center text-center overflow-hidden
+                px-4 pt-16 pb-0
+                sm:px-6 sm:pt-20
+                md:px-10 md:pt-24">
 
-        <!-- Ghost text background -->
+        {{-- Ghost text --}}
         <span class="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
-            style="font-family:'Cormorant Garamond',serif; font-size:clamp(100px,18vw,260px); font-weight:700; color:rgba(255,255,255,0.04); letter-spacing:0.05em; white-space:nowrap; user-select:none;">
+            style="font-family:'Cormorant Garamond',serif;
+                   font-size:clamp(60px,18vw,260px);
+                   font-weight:700;
+                   color:rgba(255,255,255,0.04);
+                   letter-spacing:0.05em;
+                   white-space:nowrap;">
             EVERY
         </span>
 
-        <!-- Headline -->
-        <div class="relative z-10">
+        {{-- Headline --}}
+        <div class="relative z-10 px-2">
             <h2 class="text-white font-light mb-1"
-                style="font-family:'Jost',sans-serif; font-size:clamp(28px,4vw,56px); font-weight:300; letter-spacing:0.01em;">
+                style="font-family:'Jost',sans-serif;
+                       font-size:clamp(20px,4vw,56px);
+                       font-weight:300;
+                       letter-spacing:0.01em;">
                 {{ $expertise->title ?? '12+ years of expertise.' }}
             </h2>
-            <div class="flex items-center justify-center gap-3 mb-2">
-                <span class="block w-px bg-white opacity-40" style="height:28px;"></span>
+
+            <div class="flex items-center justify-center my-2">
+                <span class="block w-px bg-white opacity-40" style="height:24px;"></span>
             </div>
-            <p class="text-white opacity-60 tracking-widest uppercase text-xs mb-2"
-                style="letter-spacing:0.2em;font-size:16px">Excellence in</p>
+
+            <p class="text-white opacity-60 uppercase mb-2"
+                style="letter-spacing:0.2em; font-size:clamp(11px,1.2vw,16px);">
+                Excellence in
+            </p>
+
             <h3 class="text-white font-light"
-                style="font-family:'Cormorant Garamond',serif; font-size:clamp(40px,7vw,96px); font-weight:300;">
+                style="font-family:'Cormorant Garamond',serif;
+                       font-size:clamp(32px,7vw,96px);
+                       font-weight:300;">
                 {{ $expertise->name ?? 'Every detail' }}
             </h3>
         </div>
 
-        <!-- Center architectural image -->
-        <div class="relative z-10 mt-10 w-full"
-            style="max-width:900px; height:clamp(300px,45vw,520px); overflow:hidden;">
+        {{-- Center image --}}
+        <div class="relative z-10 mt-8 w-full mx-auto overflow-hidden
+                    px-4 sm:px-6 md:px-0"
+            style="max-width:900px; height:clamp(220px,45vw,520px);">
             <img src="{{ $expertise->img_path ?? asset('assets/images/quality-top.jpg') }}"
                 alt="Architectural detail"
                 class="w-full h-full object-cover"
@@ -702,62 +694,83 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
         </div>
     </div>
 
-    <!-- ── Part 2: Two columns ── -->
-    <div class="relative w-full overflow-hidden" style="margin-top:0;">
+    {{-- ── Part 2: Two columns ── --}}
+    <div class="relative w-full overflow-hidden
+                px-4 pt-12 pb-16
+                sm:px-6 sm:pt-14 sm:pb-20
+                md:px-10 md:pt-16 md:pb-24
+                lg:px-16 lg:pt-20 lg:pb-28
+                xl:px-24 xl:pt-24 xl:pb-32">
 
-
-        <div class="absolute inset-0 flex flex-col justify-start pt-4 pl-4 select-none pointer-events-none overflow-hidden"
-            style="z-index:0;">
+        {{-- Background text --}}
+        <div class="absolute inset-0 flex flex-col justify-start pt-4 pl-2 select-none pointer-events-none overflow-hidden" style="z-index:0;">
             @foreach($bgTextLines as $line)
-            <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(60px,12vw,180px); font-weight:700; color:rgba(255,255,255,0.04); white-space:nowrap; line-height:1;">
+            <span style="font-family:'Cormorant Garamond',serif;
+                         font-size:clamp(40px,10vw,180px);
+                         font-weight:700;
+                         color:rgba(255,255,255,0.04);
+                         white-space:nowrap;
+                         line-height:1.1;">
                 {{ $line }}
             </span>
             @endforeach
         </div>
 
-        <!-- Two Columns -->
-        <div class="relative z-10 flex flex-col md:flex-row w-full"
-            style="border-top:1px solid rgba(255,255,255,0.08);">
+        {{-- Grid --}}
+        <div id="quality-grid" class="relative z-10 flex flex-col md:flex-row w-full">
 
-            <!-- Col 1 -->
-            <div class="w-full md:w-1/2 flex flex-col"
-                style="border-right:1px solid rgba(255,255,255,0.08); padding:50px 40px 60px;">
-                <p class="text-white text-sm leading-relaxed mb-10 opacity-80"
-                    style="max-width:480px; line-height:1.9; font-weight:300;">
+            {{-- Animated border line --}}
+            <div class="quality-border-line" style="
+                position:absolute; top:0; left:0;
+                height:1px; width:0%;
+                background:rgba(255,255,255,0.25);
+                z-index:20;"></div>
+
+            {{-- Col 1 --}}
+            <div class="w-full md:w-1/2 flex flex-col
+                        pt-8 pb-10 md:pt-12 md:pb-16
+                        pr-0 md:pr-10 lg:pr-16
+                        md:border-r md:border-white/10">
+
+                <p class="text-white text-sm leading-relaxed mb-6 md:mb-10 opacity-80"
+                    style="line-height:1.9; font-weight:300; max-width:480px;">
                     {!! $expertise->body ?? 'We deliver exceptional construction using first-rate materials and innovative techniques. Every project is built with precision and care, ensuring unmatched durability, stunning aesthetics, and spaces that exceed expectations and endure over time.' !!}
                 </p>
 
-                <div class="expand-img-wrap overflow-hidden cursor-pointer" style="height:420px; position:relative;">
+                <div class="quality-img-wrap w-full overflow-hidden cursor-pointer"
+                    style="height:clamp(220px,40vw,420px); position:relative;">
                     <img src="{{ $expertiseImages[0] ?? asset('assets/images/q1.jpg') }}"
                         alt="Lobby interior"
-                        class="expand-img w-full h-full object-cover transition-transform duration-700 ease-in-out"
-                        style="transform-origin:center center; transform:scale(1);"
+                        class="quality-img w-full h-full object-cover"
+                        style="transform:scale(1); transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);"
                         onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
-                    <div class="expand-overlay absolute inset-0 transition-opacity duration-500"
-                        style="background:rgba(21,32,24,0.35); opacity:0;"></div>
                 </div>
             </div>
 
-            <!-- Col 2 -->
-            <div class="w-full md:w-1/2 flex flex-col" style="padding:50px 40px 60px;">
-                <p class="text-white text-sm leading-relaxed mb-10 opacity-80"
-                    style="max-width:480px; line-height:1.9; font-weight:300;">
+            {{-- Col 2 --}}
+            <div class="w-full md:w-1/2 flex flex-col
+                        pt-8 pb-10 md:pt-12 md:pb-16
+                        pl-0 md:pl-10 lg:pl-16
+                        border-t border-white/10 md:border-t-0">
+
+                <p class="text-white text-sm leading-relaxed mb-6 md:mb-10 opacity-80"
+                    style="line-height:1.9; font-weight:300; max-width:480px;">
                     {!! $expertise->body_2 ?? 'We guarantee on-schedule completion, respecting your timelines without compromise. Projects are executed with careful planning and efficiency, giving you a smooth, hassle-free experience as you prepare to step into your perfectly completed space.' !!}
                 </p>
 
-                <div class="expand-img-wrap overflow-hidden cursor-pointer" style="height:420px; position:relative;">
+                <div class="quality-img-wrap w-full overflow-hidden cursor-pointer"
+                    style="height:clamp(220px,40vw,420px); position:relative;">
                     <img src="{{ $expertiseImages[1] ?? asset('assets/images/q2.jpg') }}"
                         alt="Bathroom interior"
-                        class="expand-img w-full h-full object-cover transition-transform duration-700 ease-in-out"
-                        style="transform-origin:center center; transform:scale(1);"
+                        class="quality-img w-full h-full object-cover"
+                        style="transform:scale(1); transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);"
                         onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
-                    <div class="expand-overlay absolute inset-0 transition-opacity duration-500"
-                        style="background:rgba(21,32,24,0.35); opacity:0;"></div>
                 </div>
             </div>
 
         </div>
     </div>
+
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
@@ -765,7 +778,7 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 @endphp
 
-<section class="w-full relative overflow-hidden pt-16 pb-0 px-5"
+<section class="w-full relative z-10 overflow-hidden pt-16 pb-0 px-5"
     style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
     <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
 
@@ -874,7 +887,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
 
 <!-- ===== NEWS & EVENTS ===== -->
-<section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative"
+<section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative z-10"
     style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
 
     <div class="container mx-auto flex flex-col md:flex-row gap-8 lg:gap-24 pt-12 md:pt-[100px]">
@@ -955,7 +968,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
     </div>
 </section>
 <!-- ===== PARTNERS / CTA ===== -->
-<section class="relative w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#f2ede6;">
+<section class="relative z-10 w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#f2ede6;">
 
     <!-- Map Background Image -->
     <div class="absolute inset-y-0 left-0 w-1/2 pointer-events-none" style="z-index:0;">
@@ -1204,5 +1217,36 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
         }
     });
 </script>
+@push('scripts')
+<script>
+window.addEventListener('load', function () {
 
+    // ── Border line animation only ──
+    gsap.to('.quality-border-line', {
+        width: '100%',
+        duration: 1.4,
+        ease: 'power2.out',
+        scrollTrigger: {
+            trigger: '#quality-grid',
+            start: 'top 80%',
+            once: true,
+        }
+    });
+
+    // ── Hover: image expand ──
+    document.querySelectorAll('.quality-img-wrap').forEach(wrap => {
+        const img = wrap.querySelector('.quality-img');
+
+        wrap.addEventListener('mouseenter', () => {
+            img.style.transform = 'scale(1.08)';
+        });
+
+        wrap.addEventListener('mouseleave', () => {
+            img.style.transform = 'scale(1)';
+        });
+    });
+
+});
+</script>
+@endpush
 @endsection
