@@ -250,7 +250,7 @@
                      style="height:clamp(300px,40vw,500px);"
                      onerror="this.parentElement.style.background='#c0b8b0'; this.style.display='none';" />
                  <img src="/assets/images/projectDetailsLeft-stone.png" alt=""
-                     class="absolute pointer-events-none float-down"
+                     class="absolute pointer-events-none float-down scroll-move" data-axis="Y"
                      style="width:80px; bottom:-20px; left:-20px; z-index:2;"
                      onerror="this.style.display='none';" />
              </div>
@@ -262,7 +262,7 @@
                      style="height:clamp(300px,40vw,500px);"
                      onerror="this.parentElement.style.background='#b0b8b8'; this.style.display='none';" />
                  <img src="/assets/images/projectDetailsRight-stone.png" alt=""
-                     class="absolute pointer-events-none float-up"
+                     class="absolute pointer-events-none float-up scroll-move" data-axis="Y"
                      style="width:72px; top:-24px; right:-16px; z-index:2;"
                      onerror="this.style.display='none';" />
              </div>

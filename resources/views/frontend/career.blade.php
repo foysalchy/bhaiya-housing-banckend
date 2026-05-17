@@ -224,13 +224,13 @@ $jobSchemas[] = [
 
                         <!-- Gold Splash Image (contact-stone-bg.png) - ছবির নিচে এবং বামে থাকবে -->
                         <img src="{{ asset('images/contact-stone-bg.png') }}" alt=""
-                            class="absolute pointer-events-none"
+                            class="absolute pointer-events-none scroll-move" data-axis="Y"
                             style="width: 140px; bottom: -40px; left: -60px; z-index: 5;"
                             onerror="this.style.display='none';">
 
                         <!-- Black Stone Image (mission-stone.png) - একদম কোণায় উপরে থাকবে -->
                         <img src="{{ asset('images/mission-stone.png') }}" alt=""
-                            class="absolute pointer-events-none"
+                            class="absolute pointer-events-none scroll-move" data-axis="Y"
                             style="width: 80px; bottom: -10px; left: -20px; z-index: 20;"
                             onerror="this.style.display='none';">
                     </div>
@@ -239,7 +239,7 @@ $jobSchemas[] = [
                     <div class="w-full md:w-8/12">
                         @if($rightImg)
                         <img src="{{ asset($rightImg) }}" alt="Office"
-                            class="w-full object-cover"
+                            class="w-full object-cover scroll-move" data-axis="Y"
                             style="height: 450px;">
                         @endif
                     </div>

@@ -180,29 +180,111 @@
         }
       });
     });
+    // ── News & Events text scroll animation ──
+(function () {
+    const els = document.querySelectorAll('.scroll-move');
+    if (!els.length) return;
+
+    els.forEach(el => {
+        // speed এর ভ্যালু পজিটিভ/নেগেটিভ করে আপনি মুভমেন্টের দিক পরিবর্তন করতে পারবেন
+        const speed = parseFloat(el.dataset.speed ?? 0.15); 
+        const axis  = (el.dataset.axis ?? 'Y').toUpperCase();
+        const lerp  = parseFloat(el.dataset.lerp ?? 0.08);
+
+        let initialOffset = 0;
+        let target  = 0;
+        let current = 0;
+        let rafId   = null;
+
+        function calculateOffset() {
+            el.style.translate = 'none'; 
+            
+            const rect = el.getBoundingClientRect();
+            
+            // X বা Y যেদিকেই যাক না কেন, আমরা যেহেতু পেজ উপর-নিচ স্ক্রল করছি, 
+            // তাই সবসময় Y-axis (Vertical) পজিশন মাপতে হবে।
+            const windowCenterY = window.innerHeight / 2;
+            const elementCenterY = rect.height / 2;
+            const absolutePosY = rect.top + window.scrollY;
+
+            // স্ক্রিনের মাঝে এলে যেন ভ্যালু 0 হয়
+            initialOffset = absolutePosY - windowCenterY + elementCenterY;
+        }
+
+        function tick() {
+            current += (target - current) * lerp;
+
+            if (Math.abs(target - current) < 0.01) {
+                current = target;
+                rafId   = null;
+            } else {
+                rafId = requestAnimationFrame(tick);
+            }
+
+            // ✅ translate অ্যাপ্লাই করা
+            if (axis === 'X') {
+                el.style.translate = `${current}px 0px`;
+            } else {
+                el.style.translate = `0px ${current}px`;
+            }
+        }
+
+        function onScroll(scrollPos) {
+            target = -(scrollPos - initialOffset) * speed;
+            if (!rafId) rafId = requestAnimationFrame(tick);
+        }
+
+        // Init - প্রথমে পজিশন মেপে নেওয়া
+        calculateOffset();
+
+        const startScroll = window.scrollY;
+        target = -(startScroll - initialOffset) * speed;
+        current = target;
+
+        if (axis === 'X') {
+            el.style.translate = `${current}px 0px`;
+        } else {
+            el.style.translate = `0px ${current}px`;
+        }
+
+        // ইভেন্ট লিসেনার
+        if (typeof lenis !== 'undefined') {
+            lenis.on('scroll', ({ scroll }) => onScroll(scroll));
+        } else {
+            window.addEventListener('scroll', () => onScroll(window.scrollY));
+        }
+
+        window.addEventListener('resize', () => {
+            calculateOffset();
+            onScroll(window.scrollY);
+        });
+    });
+})();
   </script>
   <script>
-window.addEventListener('load', function () {
+    window.addEventListener('load', function() {
 
-    const hero = document.querySelector('.hero-fixed, [data-hero-fixed]');
-    if (!hero) return;
+      const hero = document.querySelector('.hero-fixed, [data-hero-fixed]');
+      if (!hero) return;
 
-    function onScroll(scrollY) {
-        const heroH    = hero.offsetHeight;
+      function onScroll(scrollY) {
+        const heroH = hero.offsetHeight;
         const progress = Math.min(scrollY / heroH, 1);
 
         // ✅ শুধু translateY — scale নেই
         const translateY = progress * -30;
         hero.style.transform = `translateY(${translateY}%)`;
-    }
+      }
 
-    if (window.innerWidth > 768 && typeof lenis !== 'undefined') {
-        lenis.on('scroll', ({ scroll }) => onScroll(scroll));
-    } else {
+      if (window.innerWidth > 768 && typeof lenis !== 'undefined') {
+        lenis.on('scroll', ({
+          scroll
+        }) => onScroll(scroll));
+      } else {
         window.addEventListener('scroll', () => onScroll(window.scrollY));
-    }
+      }
 
-});
+    });
   </script>
   </body>
 

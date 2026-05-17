@@ -203,6 +203,7 @@
                         <p class="text-white font-medium text-sm">{!! $job->body_3 !!}</p>
                     </div>
                     @endif
+                    
                 </div>
 
             </div>
@@ -295,6 +296,13 @@
                         By applying for this job listing, you agree to our Data Privacy Policy for recruitment and job applications.
                     </p>
                 </form>
+                <div class=" absolute pointer-events-none scroll-move" data-axis="Y"
+                    
+                        style="left:-50px; bottom:-10px; z-index:100;">
+                        <img src="/assets/images/overview-stone.png" alt=""
+                            style="width:clamp(120px,7vw,160px); opacity:0.8;"
+                            onerror="this.style.display='none'" />
+                    </div>
             </div>
 
         </div>

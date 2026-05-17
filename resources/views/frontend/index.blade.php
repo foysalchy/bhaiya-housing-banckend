@@ -275,12 +275,10 @@ $setting->title ?? 'Bhaiya Housing',
         <img
             src="{{ $hero->img_path ?? asset('assets/images/hero-bg.jpg') }}"
             alt="hero-bg"
-            class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]"
-        />
+            class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
         <div
             class="absolute inset-0"
-            style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%)"
-        ></div>
+            style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%)"></div>
     </div>
 
     {{-- Content --}}
@@ -351,8 +349,7 @@ $setting->title ?? 'Bhaiya Housing',
     id="videoModal"
     class="fixed inset-0 z-[200] items-center justify-center bg-black/85 backdrop-blur-sm px-4 md:px-10"
     style="display: none"
-    onclick="closeVideoModal(event)"
->
+    onclick="closeVideoModal(event)">
     <div class="relative w-full max-w-5xl mx-auto" onclick="event.stopPropagation()">
         <button onclick="closeVideoModal()"
             class="absolute -top-10 right-0 text-white opacity-70 hover:opacity-100 transition-opacity">
@@ -406,7 +403,7 @@ $setting->title ?? 'Bhaiya Housing',
             </div>
 
             <!-- Bottom image -->
-            <div class="fade-in delay-3">
+            <div class="fade-in delay-3 scroll-move" data-axis="Y" data-max-move="180">
                 <img src="{{ $extraImages[0] ?? asset('assets/images/sub.jpg') }}"
                     alt="Property"
                     class="img-shadow rounded-sm object-cover w-full h-[260px] sm:h-[320px]"
@@ -458,9 +455,16 @@ $setting->title ?? 'Bhaiya Housing',
             </div>
 
             <!-- Col 3: Right side -->
-            <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3" style="margin-left:4%;">
+            <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3 scroll-move" data-axis="Y" data-max-move="50" style="margin-left:4%;">
 
-                <div class="float-up mb-8 self-end">
+                <div class="float-up mb-8 self-end ">
+                    <div class=" absolute pointer-events-none"
+                    
+                        style="left:-40px; top:-80px; z-index:3;">
+                        <img src="/assets/images/overview-stone.png" alt=""
+                            style="width:clamp(120px,7vw,160px); opacity:0.8;"
+                            onerror="this.style.display='none'" />
+                    </div>
                     <img src="{{ $extraImages[2] ?? asset('assets/images/right-side.jpg') }}"
                         alt="Interior"
                         class="img-shadow rounded-sm object-cover"
@@ -481,9 +485,9 @@ $setting->title ?? 'Bhaiya Housing',
         </div><!-- /Row 1 desktop -->
 
         <!-- Row 2: bottom images (desktop only) -->
-        <div class="hidden md:flex relative flex-wrap items-center">
+        <div class="hidden md:flex relative flex-wrap items-center scroll-move" data-axis="Y" data-max-move="50">
 
-            <div class="absolute z-20 fade-in delay-3 float-down" style="left:20%; bottom:0px;">
+            <div class="absolute z-20 fade-in delay-3 float-down " style="left:22%; bottom:0px;">
                 <img src="{{ $extraImages[0] ?? asset('assets/images/sub.jpg') }}"
                     alt="Property"
                     class="img-shadow rounded-sm object-cover"
@@ -501,126 +505,119 @@ $setting->title ?? 'Bhaiya Housing',
 </section>
 
 @if ($featuredProjects->isNotEmpty())
-    @php $first = $featuredProjects->first(); @endphp
+@php $first = $featuredProjects->first(); @endphp
 
-    {{-- ===== FEATURED PROJECTS ===== --}}
-    <section
-        class=" relative z-10 w-full overflow-hidden backdrop-blur-md"
-        style="height: 100vh; min-height: 600px; padding-bottom: 100px; padding-top: 100px"
-      
-    >
-        {{-- Background Video --}}
-        <video
-            id="heroVideo"
-            class="absolute inset-0 w-full h-full object-cover"
-            autoplay
-            muted
-            loop
-            playsinline
-        >
-            <source
-                id="heroVideoSource"
-                src="{{ $first->video_path ?? asset('assets/video/1.mp4') }}"
-                type="video/mp4"
-            />
-        </video>
+{{-- ===== FEATURED PROJECTS ===== --}}
+<section
+    class=" relative z-10 w-full overflow-hidden backdrop-blur-md"
+    style="height: 100vh; min-height: 600px; padding-bottom: 100px; padding-top: 100px">
+    {{-- Background Video --}}
+    <video
+        id="heroVideo"
+        class="absolute inset-0 w-full h-full object-cover"
+        autoplay
+        muted
+        loop
+        playsinline>
+        <source
+            id="heroVideoSource"
+            src="{{ $first->video_path ?? asset('assets/video/1.mp4') }}"
+            type="video/mp4" />
+    </video>
 
-        {{-- Dark Overlay --}}
-        <div
-            class="absolute inset-0"
-            style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%)"
-        ></div>
+    {{-- Dark Overlay --}}
+    <div
+        class="absolute inset-0"
+        style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%)"></div>
 
-        {{-- Learn More circle button — desktop only --}}
-        <div class="hidden md:block absolute z-20" style="top: 200px; right: 350px">
-            <a
-                id="heroLearnMore"
-                href="/projects/{{ $first->id }}"
-                class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white tracking-widest transition-all duration-300 hover:bg-white hover:text-black"
-                style="width: 200px; height: 200px; font-family: 'Jost', sans-serif; font-weight: 400; letter-spacing: 0.1em; font-size: 13px"
-            >
-                Learn More
-            </a>
-        </div>
+    {{-- Learn More circle button — desktop only --}}
+    <div class="hidden md:block absolute z-20" style="top: 200px; right: 350px">
+        <a
+            id="heroLearnMore"
+            href="/projects/{{ $first->id }}"
+            class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white tracking-widest transition-all duration-300 hover:bg-white hover:text-black"
+            style="width: 200px; height: 200px; font-family: 'Jost', sans-serif; font-weight: 400; letter-spacing: 0.1em; font-size: 13px">
+            Learn More
+        </a>
+    </div>
 
-        {{-- Bottom-left: Title + Address --}}
-        <div class="absolute z-20 text-white left-4 md:left-[50px]" >
-            <p
-                class="text-xs tracking-[3px] uppercase text-white mb-3"
-                style="font-family: 'Jost', sans-serif; font-weight: 400"
-            >
-                Featured Project
-            </p>
-            <h2
-                id="heroTitle"
-                class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-2"
-                style="font-family: 'Cormorant Garamond', serif; font-weight: 300"
-            >
-                {{ $first->title }}
-            </h2>
-            <p
-                id="heroAddress"
-                class="text-sm tracking-wide"
-                style="font-family: 'Jost', sans-serif; font-weight: 300; letter-spacing: 0.05em"
-            >
-                {{ $first->location }}
-            </p>
+    {{-- Bottom-left: Title + Address --}}
+    <div class="absolute z-20 text-white left-4 md:left-[50px]">
+        <p
+            class="text-xs tracking-[3px] uppercase text-white mb-3"
+            style="font-family: 'Jost', sans-serif; font-weight: 400">
+            Featured Project
+        </p>
+        <h2
+            id="heroTitle"
+            class="font-display text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-2"
+            style="font-family: 'Cormorant Garamond', serif; font-weight: 300">
+            {{ $first->title }}
+        </h2>
+        <p
+            id="heroAddress"
+            class="text-sm tracking-wide"
+            style="font-family: 'Jost', sans-serif; font-weight: 300; letter-spacing: 0.05em">
+            {{ $first->location }}
+        </p>
 
-            {{-- Learn More — mobile only --}}
-            <a
-                id="heroLearnMoreMobile"
-                href="/projects/{{ $first->id }}"
-                class="md:hidden inline-block mt-4 text-xs tracking-[2px] uppercase border border-white/60 text-white px-5 py-2 hover:bg-white hover:text-black transition-all duration-300"
-                style="font-family: 'Jost', sans-serif; font-weight: 400"
-            >
-                Learn More
-            </a>
-        </div>
+        {{-- Learn More — mobile only --}}
+        <a
+            id="heroLearnMoreMobile"
+            href="/projects/{{ $first->id }}"
+            class="md:hidden inline-block mt-4 text-xs tracking-[2px] uppercase border border-white/60 text-white px-5 py-2 hover:bg-white hover:text-black transition-all duration-300"
+            style="font-family: 'Jost', sans-serif; font-weight: 400">
+            Learn More
+        </a>
+    </div>
 
-        {{-- Bottom Thumbnails Strip --}}
-        <div class="absolute bottom-4 md:bottom-10 left-0 right-0 z-20 px-4 md:px-0 md:left-10">
-            <div class="flex gap-3 md:gap-5 overflow-x-auto scrollbar-hide pb-1 md:p-4 md:overflow-visible">
+    {{-- Bottom Thumbnails Strip --}}
+    <div class="absolute bottom-4 md:bottom-10 left-0 right-0 z-20 px-4 md:px-0 md:left-10">
+        <div class="flex gap-3 md:gap-5 overflow-x-auto scrollbar-hide pb-1 md:p-4 md:overflow-visible">
 
-                @foreach ($featuredProjects as $i => $project)
-                    <div
-                        class="thumb-item {{ $i === 0 ? 'active' : '' }} cursor-pointer overflow-visible relative flex-shrink-0"
-                        style="
+            @foreach ($featuredProjects as $i => $project)
+            <div
+                class="thumb-item {{ $i === 0 ? 'active' : '' }} cursor-pointer overflow-visible relative flex-shrink-0"
+                style="
                             width: clamp(120px, 28vw, 200px);
                             height: clamp(90px, 20vw, 150px);
                             border: 2px solid {{ $i === 0 ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.3)' }};
                         "
-                        data-video="{{ $project->video_path ?? asset('assets/video/1.mp4') }}"
-                        data-title="{{ $project->title }}"
-                        data-address="{{ $project->location }}"
-                        data-url="/projects/{{ $project->id }}"
-                        onclick="switchVideo(this)"
-                    >
-                        <img
-                            src="{{ $project->img_path ?? asset('assets/images/video-thumb' . ($i + 1) . '.jpg') }}"
-                            alt="{{ $project->title }}"
-                            class="w-full h-full object-cover {{ $i === 0 ? 'opacity-90' : 'opacity-70' }} hover:opacity-100 transition-opacity duration-200"
-                            onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';"
-                        />
+                data-video="{{ $project->video_path ?? asset('assets/video/1.mp4') }}"
+                data-title="{{ $project->title }}"
+                data-address="{{ $project->location }}"
+                data-url="/projects/{{ $project->id }}"
+                onclick="switchVideo(this)">
+                <img
+                    src="{{ $project->img_path ?? asset('assets/images/video-thumb' . ($i + 1) . '.jpg') }}"
+                    alt="{{ $project->title }}"
+                    class="w-full h-full object-cover {{ $i === 0 ? 'opacity-90' : 'opacity-70' }} hover:opacity-100 transition-opacity duration-200"
+                    onerror="this.parentElement.style.background='#3a3a3a'; this.style.display='none';" />
 
-                        {{-- Progress Bar --}}
-                        <div
-                            class="progress-bar absolute left-0 h-[2px] bg-white z-10 {{ $i === 0 ? '' : 'hidden' }}"
-                            style="width: 0%; top: 100%; margin-top: 4px; transition: none"
-                        ></div>
-                    </div>
-                @endforeach
-
+                {{-- Progress Bar --}}
+                <div
+                    class="progress-bar absolute left-0 h-[2px] bg-white z-10 {{ $i === 0 ? '' : 'hidden' }}"
+                    style="width: 0%; top: 100%; margin-top: 4px; transition: none"></div>
             </div>
-        </div>
+            @endforeach
 
-    </section>
+        </div>
+    </div>
+
+</section>
 @endif
 
 @push('styles')
 <style>
     /* Hide scrollbar on thumbnail strip */
-    .scrollbar-hide::-webkit-scrollbar { display: none; }
-    .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+    .scrollbar-hide::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-hide {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
 </style>
 @endpush
 
@@ -634,7 +631,8 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 
     {{-- Background image --}}
     <div class="absolute inset-0 w-full h-full overflow-hidden" style="z-index:0;">
-        <img id="qualityBg" class="absolute w-full"
+        <img id="qualityBg" class="absolute w-full scroll-move"
+            data-axis="Y"
             src="/assets/images/quality-bg.png" alt=""
             style="top:-20%; left:0; height:140%; object-fit:cover; will-change:transform;" />
     </div>
@@ -646,7 +644,8 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
                 md:px-10 md:pt-24">
 
         {{-- Ghost text --}}
-        <span class="absolute inset-0 flex items-center justify-center select-none pointer-events-none"
+        <span class="absolute inset-0 flex items-center justify-center select-none pointer-events-none scroll-move"
+            data-axis="Y"
             style="font-family:'Cormorant Garamond',serif;
                    font-size:clamp(60px,18vw,260px);
                    font-weight:700;
@@ -703,11 +702,10 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
                 xl:px-24 xl:pt-24 xl:pb-32">
 
         {{-- Background text --}}
-        <div class="absolute inset-0 flex flex-col justify-start pt-4 pl-2 select-none pointer-events-none overflow-hidden" style="z-index:0;">
+        <div class="absolute inset-0 flex flex-col justify-start pt-4 pl-2 select-none pointer-events-none overflow-hidden mt-16" style="z-index:0;">
             @foreach($bgTextLines as $line)
-            <span style="font-family:'Cormorant Garamond',serif;
-                         font-size:clamp(40px,10vw,180px);
-                         font-weight:700;
+            <span class="scroll-move" data-axis="Y" style="font-family:'Cormorant Garamond',serif;
+font-size: clamp(32px, 6vw, 120px);                         font-weight:700;
                          color:rgba(255,255,255,0.04);
                          white-space:nowrap;
                          line-height:1.1;">
@@ -727,49 +725,59 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
                 z-index:20;"></div>
 
             {{-- Col 1 --}}
-            <div class="w-full md:w-1/2 flex flex-col
-                        pt-8 pb-10 md:pt-12 md:pb-16
-                        pr-0 md:pr-10 lg:pr-16
-                        md:border-r md:border-white/10">
+            {{-- Col 1 --}}
+            <div class="quality-col w-full md:w-1/2
+            md:border-r md:border-white/10"
+                style="position:relative; overflow:hidden; display:flex; flex-direction:column;">
 
-                <p class="text-white text-sm leading-relaxed mb-6 md:mb-10 opacity-80"
-                    style="line-height:1.9; font-weight:300; max-width:480px;">
-                    {!! $expertise->body ?? 'We deliver exceptional construction using first-rate materials and innovative techniques. Every project is built with precision and care, ensuring unmatched durability, stunning aesthetics, and spaces that exceed expectations and endure over time.' !!}
-                </p>
+                <div style="padding:2.5rem 2rem; min-height:180px; position:relative; z-index:2; flex-shrink:0;">
+                    <p class="text-white text-sm leading-relaxed opacity-80"
+                        style="line-height:1.9; font-weight:300;">
+                        {{-- ✅ body, body_2 না --}}
+                        {!! $expertise->body ?? 'We deliver exceptional construction using first-rate materials.' !!}
+                    </p>
+                </div>
 
-                <div class="quality-img-wrap w-full overflow-hidden cursor-pointer"
-                    style="height:clamp(220px,40vw,420px); position:relative;">
+                <div class="quality-img-wrap"
+                    style="overflow:hidden; flex-shrink:0;
+               width:60%; margin:0 auto; height:280px;
+               transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
+                           width 0.75s cubic-bezier(0.76,0,0.24,1);">
                     <img src="{{ $expertiseImages[0] ?? asset('assets/images/q1.jpg') }}"
-                        alt="Lobby interior"
                         class="quality-img w-full h-full object-cover"
-                        style="transform:scale(1); transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);"
-                        onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
+                        style="transform:scale(1.04);
+                   transition:transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
                 </div>
             </div>
 
             {{-- Col 2 --}}
-            <div class="w-full md:w-1/2 flex flex-col
-                        pt-8 pb-10 md:pt-12 md:pb-16
-                        pl-0 md:pl-10 lg:pl-16
-                        border-t border-white/10 md:border-t-0">
+            <div class="quality-col w-full md:w-1/2
+            border-t border-white/10 md:border-t-0"
+                style="position:relative; overflow:hidden; display:flex; flex-direction:column;">
 
-                <p class="text-white text-sm leading-relaxed mb-6 md:mb-10 opacity-80"
-                    style="line-height:1.9; font-weight:300; max-width:480px;">
-                    {!! $expertise->body_2 ?? 'We guarantee on-schedule completion, respecting your timelines without compromise. Projects are executed with careful planning and efficiency, giving you a smooth, hassle-free experience as you prepare to step into your perfectly completed space.' !!}
-                </p>
+                <div style="padding:2.5rem 2rem; min-height:180px; position:relative; z-index:2; flex-shrink:0;">
+                    <p class="text-white text-sm leading-relaxed opacity-80"
+                        style="line-height:1.9; font-weight:300;">
+                        {{-- ✅ body_2 --}}
+                        {!! $expertise->body_2 ?? 'We guarantee on-schedule completion, respecting your timelines.' !!}
+                    </p>
+                </div>
 
-                <div class="quality-img-wrap w-full overflow-hidden cursor-pointer"
-                    style="height:clamp(220px,40vw,420px); position:relative;">
+                <div class="quality-img-wrap"
+                    style="overflow:hidden; flex-shrink:0;
+               width:60%; margin:0 auto; height:280px;
+               transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
+                           width 0.75s cubic-bezier(0.76,0,0.24,1);">
                     <img src="{{ $expertiseImages[1] ?? asset('assets/images/q2.jpg') }}"
-                        alt="Bathroom interior"
                         class="quality-img w-full h-full object-cover"
-                        style="transform:scale(1); transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94);"
-                        onerror="this.parentElement.style.background='#1a2b1c'; this.style.display='none';" />
+                        style="transform:scale(1.04);
+                   transition:transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
                 </div>
             </div>
-
         </div>
     </div>
+
+
 
 </section>
 
@@ -778,132 +786,149 @@ $bgTextLines = explode(' ', $expertise->short ?? 'Quality Construction');
 $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 @endphp
 
-<section class="w-full relative z-10 overflow-hidden pt-16 pb-0 px-5"
+<section class="w-full relative z-10 overflow-hidden pt-16 pb-0"
     style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
-    <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
 
-        <!-- Decorative stone/dot -->
-        <div class="absolute left-8 pointer-events-none" style="top:52%; z-index:2;">
-            <img src="/assets/images/overview-stone.png" alt="" style="width:56px; opacity:0.7;"
-                onerror="this.style.display='none'" />
-        </div>
+    <div class="container mx-auto px-6 lg:px-14 pt-16 pb-0">
 
-        <div>
-            <!-- Heading -->
-            <h2 class="mb-10 font-light text-gray-900"
-                style="font-size:clamp(32px,5vw,64px); font-family:'Jost',sans-serif; font-weight:300; letter-spacing:-0.01em;">
-                {!! $storiesSection->title
-                ? preg_replace('/satisfaction/i', '<em style="font-family:\'Cormorant Garamond\',serif; font-style:italic; font-weight:300;">satisfaction</em>', e($storiesSection->title))
-                : 'The stories of <em style="font-family:\'Cormorant Garamond\',serif; font-style:italic; font-weight:300;">satisfaction</em>'
-                !!}
-            </h2>
+        {{-- Heading --}}
+        <h2 class="mb-10 font-light text-gray-900"
+            style="font-size:clamp(32px,5vw,64px); font-family:'Jost',sans-serif; font-weight:300; letter-spacing:-0.01em;">
+            {!! $storiesSection->title
+            ? preg_replace('/satisfaction/i', '<em style="font-family:\'Cormorant Garamond\',serif; font-style:italic; font-weight:300;">satisfaction</em>', e($storiesSection->title))
+            : 'The stories of <em style="font-family:\'Cormorant Garamond\',serif; font-style:italic; font-weight:300;">satisfaction</em>'
+            !!}
+        </h2>
 
-            <!-- Testimonial Content Row -->
-            <div class="flex flex-col md:flex-row items-start gap-10 mb-0 relative">
+        {{-- Testimonial Row --}}
+        <div class="flex flex-col md:flex-row items-start gap-10 mb-16 relative">
 
-                <!-- Left: Avatar + Name -->
-                <div class="w-full md:w-1/4 flex flex-col gap-3">
-                    <div class="rounded-full overflow-hidden border border-gray-200" style="width:64px; height:64px;">
-                        <img id="testimonialAvatar"
-                            src="{{ $storiesItems->first()->img_path ?? asset('assets/images/4.jpeg') }}"
-                            alt="avatar"
-                            class="w-full h-full object-cover transition-opacity duration-500"
-                            onerror="this.src=''; this.parentElement.style.background='#d6cfc5';" />
-                    </div>
-                    <div>
-                        <p id="testimonialName"
-                            class="font-medium text-gray-900 text-lg transition-opacity duration-500"
-                            style="font-family:'Jost',sans-serif; font-weight:500;">
-                            {{ $storiesItems->first()->title ?? 'Md. Mamun Molla' }}
-                        </p>
-                        <p id="testimonialRole"
-                            class="text-gray-600 text-sm mt-0.5 transition-opacity duration-500"
-                            style="font-weight:300;">
-                            {{ $storiesItems->first()->name ?? 'Professor' }}
-                        </p>
-                    </div>
+            {{-- Left: Avatar + Name --}}
+            <div class="w-full md:w-1/4 flex flex-col gap-3 flex-shrink-0">
+                <div class="rounded-full overflow-hidden border border-gray-200" style="width:64px; height:64px;">
+                    <img id="testimonialAvatar"
+                        src="{{ $storiesItems->first()->img_path ?? asset('assets/images/4.jpeg') }}"
+                        alt="avatar" class="w-full h-full object-cover transition-opacity duration-500"
+                        onerror="this.src=''; this.parentElement.style.background='#d6cfc5';" />
                 </div>
-
-                <!-- Right: Quote -->
-                <div class="w-full md:w-3/4 relative ml-auto">
-                    <span class="absolute -left-4 -top-2 text-gray-400 select-none"
-                        style="font-size:52px; font-family:'Georgia',serif; line-height:1; opacity:0.6;">&ldquo;</span>
-
-                    <p id="testimonialText"
-                        class="text-gray-700 leading-relaxed pl-8 transition-opacity duration-500"
-                        style="font-size:clamp(14px,1.3vw,17px); font-weight:300; line-height:1.95; max-width:780px;">
-                        {!! $storiesItems->first()->body ?? '' !!}
+                <div>
+                    <p id="testimonialName" class="font-medium text-gray-900 text-lg transition-opacity duration-500"
+                        style="font-family:'Jost',sans-serif; font-weight:500;">
+                        {{ $storiesItems->first()->title ?? 'Md. Mamun Molla' }}
                     </p>
-
-                    <!-- Prev / Next arrows -->
-                    <div class="flex gap-3 justify-end mt-6">
-                        <button onclick="changeTestimonial(-1); resetAutoPlay()"
-                            aria-label="Previous testimonial"
-                            class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
-                            style="width:44px; height:44px;">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                aria-hidden="true"
-                                class="group-hover:stroke-white transition-colors duration-300">
-                                <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" class="group-hover:stroke-white" />
-                            </svg>
-                        </button>
-
-                        <button onclick="changeTestimonial(1); resetAutoPlay()"
-                            aria-label="Next testimonial"
-                            class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
-                            style="width:44px; height:44px;">
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"
-                                aria-hidden="true"
-                                class="group-hover:stroke-white transition-colors duration-300">
-                                <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
-                                    stroke-linejoin="round" class="group-hover:stroke-white" />
-                            </svg>
-                        </button>
-                    </div>
+                    <p id="testimonialRole" class="text-gray-600 text-sm mt-0.5 transition-opacity duration-500"
+                        style="font-weight:300;">
+                        {{ $storiesItems->first()->name ?? 'Professor' }}
+                    </p>
                 </div>
             </div>
-        </div>
 
-        <!-- Bottom Images -->
-        <div class="flex w-full mt-10" style="height:clamp(320px,45vw,560px);">
-            <div class="w-1/2 overflow-hidden">
-                <img src="{{ $storiesSection->img_path ?? asset('assets/images/test1.avif') }}"
-                    alt="Interior" class="w-full object-cover"
-                    onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
-                <p class="text-black font-body font-light leading-relaxed text-sm md:text-base">
-                    {!! $storiesSection->body ?? 'Bhaiya Housing is devoted to designing inspiring residential and commercial spaces that transcend expectations.' !!}
+            {{-- ✅ Right: Quote — right edge পর্যন্ত যাবে --}}
+            <div class="flex-1 relative min-w-0">
+                <span class="absolute -left-4 -top-2 text-gray-400 select-none"
+                    style="font-size:52px; font-family:'Georgia',serif; line-height:1; opacity:0.6;">&ldquo;</span>
+
+                <p id="testimonialText"
+                    class="text-gray-700 leading-relaxed pl-8 transition-opacity duration-500"
+                    style="font-size:clamp(14px,1.3vw,17px); font-weight:300; line-height:1.95;">
+                    {!! $storiesItems->first()->body ?? '' !!}
                 </p>
+
+                {{-- Arrows --}}
+                <div class="flex gap-3 justify-end mt-6">
+                    <button onclick="changeTestimonial(-1); resetAutoPlay()" aria-label="Previous"
+                        class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                        style="width:44px; height:44px;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="group-hover:stroke-white" />
+                        </svg>
+                    </button>
+                    <button onclick="changeTestimonial(1); resetAutoPlay()" aria-label="Next"
+                        class="rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 hover:bg-gray-900 hover:border-gray-900 group"
+                        style="width:44px; height:44px;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                            <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5" stroke-linecap="round"
+                                stroke-linejoin="round" class="group-hover:stroke-white" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div class="w-1/2 overflow-hidden" style="margin-left:2px;">
-                <img src="{{ $sectionImages[0] ?? asset('assets/images/test2.avif') }}"
-                    alt="Interior" class="w-full h-full object-cover"
-                    onerror="this.parentElement.style.background='#bab4ac'; this.style.display='none';" />
-            </div>
+
         </div>
 
     </div>
-</section>
 
+    {{-- Bottom Images --}}
+    <div class="relative container flex items-end mt-32" style="height:clamp(360px,48vw,580px);">
+
+        {{-- Stone: scroll করে উপরে যাবে --}}
+        <div class="scroll-move absolute pointer-events-none"
+            data-axis="Y"
+            style="left:0; top:0; z-index:3;">
+            <img src="/assets/images/overview-stone.png" alt=""
+                style="width:clamp(120px,7vw,160px); opacity:0.8;"
+                onerror="this.style.display='none'" />
+        </div>
+
+        {{-- Left image + text --}}
+        <div class="w-1/2 h-full flex flex-col pl-6 lg:pl-14">
+            <div class="flex-1 overflow-hidden">
+                <img src="{{ $storiesSection->img_path ?? asset('assets/images/test1.avif') }}"
+                    alt="Interior"
+                    class="w-full h-full object-cover"
+                    onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
+            </div>
+            <p class="text-gray-700 font-light leading-relaxed text-sm py-6 pr-8"
+                style="font-weight:300; line-height:1.9; max-width:520px;">
+                {!! $storiesSection->body ?? 'Bhaiya Housing is devoted to designing inspiring residential and commercial spaces that transcend expectations. With a focus on modern aesthetics, impeccable craftsmanship, and an unwavering commitment to integrity, we create environments that harmoniously balance sophistication and purpose, delivering timeless value.' !!}
+            </p>
+        </div>
+
+        {{-- Right image: scroll করে উপরে যাবে --}}
+        <div class="scroll-move w-1/2 overflow-hidden"
+            data-axis="Y"
+            data-max-move="10"
+            style="height:110%; margin-left:2px; flex-shrink:0;">
+            <img src="{{ $sectionImages[0] ?? asset('assets/images/test2.avif') }}"
+                alt="Interior"
+                class="w-full h-full object-cover"
+                onerror="this.parentElement.style.background='#bab4ac'; this.style.display='none';" />
+        </div>
+
+    </div>
+
+</section>
 
 <!-- ===== NEWS & EVENTS ===== -->
 <section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative z-10"
     style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
 
+    {{-- Hover image (follows cursor) --}}
+    <div id="newsHoverImg"
+        style="position:fixed; pointer-events:none; z-index:999;
+               width:120px; height:150px;
+               transform:rotate(10deg) translate(-50%,-50%);
+               opacity:0; transition:opacity 0.3s ease;
+               overflow:hidden; top:0; left:0;">
+        <img id="newsHoverImgEl" src="" alt=""
+            style="width:100%; height:100%; object-fit:cover;" />
+    </div>
+
     <div class="container mx-auto flex flex-col md:flex-row gap-8 lg:gap-24 pt-12 md:pt-[100px]">
 
-        <!-- Left Side: Title & Button -->
+        {{-- Left Side --}}
         <div class="w-full md:w-[30%] relative z-10">
 
-            <!-- MOBILE: horizontal heading + button in a row -->
+            {{-- MOBILE --}}
             <div class="flex md:hidden items-center justify-between mb-2">
-                <h2 style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(28px,7vw,48px); color:#1a1a1a; letter-spacing:-0.01em; line-height:1.1;">
+                <h2 style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(28px,7vw,48px); color:#1a1a1a; line-height:1.1;">
                     News
                     <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:0.85em; color:#3a3a3a; margin:0 3px;">&amp;</em>
                     Events
                 </h2>
                 <a href="/events"
-                    class="flex items-center justify-center rounded-full flex-shrink-0 text-center"
+                    class="flex items-center justify-center rounded-full flex-shrink-0"
                     style="width:85px; height:85px; border:1.5px solid #1a1a1a; font-size:11px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; transition:background 0.3s, color 0.3s;"
                     onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
                     onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
@@ -911,25 +936,46 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 </a>
             </div>
 
-            <!-- DESKTOP: rotated vertical heading + circle button -->
+            {{-- DESKTOP: News | vertical line | Events --}}
+            {{-- DESKTOP: News | line | Events --}}
             <div class="hidden md:flex flex-row items-center justify-between min-h-[500px]">
-                <div style="writing-mode:vertical-rl; transform:rotate(180deg); white-space:nowrap; display:flex; align-items:center; gap:4px;">
-                    <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">News</span>
-                    <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(32px,4vw,58px); color:#3a3a3a; margin:0 4px;">&amp;</em>
-                    <span style="font-family:'Jost',sans-serif; font-weight:500; font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;">Events</span>
+
+                {{-- Rotated container --}}
+                <div style="display:flex; flex-direction:column; align-items:flex-start; gap:0;
+            transform:rotate(-90deg); white-space:nowrap; transform-origin: center center;">
+
+                    <span style="font-family:'Jost',sans-serif; font-weight:500;
+                 font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;
+                 display:block; line-height:1.1;">
+                        News
+                    </span>
+
+                    <span class="scroll-move" data-axis="X"
+                        style="font-family:'Jost',sans-serif; font-weight:500;
+               font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;
+               display:block; line-height:1.1;
+               transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
+               will-change: transform;">
+                        &amp; Events
+                    </span>
+
                 </div>
+
                 <a href="/events"
-                    class="flex items-center justify-center rounded-full mt-8"
-                    style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0; transition:background 0.3s, color 0.3s;"
+                    class="flex items-center justify-center rounded-full"
+                    style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px;
+               letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0;
+               transition:background 0.3s, color 0.3s;"
                     onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
                     onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
                     View All
                 </a>
+
             </div>
 
         </div>
 
-        <!-- Right Side: News & Events List -->
+        {{-- Right Side: List --}}
         <div class="w-full md:w-[70%] flex flex-col relative z-10">
 
             @forelse($newsEvents as $index => $item)
@@ -938,10 +984,16 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             $type = ucfirst($item['type']);
             $date = $item['start_date'];
             $url = '/' . strtolower($item['type']) . '/' . $item['id'];
+            $imgPath = asset($item['img_path'] ?? '');
             @endphp
 
             <a href="{{ $url }}"
-                class="border-t {{ $isLast ? 'border-b' : '' }} border-[#ccc3b6] py-5 md:py-6 lg:py-8 flex flex-col sm:flex-row gap-2 sm:gap-12 items-start group hover:bg-[#e3dbcf] transition duration-300 px-3 sm:px-4 -mx-3 sm:-mx-4 cursor-pointer"
+                class="news-row border-t {{ $isLast ? 'border-b' : '' }} border-[#ccc3b6]
+                       py-5 md:py-6 lg:py-8
+                       flex flex-col sm:flex-row gap-2 sm:gap-12 items-start
+                       group hover:bg-[#e3dbcf] transition duration-300
+                       px-3 sm:px-4 -mx-3 sm:-mx-4 cursor-pointer"
+                data-img="{{ $imgPath }}"
                 style="text-decoration:none;">
 
                 <div class="w-full sm:w-40 flex-shrink-0 flex sm:flex-col flex-row gap-2 sm:gap-0">
@@ -967,8 +1019,12 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
         </div>
     </div>
 </section>
+
+
+
+
 <!-- ===== PARTNERS / CTA ===== -->
-<section class="relative z-10 w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#f2ede6;">
+<section class="relative z-10 w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#fff;">
 
     <!-- Map Background Image -->
     <div class="absolute inset-y-0 left-0 w-1/2 pointer-events-none" style="z-index:0;">
@@ -981,7 +1037,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
     <div class="relative z-10 px-6 md:px-16 lg:px-24">
 
         <!-- Heading -->
-        <h2 class="mb-16 font-light leading-tight text-gray-900" style="font-size:clamp(32px,4.5vw,64px);">
+        <h2 class="mb-16 font-light leading-tight text-gray-900 scroll-move" data-axis="Y" style="font-size:clamp(32px,4.5vw,64px);">
             @php
 
             $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
@@ -1219,34 +1275,80 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 </script>
 @push('scripts')
 <script>
-window.addEventListener('load', function () {
+    window.addEventListener('load', function() {
 
-    // ── Border line animation only ──
-    gsap.to('.quality-border-line', {
-        width: '100%',
-        duration: 1.4,
-        ease: 'power2.out',
-        scrollTrigger: {
-            trigger: '#quality-grid',
-            start: 'top 80%',
-            once: true,
-        }
-    });
-
-    // ── Hover: image expand ──
-    document.querySelectorAll('.quality-img-wrap').forEach(wrap => {
-        const img = wrap.querySelector('.quality-img');
-
-        wrap.addEventListener('mouseenter', () => {
-            img.style.transform = 'scale(1.08)';
+        // ── Border line animation only ──
+        gsap.to('.quality-border-line', {
+            width: '100%',
+            duration: 1.4,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '#quality-grid',
+                start: 'top 80%',
+                once: true,
+            }
         });
 
-        wrap.addEventListener('mouseleave', () => {
+        // ── Hover: image expand ──
+        document.querySelectorAll('.quality-img-wrap').forEach(wrap => {
+            const img = wrap.querySelector('.quality-img');
+
+            wrap.addEventListener('mouseenter', () => {
+                img.style.transform = 'scale(1.08)';
+            });
+
+            wrap.addEventListener('mouseleave', () => {
+                img.style.transform = 'scale(1)';
+            });
+        });
+
+    });
+</script>
+
+<script>
+    (function() {
+        const hoverImg = document.getElementById('newsHoverImg');
+        const hoverImgEl = document.getElementById('newsHoverImgEl');
+        const rows = document.querySelectorAll('.news-row');
+
+        // Follow cursor
+        document.addEventListener('mousemove', (e) => {
+            hoverImg.style.left = e.clientX + 'px';
+            hoverImg.style.top = e.clientY + 'px';
+        });
+
+        rows.forEach(row => {
+            const src = row.dataset.img;
+
+            row.addEventListener('mouseenter', () => {
+                if (!src) return;
+                hoverImgEl.src = src;
+                hoverImg.style.opacity = '1';
+            });
+
+            row.addEventListener('mouseleave', () => {
+                hoverImg.style.opacity = '0';
+            });
+        });
+    })();
+</script>
+<script>
+    document.querySelectorAll('.quality-col').forEach(col => {
+        const wrap = col.querySelector('.quality-img-wrap');
+        const img = col.querySelector('.quality-img');
+
+        col.addEventListener('mouseenter', () => {
+            wrap.style.width = '100%';
+            wrap.style.height = '500px';
             img.style.transform = 'scale(1)';
         });
-    });
 
-});
+        col.addEventListener('mouseleave', () => {
+            wrap.style.width = '60%';
+            wrap.style.height = '280px';
+            img.style.transform = 'scale(1.04)';
+        });
+    });
 </script>
 @endpush
 @endsection

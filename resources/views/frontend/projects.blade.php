@@ -180,7 +180,7 @@
 
 
      {{-- Ghost BG text --}}
-     <div class="absolute top-6 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
+     <div class="absolute top-6 right-0 pointer-events-none select-none overflow-hidden scroll-move" data-axis="X" style="z-index:0;">
          <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,200px); font-weight:700; font-style:italic; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
              Signature
          </span>
