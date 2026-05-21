@@ -1,23 +1,25 @@
 <!-- ── Header ── -->
-<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-6 flex items-center justify-between" style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0);z-index: 50;"> <!-- Logo -->
-  <a href="/" class="z-50 flex-shrink-0">
-    <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
-        alt="{{ $setting->title ?? 'Bhaiya' }}"
-        class="w-auto"
-        style="height: clamp(36px, 5vw, 64px);"
-        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-    <span class="hidden text-white font-semibold tracking-widest"
-        style="font-family:'Jost',sans-serif; font-size: clamp(16px, 2vw, 24px);">
-        {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
-    </span>
-</a>
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-4 md:py-6 flex items-center justify-between"
+    style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0); z-index: 50;">
+
+    <!-- Logo -->
+    <a href="/" class="z-50 flex-shrink-0">
+        <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
+            alt="{{ $setting->title ?? 'Bhaiya' }}"
+            class="h-8 sm:h-10 md:h-12 w-auto"
+            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+        <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
+            style="font-family:'Jost',sans-serif;">
+            {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
+        </span>
+    </a>
 
     <!-- Hamburger -->
     <button id="menuToggle" onclick="openMenu()"
-        class="z-50 flex flex-col gap-1.5 group cursor-pointer" aria-label="Open menu">
-        <span class="w-8 h-px bg-white transition-all duration-300 group-hover:w-10"></span>
-        <span class="w-5 h-px bg-white transition-all duration-300 group-hover:w-10"></span>
-        <span class="w-8 h-px bg-white transition-all duration-300 group-hover:w-10"></span>
+        class="z-50 flex flex-col gap-1.5 group cursor-pointer p-1" aria-label="Open menu">
+        <span class="w-7 md:w-8 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
+        <span class="w-4 md:w-5 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
+        <span class="w-7 md:w-8 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
     </button>
 
 </header>
@@ -33,24 +35,28 @@
             onerror="this.style.display='none';" />
     </div>
 
+    <!-- Right side bg image -->
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index:0;">
+        <div class="absolute right-0 top-0 w-1/3 h-full opacity-50"
+            style="background-image: url('/assets/images/bg-news.png'); background-repeat: repeat-y; background-size: 100% auto;">
+        </div>
+    </div>
+
     <!-- Top bar -->
-    <div class="relative z-10 flex items-center justify-between px-8 md:px-14 py-7 flex-shrink-0">
-        <!-- Logo -->
+    <div class="relative z-10 flex items-center justify-between px-6 sm:px-8 md:px-14 py-5 md:py-7 flex-shrink-0">
         <a href="/">
             <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
                 alt="{{ $setting->title ?? 'Bhaiya' }}"
-                class="h-10 w-auto"
+                class="h-8 md:h-10 w-auto"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
             <span class="hidden text-white font-semibold text-lg tracking-widest"
                 style="font-family:'Jost',sans-serif;">
                 {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
             </span>
         </a>
-        <!-- Close -->
-        <button onclick="closeMenu()"
-            aria-label="Close menu"
-            class="text-white opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer">
-            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="white"
+        <button onclick="closeMenu()" aria-label="Close menu"
+            class="text-white opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer p-1">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" stroke="white"
                 stroke-width="1.5" stroke-linecap="round" aria-hidden="true">
                 <line x1="4" y1="4" x2="24" y2="24" />
                 <line x1="24" y1="4" x2="4" y2="24" />
@@ -59,11 +65,11 @@
     </div>
 
     <!-- Body: Image left + Nav right -->
-    <div class="relative z-10 flex flex-1 items-center justify-around px-8 md:px-14 gap-10 overflow-hidden">
+    <div class="relative z-10 flex flex-1 items-center justify-center md:justify-around px-6 sm:px-8 md:px-14 gap-8 overflow-hidden">
 
-        <!-- Left: Hover Image -->
-        <div class="hidden md:block w-5/12 flex-shrink-0 pr-16">
-            <div class="overflow-hidden" style="height:clamp(280px,42vw,500px);" id="menuImageWrap">
+        <!-- Left: Hover Image — hidden on mobile -->
+        <div class="hidden md:block w-5/12 flex-shrink-0 pr-8 lg:pr-16">
+            <div class="overflow-hidden" style="height:clamp(220px,38vw,500px);" id="menuImageWrap">
                 <img id="menuImage"
                     src="{{ asset('assets/images/m3.jpg') }}"
                     alt="nav image"
@@ -74,93 +80,123 @@
         </div>
 
         <!-- Right: Nav links -->
-        <div class="flex flex-1 items-center justify-around gap-0">
-            <nav class="flex flex-col justify-end gap-2">
+        <div class="flex flex-1 items-center justify-center md:justify-around">
+            <div class="flex flex-col justify-end gap-1 sm:gap-2 w-full max-w-xs md:max-w-none">
 
-                {{-- Static fixed links --}}
                 @php
                 $staticLinks = [
-                ['href' => '/', 'label' => 'Home', 'key' => 'home'],
-                ['href' => '/about', 'label' => 'About Us', 'key' => 'about'],
-                ['href' => '/projects', 'label' => 'Projects', 'key' => 'projects'],
-                ['href' => '/concerns', 'label' => 'Other Concerns', 'key' => 'concerns'],
-                ['href' => '/career', 'label' => 'Career', 'key' => 'career'],
-                ['href' => '/events', 'label' => 'News & Events', 'key' => 'events'],
+                    ['href' => '/',          'label' => 'Home',           'key' => 'home'],
+                    ['href' => '/about',     'label' => 'About Us',       'key' => 'about'],
+                    ['href' => '/projects',  'label' => 'Projects',       'key' => 'projects'],
+                    ['href' => '/concerns',  'label' => 'Other Concerns', 'key' => 'concerns'],
+                    ['href' => '/career',    'label' => 'Career',         'key' => 'career'],
+                    ['href' => '/events',    'label' => 'News & Events',  'key' => 'events'],
                 ];
                 @endphp
+
                 @foreach($staticLinks as $link)
                 <a href="{{ $link['href'] }}"
-                    class="menu-link group block text-white opacity-50 transition-opacity duration-300 hover:opacity-100 flex items-center gap-4 "
-                    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25;"
+                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4"
                     data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
-                    <span class="block h-px bg-white w-0 group-hover:w-24 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 flex-shrink-0"></span>
+                    <span class="block h-px bg-white w-0 group-hover:w-16 md:group-hover:w-24 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 flex-shrink-0"></span>
                     <span>{{ $link['label'] }}</span>
                 </a>
                 @endforeach
 
-              <!-- Contact Us -->
-<a href="#"
-    class="menu-link block text-white transition-opacity duration-300"
-    style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300; font-size:clamp(36px,5.5vw,72px); line-height:1.25; opacity:0.5;"
-    data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
-    onmouseover="hoverLink(this)"
-    onmouseout="unhoverLink(this)">
-    Contact Us
-</a>
+                <!-- Contact Us -->
+                <a href="#"
+                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4"
+                    data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
+                    onmouseover="hoverLink(this)"
+                    onmouseout="unhoverLink(this)">
+                    <span class="block h-px bg-white w-0 group-hover:w-16 md:group-hover:w-24 transition-all duration-500 ease-out opacity-0 group-hover:opacity-100 flex-shrink-0"></span>
+                    <span>Contact Us</span>
+                </a>
 
-<div class="flex items-center gap-10 pl-1" style="margin-top:-4px;">
-    <a href="/landowner-contact"
-        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
-        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
-        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
-        As A Landowner
-    </a>
-    <a href="/customer-contact"
-        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
-        style="font-family:'Jost',sans-serif; font-size:13px; font-weight:300; letter-spacing:0.08em;">
-        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
-        As A Customer
-    </a>
-</div>
+                <!-- Sub links -->
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8 pl-1 mt-1">
+                    <a href="/landowner-contact"
+                        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                        style="font-family:'Jost',sans-serif; font-size:12px; font-weight:300; letter-spacing:0.08em;">
+                        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
+                        As A Landowner
+                    </a>
+                    <a href="/customer-contact"
+                        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                        style="font-family:'Jost',sans-serif; font-size:12px; font-weight:300; letter-spacing:0.08em;">
+                        <span class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
+                        As A Customer
+                    </a>
+                </div>
+
+            </div>
         </div>
 
-        </nav>
-
-        <!-- Vertical line -->
-        <div class="self-stretch w-px ml-8 flex-shrink-0"
+        <!-- Vertical line — hidden on mobile -->
+        <div class="hidden md:block self-stretch w-px ml-4 lg:ml-8 flex-shrink-0"
             style="background:rgba(255,255,255,0.2);"></div>
+
     </div>
-</div>
 
 </div>
+
+<style>
+    .header-menu-list {
+        font-family: 'Cormorant Garamond', 'Jost', serif;
+        font-size: clamp(28px, 4.5vw, 58px);
+        font-weight: 300;
+        color: white;
+        letter-spacing: 0.02em;
+        line-height: 1.15;
+        opacity: 0.85;
+        text-decoration: none;
+    }
+    .header-menu-list:hover {
+        opacity: 1;
+    }
+</style>
 
 <script>
-    (function() {
+    function openMenu() {
+        const overlay = document.getElementById('menuOverlay');
+        overlay.style.pointerEvents = 'all';
+        overlay.style.opacity = '1';
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+        const overlay = document.getElementById('menuOverlay');
+        overlay.style.pointerEvents = 'none';
+        overlay.style.opacity = '0';
+        document.body.style.overflow = '';
+    }
+
+    function hoverLink(el) {
+        const img = el.getAttribute('data-img');
+        if (img) {
+            const menuImg = document.getElementById('menuImage');
+            if (menuImg) menuImg.src = img;
+        }
+    }
+
+    function unhoverLink(el) {}
+
+    (function () {
         let lastScroll = 0;
         const header = document.getElementById('site-header');
 
-        window.addEventListener('scroll', function() {
+        window.addEventListener('scroll', function () {
             const current = window.scrollY;
-
             if (current > 80 && current > lastScroll) {
-                // scroll down — hide
                 header.style.transform = 'translateY(-100%)';
                 header.style.background = 'transparent';
             } else {
-                // scroll up — show with bg
                 header.style.transform = 'translateY(0)';
-                if (current > 80) {
-                    header.style.background = '#152018';
-                } else {
-                    header.style.background = 'transparent';
-                }
+                header.style.background = current > 80 ? '#152018' : 'transparent';
             }
-
             lastScroll = current;
-        }, {
-            passive: true
-        });
+        }, { passive: true });
     })();
 </script>

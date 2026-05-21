@@ -159,7 +159,7 @@ $jobSchemas[] = [
 
 <main class="">
     <!-- ===== HERO ===== -->
- <section class="fixed hero-fixed  top-0 left-0 w-full z-0 overflow-hidden
+    <section class="fixed hero-fixed  top-0 left-0 w-full z-0 overflow-hidden
                 h-[600px] md:h-[700px] lg:h-[900px]">
         <!-- Background Image -->
         <img src="{{ asset($career->img_path ?? '') }}"
@@ -171,14 +171,14 @@ $jobSchemas[] = [
 
         <!-- Text -->
         <div class="absolute inset-0 flex items-center px-10 md:px-20">
-            <h2 class="text-white text-3xl md:text-5xl lg:text-7xl font-semibold">
+            <h2 class="text-white text-xl md:text-3xl lg:text-5xl font-semibold">
                 {!! $career->title ?? '' !!}
             </h2>
         </div>
 
     </section>
-<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
-    style="position: relative; z-index: 2;"></div>
+    <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+        style="position: relative; z-index: 2;"></div>
 
     <!-- Career Section -->
     <section class="relative z-10 w-full overflow-hidden py-16 bg-[#F6F6F6]">
@@ -200,7 +200,7 @@ $jobSchemas[] = [
 
                 <!-- Row 1: Two text columns -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
-                    <div class="text-lg font-normal text-gray-700 leading-relaxed">
+                    <div class="text-lg font-normal text-gray-700 leading-relaxed pl-20">
                         {!! $careerOverview?->short ?? '' !!}
                     </div>
                     <div class="text-md font-normal text-gray-700 leading-relaxed">
@@ -225,8 +225,7 @@ $jobSchemas[] = [
                         <!-- Gold Splash Image (contact-stone-bg.png) - ছবির নিচে এবং বামে থাকবে -->
                         <img src="{{ asset('images/contact-stone-bg.png') }}" alt=""
                             class="absolute pointer-events-none scroll-move" data-axis="Y"
-                            style="width: 140px; bottom: -40px; left: -60px; z-index: 5;"
-                            onerror="this.style.display='none';">
+                            style="width: 140px; bottom: -40px; left: -60px; z-index: 5;">
 
                         <!-- Black Stone Image (mission-stone.png) - একদম কোণায় উপরে থাকবে -->
                         <img src="{{ asset('images/mission-stone.png') }}" alt=""
@@ -296,7 +295,12 @@ $jobSchemas[] = [
                         </a>
                     </div>
                     @endforeach
+                    <div class=" absolute pointer-events-none scroll-move" data-axis="Y"
 
+                        style="right:-140px; bottom:-60px; z-index:3;">
+                        <img src="/assets/images/overview-stone.png" alt=""
+                            style="height:220px;width: 220px; " />
+                    </div>
                     <!-- Bottom border -->
                     <div style="border-top:1px solid #c8c0b4;"></div>
 
@@ -305,7 +309,7 @@ $jobSchemas[] = [
         </div>
 
     </section>
-
+   
     <!-- Apply For A Role Section -->
     <section class="relative w-full overflow-hidden py-20" style="background:#1B281F;">
 
@@ -401,6 +405,12 @@ $jobSchemas[] = [
 
             </form>
         </div>
+          <div class=" absolute pointer-events-none scroll-move z-[1000]" data-axis="Y"
+
+                        style="left:-140px; bottom:-60px;">
+                        <img src="/assets/images/overview-stone.png" alt=""
+                            style="height:220px;width: 220px; " />
+                    </div>
     </section>
 
 

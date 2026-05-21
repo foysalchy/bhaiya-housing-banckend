@@ -186,9 +186,14 @@
     if (!els.length) return;
 
     els.forEach(el => {
-        // speed এর ভ্যালু পজিটিভ/নেগেটিভ করে আপনি মুভমেন্টের দিক পরিবর্তন করতে পারবেন
         const speed = parseFloat(el.dataset.speed ?? 0.15); 
-        const axis  = (el.dataset.axis ?? 'Y').toUpperCase();
+        
+        // 1. Data-axis রিড করা এবং মাইনাস (-) আছে কিনা চেক করা
+        const rawAxis = (el.dataset.axis ?? 'Y').toUpperCase().trim();
+        const isNegative = rawAxis.startsWith('-'); // true হবে যদি -X বা -Y হয়
+        const baseAxis = rawAxis.replace('-', '');  // মাইনাস সরিয়ে শুধু X বা Y নেওয়া
+        const dirMultiplier = isNegative ? -1 : 1;  // মাইনাস থাকলে -1 দিয়ে গুণ করবো
+
         const lerp  = parseFloat(el.dataset.lerp ?? 0.08);
 
         let initialOffset = 0;
@@ -201,14 +206,23 @@
             
             const rect = el.getBoundingClientRect();
             
-            // X বা Y যেদিকেই যাক না কেন, আমরা যেহেতু পেজ উপর-নিচ স্ক্রল করছি, 
-            // তাই সবসময় Y-axis (Vertical) পজিশন মাপতে হবে।
             const windowCenterY = window.innerHeight / 2;
             const elementCenterY = rect.height / 2;
             const absolutePosY = rect.top + window.scrollY;
 
-            // স্ক্রিনের মাঝে এলে যেন ভ্যালু 0 হয়
             initialOffset = absolutePosY - windowCenterY + elementCenterY;
+        }
+
+        // 2. Translate অ্যাপ্লাই করার জন্য আলাদা ফাংশন বানালাম
+        function applyTranslate(value) {
+            // dirMultiplier (-1 বা 1) দিয়ে ভ্যালুকে গুণ করে দিক ঠিক করা হচ্ছে
+            const finalValue = value * dirMultiplier; 
+
+            if (baseAxis === 'X') {
+                el.style.translate = `${finalValue}px 0px`;
+            } else {
+                el.style.translate = `0px ${finalValue}px`;
+            }
         }
 
         function tick() {
@@ -222,11 +236,7 @@
             }
 
             // ✅ translate অ্যাপ্লাই করা
-            if (axis === 'X') {
-                el.style.translate = `${current}px 0px`;
-            } else {
-                el.style.translate = `0px ${current}px`;
-            }
+            applyTranslate(current);
         }
 
         function onScroll(scrollPos) {
@@ -241,11 +251,7 @@
         target = -(startScroll - initialOffset) * speed;
         current = target;
 
-        if (axis === 'X') {
-            el.style.translate = `${current}px 0px`;
-        } else {
-            el.style.translate = `0px ${current}px`;
-        }
+        applyTranslate(current);
 
         // ইভেন্ট লিসেনার
         if (typeof lenis !== 'undefined') {

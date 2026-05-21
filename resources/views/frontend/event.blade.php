@@ -139,96 +139,93 @@
  @section('content')
 
  <!-- ===== HERO ===== -->
-<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
-                h-[600px] md:h-[700px] lg:h-[900px]"
-   >
-    <!-- Background Image -->
-    <img src="{{ $eventHero->img_path ?? asset('assets/images/event.jpg') }}" alt="interior"
-        class="absolute inset-0 w-full h-full object-cover" />
+ <section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+                h-[600px] md:h-[700px] lg:h-[900px]">
+     <!-- Background Image -->
+     <img src="{{ $eventHero->img_path ?? asset('assets/images/event.jpg') }}" alt="interior"
+         class="absolute inset-0 w-full h-full object-cover" />
 
-    <!-- Dark Overlay -->
-    <div class="absolute inset-0 bg-black/50"></div>
+     <!-- Dark Overlay -->
+     <div class="absolute inset-0 bg-black/50"></div>
 
-    <!-- Text -->
-    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-        <h2 class="text-white font-light" style="font-size:clamp(18px,3.5vw,52px); line-height:1.2;">
-            <span style="font-family:'Jost',sans-serif; font-weight:400;">Where </span>
-            <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Stay informed with
-            </em>
-            <span style="font-family:'Jost',sans-serif; font-weight:400;"><br> </span>
-            <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Bhaiya Housing Ltd.
-            </em>
-        </h2>
-    </div>
+     <!-- Text -->
+     <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20 ">
+         <h2 class="text-white font-light pl-10" style="font-size:clamp(20px,3.5vw,52px); line-height:1.2;">
+             Stay informed with<br>
+             <span class="font-migra-italic">Bhaiya Housing Ltd.
+             </span>
 
-</section>
-<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
-    style="position: relative; z-index: 2;"></div>
+         </h2>
+     </div>
 
-<section class="w-full min-h-screen relative z-10 overflow-hidden py-10 md:py-16"
-    style="background:#FFFDFA;">
+ </section>
+ <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+     style="position: relative; z-index: 2;"></div>
 
-    <!-- BG texture -->
-    <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
-        <img src="/assets/images/bg-news.png" alt=""
-            class="w-full h-full object-cover opacity-20"
-            onerror="this.style.display='none';" />
-    </div>
+ <section class="w-full min-h-screen relative z-10 overflow-hidden py-10 md:py-16"
+     style="background:#FFFDFA;">
 
-    <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-14">
+     <!-- BG texture -->
+     <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
+         <img src="/assets/images/bg-news.png" alt=""
+             class="w-1/3 h-full object-cover opacity-50"
+             onerror="this.style.display='none';" />
+     </div>
 
-        <!-- Mobile: horizontal filter row -->
-        <div class="flex md:hidden gap-3 justify-center mb-8">
-            <button onclick="setFilter('all', this)"
-                class="filter-btn active-filter w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
-                All
-            </button>
-            <button onclick="setFilter('events', this)"
-                class="filter-btn w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
-                Events
-            </button>
-            <button onclick="setFilter('news', this)"
-                class="filter-btn w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
-                News
-            </button>
-        </div>
+     <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-14 ">
 
-        <!-- Desktop: side-by-side layout -->
-        <div class="flex gap-8 lg:gap-16 items-start">
+         <!-- Mobile: horizontal filter row -->
+         <div class="flex md:hidden gap-3 justify-center mb-8">
+             <button onclick="setFilter('all', this)"
+                 class="filter-btn active-filter w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
+                 All
+             </button>
+             <button onclick="setFilter('events', this)"
+                 class="filter-btn w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
+                 Events
+             </button>
+             <button onclick="setFilter('news', this)"
+                 class="filter-btn w-20 h-20 sm:w-24 sm:h-24 rounded-full border border-gray-300 text-xs sm:text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center">
+                 News
+             </button>
+         </div>
 
-            <!-- ── Left: Filter Buttons (desktop only) ── -->
-            <div class="hidden md:flex flex-col items-center gap-3 pt-8 flex-shrink-0" style="min-width:120px;">
-                <button onclick="setFilter('all', this)"
-                    class="filter-btn active-filter w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
-                    style="margin-bottom:-12px; position:relative; z-index:3;">
-                    All
-                </button>
-                <button onclick="setFilter('events', this)"
-                    class="filter-btn w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
-                    style="margin-bottom:-12px; position:relative; z-index:2;">
-                    Events
-                </button>
-                <button onclick="setFilter('news', this)"
-                    class="filter-btn w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
-                    style="position:relative; z-index:1;">
-                    News
-                </button>
-            </div>
+         <!-- Desktop: side-by-side layout -->
+         <div class="flex gap-8 lg:gap-16 items-start">
 
-            <!-- ── Right: News List ── -->
-            <div class="flex-1 pt-0 md:ml-10 lg:ml-28">
-                <div style="border-top:1px solid #c8c0b4;"></div>
-                <div id="newsList"></div>
+             <!-- ── Left: Filter Buttons (desktop only) ── -->
+             <div class="hidden md:flex flex-col items-center gap-3 pt-8 flex-shrink-0" style="min-width:120px;">
+                 <button onclick="setFilter('all', this)"
+                     class="filter-btn active-filter w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
+                     style="margin-bottom:-12px; position:relative; z-index:3;">
+                     All
+                 </button>
+                 <button onclick="setFilter('events', this)"
+                     class="filter-btn w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
+                     style="margin-bottom:-12px; position:relative; z-index:2;">
+                     Events
+                 </button>
+                 <button onclick="setFilter('news', this)"
+                     class="filter-btn w-24 h-24 lg:w-28 lg:h-28 rounded-full border border-gray-300 text-sm font-light tracking-wide transition-all duration-300 flex items-center justify-center"
+                     style="position:relative; z-index:1;">
+                     News
+                 </button>
+             </div>
 
-                <!-- No results -->
-                <p id="noResults" class="text-center text-gray-400 py-16 hidden">
-               No Data Found
-                </p>
-            </div>
+             <!-- ── Right: News List ── -->
+             <div class="flex-1 pt-0 md:ml-10 lg:ml-28">
+                 <div style="border-top:1px solid #c8c0b4;"></div>
+                 <div id="newsList"></div>
 
-        </div>
-    </div>
-</section>
+                 <!-- No results -->
+                 <p id="noResults" class="text-center text-gray-400 py-16 hidden">
+                     No Data Found
+                 </p>
+             </div>
+
+         </div>
+     </div>
+ </section>
 
 
  <script>

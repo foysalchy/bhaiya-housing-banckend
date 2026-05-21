@@ -156,11 +156,8 @@
      <div class="absolute inset-0 bg-black/50"></div>
      <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
          <h2 class="text-white font-light" style="font-size:clamp(18px,3.5vw,52px); line-height:1.2;">
-             {!! $concernHero?->title ?? "
-             <em style=\"font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;\">
-                 Expanding Excellence,<br>Our Other Ventures
-             </em>"
-             !!}
+          
+              Expanding Excellence<br><span class="font-migra-italic">Our Other Ventures</span>  
          </h2>
      </div>
  </section>
@@ -172,11 +169,11 @@
      <div class="mx-auto px-4 sm:px-6 lg:px-14">
 
          <!-- Two column text -->
-         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-12 md:mb-16">
-             <p class="text-sm font-light leading-loose text-gray-600">
+         <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-10 mb-12 md:mb-16" style="font-size:16px;font-weight:400;letter-spacing:1px;color:#000">
+             <p class=" prose prose-sm max-w-none   pl-10">
                  {{ $concern?->short ?? '' }}
              </p>
-             <div class="text-sm font-light leading-loose text-gray-600 prose prose-sm max-w-none">
+             <div class=" prose prose-sm max-w-none">
                  {!! $concern?->body ?? '' !!}
              </div>
          </div>

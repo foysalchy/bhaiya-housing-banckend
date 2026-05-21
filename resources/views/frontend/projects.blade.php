@@ -141,53 +141,48 @@
  @endsection
  @section('content')
 
-<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
+ <section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
                 h-[600px] md:h-[700px] lg:h-[900px]"
-    style="z-index: 1; transform-origin: top center; will-change: transform;">
+     style="z-index: 1; transform-origin: top center; will-change: transform;">
 
-    <img src="{{ $projectHero->img_path ?? asset('assets/images/projectmain.jpg') }}"
-        alt="interior"
-        class="absolute inset-0 w-full h-full object-cover" />
+     <img src="{{ $projectHero->img_path ?? asset('assets/images/projectmain.jpg') }}"
+         alt="interior"
+         class="absolute inset-0 w-full h-full object-cover" />
 
-    <div class="absolute inset-0 bg-black/50"></div>
+     <div class="absolute inset-0 bg-black/50"></div>
 
-    <div class="absolute inset-0 flex items-center px-10 md:px-20">
-        <h2 class="text-white font-light"
-            style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
-            @if($projectHero?->title)
-                {!! $projectHero->title !!}
-            @else
-                <span style="font-family:'Jost',sans-serif; font-weight:400;">Where </span>
-                <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">innovation </em>
-                <span style="font-family:'Jost',sans-serif; font-weight:400;">meets </span>
-                <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">quality &amp; trust</em>
-            @endif
-        </h2>
-    </div>
+     <div class="absolute inset-0 flex items-center px-10 md:px-20">
+         <h2 class="text-white font-light"
+             style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
+             Where <span class="font-migra-italic">innovation</span>
+             meets <span class="font-migra-italic">
+                 quality & trust</span>
 
-</section>
+         </h2>
+     </div>
 
-{{-- Spacer --}}
-<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
-    style="position: relative; z-index: 2;"></div>
+ </section>
 
-{{-- Project section --}}
-<section class="relative w-full overflow-hidden py-16"
-    style="z-index: 2;
+ {{-- Spacer --}}
+ <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+     style="position: relative; z-index: 2;"></div>
+
+ {{-- Project section --}}
+ <section class="relative w-full overflow-hidden py-16 mt-32"
+     style="z-index: 2;
            background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;
            box-shadow: 0 -12px 40px rgba(0,0,0,0.15);">
 
-
-
      {{-- Ghost BG text --}}
-     <div class="absolute top-6 right-0 pointer-events-none select-none overflow-hidden scroll-move" data-axis="X" style="z-index:0;">
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,14vw,200px); font-weight:700; font-style:italic; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
+     <div class="absolute top-0 -right-32 pointer-events-none select-none overflow-hidden scroll-move " data-axis="-X" style="z-index:0;">
+         <span class="font-migra-italic" style=" font-size:18.3vw; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
              Signature
          </span>
      </div>
+     
 
      {{-- BG decorative image --}}
-     <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
+     <div class="absolute inset-0 pointer-events-none mt-8" style="z-index:0;">
          <img src="/assets/images/bg-image.avif" alt="" class="w-full h-full object-cover opacity-10"
              onerror="this.style.display='none';" />
      </div>
@@ -196,8 +191,8 @@
 
          {{-- Heading --}}
          <h2 class="mb-10 font-light text-gray-900" style="font-size:clamp(28px,4vw,56px); line-height:1.15;">
-             <span style="font-family:'Jost',sans-serif; font-weight:400;">Discover Our </span>
-             <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Signature Projects</em>
+             <span style=" font-weight:400;">Discover Our </span>
+         <span class="font-migra-italic">  Signature Projects</span>
          </h2>
 
          {{-- Filters --}}
@@ -208,7 +203,7 @@
                  <label for="filterStatus" class="sr-only">Filter by Status</label>
                  <select id="filterStatus" onchange="applyFilters()"
                      class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-                     style="font-family:'Jost',sans-serif; border:none;">
+                     style=" border:none;">
                      <option value="all">All Status</option>
                      <option value="upcoming">Upcoming</option>
                      <option value="ongoing">Ongoing</option>
@@ -226,7 +221,7 @@
                  <label for="filterType" class="sr-only">Filter by Type</label>
                  <select id="filterType" onchange="applyFilters()"
                      class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-                     style="font-family:'Jost',sans-serif; border:none;">
+                     style=" border:none;">
                      <option value="all">All Types</option>
                      <option value="residential">Residential</option>
                      <option value="commercial">Commercial</option>
@@ -243,7 +238,7 @@
                  <label for="filterLocation" class="sr-only">Filter by Location</label>
                  <select id="filterLocation" onchange="applyFilters()"
                      class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-4 pr-10 pl-6 cursor-pointer outline-none"
-                     style="font-family:'Jost',sans-serif; border:none;">
+                     style=" border:none;">
                      <option value="all">All Locations</option>
                      @foreach($projectLocations as $loc)
                      <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
@@ -259,11 +254,16 @@
          </div>
 
          {{-- Projects Grid --}}
+    <div class="absolute  pointer-events-none select-none overflow-hidden scroll-move mt-32" data-axis="X" style="z-index:0;">
+         <span class="font-migra-italic" style=" font-size:16.3vw; color:rgba(0,0,0,0.07); white-space:nowrap; line-height:1;">
+             PROJECTS
+         </span>
+     </div>
          <div id="projectsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-12"></div>
 
          {{-- No results --}}
          <p id="noResults" class="text-center text-gray-500 py-16 hidden"
-             style="font-family:'Jost',sans-serif; font-weight:300;">
+             style=" font-weight:300;">
              No Projects Found
          </p>
 
@@ -271,7 +271,7 @@
          <div class="flex justify-center mt-16" id="loadMoreWrap">
              <button onclick="loadMore()"
                  class="px-12 py-3 border border-gray-800 text-gray-800 text-sm font-light tracking-widest transition-all duration-300 hover:bg-gray-900 hover:text-white"
-                 style="font-family:'Jost',sans-serif; letter-spacing:0.1em;">
+                 style="letter-spacing:0.1em;">
                  Load More
              </button>
          </div>
@@ -286,38 +286,38 @@
 
      // ── Project card HTML ──
      function projectCard(p) {
-         return `
-        <a href="${p.url}" style="text-decoration:none;">
-            <div class="group cursor-pointer">
-                <!-- Image -->
-<div class="overflow-hidden mb-4" style="height:clamp(320px,85vw,500px);" >
-                    <img src="${p.img}" alt="${p.title}"
-                        class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                        onerror="this.parentElement.style.background='#c8bfb0'; this.style.display='none';" />
-                </div>
-                <!-- Info -->
-                <div class="flex items-start justify-between gap-4">
-                    <div>
-                        <h3 class="text-gray-900 font-light mb-1"
-                            style="font-family:'Cormorant Garamond',serif; font-size:clamp(20px,2vw,28px); font-weight:300;">
-                            ${p.title}
-                        </h3>
-                        <p class="text-sm text-gray-500 font-light" style="font-family:'Jost',sans-serif;">
-                            ${p.location}
-                        </p>
-                    </div>
-                    <!-- Status badge -->
-                    <span class="flex-shrink-0 text-xs uppercase tracking-widest px-3 py-1 mt-1"
-                        style="font-family:'Jost',sans-serif; letter-spacing:0.12em;
-                               background:${p.status === 'complete' ? '#e8f0e9' : p.status === 'upcoming' ? '#f0ece4' : '#eef0f8'};
-                               color:${p.status === 'complete' ? '#2d6a35' : p.status === 'upcoming' ? '#7a6a4a' : '#3a4a7a'};">
-                        ${p.status}
-                    </span>
-                </div>
-            </div>
-        </a>`;
-     }
+    return `
+    <a href="${p.url}" class="block group w-[500px]">
 
+      <div class="group cursor-pointer pl-4 md:pl-10">
+
+    <!-- Image Wrapper -->
+    <div class="overflow-hidden mb-4 h-[350px] md:h-[600px] w-full">
+
+        <img
+            src="${p.img}"
+            alt="${p.title}"
+            class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+            onerror="this.parentElement.style.background='#c8bfb0'; this.style.display='none';"
+        />
+
+    </div>
+     
+    <!-- Text (optional) -->
+    <div class="px-2 md:px-0">
+        <h3 class="text-lg md:text-xl font-medium text-gray-900">
+            ${p.title}
+        </h3>
+
+        <p class="text-sm text-gray-500 mt-1">
+            ${p.location ?? ''}
+        </p>
+    </div>
+
+</div>
+
+    </a>`;
+}
      // ── Grid render ──
      function renderGrid() {
          const grid = document.getElementById('projectsGrid');

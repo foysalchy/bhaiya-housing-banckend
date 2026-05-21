@@ -151,13 +151,10 @@
 
     <!-- Text -->
     <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-        <h2 class="text-white font-light" style="font-size:clamp(18px,3.5vw,52px); line-height:1.2;">
-            <span style="font-family:'Jost',sans-serif; font-weight:400;">Where </span>
-            <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Stay informed with
-            </em>
-            <span style="font-family:'Jost',sans-serif; font-weight:400;"><br> </span>
-            <em style="font-family:'Cormorant Garamond',serif; font-style:italic; font-weight:300;">Bhaiya Housing Ltd.
-            </em>
+        <h2 class="text-white font-light pl-20" style="font-size:clamp(18px,3.5vw,52px); line-height:1.2;">
+             Stay informed with<br>
+             <span class="font-migra-italic">Bhaiya Housing Ltd.
+             </span>
         </h2>
     </div>
 

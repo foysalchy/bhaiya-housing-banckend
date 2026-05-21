@@ -136,7 +136,7 @@
      <div class="absolute inset-0 bg-black/50"></div>
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
          <h2 class="text-white font-light" style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
-             {{ $contactHero?->title ?? "We're here to assist you,with any inquiries"}}
+             We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
 
          </h2>
      </div>
@@ -185,14 +185,14 @@
  </div>
 
  {{-- ── Main Section ── --}}
- <section class="relative w-full overflow-hidden py-20" style="background:#f2ede6;">
+ <section class="relative w-full overflow-hidden py-20" style="background:#F6F6F6;">
 
-     <div class="absolute right-8 inset-y-0 flex flex-col justify-center pointer-events-none select-none overflow-hidden" style="z-index:0;">
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Get</span>
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">In</span>
-         <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
+
+     <div class="absolute inset-0 pointer-events-none" style="z-index:0;">
+         <img src="/assets/images/bg-news.png" alt=""
+             class="w-1/3 h-full object-cover opacity-50"
+             onerror="this.style.display='none';" />
      </div>
-
      <div class="relative z-10 container mx-auto px-6 lg:px-14">
          <div class="flex flex-col md:flex-row gap-16 items-start">
 
@@ -202,17 +202,24 @@
                  <!-- Image 1: back-left -->
                  <div class="absolute overflow-hidden shadow-xl"
                      style="width:260px; height:310px; left:0; top:30px; z-index:1;">
-                     <img src="{{ $contactImages[0]->img_path ?? asset('assets/images/contact-bottom.jpg') }}"
-                         alt="{{ $contactImages[0]->title ?? 'Interior' }}"
+                     <img src="{{ $contactImages[1]->img_path ?? asset('assets/images/contact-bottom.jpg') }}"
+                         alt="{{ $contactImages[1]->title ?? 'Interior' }}"
+                         class="w-full h-full object-cover"
+                         onerror="this.parentElement.style.background='#b8b0a8'; this.style.display='none';" />
+                 </div>
+                 <div class="absolute overflow-hidden shadow-xl scroll-move" data-axis="Y"
+                     style=" left:180px; top:80px; z-index:2;">
+                     <img src="{{  asset('assets/images/contact-stone-bg.png') }}"
+                         alt="leaf"
                          class="w-full h-full object-cover"
                          onerror="this.parentElement.style.background='#b8b0a8'; this.style.display='none';" />
                  </div>
 
                  <!-- Image 2: front-right -->
-                 <div class="absolute overflow-hidden shadow-2xl"
-                     style="width:260px; height:310px; left:180px; top:0; z-index:2;">
-                     <img src="{{ $contactImages[1]->img_path ?? asset('assets/images/contact-top.jpg') }}"
-                         alt="{{ $contactImages[1]->title ?? 'Dining' }}"
+                 <div class="absolute overflow-hidden shadow-2xl "
+                     style="width:260px; height:310px; left:250px; top:80px; z-index:2;">
+                     <img src="{{ $contactImages[0]->img_path ?? asset('assets/images/contact-top.jpg') }}"
+                         alt="{{ $contactImages[0]->title ?? 'Dining' }}"
                          class="w-full h-full object-cover"
                          onerror="this.parentElement.style.background='#9a9290'; this.style.display='none';" />
                  </div>
@@ -221,6 +228,11 @@
 
              <!-- ── Right: Contact Form ── -->
              <div class="w-full md:flex-1 pt-2">
+                 <div class="absolute -right-32 -top-32 inset-y-0 mt-32 font-migra-italic  opacity-80 scroll-move" data-axis="-X" style="z-index:0;">
+                     <span style=" font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045);  letter-spacing: 4px; white-space:nowrap;">GetIn</span>
+
+                 </div>
+
 
                  {{-- ── Success Message ── --}}
                  @if(session('success'))
@@ -305,6 +317,10 @@
                      </button>
 
                  </form>
+                 <div class="absolute right-32 -bottom-64 mt-64 inset-y-0  font-migra-italic opacity-80 scroll-move" data-axis="X" style="z-index:0;">
+
+                     <span style="font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
+                 </div>
              </div>
          </div>
      </div>

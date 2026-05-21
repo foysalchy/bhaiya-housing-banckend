@@ -1,5 +1,5 @@
  @extends('layouts.front')
-@section('title', $project->title ?? 'Premium Project')
+ @section('title', $project->title ?? 'Premium Project')
  @section('meta')
  @php
  $projectName = $project->title ?? 'Premium Project';
@@ -159,11 +159,16 @@
          </h2>
      </div>
  </section>
-<div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
-    style="position: relative; z-index: 2;"></div>
+ <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+     style="position: relative; z-index: 2;"></div>
 
  {{-- ===== AT A GLANCE ===== --}}
  <section class="relative z-10 w-full" style="background:#ffffff; font-family:'Jost',sans-serif;">
+     <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index:0;">
+         <div class="absolute right-0 top-0 w-1/3 h-full opacity-50"
+             style="background-image: url('/assets/images/bg-news.png'); background-repeat: repeat-y; background-size: 100% auto;">
+         </div>
+     </div>
      <div class="container mx-auto px-6 lg:px-14 py-20">
          <div class="flex flex-col md:flex-row gap-16 items-start">
 
@@ -225,7 +230,7 @@
              </div>
 
              <!-- Right: Image -->
-             <div class="hidden md:block md:w-1/2 relative" style="margin-top: -10%;">
+             <div class="hidden md:block md:w-1/3 h-[350px] md:h-[600px] relative scroll-move" data-axis="Y" style="margin-top: -20%;z-index:100">
                  <img src="{{ $imgPaths[0] ?? asset('assets/images/d1.avif') }}"
                      alt="{{ $project->title }}"
                      class="w-full object-cover shadow-2xl"
@@ -244,26 +249,26 @@
          <div class="relative flex flex-col md:flex-row gap-8 items-start">
 
              <!-- Left Image -->
-             <div class="relative w-full md:w-1/2">
+             <div class="relative w-full md:w-1/2 h-full">
                  <img src="{{ $imgPaths[1] ?? asset('assets/images/g1.avif') }}"
                      alt="Gallery 1" class="w-full object-cover shadow-lg"
                      style="height:clamp(300px,40vw,500px);"
                      onerror="this.parentElement.style.background='#c0b8b0'; this.style.display='none';" />
                  <img src="/assets/images/projectDetailsLeft-stone.png" alt=""
                      class="absolute pointer-events-none float-down scroll-move" data-axis="Y"
-                     style="width:80px; bottom:-20px; left:-20px; z-index:2;"
+                     style="height:150px;width: 150px; bottom:-20px; left:-60px; z-index:2;"
                      onerror="this.style.display='none';" />
              </div>
 
              <!-- Right Image -->
-             <div class="relative w-full md:w-1/2">
+             <div class="relative w-full ">
                  <img src="{{ $imgPaths[2] ?? asset('assets/images/g2.avif') }}"
-                     alt="Gallery 2" class="w-full object-cover shadow-lg"
-                     style="height:clamp(300px,40vw,500px);"
+                     alt="Gallery 2" class="w-full h-1/2 object-cover shadow-lg"
+
                      onerror="this.parentElement.style.background='#b0b8b8'; this.style.display='none';" />
                  <img src="/assets/images/projectDetailsRight-stone.png" alt=""
                      class="absolute pointer-events-none float-up scroll-move" data-axis="Y"
-                     style="width:72px; top:-24px; right:-16px; z-index:2;"
+                     style="height:150px;width: 150px; top:-24px; right:-50px; z-index:2;"
                      onerror="this.style.display='none';" />
              </div>
 
@@ -450,181 +455,297 @@
 
  </section>
 
- {{-- ===== slider===== --}}
- @if($sliderTotal > 0)
+{{-- ===== GALLERY SLIDER ===== --}}
+@if($sliderTotal > 0)
 <section class="relative z-10 w-full overflow-hidden py-10 lg:py-20" style="background:#f2ede6; min-height: 500px;">
 
     <!-- Background "Gallery" Text -->
     <div class="absolute top-0 right-0 pointer-events-none select-none overflow-hidden" style="z-index:0;">
-        <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(100px,20vw,280px); font-weight:700; color:rgba(0,0,0,0.05); white-space:nowrap; line-height: 1;">Gallery</span>
+        <span style="font-family:'Cormorant Garamond',serif; font-size:clamp(100px,20vw,280px); font-weight:700; color:rgba(0,0,0,0.05); white-space:nowrap; line-height:1;">Gallery</span>
     </div>
 
-    <!-- Slider Container -->
-    <div class="relative z-10 w-full" id="sliderWrapper">
-        <div id="sliderTrack" class="flex items-center" style="transition: transform 0.7s cubic-bezier(0.4, 0, 0.2, 1); will-change: transform;">
-            @foreach($sliderImages as $i => $src)
-            <div class="gallery-slide relative flex-shrink-0 cursor-pointer overflow-hidden transition-all duration-700 ease-in-out"
-                 data-real-index="{{ $i }}"
-                 onclick="goToRealIndex({{ $i }})"
-                 style="height:clamp(300px, 45vw, 520px); margin: 0 10px;">
+    <!-- Slider Track -->
+    <div class="relative z-10 w-full flex items-start gap-2 lg:gap-3 overflow-hidden px-0"
+        style="height: clamp(300px, 45vw, 520px);">
 
-                <img src="{{ $src }}" alt="Gallery {{ $i + 1 }}"
-                    class="w-full h-full object-cover block"
-                    onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
+        <!-- Far Left (half outside, smallest) -->
+        <div class="flex-shrink-0 overflow-hidden cursor-pointer relative group"
+            style="width: clamp(50px, 7vw, 110px); height: 68%; margin-left: -30px; align-self: flex-start;"
+            onclick="galleryGoTo((galleryState.active - 2 + galleryState.total) % galleryState.total)">
+            <img id="leftImg1" src="" alt=""
+                class="w-full h-full object-cover block transition-all duration-700 group-hover:scale-105"
+                style="filter:brightness(0.5);" />
+        </div>
 
+        <!-- Left (medium height) -->
+        <div class="flex-shrink-0 overflow-hidden cursor-pointer relative group"
+            style="width: 25%; height: 68%; align-self: flex-start;"
+            onclick="galleryGoTo((galleryState.active - 1 + galleryState.total) % galleryState.total)">
+            <img id="leftImg2" src="" alt=""
+                class="w-full h-full object-cover block transition-all duration-700 group-hover:scale-105"
+                style="filter:brightness(0.52);" />
+        </div>
 
+        <!-- Center (tallest, full height) -->
+        <div class="flex-1 overflow-hidden cursor-pointer relative group"
+            style="height: 100%; align-self: flex-start;"
+            onclick="galleryOpenLightbox(galleryState.active)">
+            <img id="centerImg" src="" alt=""
+                class="w-full h-full object-cover block"
+                style="filter:brightness(1); transition: opacity 0.4s ease, transform 0.55s ease;" />
+            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-500 flex items-center justify-center">
+                <div class="opacity-0 group-hover:opacity-100 transition-all duration-300 bg-white/20 backdrop-blur-sm rounded-full p-3">
+                    <svg width="22" height="22" fill="none" stroke="white" stroke-width="2" viewBox="0 0 24 24">
+                        <circle cx="11" cy="11" r="8"/>
+                        <path d="m21 21-4.35-4.35M11 8v6M8 11h6"/>
+                    </svg>
+                </div>
             </div>
-            @endforeach
         </div>
+
+        <!-- Right (medium height) -->
+        <div class="flex-shrink-0 overflow-hidden cursor-pointer relative group"
+            style="width: clamp(70px, 11vw, 170px); height: 52%; align-self: flex-start;"
+            onclick="galleryGoTo((galleryState.active + 1) % galleryState.total)">
+            <img id="rightImg1" src="" alt=""
+                class="w-full h-full object-cover block transition-all duration-700 group-hover:scale-105"
+                style="filter:brightness(0.52);" />
+        </div>
+
+        <!-- Far Right (half outside, smallest) -->
+        <div class="flex-shrink-0 overflow-hidden cursor-pointer relative group"
+            style="width: clamp(50px, 7vw, 110px); height: 52%; margin-right: -30px; align-self: flex-start;"
+            onclick="galleryGoTo((galleryState.active + 2) % galleryState.total)">
+            <img id="rightImg2" src="" alt=""
+                class="w-full h-full object-cover block transition-all duration-700 group-hover:scale-105"
+                style="filter:brightness(0.5);" />
+        </div>
+
     </div>
 
-    <!-- Controls & Progress Bar -->
-    <div class="relative z-10 flex items-center justify-between mt-12 px-6 lg:px-20">
-        <div class="flex-1 max-w-md h-[1px] bg-gray-300 relative">
-            <div id="progressBar" class="absolute left-0 top-0 h-[1px] bg-black transition-all duration-700" style="width:0%;"></div>
+    <!-- Controls -->
+    <div class="relative z-10 flex items-center gap-6 mt-10 px-6 lg:px-16">
+
+        <!-- Progress bar -->
+        <div class="w-32 lg:w-56 h-[1px] bg-gray-400 relative flex-shrink-0">
+            <div id="galleryProgress"
+                class="absolute left-0 top-0 h-[1px] bg-black transition-all duration-700"
+                style="width:0%;"></div>
         </div>
 
-        <div class="flex gap-4 ml-8">
-           <button onclick="moveSlide(-1)" aria-label="Previous slide"
-                class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    aria-hidden="true" class="text-gray-600 group-hover:text-white">
+        <!-- Counter -->
+        <span id="galleryCounter"
+            class="text-xs tracking-widest text-gray-500 flex-shrink-0"
+            style="font-family:'Cormorant Garamond',serif;">01 / 01</span>
+
+        <!-- Arrows -->
+        <div class="flex gap-3 flex-shrink-0">
+            <button onclick="galleryMove(-1)" aria-label="Previous"
+                class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all duration-300">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    class="text-gray-600 group-hover:text-white transition-colors">
                     <path d="M15 18l-6-6 6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
-
-            <button onclick="moveSlide(1)" aria-label="Next slide"
-                class="w-10 h-10 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
-                    aria-hidden="true" class="text-gray-600 group-hover:text-white">
+            <button onclick="galleryMove(1)" aria-label="Next"
+                class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center hover:bg-black hover:border-black group transition-all duration-300">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    class="text-gray-600 group-hover:text-white transition-colors">
                     <path d="M9 18l6-6-6-6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
             </button>
         </div>
+
     </div>
 
 </section>
 
-<style>
-    #sliderWrapper { overflow: visible; }
-    .gallery-slide.active .details-overlay { opacity: 1; }
-    .gallery-slide img { filter: grayscale(20%) brightness(0.9); transition: all 0.7s; }
-    .gallery-slide.active img { filter: grayscale(0%) brightness(1); }
-</style>
+<!-- ===== LIGHTBOX ===== -->
+<div id="galleryLightbox"
+    class="fixed inset-0 z-[9999] items-center justify-center"
+    style="display:none; background:rgba(0,0,0,0.95);">
+
+    <div class="absolute top-5 right-5 z-10 flex gap-2">
+        <button onclick="galleryZoom(0.8)" aria-label="Zoom Out"
+            class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/15 transition-all">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35M8 11h6"/>
+            </svg>
+        </button>
+        <button onclick="galleryZoom(1.25)" aria-label="Zoom In"
+            class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/15 transition-all">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"/>
+                <path d="m21 21-4.35-4.35M11 8v6M8 11h6"/>
+            </svg>
+        </button>
+        <button onclick="galleryFullscreen()" aria-label="Fullscreen"
+            class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/15 transition-all">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/>
+            </svg>
+        </button>
+        <button onclick="galleryCloseLightbox()" aria-label="Close"
+            class="w-10 h-10 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/15 transition-all">
+            <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M18 6L6 18M6 6l12 12"/>
+            </svg>
+        </button>
+    </div>
+
+    <button onclick="galleryLightboxMove(-1)" aria-label="Previous"
+        class="absolute left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-all">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M15 18l-6-6 6-6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <button onclick="galleryLightboxMove(1)" aria-label="Next"
+        class="absolute right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full border border-white/30 flex items-center justify-center text-white hover:bg-white/10 transition-all">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M9 18l6-6-6-6" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+    </button>
+
+    <div class="w-full h-full flex items-center justify-center px-16 overflow-hidden">
+        <img id="lightboxImg" src="" alt=""
+            style="max-width:88vw; max-height:84vh; object-fit:contain; transform:scale(1); transition:transform 0.3s ease; transform-origin:center center; cursor:zoom-in;"/>
+    </div>
+
+    <div class="absolute bottom-5 left-1/2 -translate-x-1/2 text-white/50 text-sm tracking-widest"
+        id="lightboxCounter" style="font-family:'Cormorant Garamond',serif;"></div>
+</div>
 
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const track = document.getElementById('sliderTrack');
-    const bar = document.getElementById('progressBar');
-    const slides = Array.from(track.children);
-    const total = slides.length;
+(function() {
+    const images = @json($sliderImages);
+    const total = images.length;
+    let autoTimer = null;
 
-    if (total === 0) return;
+    window.galleryState = { active: 0, total, zoom: 1 };
 
-    // Infinite Loop: Clone items to fill sides
-    // We clone elements to make sure there's no gap on either side
-    for(let i=0; i<3; i++) {
-        slides.forEach(slide => {
-            const clone = slide.cloneNode(true);
-            track.appendChild(clone);
-        });
-        slides.slice().reverse().forEach(slide => {
-            const clone = slide.cloneNode(true);
-            track.insertBefore(clone, track.firstChild);
-        });
-    }
+    function idx(n) { return ((n % total) + total) % total; }
 
-    const allSlides = Array.from(track.children);
-    let currentIndex = Math.floor(allSlides.length / 2); // Start from middle
-    let isTransitioning = false;
-    let autoTimer;
+    function updateGallery(immediate) {
+        const a = galleryState.active;
+        const centerImg = document.getElementById('centerImg');
 
-    const LARGE_W = 65; // Active slide width in %
-    const SMALL_W = 15; // Inactive slide width in %
-
-    function updateSlider(immediate = false) {
-        if (immediate) track.style.transition = 'none';
-        else track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
-
-        const isMobile = window.innerWidth < 768;
-        const activeW = isMobile ? '85vw' : LARGE_W + 'vw';
-        const inactiveW = isMobile ? '12vw' : SMALL_W + 'vw';
-
-        allSlides.forEach((slide, i) => {
-            if (i === currentIndex) {
-                slide.style.width = activeW;
-                slide.style.opacity = '1';
-                slide.classList.add('active');
-            } else {
-                slide.style.width = inactiveW;
-                slide.style.opacity = '0.4';
-                slide.classList.remove('active');
-            }
-        });
-
-        // Center calculation: active slide matches window center
-        const activeSlide = allSlides[currentIndex];
-        const slideCenter = activeSlide.offsetLeft + (activeSlide.offsetWidth / 2);
-        const viewportCenter = window.innerWidth / 2;
-        const offset = slideCenter - viewportCenter;
-
-        track.style.transform = `translateX(-${offset}px)`;
-
-        // Update progress bar based on real index
-        const realIdx = parseInt(activeSlide.getAttribute('data-real-index'));
-        bar.style.width = ((realIdx + 1) / total * 100) + '%';
-
-        if (immediate) {
-            track.offsetHeight; // force reflow
-            track.style.transition = 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)';
+        if (!immediate) {
+            centerImg.style.opacity = '0';
+            centerImg.style.transform = 'scale(1.04)';
         }
+
+        setTimeout(() => {
+            document.getElementById('leftImg1').src  = images[idx(a - 2)];
+            document.getElementById('leftImg2').src  = images[idx(a - 1)];
+            centerImg.src                            = images[idx(a)];
+            document.getElementById('rightImg1').src = images[idx(a + 1)];
+            document.getElementById('rightImg2').src = images[idx(a + 2)];
+
+            centerImg.style.opacity   = '1';
+            centerImg.style.transform = 'scale(1)';
+
+            document.getElementById('galleryProgress').style.width =
+                ((a + 1) / total * 100) + '%';
+
+            document.getElementById('galleryCounter').textContent =
+                String(a + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+
+        }, immediate ? 0 : 350);
     }
 
-    window.moveSlide = function(step) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentIndex += step;
-        updateSlider();
+    window.galleryMove = function(step) {
+        galleryState.active = idx(galleryState.active + step);
+        updateGallery(false);
         resetAuto();
     };
 
-    window.goToRealIndex = function(idx) {
-        // Find nearest instance of this index to the current view
-        // For simplicity, just jump in the middle section
-        // Note: Real index click needs careful mapping in cloned setup
+    window.galleryGoTo = function(i) {
+        galleryState.active = idx(i);
+        updateGallery(false);
+        resetAuto();
     };
 
-    track.addEventListener('transitionend', () => {
-        isTransitioning = false;
-        // Loop safety: if we go too far into clones, jump back to middle set
-        const threshold = total * 2;
-        if (currentIndex < threshold) {
-            currentIndex += total;
-            updateSlider(true);
-        } else if (currentIndex >= allSlides.length - threshold) {
-            currentIndex -= total;
-            updateSlider(true);
-        }
-    });
+    // Lightbox
+    window.galleryOpenLightbox = function() {
+        galleryState.zoom = 1;
+        const lb = document.getElementById('galleryLightbox');
+        lb.style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('lightboxImg').style.transform = 'scale(1)';
+        updateLightbox();
+    };
+
+    window.galleryCloseLightbox = function() {
+        document.getElementById('galleryLightbox').style.display = 'none';
+        document.body.style.overflow = '';
+        galleryState.zoom = 1;
+    };
+
+    window.galleryLightboxMove = function(step) {
+        galleryState.active = idx(galleryState.active + step);
+        galleryState.zoom = 1;
+        document.getElementById('lightboxImg').style.transform = 'scale(1)';
+        updateGallery(false);
+        updateLightbox();
+    };
+
+    window.galleryZoom = function(factor) {
+        galleryState.zoom = Math.min(Math.max(galleryState.zoom * factor, 0.5), 5);
+        document.getElementById('lightboxImg').style.transform = `scale(${galleryState.zoom})`;
+    };
+
+    window.galleryFullscreen = function() {
+        const el = document.getElementById('galleryLightbox');
+        if (!document.fullscreenElement) el.requestFullscreen?.();
+        else document.exitFullscreen?.();
+    };
+
+    function updateLightbox() {
+        const a = galleryState.active;
+        document.getElementById('lightboxImg').src = images[idx(a)];
+        document.getElementById('lightboxCounter').textContent =
+            String(a + 1).padStart(2, '0') + ' / ' + String(total).padStart(2, '0');
+    }
+
+    // Auto slideshow — 4 seconds
+    function startAuto() {
+        autoTimer = setInterval(() => {
+            galleryState.active = idx(galleryState.active + 1);
+            updateGallery(false);
+        }, 4000);
+    }
 
     function resetAuto() {
         clearInterval(autoTimer);
-        autoTimer = setInterval(() => moveSlide(1), 5000);
+        startAuto();
     }
 
-    window.addEventListener('resize', () => updateSlider(true));
+    // Keyboard
+    document.addEventListener('keydown', e => {
+        const lb = document.getElementById('galleryLightbox');
+        if (lb.style.display === 'none') return;
+        if (e.key === 'ArrowRight') galleryLightboxMove(1);
+        if (e.key === 'ArrowLeft')  galleryLightboxMove(-1);
+        if (e.key === 'Escape')     galleryCloseLightbox();
+        if (e.key === '+')          galleryZoom(1.25);
+        if (e.key === '-')          galleryZoom(0.8);
+    });
 
-    updateSlider(true);
-    resetAuto();
-});
+    document.getElementById('galleryLightbox').addEventListener('click', function(e) {
+        if (e.target === this) galleryCloseLightbox();
+    });
+
+    document.addEventListener('DOMContentLoaded', () => { updateGallery(true); startAuto(); });
+    if (document.readyState !== 'loading') { updateGallery(true); startAuto(); }
+})();
 </script>
 @endif
 
-
-
  {{-- ===== LOCATION ===== --}}
  @if($project->location)
- <section class="w-full flex flex-col md:flex-row"
+ <section class="relative w-full flex flex-col md:flex-row"
      style="height:clamp(400px,55vw,600px); font-family:'Jost',sans-serif;">
 
      <div class="flex flex-col justify-between px-10 py-16 md:w-5/12 flex-shrink-0"
@@ -640,12 +761,12 @@ document.addEventListener('DOMContentLoaded', function() {
      <div class="flex-1 relative">
          @if(!empty($extra['map_url']))
          <iframe src="{{ $extra['map_url'] }}"
-            title="Project Location Map"
-            class="w-full h-full border-0"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
+             title="Project Location Map"
+             class="w-full h-full border-0"
+             allowfullscreen=""
+             loading="lazy"
+             referrerpolicy="no-referrer-when-downgrade">
+         </iframe>
          @else
          <div class="w-full h-full flex items-center justify-center bg-gray-200">
              <p class="text-gray-500 text-sm">Map unavailable</p>

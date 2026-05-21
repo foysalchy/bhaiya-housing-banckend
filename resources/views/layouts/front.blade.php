@@ -43,7 +43,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Local CSS -->
-    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}?v=111111">
 
     <style>
         html.lenis { height: auto; }
@@ -56,6 +56,62 @@
         header.hide {
             transform: translateY(-100%);
         }
+
+        /* ======= Custom Trailing Cursor CSS ======= */
+        @media (pointer: fine) {
+            
+            /* body, a, button { cursor: none !important; } */
+
+            .cursor-dot {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 5px;
+                height: 5px;
+                background-color: #000000;
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 999999;
+                transform: translate(-50%, -50%);
+                transition: width 0.3s ease, height 0.3s ease, background-color 0.3s ease;
+                will-change: transform, width, height;
+            }
+
+            .cursor-dot.active {
+                width: 15px;
+                height: 15px;
+                background-color: rgba(0, 0, 0, 0.5); 
+            }
+
+            .cursor-dot.active-large {
+                width: 50px;
+                height: 50px;
+                background-color: #000;
+               
+                backdrop-filter: blur(2px); 
+            }
+            
+        }
+        
+        @media (pointer: coarse) {
+            .cursor-dot {
+                display: none;
+            }
+        }
+        
+        .test-circle {
+            width: 150px;
+            height: 150px;
+            border: 1px solid #ccc;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 50px auto;
+            cursor: pointer;
+            position: relative;
+        }
+        /* ========================================== */
     </style>
 
     @stack('styles')
@@ -63,10 +119,16 @@
 
 <body>
 
+    <!-- ======= Custom Cursor Element ======= -->
+    <div class="cursor-dot" id="cursor-dot"></div>
+    <!-- ===================================== -->
+
     @include('partials.header')
 
     <main>
         @yield('content')
+        
+       
     </main>
 
     @include('partials.floating')
@@ -82,111 +144,137 @@
     <!-- Local JS -->
     <script src="{{ asset('frontend/js/main.js') }}"></script>
 
-   <script>
-  let lastScroll = 0;
-  const header = document.querySelector('header');
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector('header');
 
-  window.addEventListener('load', function () {
+        window.addEventListener('load', function () {
 
-    // ── GSAP ScrollTrigger register ──
-    gsap.registerPlugin(ScrollTrigger);
+            // ── GSAP ScrollTrigger register ──
+            gsap.registerPlugin(ScrollTrigger);
 
-    if (window.innerWidth > 768) {
+            if (window.innerWidth > 768) {
+                const lenis = new Lenis({
+                    duration: 1.4,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                    smooth: true,
+                });
 
-      // ── Lenis smooth scroll ──
-      const lenis = new Lenis({
-        duration: 1.4,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smooth: true,
-      });
+                gsap.ticker.add((time) => lenis.raf(time * 1000));
+                gsap.ticker.lagSmoothing(0);
+                lenis.on('scroll', ScrollTrigger.update);
 
-      // ── Lenis + GSAP ticker sync ──
-      gsap.ticker.add((time) => lenis.raf(time * 1000));
-      gsap.ticker.lagSmoothing(0);
+                lenis.on('scroll', ({ scroll }) => {
+                    header.classList.toggle('hide', scroll > lastScroll && scroll > 80);
+                    lastScroll = scroll;
+                });
+            } else {
+                window.addEventListener('scroll', () => {
+                    const s = window.scrollY;
+                    header.classList.toggle('hide', s > lastScroll && s > 80);
+                    lastScroll = s;
+                });
+            }
 
-      // ── ScrollTrigger + Lenis sync ──
-      lenis.on('scroll', ScrollTrigger.update);
+            // GSAP Parallax & Fade Up...
+            gsap.utils.toArray('[data-speed]').forEach(el => {
+                const speed = parseFloat(el.dataset.speed) || 1;
+                gsap.to(el, {
+                    y: () => (1 - speed) * ScrollTrigger.maxScroll(window) * 0.3,
+                    ease: 'none',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top bottom',
+                        end: 'bottom top',
+                        scrub: true,
+                    }
+                });
+            });
 
-      // ── Header hide/show ──
-      lenis.on('scroll', ({ scroll }) => {
-        header.classList.toggle('hide', scroll > lastScroll && scroll > 80);
-        lastScroll = scroll;
-      });
+            gsap.utils.toArray('[data-gsap="fade-up"]').forEach(el => {
+                gsap.from(el, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 1,
+                    ease: 'power3.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%',
+                    }
+                });
+            });
+        });
 
-    } else {
-      // Mobile
-      window.addEventListener('scroll', () => {
-        const s = window.scrollY;
-        header.classList.toggle('hide', s > lastScroll && s > 80);
-        lastScroll = s;
-      });
-    }
+        // ==========================================
+        // ── Custom Trailing & Magnetic Cursor Logic ──
+        // ==========================================
+        const dot = document.getElementById('cursor-dot');
+        
+        let mouseX = window.innerWidth / 2;
+        let mouseY = window.innerHeight / 2;
+        let dotX = window.innerWidth / 2;
+        let dotY = window.innerHeight / 2;
+        
+        let magneticElement = null; // ম্যাগনেটিক ইফেক্টের জন্য ভ্যারিয়েবল
 
-    // ── Parallax (data-speed attribute) ──
-    gsap.utils.toArray('[data-speed]').forEach(el => {
-      const speed = parseFloat(el.dataset.speed) || 1;
-      gsap.to(el, {
-        y: () => (1 - speed) * ScrollTrigger.maxScroll(window) * 0.3,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true,
+        if (window.matchMedia("(pointer: fine)").matches) {
+            
+            window.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                let targetX = mouseX;
+                let targetY = mouseY;
+
+                // যদি magneticElement থাকে, তবে টার্গেট হবে ওই ইলিমেন্টের একদম সেন্টার
+                if (magneticElement) {
+                    const rect = magneticElement.getBoundingClientRect();
+                    targetX = rect.left + (rect.width / 2);
+                    targetY = rect.top + (rect.height / 2);
+                }
+
+                // 0.15 হলো স্পিড
+                dotX += (targetX - dotX) * 0.15;
+                dotY += (targetY - dotY) * 0.15;
+                
+                dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+                
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // ── Event Delegation for Hover & Magnetic Logic ──
+            document.addEventListener('mouseover', (e) => {
+                const largeTarget = e.target.closest('.hover-lg');
+                const normalTarget = e.target.closest('a, button, input[type="submit"], input[type="button"]');
+
+                if (largeTarget) {
+                    magneticElement = largeTarget; // ম্যাগনেট চালু
+                    dot.classList.add('active-large');
+                    dot.classList.remove('active');
+                } else if (normalTarget) {
+                    dot.classList.add('active');
+                    dot.classList.remove('active-large');
+                }
+            });
+
+            document.addEventListener('mouseout', (e) => {
+                const largeTarget = e.target.closest('.hover-lg');
+                const normalTarget = e.target.closest('a, button, input[type="submit"], input[type="button"]');
+
+                if (largeTarget) {
+                    magneticElement = null; // ম্যাগনেট বন্ধ (মাউসের কাছে ফিরে যাবে)
+                    dot.classList.remove('active-large');
+                } else if (normalTarget) {
+                    dot.classList.remove('active');
+                }
+            });
         }
-      });
-    });
+        // ==========================================
+    </script>
 
-    // ── Fade-in on scroll (data-aos alternative) ──
-    gsap.utils.toArray('[data-gsap="fade-up"]').forEach(el => {
-      gsap.from(el, {
-        y: 60,
-        opacity: 0,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: el,
-          start: 'top 85%',
-        }
-      });
-    });
-
-  });
-</script>
-<!-- <script>
-  // ── Parallax / Inertia Scroll (Lenis-based, replaces jquery-inertiaScroll) ──
-  window.addEventListener('load', function () {
-
-    const parallaxEls = document.querySelectorAll('[data-speed]');
-
-    // Store initial offsets
-    parallaxEls.forEach(el => {
-      el.dataset._originY = el.getBoundingClientRect().top + window.scrollY;
-    });
-
-    function applyParallax(scrollY) {
-      parallaxEls.forEach(el => {
-        const speed  = parseFloat(el.dataset.speed  ?? 1);
-        const margin = parseFloat(el.dataset.margin ?? 0);
-        // speed < 1 → slower than page (classic parallax)
-        // speed > 1 → faster (like jquery-inertiaScroll data-speed)
-        // Normalise: treat speed=1 as neutral, like the plugin does
-        const delta = (scrollY * (speed - 1) * 0.08) + margin;
-        el.style.transform = `translate3d(0, ${delta}px, 0)`;
-        el.style.willChange = 'transform';
-      });
-    }
-
-    if (window.innerWidth > 768 && lenis) {
-      // Hook into existing Lenis instance
-      lenis.on('scroll', ({ scroll }) => applyParallax(scroll));
-    } else {
-      // Mobile fallback
-      window.addEventListener('scroll', () => applyParallax(window.scrollY));
-    }
-
-  });
-</script> -->
     @stack('scripts')
 
 </body>
