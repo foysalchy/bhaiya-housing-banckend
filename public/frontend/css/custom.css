@@ -217,15 +217,15 @@ body {
 
 /* Circle button */
 .circle-btn {
-    width: 130px;
-    height: 130px;
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
     border: 1.5px solid #152018;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 18px;
     letter-spacing: 0.08em;
     color: #152018;
     text-decoration: none;

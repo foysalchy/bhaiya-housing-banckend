@@ -154,18 +154,19 @@
      <img src="{{ $concernHero?->img_path ?? asset('assets/images/concern.jpg') }}"
          alt="interior" class="absolute inset-0 w-full h-full" />
      <div class="absolute inset-0 bg-black/50"></div>
-   <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-    <h2 class="text-white font-light pl-4 sm:pl-8 md:pl-12 pt-16 sm:pt-24 md:pt-32"
-        style="font-size: clamp(32px, 3.85vw, 90px); line-height:1.2;">
-        Expanding Excellence<br>
-        <span class="font-migra-italic">Our Other Ventures</span>
-    </h2>
-</div>
+ 
+     <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
+         <h2 class="text-white font-light pl-12 pt-32" style="font-size:3.85vw; line-height:1.2;letter-spacing: -4px;">
+          
+              Expanding Excellence<br><span class="font-migra-italic">Our Other Ventures</span>  
+         </h2>
+     </div>
+ 
  </section>
 <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"></div>
 
  {{-- ===== MAIN SECTION ===== --}}
- <section class="w-full relative z-10 py-10 md:py-16" style="background:#f2ede6;">
+ <section class="w-full relative z-10 py-10 md:py-16" style="background:#fff;">
 
      <div class="mx-auto px-4 sm:px-6 lg:px-14">
 

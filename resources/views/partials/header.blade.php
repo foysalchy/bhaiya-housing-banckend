@@ -1,12 +1,12 @@
 <!-- ── Header ── -->
-<header id="site-header" class="fixed top-0 left-0 w-full z-50 px-6 md:px-12 py-4 md:py-6 flex items-center justify-between"
+<header id="site-header" class="fixed top-0 left-0 w-full z-50  py-4 md:py-6"
     style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0); z-index: 50;">
-
+    <div class="container  flex items-center justify-between mx-auto m-auto">
     <!-- Logo -->
 <a href="/" class="z-50 flex-shrink-0">
     <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
         alt="{{ $setting->title ?? 'Bhaiya' }}"
-        class="h-8 w-24 sm:h-10 sm:w-40 md:h-12 md:w-48 lg:w-64 object-contain"
+        class="  w-[180px] object-contain"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
     <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
         style="font-family:'Jost',sans-serif;">
@@ -20,7 +20,7 @@
         <span class="w-4 md:w-5 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
         <span class="w-7 md:w-8 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
     </button>
-
+</div>
 </header>
 
 <!-- ── Full Screen Menu Overlay ── -->

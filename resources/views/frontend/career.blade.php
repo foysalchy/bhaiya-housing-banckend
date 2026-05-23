@@ -197,7 +197,7 @@ $jobSchemas[] = [
             $rightImg = $overviewImages[0] ?? null;
             @endphp
 
-            <div class="relative z-10 container mx-auto px-6 lg:px-20">
+            <div class="relative z-10 container mx-auto  ">
 
                 <!-- Row 1: Two text columns -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-16 mb-16">
@@ -282,16 +282,16 @@ $jobSchemas[] = [
                 <div class="md:ml-[28%]">
 
                     @foreach($jobPositions as $job)
-                    <div class="py-10" style="border-top:1px solid #c8c0b4;">
-                        <h2 class="text-gray-800 font-normal mb-3"
+                    <div class="py-6" style="border-top:1px solid #c8c0b4;">
+                        <h2 class="text-gray-800 font-normal mb-1"
                             style="font-size:clamp(18px,2vw,34px); font-weight:400;">
                             {{ $job->title ??'' }}
                         </h2>
-                        <p class="text-lg font-light text-gray-500 leading-loose mb-6">
+                        <p class="text-lg font-light text-gray-500 leading-loose mb-6" style="line-height:1.4;">
                             {!! $job->short ??'' !!}
                         </p>
                         <a href="{{ route('job.details', $job->name) }}"
-                            class="mt-10 inline-block px-8 py-2.5 border border-gray-700 text-md font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900">
+                            class="mt-0 inline-block px-8 py-2.5 border border-gray-700 text-md font-light text-gray-700 tracking-wide transition-all duration-300 hover:bg-gray-900 hover:text-white hover:border-gray-900">
                             Apply Now
                         </a>
                     </div>
