@@ -646,11 +646,8 @@ $schema = [
     });
 </script>
 <script>
-<<<<<<< HEAD
     const timelineData = {!! json_encode($timelineData) !!};
-=======
-    const timelineData = {!!json_encode($timelineData) !!};
->>>>>>> bec00e7963e80422426433861d456eaba6defde9
+ 
     const total = timelineData.length;
     let currentIndex = 0;
 
