@@ -133,12 +133,13 @@
                 h-[600px] md:h-[700px] lg:h-[900px]"> <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
          alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
      <div class="absolute inset-0 bg-black/50"></div>
-     <div class="absolute inset-0 flex items-center px-10 md:px-20">
-         <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2;">
-             We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
-
-         </h2>
-     </div>
+    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
+    <h2 class="text-white font-light md:pl-12 md:pt-32"
+        style="font-size: clamp(32px, 3.85vw, 90px); line-height:1.2;">
+        We're here to assist you <br>
+        with <span class="font-migra-italic">any inquiries</span>
+    </h2>
+</div>
  </section>
  <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
      style="position: relative; z-index: 2;"></div>

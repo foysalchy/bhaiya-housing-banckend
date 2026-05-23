@@ -149,13 +149,13 @@
     <div class="absolute inset-0 bg-black/50"></div>
 
     <!-- Text -->
-    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-        <h2 class="text-white font-light pl-12 pt-32 sm:pl-8 md:pl-20"
-            style="font-size:3.85vw; line-height: 1.2;">
-            Stay informed with<br>
-            <span class="font-migra-italic">Bhaiya Housing Ltd.</span>
-        </h2>
-    </div>
+  <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
+    <h2 class="text-white font-light pl-4 sm:pl-8 md:pl-20 pt-16 sm:pt-24 md:pt-32"
+        style="font-size: clamp(32px, 3.85vw, 90px); line-height: 1.2;">
+        Stay informed with<br>
+        <span class="font-migra-italic">Bhaiya Housing Ltd.</span>
+    </h2>
+</div>
 </section>
 
 <div class="h-[500px] sm:h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"

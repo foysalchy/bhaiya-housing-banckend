@@ -151,13 +151,13 @@
 
     <div class="absolute inset-0 bg-black/50"></div>
 
-    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-        <h2 class="text-white pl-12 pt-32 font-light max-w-[90%] md:max-w-[70%] lg:max-w-[60%]"
-            style="font-size:3.85vw; line-height:1.2;">
-            Where <span class="font-migra-italic">innovation</span>
-            meets <span class="font-migra-italic">quality & trust</span>
-        </h2>
-    </div>
+   <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
+    <h2 class="text-white md:pl-12 md:pt-32 font-light max-w-[90%] md:max-w-[80%] lg:max-w-[70%]"
+        style="font-size: clamp(50px, 3.85vw, 100px); line-height:1.2;">
+        Where <span class="font-migra-italic">innovation</span>
+        meets <span class="font-migra-italic">quality & trust</span>
+    </h2>
+</div>
 
 </section>
 
