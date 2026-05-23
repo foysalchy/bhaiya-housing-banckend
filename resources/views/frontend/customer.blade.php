@@ -133,22 +133,14 @@
                 h-[85vh]"> <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
          alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
      <div class="absolute inset-0 bg-black/50"></div>
-<<<<<<< HEAD
+ 
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
          <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2; font-weight:500; letter-spacing: -4px;">
              We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
 
          </h2>
      </div>
-=======
-    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-    <h2 class="text-white font-light md:pl-12 md:pt-32"
-        style="font-size: clamp(32px, 3.85vw, 90px); line-height:1.2;">
-        We're here to assist you <br>
-        with <span class="font-migra-italic">any inquiries</span>
-    </h2>
-</div>
->>>>>>> bec00e7963e80422426433861d456eaba6defde9
+ 
  </section>
  <div class="   h-[85vh] w-full pointer-events-none"
      style="position: relative; z-index: 2;"></div>
