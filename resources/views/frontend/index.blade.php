@@ -268,7 +268,7 @@ $setting->title ?? 'Bhaiya Housing',
 @section('content')
 
 <!-- ===== HERO ===== -->
-<section id="home" class="fixed hero-fixed  top-0 left-0 w-full h-screen z-0 overflow-hidden">
+<section id="home" class="fixed hero-fixed top-0 left-0 w-full h-screen z-0 overflow-hidden">
 
     {{-- Background --}}
     <div class="absolute inset-0">
@@ -285,20 +285,11 @@ $setting->title ?? 'Bhaiya Housing',
     <div class="relative z-10 h-full flex flex-col justify-center items-end">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-3xl mt-5">
-                <h1
-                    class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
-
+                <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] opacity-0 animate-[fadeUp_0.8s_0.35s_ease_forwards]">
                     We
-                    <span class="font-migra-italic">
-                        transform
-                    </span>
-
+                    <span class="font-migra-italic">transform</span>
                     your <br>
-
-                    <span class="font-migra-italic">
-                        dreams
-                    </span>
-
+                    <span class="font-migra-italic">dreams</span>
                     into addresses
                 </h1>
             </div>
@@ -382,7 +373,7 @@ $setting->title ?? 'Bhaiya Housing',
     <div class="mx-auto px-4 sm:px-6 lg:px-10">
 
         @php
-        $extraImages = json_decode($dreams->img_paths ?? '[]', true);
+            $extraImages = json_decode($dreams->img_paths ?? '[]', true);
         @endphp
 
         <!-- ══════════════════════════════════
@@ -391,8 +382,8 @@ $setting->title ?? 'Bhaiya Housing',
         <div class="flex flex-col gap-8 md:hidden">
 
             <!-- Heading -->
-            <h2 class="font-display font-size[72px]  text-4xl sm:text-5xl font-light leading-tight text-gray-900 text-center p-[50px]">
-                <strong>Building </strong> <br> <strong>dreams for</strong>
+            <h2 class="font-display text-4xl sm:text-5xl font-light leading-tight text-gray-900 text-center px-4 py-10">
+                <strong>Building </strong><br><strong>dreams for</strong>
                 <span>decades</span>
             </h2>
 
@@ -437,15 +428,71 @@ $setting->title ?? 'Bhaiya Housing',
         </div>
 
         <!-- ══════════════════════════════════
-             DESKTOP LAYOUT (≥ md), original
+             TABLET LAYOUT (≥ md, < lg)
+        ══════════════════════════════════ -->
+        <div class="hidden md:flex lg:hidden flex-col gap-10">
+
+            <!-- Heading -->
+            <h2 class="font-display font-semibold text-5xl font-light leading-tight text-gray-900 text-center tracking-tight">
+                Building <br>
+                dreams for <span class="font-cormorant italic">decades</span>
+            </h2>
+
+            <!-- Top row: big image + right col -->
+            <div class="flex gap-6 items-start">
+
+                <!-- Big center image -->
+                <div class="img-shadow rounded-sm overflow-hidden fade-in delay-2 flex-1" style="height: 500px;">
+                    <img src="{{ $dreams->img_path ?? asset('assets/images/main.avif') }}"
+                        alt="Modern building"
+                        class="w-full h-full object-cover"
+                        onerror="this.style.background='#c5bdb5'; this.removeAttribute('src');" />
+                </div>
+
+                <!-- Right column -->
+                <div class="flex flex-col gap-6 w-[42%] flex-shrink-0 fade-in delay-3">
+                    <div class="float-up">
+                        <img src="{{ $extraImages[2] ?? asset('assets/images/right-side.jpg') }}"
+                            alt="Interior"
+                            class="img-shadow rounded-sm object-cover w-full"
+                            style="height: 240px; object-position: center;"
+                            onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
+                    </div>
+                    <p class="text-sm leading-relaxed fade-in delay-3" style="color:#555; line-height:1.9;">
+                        {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
+                    </p>
+                    <div class="fade-in delay-4">
+                        <a href="{{ route('front.about') }}" class="circle-btn hover-lg z-20">Learn More</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom row: two images -->
+            <div class="grid grid-cols-2 gap-6 fade-in delay-2">
+                <img src="{{ $extraImages[0] ?? asset('assets/images/side.jpg') }}"
+                    alt="Outdoor space"
+                    class="img-shadow rounded-sm object-cover w-full float-down"
+                    style="height: 280px; object-position: center;"
+                    onerror="this.style.background='#d6cfc5'; this.removeAttribute('src');" />
+                <img src="{{ $extraImages[1] ?? asset('assets/images/sub.jpg') }}"
+                    alt="Property"
+                    class="img-shadow rounded-sm object-cover w-full float-up"
+                    style="height: 280px; object-position: center;"
+                    onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
+            </div>
+
+        </div>
+
+        <!-- ══════════════════════════════════
+             DESKTOP LAYOUT (≥ lg), original
         ══════════════════════════════════ -->
 
         <!-- Row 1 -->
-        <div class="hidden md:flex relative flex-wrap items-start">
+        <div class="hidden lg:flex relative flex-wrap items-start">
 
             <!-- Col 1: Heading -->
-            <div class="w-full h-full md:w-1/4 pt-6 z-10 fade-in delay-1">
-                <h2 class="font-display  font-semibold text-[72px] font-light leading-tight text-gray-900 text-center tracking-tight">
+            <div class="w-full h-full lg:w-1/4 pt-6 z-10 fade-in delay-1">
+                <h2 class="font-display font-semibold text-[72px] font-light leading-tight text-gray-900 text-center tracking-tight">
                     Building <br>
                     dreams for <span class="font-cormorant italic">decades</span>
                 </h2>
@@ -460,7 +507,7 @@ $setting->title ?? 'Bhaiya Housing',
             </div>
 
             <!-- Col 2: Big Center Image -->
-            <div class="w-full md:w-5/12 relative fade-in delay-2" style="margin-left:2% ;">
+            <div class="w-full lg:w-5/12 relative fade-in delay-2" style="margin-left:2%;">
                 <div class="img-shadow rounded-sm overflow-hidden" style="height:800px;">
                     <img src="{{ $dreams->img_path ?? asset('assets/images/main.avif') }}"
                         alt="Modern building"
@@ -470,11 +517,10 @@ $setting->title ?? 'Bhaiya Housing',
             </div>
 
             <!-- Col 3: Right side -->
-            <div class="w-full md:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3 scroll-move" data-axis="Y" data-max-move="50" style="margin-left:4%;">
+            <div class="w-full lg:w-1/4 flex flex-col items-start pl-6 pt-2 fade-in delay-3 scroll-move" data-axis="Y" data-max-move="50" style="margin-left:4%;">
 
-                <div class="float-up mb-8 self-end ">
-                    <div class=" absolute pointer-events-none"
-
+                <div class="float-up mb-8 self-end">
+                    <div class="absolute pointer-events-none"
                         style="left:-40px; top:-80px; z-index:3;">
                         <img src="/assets/images/overview-stone.png" alt=""
                             style="width:clamp(120px,7vw,160px); opacity:0.8;"
@@ -493,16 +539,16 @@ $setting->title ?? 'Bhaiya Housing',
                 </p>
 
                 <div class="fade-in delay-4">
-                    <a href="{{route('front.about') }}" class="circle-btn hover-lg z-20">Learn More</a>
+                    <a href="{{ route('front.about') }}" class="circle-btn hover-lg z-20">Learn More</a>
                 </div>
             </div>
 
         </div><!-- /Row 1 desktop -->
 
         <!-- Row 2: bottom images (desktop only) -->
-        <div class="hidden md:flex relative flex-wrap items-center scroll-move" data-axis="Y" data-max-move="50">
+        <div class="hidden lg:flex relative flex-wrap items-center scroll-move" data-axis="Y" data-max-move="50">
 
-            <div class="absolute z-20 fade-in delay-3 float-down " style="left:22%; bottom:0px;">
+            <div class="absolute z-20 fade-in delay-3 float-down" style="left:22%; bottom:0px;">
                 <img src="{{ $extraImages[1] ?? asset('assets/images/sub.jpg') }}"
                     alt="Property"
                     class="img-shadow rounded-sm object-cover"
@@ -848,7 +894,7 @@ font-size: clamp(100px, 12vw, 260px);                    font-weight:bolder;
     </div>
 
     {{-- ── Part 2: Two columns ── --}}
-    <div class="relative w-full overflow-hidden
+  <div class="relative w-full overflow-hidden
                 px-4 pt-12 pb-16
                 sm:px-6 sm:pt-14 sm:pb-20
                 md:px-10 md:pt-16 md:pb-24
@@ -859,10 +905,11 @@ font-size: clamp(100px, 12vw, 260px);                    font-weight:bolder;
         <div class="absolute inset-0 flex flex-col justify-start pt-4 pl-2 select-none pointer-events-none overflow-hidden mt-16" style="z-index:0;">
             @foreach($bgTextLines as $line)
             <span class="scroll-move" data-axis="Y" style="
-font-size: clamp(32px, 6vw, 120px);                         font-weight:700;
-                         color:rgba(255,255,255,0.04);
-                         white-space:nowrap;
-                         line-height:1.1;">
+                font-size: clamp(32px, 6vw, 120px);
+                font-weight: 700;
+                color: rgba(255,255,255,0.04);
+                white-space: nowrap;
+                line-height: 1.1;">
                 {{ $line }}
             </span>
             @endforeach
@@ -873,71 +920,73 @@ font-size: clamp(32px, 6vw, 120px);                         font-weight:700;
 
             {{-- Animated border line --}}
             <div class="quality-border-line" style="
-                position:absolute; top:0; left:0;
-                height:1px; width:0%;
-                background:rgba(255,255,255,0.25);
-                z-index:20;"></div>
-
+                position: absolute; top: 0; left: 0;
+                height: 1px; width: 0%;
+                background: rgba(255,255,255,0.25);
+                z-index: 20;"></div>
 
             {{-- Col 1 --}}
             <div class="quality-col w-full md:w-1/2
-            md:border-r md:border-white/10 p-10"
-                style="position:relative; overflow:hidden; display:flex; flex-direction:column;">
+                        md:border-r md:border-white/10
+                        p-6 sm:p-8 md:p-10"
+                style="position: relative; overflow: hidden; display: flex; flex-direction: column;">
 
-                <div style="padding:2.5rem 2rem; min-height:180px; position:relative; z-index:2; flex-shrink:0;">
+                <div class="py-6 sm:py-8 md:py-10 px-2 sm:px-4 md:px-8"
+                     style="min-height: clamp(100px, 15vw, 180px); position: relative; z-index: 2; flex-shrink: 0;">
                     <p class="text-white text-sm leading-relaxed opacity-80"
-                        style="line-height:1.9; font-weight:300;">
-
+                        style="line-height: 1.9; font-weight: 300;">
                         {!! $expertise->body_2 ?? 'We deliver exceptional construction using first-rate materials.' !!}
                     </p>
                 </div>
 
-                <div class="quality-img-wrap"
-                    style="overflow:hidden; flex-shrink:0;
-               width:60%; margin:0 auto; height:550px;
-               transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
-                           width 0.75s cubic-bezier(0.76,0,0.24,1);">
+                <div class="quality-img-wrap mx-auto"
+                    style="overflow: hidden; flex-shrink: 0;
+                           width: clamp(200px, 75%, 400px);
+                           height: clamp(260px, 40vw, 550px);
+                           transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
+                                       width 0.75s cubic-bezier(0.76,0,0.24,1);">
                     <img src="{{ $expertiseImages[0] ?? asset('assets/images/q1.jpg') }}"
-                        class="quality-img w-full  object-cover"
-                        style="transform:scale(1.04);
-                   transition:transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
+                        class="quality-img w-full h-full object-cover"
+                        style="transform: scale(1.04);
+                               transition: transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
                 </div>
             </div>
 
             {{-- Col 2 --}}
             <div class="quality-col w-full md:w-1/2
-            border-t border-white/10 md:border-t-0 p-10"
-                style="position:relative; overflow:hidden; display:flex; flex-direction:column;">
+                        border-t border-white/10 md:border-t-0
+                        p-6 sm:p-8 md:p-10"
+                style="position: relative; overflow: hidden; display: flex; flex-direction: column;">
 
-                <div style="padding:2.5rem 2rem; min-height:180px; position:relative; z-index:2; flex-shrink:0;">
+                <div class="py-6 sm:py-8 md:py-10 px-2 sm:px-4 md:px-8"
+                     style="min-height: clamp(100px, 15vw, 180px); position: relative; z-index: 2; flex-shrink: 0;">
                     <p class="text-white text-sm leading-relaxed opacity-80"
-                        style="line-height:1.9; font-weight:300;">
-                        {{-- ✅ body_2 --}}
+                        style="line-height: 1.9; font-weight: 300;">
                         {!! $expertise->body_2 ?? 'We guarantee on-schedule completion, respecting your timelines.' !!}
                     </p>
                 </div>
 
-                <div class="quality-img-wrap"
-                    style="overflow:hidden; flex-shrink:0;
-               width:60%; margin:0 auto; height:550px;
-               transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
-                           width 0.75s cubic-bezier(0.76,0,0.24,1);">
+                <div class="quality-img-wrap mx-auto"
+                    style="overflow: hidden; flex-shrink: 0;
+                           width: clamp(200px, 75%, 400px);
+                           height: clamp(260px, 40vw, 550px);
+                           transition: height 0.75s cubic-bezier(0.76,0,0.24,1),
+                                       width 0.75s cubic-bezier(0.76,0,0.24,1);">
                     <img src="{{ $expertiseImages[1] ?? asset('assets/images/q2.jpg') }}"
                         class="quality-img w-full h-full object-cover"
-                        style="transform:scale(1.04);
-                   transition:transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
+                        style="transform: scale(1.04);
+                               transition: transform 0.75s cubic-bezier(0.25,0.46,0.45,0.94);" />
                 </div>
             </div>
+
         </div>
     </div>
-
-
 
 </section>
 
 <!-- ===== TESTIMONIALS ===== -->
 @php
-$sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
+    $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 @endphp
 
 <section class="w-full relative z-10 overflow-hidden pt-16 pb-0"
@@ -947,80 +996,85 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
         {{-- Heading --}}
         <h2 class="mb-10 text-gray-900"
-            style="font-size:clamp(32px,5vw,64px); font-weight:300;">
-
+            style="font-size: clamp(28px, 5vw, 64px); font-weight: 300;">
             The stories of
-            <em style="font-family:'Migra',serif; font-style:italic; font-weight:300;">
+            <em style="font-family: 'Migra', serif; font-style: italic; font-weight: 300;">
                 satisfaction
             </em>
-
         </h2>
 
         {{-- Testimonial Row --}}
         <div id="testimonialWrapper" style="overflow: hidden; position: relative;">
 
-            <div id="testimonialCard" class="flex flex-col md:flex-row items-start gap-10 mb-16 relative mt-6">
+            <div id="testimonialCard"
+                 class="flex flex-col md:flex-row items-start gap-6 md:gap-10 mb-16 relative mt-6">
 
                 {{-- Left: Avatar + Name --}}
-                <div class="w-full md:w-1/4 flex flex-col gap-3 flex-shrink-0">
-                    <div class="rounded-full overflow-hidden border border-gray-200" style="width:128px; height:128px;">
+                <div class="w-full md:w-1/4 flex flex-row md:flex-col items-center md:items-start gap-4 md:gap-3 flex-shrink-0">
+                    <div class="rounded-full overflow-hidden border border-gray-200 flex-shrink-0"
+                         style="width: clamp(72px, 12vw, 128px); height: clamp(72px, 12vw, 128px);">
                         <img id="testimonialAvatar"
                             src="{{ $storiesItems->first()->img_path ?? asset('assets/images/4.jpeg') }}"
-                            alt="avatar" class="w-full h-full object-cover transition-opacity duration-500"
+                            alt="avatar"
+                            class="w-full h-full object-cover transition-opacity duration-500"
                             onerror="this.src=''; this.parentElement.style.background='#d6cfc5';" />
                     </div>
                     <div>
-                        <p id="testimonialName" class="font-medium text-gray-900 text-lg transition-opacity duration-500"
-                            style=" font-weight:500;">
+                        <p id="testimonialName"
+                           class="font-medium text-gray-900 text-base md:text-lg transition-opacity duration-500"
+                           style="font-weight: 500;">
                             {{ $storiesItems->first()->title ?? 'Md. Mamun Molla' }}
                         </p>
-                        <p id="testimonialRole" class="text-gray-600 text-sm mt-0.5 transition-opacity duration-500"
-                            style="font-weight:300;">
+                        <p id="testimonialRole"
+                           class="text-gray-600 text-sm mt-0.5 transition-opacity duration-500"
+                           style="font-weight: 300;">
                             {{ $storiesItems->first()->name ?? 'Professor' }}
                         </p>
                     </div>
                 </div>
 
-                {{-- ✅ Right: Quote — right edge পর্যন্ত যাবে --}}
-                <div class="flex items-start gap-4 pl-32">
+                {{-- Right: Quote --}}
+                <div class="flex items-start gap-3 sm:gap-4 w-full md:flex-1 min-w-0">
 
-                    <!-- SVG -->
-                    <div class="flex-shrink-0">
-                        <svg width="59" height="44" viewBox="0 0 59 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M13.2977 17.4125C12.6473 17.4125 12.0232 17.5117 11.4019 17.6021C11.6032 16.9254 11.8102 16.2371 12.1427 15.6187C12.4752 14.7204 12.9944 13.9417 13.5107 13.1571C13.9423 12.3083 14.7036 11.7337 15.2636 11.0075C15.8498 10.3017 16.649 9.83208 17.2819 9.24583C17.9032 8.63333 18.7169 8.32708 19.3644 7.89542C20.0411 7.5075 20.6302 7.07875 21.2602 6.87458L22.8323 6.22708L24.2148 5.6525L22.8002 0L21.059 0.419999C20.5019 0.559999 19.8223 0.723332 19.0494 0.918749C18.259 1.06458 17.4161 1.46417 16.4769 1.82875C15.5494 2.24292 14.4761 2.52292 13.4786 3.18792C12.4752 3.82375 11.3173 4.35458 10.2965 5.20625C9.30775 6.08417 8.11483 6.84542 7.234 7.9625C6.2715 9.00667 5.32066 10.1033 4.58275 11.3517C3.72816 12.5417 3.14775 13.8483 2.53525 15.1404C1.98108 16.4325 1.53483 17.7537 1.17025 19.0371C0.478996 21.6096 0.169829 24.0538 0.0502462 26.145C-0.0489205 28.2392 0.00941282 29.9804 0.131913 31.2404C0.175663 31.8354 0.25733 32.4129 0.315663 32.8125L0.388579 33.3025L0.464413 33.285C0.983174 35.7083 2.17738 37.9351 3.90889 39.708C5.6404 41.4809 7.83845 42.7274 10.2488 43.3032C12.6591 43.8791 15.1832 43.7608 17.5291 42.962C19.875 42.1632 21.9468 40.7166 23.5049 38.7896C25.063 36.8625 26.0437 34.5337 26.3335 32.0725C26.6234 29.6114 26.2105 27.1185 25.1427 24.8821C24.0749 22.6458 22.3958 20.7575 20.2996 19.4356C18.2035 18.1138 15.7759 17.4123 13.2977 17.4125ZM45.3811 17.4125C44.7307 17.4125 44.1065 17.5117 43.4852 17.6021C43.6865 16.9254 43.8936 16.2371 44.2261 15.6187C44.5586 14.7204 45.0777 13.9417 45.594 13.1571C46.0257 12.3083 46.7869 11.7337 47.3469 11.0075C47.9332 10.3017 48.7323 9.83208 49.3652 9.24583C49.9865 8.63333 50.8002 8.32708 51.4477 7.89542C52.1244 7.5075 52.7136 7.07875 53.3436 6.87458L54.9157 6.22708L56.2982 5.6525L54.8836 0L53.1423 0.419999C52.5852 0.559999 51.9057 0.723332 51.1327 0.918749C50.3423 1.06458 49.4994 1.46417 48.5602 1.82875C47.6357 2.24583 46.5594 2.52292 45.5619 3.19083C44.5586 3.82667 43.4007 4.3575 42.3798 5.20917C41.3911 6.08708 40.1982 6.84833 39.3173 7.9625C38.3548 9.00667 37.404 10.1033 36.6661 11.3517C35.8115 12.5417 35.2311 13.8483 34.6186 15.1404C34.0644 16.4325 33.6182 17.7537 33.2536 19.0371C32.5623 21.6096 32.2532 24.0538 32.1336 26.145C32.0344 28.2392 32.0927 29.9804 32.2152 31.2404C32.259 31.8354 32.3407 32.4129 32.399 32.8125L32.4719 33.3025L32.5477 33.285C33.0665 35.7083 34.2607 37.9351 35.9922 39.708C37.7237 41.4809 39.9218 42.7274 42.3321 43.3032C44.7424 43.8791 47.2665 43.7608 49.6124 42.962C51.9583 42.1632 54.0302 40.7166 55.5883 38.7896C57.1464 36.8625 58.127 34.5337 58.4169 32.0725C58.7067 29.6114 58.2938 27.1185 57.226 24.8821C56.1582 22.6458 54.4791 20.7575 52.383 19.4356C50.2868 18.1138 47.8592 17.4123 45.3811 17.4125Z" fill="#152018"></path>
+                    {{-- SVG quote mark — hidden on very small screens --}}
+                    <div class="flex-shrink-0 hidden sm:block pt-1">
+                        <svg width="48" height="36" viewBox="0 0 59 44" fill="none"
+                             xmlns="http://www.w3.org/2000/svg"
+                             class="md:w-[59px] md:h-[44px]">
+                            <path d="M13.2977 17.4125C12.6473 17.4125 12.0232 17.5117 11.4019 17.6021C11.6032 16.9254 11.8102 16.2371 12.1427 15.6187C12.4752 14.7204 12.9944 13.9417 13.5107 13.1571C13.9423 12.3083 14.7036 11.7337 15.2636 11.0075C15.8498 10.3017 16.649 9.83208 17.2819 9.24583C17.9032 8.63333 18.7169 8.32708 19.3644 7.89542C20.0411 7.5075 20.6302 7.07875 21.2602 6.87458L22.8323 6.22708L24.2148 5.6525L22.8002 0L21.059 0.419999C20.5019 0.559999 19.8223 0.723332 19.0494 0.918749C18.259 1.06458 17.4161 1.46417 16.4769 1.82875C15.5494 2.24292 14.4761 2.52292 13.4786 3.18792C12.4752 3.82375 11.3173 4.35458 10.2965 5.20625C9.30775 6.08417 8.11483 6.84542 7.234 7.9625C6.2715 9.00667 5.32066 10.1033 4.58275 11.3517C3.72816 12.5417 3.14775 13.8483 2.53525 15.1404C1.98108 16.4325 1.53483 17.7537 1.17025 19.0371C0.478996 21.6096 0.169829 24.0538 0.0502462 26.145C-0.0489205 28.2392 0.00941282 29.9804 0.131913 31.2404C0.175663 31.8354 0.25733 32.4129 0.315663 32.8125L0.388579 33.3025L0.464413 33.285C0.983174 35.7083 2.17738 37.9351 3.90889 39.708C5.6404 41.4809 7.83845 42.7274 10.2488 43.3032C12.6591 43.8791 15.1832 43.7608 17.5291 42.962C19.875 42.1632 21.9468 40.7166 23.5049 38.7896C25.063 36.8625 26.0437 34.5337 26.3335 32.0725C26.6234 29.6114 26.2105 27.1185 25.1427 24.8821C24.0749 22.6458 22.3958 20.7575 20.2996 19.4356C18.2035 18.1138 15.7759 17.4123 13.2977 17.4125ZM45.3811 17.4125C44.7307 17.4125 44.1065 17.5117 43.4852 17.6021C43.6865 16.9254 43.8936 16.2371 44.2261 15.6187C44.5586 14.7204 45.0777 13.9417 45.594 13.1571C46.0257 12.3083 46.7869 11.7337 47.3469 11.0075C47.9332 10.3017 48.7323 9.83208 49.3652 9.24583C49.9865 8.63333 50.8002 8.32708 51.4477 7.89542C52.1244 7.5075 52.7136 7.07875 53.3436 6.87458L54.9157 6.22708L56.2982 5.6525L54.8836 0L53.1423 0.419999C52.5852 0.559999 51.9057 0.723332 51.1327 0.918749C50.3423 1.06458 49.4994 1.46417 48.5602 1.82875C47.6357 2.24583 46.5594 2.52292 45.5619 3.19083C44.5586 3.82667 43.4007 4.3575 42.3798 5.20917C41.3911 6.08708 40.1982 6.84833 39.3173 7.9625C38.3548 9.00667 37.404 10.1033 36.6661 11.3517C35.8115 12.5417 35.2311 13.8483 34.6186 15.1404C34.0644 16.4325 33.6182 17.7537 33.2536 19.0371C32.5623 21.6096 32.2532 24.0538 32.1336 26.145C32.0344 28.2392 32.0927 29.9804 32.2152 31.2404C32.259 31.8354 32.3407 32.4129 32.399 32.8125L32.4719 33.3025L32.5477 33.285C33.0665 35.7083 34.2607 37.9351 35.9922 39.708C37.7237 41.4809 39.9218 42.7274 42.3321 43.3032C44.7424 43.8791 47.2665 43.7608 49.6124 42.962C51.9583 42.1632 54.0302 40.7166 55.5883 38.7896C57.1464 36.8625 58.127 34.5337 58.4169 32.0725C58.7067 29.6114 58.2938 27.1185 57.226 24.8821C56.1582 22.6458 54.4791 20.7575 52.383 19.4356C50.2868 18.1138 47.8592 17.4123 45.3811 17.4125Z"
+                                  fill="#152018"/>
                         </svg>
                     </div>
 
-                    <!-- TEXT -->
+                    {{-- Text + arrows --}}
                     <div class="flex-1 min-w-0">
-
                         <p id="testimonialText"
-                            class="text-gray-700 leading-relaxed transition-opacity duration-500"
-                            style="font-size:clamp(14px,1.3vw,17px); font-weight:300; line-height:1.95;">
+                           class="text-gray-700 leading-relaxed transition-opacity duration-500"
+                           style="font-size: clamp(13px, 1.3vw, 17px); font-weight: 300; line-height: 1.95;">
                             {!! $storiesItems->first()->body ?? '' !!}
                         </p>
 
-                        <!-- ARROWS -->
-                        <div class="flex gap-3 justify-end mt-16    ">
+                        {{-- Arrows --}}
+                        <div class="flex gap-3 justify-end mt-10 md:mt-16">
                             <button onclick="changeTestimonial(-1); resetAutoPlay()" aria-label="Previous"
                                 class="rounded-full border border-gray-400 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 group"
-                                style="width:44px; height:44px;">
+                                style="width: 44px; height: 44px;">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M10 3L5 8L10 13" stroke="#555" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white" />
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="group-hover:stroke-white" />
                                 </svg>
                             </button>
-
                             <button onclick="changeTestimonial(1); resetAutoPlay()" aria-label="Next"
                                 class="rounded-full border border-gray-400 flex items-center justify-center hover:bg-gray-900 hover:border-gray-900 group"
-                                style="width:44px; height:44px;">
+                                style="width: 44px; height: 44px;">
                                 <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                     <path d="M6 3L11 8L6 13" stroke="#555" stroke-width="1.5"
-                                        stroke-linecap="round" stroke-linejoin="round" class="group-hover:stroke-white" />
+                                        stroke-linecap="round" stroke-linejoin="round"
+                                        class="group-hover:stroke-white" />
                                 </svg>
                             </button>
                         </div>
-
                     </div>
 
                 </div>
@@ -1029,24 +1083,44 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
         </div>
     </div>
 
+    {{-- Bottom Images --}}
+
+    {{-- Mobile: stacked layout --}}
+    <div class="block md:hidden mt-16 px-4">
+        <div class="w-full overflow-hidden mb-0" style="height: clamp(220px, 60vw, 380px);">
+            <img src="{{ $storiesSection->img_path ?? asset('assets/images/test1.avif') }}"
+                alt="Interior"
+                class="w-full h-full object-cover"
+                onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
+        </div>
+        <p class="text-gray-700 font-light leading-relaxed text-sm py-6"
+            style="font-weight: 300; line-height: 1.9;">
+            {!! $storiesSection->body ?? 'Bhaiya Housing is devoted to designing inspiring residential and commercial spaces that transcend expectations. With a focus on modern aesthetics, impeccable craftsmanship, and an unwavering commitment to integrity, we create environments that harmoniously balance sophistication and purpose, delivering timeless value.' !!}
+        </p>
+        <div class="w-full overflow-hidden" style="height: clamp(240px, 65vw, 400px);">
+            <img src="{{ $sectionImages[0] ?? asset('assets/images/test2.avif') }}"
+                alt="Interior"
+                class="w-full h-full object-cover"
+                onerror="this.parentElement.style.background='#bab4ac'; this.style.display='none';" />
+        </div>
     </div>
 
-    {{-- Bottom Images --}}
-    <div class="relative container flex items-end mt-32" style="height:clamp(360px,48vw,580px);">
+    {{-- Desktop: side-by-side layout --}}
+    <div class="hidden md:flex relative container items-end mt-32"
+         style="height: clamp(360px, 48vw, 580px);">
 
-        {{-- Stone: scroll করে উপরে যাবে --}}
+        {{-- Decorative stones --}}
         <div class="scroll-move absolute pointer-events-none"
             data-axis="Y"
-            style="left:0; top:0; z-index:3;">
+            style="left: 0; top: 0; z-index: 3;">
             <img src="/assets/images/overview-stone.png" alt=""
-                style="width:clamp(120px,7vw,160px); opacity:0.8;"
+                style="width: clamp(100px, 7vw, 160px); opacity: 0.8;"
                 onerror="this.style.display='none'" />
         </div>
-        <div class=" absolute pointer-events-none"
-
-            style="left:0; top:-60px; z-index:-3;">
+        <div class="absolute pointer-events-none"
+            style="left: 0; top: -60px; z-index: -3;">
             <img src="/assets/images/reviewstonebg.png" alt=""
-                style="width:clamp(120px,7vw,160px); opacity:0.8;"
+                style="width: clamp(100px, 7vw, 160px); opacity: 0.8;"
                 onerror="this.style.display='none'" />
         </div>
 
@@ -1059,16 +1133,14 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                     onerror="this.parentElement.style.background='#c8c0b8'; this.style.display='none';" />
             </div>
             <p class="text-gray-700 font-light leading-relaxed text-sm py-6 pr-8"
-                style="font-weight:300; line-height:1.9; max-width:520px;">
+                style="font-weight: 300; line-height: 1.9; max-width: 520px;">
                 {!! $storiesSection->body ?? 'Bhaiya Housing is devoted to designing inspiring residential and commercial spaces that transcend expectations. With a focus on modern aesthetics, impeccable craftsmanship, and an unwavering commitment to integrity, we create environments that harmoniously balance sophistication and purpose, delivering timeless value.' !!}
             </p>
         </div>
 
-        {{-- Right image: scroll করে উপরে যাবে --}}
-        <div class=" w-1/2 overflow-hidden pl-12"
-
-
-            style="height:110%; margin-left:2px; flex-shrink:0;">
+        {{-- Right image --}}
+        <div class="w-1/2 overflow-hidden pl-6 lg:pl-12 flex-shrink-0"
+             style="height: 110%; margin-left: 2px;">
             <img src="{{ $sectionImages[0] ?? asset('assets/images/test2.avif') }}"
                 alt="Interior"
                 class="w-full h-full object-cover"
@@ -1083,15 +1155,16 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 <section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative z-10"
     style="background: url('{{ asset('assets/images/testimonial-bg.png') }}') center center / cover no-repeat, #F6F6F6;">
 
-    {{-- Hover image (follows cursor) --}}
+    {{-- Hover image (follows cursor) — desktop only --}}
     <div id="newsHoverImg"
-        style="position:fixed; pointer-events:none; z-index:999;
-               width:120px; height:150px;
-               transform:rotate(10deg) translate(-50%,-50%);
-               opacity:0; transition:opacity 0.3s ease;
-               overflow:hidden; top:0; left:0;">
+        class="hidden md:block"
+        style="position: fixed; pointer-events: none; z-index: 999;
+               width: clamp(90px, 10vw, 140px); height: clamp(110px, 12vw, 170px);
+               transform: rotate(10deg) translate(-50%, -50%);
+               opacity: 0; transition: opacity 0.3s ease;
+               overflow: hidden; top: 0; left: 0;">
         <img id="newsHoverImgEl" src="" alt=""
-            style="width:100%; height:100%; object-fit:cover;" />
+            style="width: 100%; height: 100%; object-fit: cover;" />
     </div>
 
     <div class="container mx-auto flex flex-col md:flex-row gap-8 lg:gap-24 pt-12 md:pt-[100px]">
@@ -1099,92 +1172,113 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
         {{-- Left Side --}}
         <div class="w-full md:w-[30%] relative z-10">
 
-            {{-- MOBILE --}}
-            <div class="flex md:hidden items-center justify-between mb-2">
-                <h2 style=" font-weight:500; font-size:clamp(28px,7vw,48px); color:#1a1a1a; line-height:1.1;">
+            {{-- MOBILE heading + View All --}}
+            <div class="flex md:hidden items-center justify-between mb-6">
+                <h2 style="font-weight: 500; font-size: clamp(28px, 7vw, 48px);
+                           color: #1a1a1a; line-height: 1.1;">
                     News
-                    <em style=" font-style:italic; font-weight:300; font-size:0.85em; color:#3a3a3a; margin:0 3px;">&amp;</em>
+                    <em style="font-style: italic; font-weight: 300;
+                               font-size: 0.85em; color: #3a3a3a; margin: 0 3px;">
+                        &amp;
+                    </em>
                     Events
                 </h2>
                 <a href="/events"
-                    class="flex items-center justify-center rounded-full flex-shrink-0"
-                    style="width:85px; height:85px; border:1.5px solid #1a1a1a; font-size:11px; letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; transition:background 0.3s, color 0.3s;"
+                    class="flex items-center justify-center rounded-full flex-shrink-0 text-center"
+                    style="width: clamp(70px, 18vw, 90px); height: clamp(70px, 18vw, 90px);
+                           border: 1.5px solid #1a1a1a; font-size: 11px;
+                           letter-spacing: 0.08em; color: #1a1a1a;
+                           text-decoration: none; transition: background 0.3s, color 0.3s;"
                     onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
                     onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
                     View All
                 </a>
             </div>
 
-            {{-- DESKTOP: News | line | Events --}}
-            <div class="hidden md:flex flex-row items-center justify-between min-h-[500px]">
+            {{-- DESKTOP: rotated heading + View All --}}
+            <div class="hidden md:flex flex-row items-center justify-between"
+                 style="min-height: clamp(300px, 40vw, 500px);">
 
-                {{-- Rotated container --}}
-                <div style="display:flex; flex-direction:column; align-items:flex-start; gap:0;
-            transform:rotate(-90deg); white-space:nowrap; transform-origin: center center;">
+                {{-- Rotated text block --}}
+                <div style="display: flex; flex-direction: column; align-items: flex-start;
+                            gap: 0; transform: rotate(-90deg); white-space: nowrap;
+                            transform-origin: center center;">
 
-                    <span style=" font-weight:500;
-                 font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;
-                 display:block; line-height:1.1;">
+                    <span style="font-weight: 500;
+                                 font-size: clamp(32px, 4.5vw, 72px);
+                                 color: #1a1a1a; letter-spacing: -0.01em;
+                                 display: block; line-height: 1.1;">
                         News
                     </span>
 
                     <span class="scroll-move" data-axis="X"
-                        style=" font-weight:500;
-               font-size:clamp(40px,5vw,72px); color:#1a1a1a; letter-spacing:-0.01em;
-               display:block; line-height:1.1;
-               transition: transform 0.6s cubic-bezier(0.25,0.46,0.45,0.94);
-               will-change: transform;">
+                        style="font-weight: 500;
+                               font-size: clamp(32px, 4.5vw, 72px);
+                               color: #1a1a1a; letter-spacing: -0.01em;
+                               display: block; line-height: 1.1;
+                               transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+                               will-change: transform;">
                         &amp; Events
                     </span>
 
                 </div>
 
+                {{-- View All circle --}}
                 <a href="/events"
-                    class="flex items-center justify-center rounded-full"
-                    style="width:130px; height:130px; border:1.5px solid #1a1a1a; font-size:13px;
-               letter-spacing:0.08em; color:#1a1a1a; text-decoration:none; flex-shrink:0;
-               transition:background 0.3s, color 0.3s;"
+                    class="flex items-center justify-center rounded-full text-center flex-shrink-0"
+                    style="width: clamp(90px, 9vw, 130px); height: clamp(90px, 9vw, 130px);
+                           border: 1.5px solid #1a1a1a;
+                           font-size: clamp(11px, 1vw, 13px);
+                           letter-spacing: 0.08em; color: #1a1a1a;
+                           text-decoration: none;
+                           transition: background 0.3s, color 0.3s;"
                     onmouseover="this.style.background='#152018'; this.style.color='#f2ede6';"
                     onmouseout="this.style.background='transparent'; this.style.color='#1a1a1a';">
                     View All
                 </a>
 
             </div>
-
         </div>
 
-        {{-- Right Side: List --}}
+        {{-- Right Side: News list --}}
         <div class="w-full md:w-[70%] flex flex-col relative z-10">
 
             @forelse($newsEvents as $index => $item)
             @php
-            $isLast = $index === count($newsEvents) - 1;
-            $type = ucfirst($item['type']);
-            $date = $item['start_date'];
-            $url = '/' . strtolower($item['type']) . '/' . $item['id'];
-            $imgPath = asset($item['img_path'] ?? '');
+                $isLast  = $index === count($newsEvents) - 1;
+                $type    = ucfirst($item['type']);
+                $date    = $item['start_date'];
+                $url     = '/' . strtolower($item['type']) . '/' . $item['id'];
+                $imgPath = asset($item['img_path'] ?? '');
             @endphp
 
             <a href="{{ $url }}"
                 class="news-row border-t {{ $isLast ? 'border-b' : '' }} border-[#ccc3b6]
                        py-5 md:py-6 lg:py-8
-                       flex flex-col sm:flex-row gap-2 sm:gap-12 items-start
-                       group  transition duration-300
+                       flex flex-col sm:flex-row gap-2 sm:gap-8 md:gap-12 items-start
+                       group transition duration-300
                        px-3 sm:px-4 -mx-3 sm:-mx-4 cursor-pointer"
                 data-img="{{ $imgPath }}"
-                style="text-decoration:none;">
+                style="text-decoration: none;">
 
-                <div class="w-full sm:w-40 flex-shrink-0 flex sm:flex-col flex-row gap-2 sm:gap-0">
-                    <p class="text-base md:text-xl text-[#54504a] font-medium">{{ $type }}</p>
+                {{-- Type + Date --}}
+                <div class="w-full sm:w-36 md:w-40 flex-shrink-0
+                            flex sm:flex-col flex-row items-baseline gap-2 sm:gap-0">
+                    <p class="text-base md:text-xl text-[#54504a] font-medium leading-tight">
+                        {{ $type }}
+                    </p>
                     @if($date)
-                    <p class="text-xs md:text-sm text-[#857f77] sm:mt-1">
+                    <p class="text-xs md:text-sm text-[#857f77] sm:mt-1 leading-tight">
                         {{ \Carbon\Carbon::parse($date)->format('d F Y') }}
                     </p>
                     @endif
                 </div>
 
-                <div class="flex-1">
-                    <h3 class="text-base md:text-xl lg:text-[1.35rem] text-[#2a2825] font-light leading-snug">
+                {{-- Title --}}
+                <div class="flex-1 min-w-0">
+                    <h3 class="text-base md:text-xl lg:text-[1.35rem] text-[#2a2825]
+                               font-light leading-snug group-hover:text-[#152018]
+                               transition-colors duration-300">
                         {{ $item['title'] }}
                     </h3>
                 </div>
@@ -1200,70 +1294,77 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
 
 
-
 <!-- ===== PARTNERS / CTA ===== -->
-<section class="relative z-10 w-full py-20 px-6 md:px-12 lg:px-24 overflow-hidden" style="background:#fff;">
+<section class="relative z-10 w-full py-16 md:py-20 px-6 md:px-12 lg:px-24 overflow-hidden"
+    style="background: #fff;">
 
-   
- 
+    {{-- Background pattern --}}
+    <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index: 0;">
+        <div class="absolute left-0 top-0 w-full sm:w-1/2 md:w-1/3 h-full opacity-50"
+            style="background-image: url('/assets/images/partners-bg.png');
+                   background-repeat: repeat-y;
+                   background-size: 100% auto;">
+        </div>
+    </div>
 
-      <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index:0;">
-         <div class="absolute left-0 top-0 w-1/3 h-full opacity-50"
-             style="background-image: url('/assets/images/partners-bg.png'); background-repeat: repeat-y; background-size: 100% auto;">
-         </div>
-     </div>
-    <!-- Content -->
-    <div class="relative z-10 px-6 md:px-16 lg:px-24">
+    {{-- Content --}}
+    <div class="relative z-10 px-0 sm:px-6 md:px-16 lg:px-24">
 
-        <!-- Heading -->
-        <h2 class="mb-16 font-light leading-tight text-gray-900 scroll-move" data-axis="Y" style="font-size:clamp(32px,4.5vw,64px);">
+        {{-- Heading --}}
+        <h2 class="mb-10 md:mb-16 font-light leading-tight text-gray-900 scroll-move"
+            data-axis="Y"
+            style="font-size: clamp(28px, 4.5vw, 64px);">
             @php
-
-            $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
-            $titleParts = explode(',', $partnerTitle);
+                $partnerTitle = $partners->title ?? 'Be a partner, be a patron';
+                $titleParts   = explode(',', $partnerTitle);
             @endphp
 
             @if(count($titleParts) >= 2)
-            {{-- Line 1: "Be a partner" --}}
-            @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[0]), $m1); @endphp
-            <span class="font-normal">{{ trim($m1[1] ?? '') }}</span>
-            <em class="font-light italic">{{ trim($m1[2] ?? $titleParts[0]) }}</em>
-            <span class="font-normal">,</span><br />
+                @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[0]), $m1); @endphp
+                <span class="font-normal">{{ trim($m1[1] ?? '') }}</span>
+                <em class="font-light italic">{{ trim($m1[2] ?? $titleParts[0]) }}</em>
+                <span class="font-normal">,</span><br />
 
-            {{-- Line 2: "be a patron" --}}
-            @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[1]), $m2); @endphp
-            <span class="font-normal">{{ trim($m2[1] ?? '') }}</span>
-            <em class="font-light italic">{{ trim($m2[2] ?? $titleParts[1]) }}</em>
+                @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[1]), $m2); @endphp
+                <span class="font-normal">{{ trim($m2[1] ?? '') }}</span>
+                <em class="font-light italic">{{ trim($m2[2] ?? $titleParts[1]) }}</em>
             @else
-            {{ $partnerTitle }}
+                {{ $partnerTitle }}
             @endif
         </h2>
 
-        <!-- Two Cards Row -->
-        <div class="flex flex-col md:flex-row gap-4 items-stretch md:ml-[28%]">
+        {{-- Two Cards Row --}}
+        <div class="relative flex flex-col md:flex-row gap-4 items-stretch md:ml-[0%] lg:ml-[20%] xl:ml-[28%]">
 
-            <!-- Card 1: Landowner -->
+            {{-- Card 1: Landowner --}}
             <a href="{{ $partners->url ?? '/landowner-contact' }}"
-                class="relative flex flex-col justify-between flex-1 cursor-pointer group border rounded-none p-6 min-h-[520px] transition-all duration-300"
-                style="border-color:#c8bfb0; background:rgba(242,237,230,0.6); text-decoration:none;"
+                class="relative flex flex-col justify-between flex-1 cursor-pointer group
+                       border rounded-none p-5 md:p-6
+                       min-h-[300px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px]
+                       transition-all duration-300"
+                style="border-color: #c8bfb0; background: rgba(242,237,230,0.6); text-decoration: none;"
                 onmouseover="this.style.borderColor='#8a7a60';"
                 onmouseout="this.style.borderColor='#c8bfb0';">
 
-                <!-- Arrow top right -->
+                {{-- Arrow top right --}}
                 <div class="flex justify-end">
-                    <div class="w-9 h-9 rounded-full border border-gray-400 flex items-center justify-center transition-all duration-300 group-hover:bg-gray-900 group-hover:border-gray-900">
+                    <div class="w-9 h-9 rounded-full border border-gray-400
+                                flex items-center justify-center
+                                transition-all duration-300
+                                group-hover:bg-gray-900 group-hover:border-gray-900">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                             <path d="M3 11L11 3M11 3H5M11 3V9"
                                 class="transition-all duration-300 group-hover:stroke-white"
-                                stroke="#555" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                stroke="#555" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                 </div>
 
-                <!-- Bottom text -->
-                <div class="mt-auto pt-8">
+                {{-- Bottom text --}}
+                <div class="mt-auto pt-6 md:pt-8">
                     <h3 class="text-gray-900 font-normal mb-2"
-                        style=" font-size:clamp(18px,1.8vw,24px);">
+                        style="font-size: clamp(16px, 1.8vw, 24px);">
                         {{ $partners->short ?? 'Contact as Landowner' }}
                     </h3>
                     <p class="text-sm font-light leading-relaxed text-gray-500 max-w-xs">
@@ -1272,102 +1373,124 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 </div>
             </a>
 
-            <!-- Card 2: Customer -->
+            {{-- Card 2: Customer --}}
             <a href="{{ $partners->extra ?? '/customer-contact' }}"
-                class="relative flex flex-col justify-between flex-1 cursor-pointer group overflow-hidden min-h-[520px] p-6 -mt-10"
-                style="text-decoration:none;">
+                class="relative flex flex-col justify-between flex-1 cursor-pointer group
+                       overflow-hidden p-5 md:p-6
+                       min-h-[300px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px]
+                       md:-mt-10"
+                style="text-decoration: none;">
 
-                <!-- Background image -->
+                {{-- Background image --}}
                 <img src="{{ $partners->img_path ?? asset('assets/images/customer.png') }}"
                     alt="room"
-                    class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 z-0"
+                    class="absolute inset-0 w-full h-full object-cover
+                           transition-transform duration-700 group-hover:scale-105 z-0"
                     onerror="this.parentElement.style.background='#1a2a2a'; this.style.display='none';" />
 
-                <!-- Dark overlay -->
+                {{-- Dark overlay --}}
                 <div class="absolute inset-0 z-[1]"
-                    style="background:linear-gradient(to top, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.25) 100%);"></div>
+                    style="background: linear-gradient(to top, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.25) 100%);"></div>
 
-                <!-- Arrow top right -->
+                {{-- Arrow top right --}}
                 <div class="relative z-10 flex justify-end">
-                    <div class="w-9 h-9 rounded-full border border-white flex items-center justify-center transition-all duration-300 group-hover:bg-white">
+                    <div class="w-9 h-9 rounded-full border border-white
+                                flex items-center justify-center
+                                transition-all duration-300 group-hover:bg-white">
                         <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
                             <path d="M3 11L11 3M11 3H5M11 3V9"
                                 class="transition-all duration-300 group-hover:stroke-gray-900"
-                                stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                stroke="white" stroke-width="1.5"
+                                stroke-linecap="round" stroke-linejoin="round" />
                         </svg>
                     </div>
                 </div>
 
-                <!-- Center text -->
-                <div class="relative z-10 flex flex-col items-start justify-center flex-1">
+                {{-- Text --}}
+                <div class="relative z-10 flex flex-col items-start justify-center flex-1 mt-4">
                     <h3 class="text-white font-normal mb-2"
-                        style="font-size:clamp(18px,1.8vw,24px);">
+                        style="font-size: clamp(16px, 1.8vw, 24px);">
                         {{ $partners->location ?? 'Contact as Customer' }}
                     </h3>
-                    <p class="text-sm font-light leading-relaxed text-white max-w-xs">
+                    <p class="text-sm font-light leading-relaxed text-white/80 max-w-xs">
                         {!! $partners->body_2 ?? 'Get in touch to find your dream home with Bhaiya Housing.' !!}
                     </p>
                 </div>
             </a>
+
+            {{-- Decorative stone — moved outside flex children, anchored to wrapper --}}
             <img src="{{ asset('images/mission-stone.png') }}" alt=""
-                class="absolute pointer-events-none scroll-move" data-axis="Y"
-                style="width: 120px; bottom: -10px; right: 50px; z-index: 20;"
+                class="absolute pointer-events-none scroll-move hidden md:block"
+                data-axis="Y"
+                style="width: clamp(80px, 8vw, 120px); bottom: -10px; right: 50px; z-index: 20;"
                 onerror="this.style.display='none';">
         </div>
-<div class="absolute pointer-events-none"
-     style="width: 200px; bottom: 40px; left: 50px; z-index: 20;">
-  <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 300 300">
-    <defs>
-      <style>
-        .ring1 { animation: radar-pulse 2.5s ease-out infinite; }
-        @keyframes radar-pulse {
-          0%   { r: 67.5px; opacity: 0.9; stroke-width: 2.5; }
-          100% { r: 130px;  opacity: 0;   stroke-width: 0.5; }
-        }
-      </style>
-      <filter id="filter0_d" x="0.3" y="0.3" width="158.4" height="158.4" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-        <feOffset dy="4"/>
-        <feGaussianBlur stdDeviation="5.35"/>
-        <feComposite in2="hardAlpha" operator="out"/>
-        <feColorMatrix type="matrix" values="0 0 0 0 0.945833 0 0 0 0 0.715603 0 0 0 0 0.279809 0 0 0 1 0"/>
-        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
-        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
-      </filter>
-      <filter id="filter1_d" x="21" y="22" width="116" height="116" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
-        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-        <feOffset dy="4"/>
-        <feGaussianBlur stdDeviation="2"/>
-        <feComposite in2="hardAlpha" operator="out"/>
-        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow1"/>
-        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow1" result="shape"/>
-      </filter>
-    </defs>
 
-    <!-- Single radar pulse ring -->
-    <g transform="translate(150,150)">
-      <circle class="ring1" cx="0" cy="0" r="67.5" fill="none" stroke="#B79870" stroke-width="2"/>
-    </g>
+        {{-- Radar / pulse SVG — decorative, desktop only --}}
+        <div class="absolute pointer-events-none hidden md:block"
+            style="width: 200px; bottom: 40px; left: 50px; z-index: 20;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 300 300">
+                <defs>
+                    <style>
+                        .ring1 {
+                            animation: radar-pulse 2.5s ease-out infinite;
+                        }
+                        @keyframes radar-pulse {
+                            0%   { r: 67.5px; opacity: 0.9; stroke-width: 2.5; }
+                            100% { r: 130px;  opacity: 0;   stroke-width: 0.5; }
+                        }
+                    </style>
+                    <filter id="filter0_d" x="0.3" y="0.3" width="158.4" height="158.4"
+                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dy="4"/>
+                        <feGaussianBlur stdDeviation="5.35"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix"
+                            values="0 0 0 0 0.945833 0 0 0 0 0.715603 0 0 0 0 0.279809 0 0 0 1 0"/>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape"/>
+                    </filter>
+                    <filter id="filter1_d" x="21" y="22" width="116" height="116"
+                        filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+                        <feColorMatrix in="SourceAlpha" type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+                        <feOffset dy="4"/>
+                        <feGaussianBlur stdDeviation="2"/>
+                        <feComposite in2="hardAlpha" operator="out"/>
+                        <feColorMatrix type="matrix"
+                            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow1"/>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow1" result="shape"/>
+                    </filter>
+                </defs>
 
-    <!-- Original SVG content -->
-    <g transform="translate(70.5, 74.5)">
-      <g filter="url(#filter0_d)">
-        <circle cx="79.5" cy="75.5" r="67.5" stroke="#B79870" stroke-width="2" shape-rendering="crispEdges" fill="none"/>
-      </g>
-      <g filter="url(#filter1_d)">
-        <circle cx="79" cy="76" r="52" fill="white"/>
-        <circle cx="79" cy="76" r="53" stroke="#A68356" stroke-width="2" fill="none"/>
-      </g>
-      <path d="M52 85.5238L70.4079 68.9097L72.157 78.1099L64.2359 85.5238H52Z" fill="#2B2B2B"/>
-      <path d="M76.069 74.3843L72.1569 78.1099L70.4078 68.9097L76.069 74.3843Z" fill="#050505"/>
-      <path d="M81.8718 68.9097L107 91.9159H94.764L70.4078 68.9097H81.8718Z" fill="#323232"/>
-      <path d="M91.333 64.2029L98.5642 60V72.7804L91.333 76.9423V64.2029Z" fill="#323232"/>
-    </g>
-  </svg>
-</div>
+                <g transform="translate(150,150)">
+                    <circle class="ring1" cx="0" cy="0" r="67.5"
+                        fill="none" stroke="#B79870" stroke-width="2"/>
+                </g>
+
+                <g transform="translate(70.5, 74.5)">
+                    <g filter="url(#filter0_d)">
+                        <circle cx="79.5" cy="75.5" r="67.5"
+                            stroke="#B79870" stroke-width="2"
+                            shape-rendering="crispEdges" fill="none"/>
+                    </g>
+                    <g filter="url(#filter1_d)">
+                        <circle cx="79" cy="76" r="52" fill="white"/>
+                        <circle cx="79" cy="76" r="53" stroke="#A68356" stroke-width="2" fill="none"/>
+                    </g>
+                    <path d="M52 85.5238L70.4079 68.9097L72.157 78.1099L64.2359 85.5238H52Z" fill="#2B2B2B"/>
+                    <path d="M76.069 74.3843L72.1569 78.1099L70.4078 68.9097L76.069 74.3843Z" fill="#050505"/>
+                    <path d="M81.8718 68.9097L107 91.9159H94.764L70.4078 68.9097H81.8718Z" fill="#323232"/>
+                    <path d="M91.333 64.2029L98.5642 60V72.7804L91.333 76.9423V64.2029Z" fill="#323232"/>
+                </g>
+            </svg>
+        </div>
+
     </div>
 </section>
 @if(count($storiesItems) > 0)

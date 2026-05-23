@@ -580,6 +580,12 @@ body {
     font-style: italic;
     letter-spacing: -4px;
 }
+
+@media (max-width: 767px) {
+    .font-migra-italic {
+        letter-spacing: 0px;
+    }
+}
 .header-menu-list {
     color: rgb(255, 255, 255);
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.42);

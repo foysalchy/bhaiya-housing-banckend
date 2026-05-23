@@ -242,40 +242,56 @@
      </div>
  </section>
 
- {{-- ===== GALLERY (2 images) ===== --}}
- @if(!empty($imgPaths[1]) || !empty($imgPaths[2]))
- <section class="relative z-10 w-full overflow-hidden py-16" style="background:#ffffff;">
-     <div class="container mx-auto px-6 lg:px-14">
-         <div class="relative flex flex-col md:flex-row gap-8 items-start">
+{{-- ===== GALLERY (2 images) ===== --}}
+@if(!empty($imgPaths[1]) || !empty($imgPaths[2]))
+<section class="relative z-10 w-full overflow-hidden py-10 md:py-16" style="background:#ffffff;">
+    <div class="container mx-auto px-6 lg:px-14">
+        <div class="relative flex flex-col md:flex-row gap-6 md:gap-8 items-start">
 
-             <!-- Left Image -->
-             <div class="relative w-full md:w-1/2 h-full">
-                 <img src="{{ $imgPaths[1] ?? asset('assets/images/g1.avif') }}"
-                     alt="Gallery 1" class="w-full object-cover shadow-lg"
-                     style="height:clamp(300px,40vw,500px);"
-                     onerror="this.parentElement.style.background='#c0b8b0'; this.style.display='none';" />
-                 <img src="/assets/images/projectDetailsLeft-stone.png" alt=""
-                     class="absolute pointer-events-none float-down scroll-move" data-axis="Y"
-                     style="height:150px;width: 150px; bottom:-20px; left:-60px; z-index:2;"
-                     onerror="this.style.display='none';" />
-             </div>
+            <!-- Left Image -->
+            <div class="relative w-full md:w-1/2">
+                <img src="{{ $imgPaths[1] ?? asset('assets/images/g1.avif') }}"
+                    alt="Gallery 1"
+                    class="w-full object-cover shadow-lg"
+                    style="height: clamp(220px, 40vw, 500px);"
+                    onerror="this.parentElement.style.background='#c0b8b0'; this.style.display='none';" />
 
-             <!-- Right Image -->
-             <div class="relative w-full ">
-                 <img src="{{ $imgPaths[2] ?? asset('assets/images/g2.avif') }}"
-                     alt="Gallery 2" class="w-full h-1/2 object-cover shadow-lg"
+                <!-- Left stone -->
+                <img src="/assets/images/projectDetailsLeft-stone.png" alt=""
+                    class="absolute pointer-events-none float-down scroll-move"
+                    data-axis="Y"
+                    style="width: clamp(60px, 8vw, 150px);
+                           height: clamp(60px, 8vw, 150px);
+                           bottom: clamp(-30px, -3vw, -20px);
+                           left: clamp(-20px, -3vw, -60px);
+                           z-index: 2;"
+                    onerror="this.style.display='none';" />
+            </div>
 
-                     onerror="this.parentElement.style.background='#b0b8b8'; this.style.display='none';" />
-                 <img src="/assets/images/projectDetailsRight-stone.png" alt=""
-                     class="absolute pointer-events-none float-up scroll-move" data-axis="Y"
-                     style="height:150px;width: 150px; top:-24px; right:-50px; z-index:2;"
-                     onerror="this.style.display='none';" />
-             </div>
+            <!-- Right Image -->
+            <div class="relative w-full md:w-1/2">
+                <img src="{{ $imgPaths[2] ?? asset('assets/images/g2.avif') }}"
+                    alt="Gallery 2"
+                    class="w-full object-cover shadow-lg"
+                    style="height: clamp(220px, 40vw, 500px);"
+                    onerror="this.parentElement.style.background='#b0b8b8'; this.style.display='none';" />
 
-         </div>
-     </div>
- </section>
- @endif
+                <!-- Right stone -->
+                <img src="/assets/images/projectDetailsRight-stone.png" alt=""
+                    class="absolute pointer-events-none float-up scroll-move"
+                    data-axis="Y"
+                    style="width: clamp(60px, 8vw, 150px);
+                           height: clamp(60px, 8vw, 150px);
+                           top: clamp(-16px, -2vw, -24px);
+                           right: clamp(-16px, -3vw, -50px);
+                           z-index: 2;"
+                    onerror="this.style.display='none';" />
+            </div>
+
+        </div>
+    </div>
+</section>
+@endif
  <section class="relative z-10 w-full overflow-hidden" style="font-family:'Jost',sans-serif;">
 
      <!-- BG Image -->

@@ -221,9 +221,9 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
 
 
 <!-- DETAIL + FORM -->
-<section class="relative z-10 w-full py-20 bg-white">
-    <div class="container mx-auto px-6 lg:px-14">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-16">
+<section class="relative z-10 w-full py-12 md:py-20 bg-white overflow-hidden">
+    <div class="container mx-auto px-4 sm:px-6 lg:px-14">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16">
 
             <!-- Left: Job Details -->
             <div class="prose prose-sm max-w-none job-body">
@@ -236,10 +236,10 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
             </div>
 
             <!-- Right: Apply Form -->
-            <div class="relative bg-[#1B281F] p-8 md:p-10">
+            <div class="relative bg-[#1B281F] p-6 sm:p-8 md:p-10">
 
-                <h2 class=" text-white mb-10 pl-16"
-                    style="font-family: Migra, serif;font-size:clamp(28px,4vw,56px); font-weight:300;">
+                <h2 class="text-white mb-8 md:mb-10 pl-0 sm:pl-8 md:pl-16"
+                    style="font-family: Migra, serif; font-size: clamp(24px, 4vw, 56px); font-weight: 300;">
                     Apply For A Role
                 </h2>
 
@@ -250,27 +250,27 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
                 @endif
 
                 <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data"
-                    class="space-y-8 pl-16">
+                    class="space-y-6 md:space-y-8 pl-0 sm:pl-8 md:pl-16">
                     @csrf
                     <input type="hidden" name="content_id" value="{{ $job->id }}">
                     <input type="hidden" name="job_title" value="{{ $job->title }}">
 
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
                         <input type="text" name="name" placeholder="Your Full Name*"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
 
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
                         <input type="tel" name="phone" placeholder="Your Mobile Number*"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
 
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
                         <input type="email" name="email" placeholder="Your Email Address*"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
 
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
                         <input type="text" name="subject" placeholder="Write Your Subject*"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
@@ -279,7 +279,7 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
                     <div>
                         <p class="text-white text-sm font-normal mb-3">Upload Your Resume</p>
                         <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
-                            <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center hover:border-white hover:bg-white/10 transition-all">
+                            <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center hover:border-white hover:bg-white/10 transition-all flex-shrink-0">
                                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
                                     <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
                                     <polyline points="17 8 12 3 7 8" />
@@ -298,21 +298,27 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
                         Apply Now
                     </button>
 
-                    <p class="text-white/60 text-xs">
+                    <p class="text-white/60 text-xs leading-relaxed">
                         By applying for this job listing, you agree to our Data Privacy Policy for recruitment and job applications.
                     </p>
                 </form>
-                <div class=" absolute pointer-events-none scroll-move" data-axis="Y"
 
-                    style="left:-100px; bottom:-10px; z-index:100;">
-                    <img src="/assets/images/overview-stone.png" alt=""
-                        style="width:220px; height:220px;"
-                        onerror="this.style.display='none'" />
-                </div>
-            </div>
+            </div>{{-- /form card — NO overflow-hidden here --}}
 
         </div>
     </div>
+
+    {{-- Stone: section-level absolute, left column-এর উপরে দেখাবে --}}
+    <div class="absolute pointer-events-none scroll-move hidden md:block"
+        data-axis="Y"
+        style="left: clamp(30%, 50%, 44%);
+               bottom: -10px;
+               z-index: 20;">
+        <img src="/assets/images/overview-stone.png" alt=""
+            style="width: clamp(120px, 12vw, 220px); height: clamp(120px, 12vw, 220px);"
+            onerror="this.style.display='none'" />
+    </div>
+
 </section>
 
 @endsection

@@ -183,26 +183,21 @@ $schema = [
         style="padding-top: 88px; padding-left: 5%; padding-right: 5%;">
 
         <h2 data-aos="fade-up" data-aos-duration="1000"
-            class="text-white  leading-tight "
-            style="font-size: clamp(28px, 4.5vw, 72px);">
-            Building <span class="font-migra-italic">
-                quality</span> spaces with <span class="font-migra-italic">
-                excellence & dedication</span>
-
+            class="text-white leading-tight"
+            style="font-size: clamp(22px, 4.5vw, 72px);">
+            Building <span class="font-migra-italic">quality</span> spaces with
+            <span class="font-migra-italic">excellence & dedication</span>
         </h2>
 
         @if ($about->body || $about->body_2)
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12 mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-12 mb-8 md:mb-16">
             @if ($about->body)
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                 <style>
-                    .about-body-1,
-                    .about-body-1 * {
-                        color: white !important;
-                    }
+                    .about-body-1, .about-body-1 * { color: white !important; }
                 </style>
-                <div class="about-body-1 leading-relaxed font-medium pl-16"
-                    style="font-size: clamp(13px, 1.2vw, 18px);">
+                <div class="about-body-1 leading-relaxed font-medium pl-0 sm:pl-8 md:pl-16"
+                    style="font-size: clamp(12px, 1.2vw, 18px);">
                     {!! $about->body !!}
                 </div>
             </div>
@@ -210,13 +205,10 @@ $schema = [
             @if ($about->body_2)
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                 <style>
-                    .about-body-2,
-                    .about-body-2 * {
-                        color: white !important;
-                    }
+                    .about-body-2, .about-body-2 * { color: white !important; }
                 </style>
                 <div class="about-body-2 leading-relaxed font-medium"
-                    style="font-size: clamp(13px, 1.2vw, 18px);">
+                    style="font-size: clamp(12px, 1.2vw, 18px);">
                     {!! $about->body_2 !!}
                 </div>
             </div>
@@ -228,7 +220,7 @@ $schema = [
 
 
 <!-- ===== MISSION & VISION SECTION ===== -->
-<section class="relative w-full z-10 overflow-visible py-16 md:py-20 lg:py-32">
+<section class="relative w-full z-10 overflow-hidden py-16 md:py-20 lg:py-32">
 
     <!-- Split Background -->
     <div class="absolute inset-0 z-0 flex">
@@ -243,86 +235,95 @@ $schema = [
 
     @php
     $mvImages = is_array($missionVision?->img_paths)
-    ? $missionVision->img_paths
-    : json_decode($missionVision?->img_paths ?? '[]', true);
-    $leftImg = $mvImages[2] ?? null;
-    $topRightImg = $mvImages[1] ?? null;
+        ? $missionVision->img_paths
+        : json_decode($missionVision?->img_paths ?? '[]', true);
+    $leftImg      = $mvImages[2] ?? null;
+    $topRightImg  = $mvImages[1] ?? null;
     $bottomRightImg = $mvImages[0] ?? null;
     @endphp
 
     <div class="relative w-full px-4 sm:px-6 md:pr-[8%] md:pl-0">
 
         <!-- IMAGE GRID -->
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 md:gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6">
 
             <!-- Left Vertical Image -->
-            <div class="md:col-span-4 relative md:-mt-64 z-10 scroll-move overflow-visible" data-axis="Y" data-aos="fade-up" data-aos-duration="1000">
+            <div class="md:col-span-4 relative md:-mt-64 z-10 scroll-move"
+                data-axis="Y" data-aos="fade-up" data-aos-duration="1000">
                 @if ($leftImg)
-                <img src="{{ asset($leftImg) }}" alt="Left Image" class="w-full h-auto object-cover shadow-sm">
+                <img src="{{ asset($leftImg) }}" alt="Left Image"
+                    class="w-full h-auto object-cover shadow-sm">
                 @endif
             </div>
 
             <!-- Right Column -->
-            <div class="md:col-span-8 flex flex-col relative overflow-visible">
+            <div class="md:col-span-8 flex flex-col relative">
 
                 @if ($topRightImg)
-                <div class="w-full md:w-[85%] lg:w-[75%] self-end relative md:-mt-56 overflow-visible"
+                <div class="w-full md:w-[85%] lg:w-[75%] self-end relative md:-mt-56"
                     data-aos="fade-left" data-aos-duration="1200">
 
-                    <!-- ✅ Main Image (Removed relative & z-10 so it stays at the bottom layer) -->
                     <img src="{{ asset($topRightImg) }}" alt="right image top"
                         class="w-full h-auto object-cover shadow-sm">
 
-                    <!-- ✅ First Stone: Added z-[999] -->
-                    <div class="absolute -bottom-24 -left-16  scroll-move overflow-visible" data-axis="Y"
-                        style="width:clamp(120px,7vw,160px); height:auto;z-index:100">
+                    <!-- Stone decoration — hidden on small screens to prevent overflow -->
+                    <div class="hidden sm:block absolute -bottom-16 md:-bottom-24 -left-8 md:-left-16 scroll-move z-[100]"
+                        data-axis="Y"
+                        style="width: clamp(90px, 7vw, 160px); height: auto;">
                         <img src="{{ asset('images/mission-stone.png') }}" alt="mission-stone"
-                            class="w-full h-auto object-contain drop-shadow-lg relative" ">
-                        <div class=" w-10 h-10 md:w-12 md:h-12 absolute top-0 left-0 ">
-                            <img src=" {{ asset('images/stone-bg.svg') }}" alt="stone-bg"
-                            class="w-full h-full object-contain">
+                            class="w-full h-auto object-contain drop-shadow-lg relative">
+                        <div class="w-8 h-8 md:w-12 md:h-12 absolute top-0 left-0">
+                            <img src="{{ asset('images/stone-bg.svg') }}" alt="stone-bg"
+                                class="w-full h-full object-contain">
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endif
+                @endif
 
-            <!-- Heading -->
-            <div class="mt-32 md:ml-12 relative z-20" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
-                <h2 class="text-3xl md:text-5xl lg:text-7xl  text-[#595959] leading-snug tracking-tight">
-                    {!! $missionVision->title ?? '' !!}
-                </h2>
-            </div>
+                <!-- Heading -->
+                <div class="mt-16 md:mt-32 md:ml-12 relative z-20"
+                    data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
+                    <h2 class="text-3xl md:text-5xl lg:text-7xl text-[#595959] leading-snug tracking-tight">
+                        {!! $missionVision->title ?? '' !!}
+                    </h2>
+                </div>
 
-            @if ($bottomRightImg)
-            <div class="w-full md:w-[50%] lg:w-[45%] self-end relative z-30 mb-12 md:mb-20 overflow-visible"
-                data-aos="fade-up" data-aos-duration="1200">
-                <div class="relative scroll-move overflow-visible" data-axis="Y">
+                @if ($bottomRightImg)
+                <div class="w-full sm:w-[70%] md:w-[50%] lg:w-[45%] self-end relative z-30 mb-12 md:mb-20"
+                    data-aos="fade-up" data-aos-duration="1200">
+                    <div class="relative scroll-move" data-axis="Y">
 
-                    <!-- ✅ Main Bottom Image -->
-                    <img src="{{ asset($bottomRightImg) }}" alt="right bottom image"
-                        class="w-full h-auto object-cover shadow-sm">
+                        <img src="{{ asset($bottomRightImg) }}" alt="right bottom image"
+                            class="w-full h-auto object-cover shadow-sm">
 
-                    <!-- ✅ Second Stone: Added z-[999] -->
-                    <div class="absolute -bottom-8 -right-12     z-[999] scroll-move overflow-visible" data-axis="Y">
-                        <img src="{{ asset('images/mission-stone-bottom.png') }}" alt="mission-stone-bottom"
-                            class="object-contain drop-shadow-md relative z-[999]" style="width:clamp(120px,7vw,160px); height:auto; ">
+                        <!-- Stone decoration — hidden on small screens -->
+                        <div class="hidden sm:block absolute -bottom-6 md:-bottom-8 -right-6 md:-right-12 z-[999] scroll-move"
+                            data-axis="Y">
+                            <img src="{{ asset('images/mission-stone-bottom.png') }}"
+                                alt="mission-stone-bottom"
+                                class="object-contain drop-shadow-md relative z-[999]"
+                                style="width: clamp(90px, 7vw, 160px); height: auto;">
+                        </div>
                     </div>
                 </div>
-            </div>
-            @endif
+                @endif
 
-        </div>
+            </div><!-- end right column -->
+        </div><!-- end image grid -->
     </div>
 
     <!-- Mission & Vision Text -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 md:gap-10 relative z-40 mt-2 px-4 sm:px-[8%] md:pl-[8%] md:pr-[4%]">
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 relative z-40 mt-2
+                px-4 sm:px-[6%] md:pl-[8%] md:pr-[4%]">
 
         <!-- Mission -->
         <div class="md:col-span-6 relative" data-aos="fade-right">
-            <h2 class=" italic text-[2.5rem] md:text-[4rem] lg:text-[6rem] leading-none text-[#1520187D] absolute -top-16 md:-top-20 -left-2 md:-left-6 z-0 opacity-40">
+            <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
+                        -top-10 md:-top-20 -left-1 md:-left-6
+                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
                 {{ $missionVision?->name ?? 'Mission' }}
             </h2>
-            <div class="relative z-10 pt-14 md:pt-16">
+            <div class="relative z-10 pt-12 md:pt-16">
                 <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl">
                     {!! $missionVision->body ?? '' !!}
                 </p>
@@ -330,12 +331,15 @@ $schema = [
         </div>
 
         <!-- Vision -->
-        <div class="md:col-span-6 relative mt-20 md:mt-48" data-aos="fade-left">
-            <h2 class="italic text-[2.5rem] md:text-[4rem] lg:text-[6rem] leading-none text-[#1520187D] absolute -top-16 md:-top-20 -left-2 md:-left-6 z-0 opacity-40">
+        <div class="md:col-span-6 relative mt-12 md:mt-48" data-aos="fade-left">
+            <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
+                        -top-10 md:-top-20 -left-1 md:-left-6
+                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
                 {{ $missionVision?->short ?? 'Vision' }}
             </h2>
-            <div class="relative z-10 pt-14 md:pt-16 ">
-                <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl pl-12">
+            <div class="relative z-10 pt-12 md:pt-16">
+                <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl
+                           pl-0 sm:pl-6 md:pl-12">
                     {!! $missionVision->body_2 ?? '' !!}
                 </p>
             </div>
@@ -343,12 +347,15 @@ $schema = [
 
     </div>
 
-    </div>
-    <div class="absolute md:bottom-16 left-4 sm:left-6 md:left-20 lg:left-32 z-20 translate-y-1/2 leading-none pointer-events-none">
-        <span class="text-5xl sm:text-7xl md:text-[120px] lg:text-[153px] font-semibold tracking-tight leading-none text-[#262E35]">
+    <!-- "History" large text -->
+    <div class="relative md:absolute md:bottom-16 left-0 px-4 sm:px-6 md:left-20 lg:left-32
+                z-20 md:translate-y-1/2 leading-none pointer-events-none mt-12 md:mt-0">
+        <span class="font-semibold tracking-tight leading-none text-[#262E35]
+                     text-[2.5rem] sm:text-[3.5rem] md:text-[80px] lg:text-[120px] xl:text-[153px]">
             History
         </span>
     </div>
+
 </section>
 
 <!-- ===== TIMELINE SECTION ===== -->
