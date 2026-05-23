@@ -415,7 +415,7 @@ $schema = [
             <h2 id="timeline-title" class="text-2xl sm:text-3xl md:text-5xl font-semibold mb-4 md:mb-6 text-white leading-tight">
                 {!! nl2br(e($timelineItems->first()?->name ?? '')) !!}
             </h2>
-            <p id="timeline-desc" class="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed">
+            <p id="timeline-desc" class="text-white text-sm sm:text-base md:text-lg leading-relaxed">
                 {!! $timelineItems->first()?->short !!}
             </p>
         </div>
@@ -646,9 +646,7 @@ $schema = [
     });
 </script>
 <script>
-    const timelineData = {
-        !!json_encode($timelineData) !!
-    };
+    const timelineData = {!!json_encode($timelineData) !!};
     const total = timelineData.length;
     let currentIndex = 0;
 
