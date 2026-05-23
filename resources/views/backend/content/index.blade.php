@@ -19,76 +19,75 @@
                     <tr>
                         <th>#</th>
                         @foreach($contents[$type] as $field => $data)
-                            @if(!in_array($field, ['body', 'body_2', 'body_3', 'body_4', 'img_paths']))
-                                <th>{{ $data['label'] }}</th>
-                            @endif
+                        @if(!in_array($field, ['body', 'body_2', 'body_3', 'body_4', 'img_paths','extra']))
+                        <th>{{ $data['label'] }}</th>
+                        @endif
                         @endforeach
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($datas as $key => $item)
-                        <tr>
-                            <td>{{ ++$key }}</td>
-                            @foreach($contents[$type] as $field => $data)
-                                @if(!in_array($field, ['body', 'body_2', 'body_3', 'body_4', 'img_paths']))
+                    <tr>
+                        <td>{{ ++$key }}</td>
+                        @foreach($contents[$type] as $field => $data)
+                        @if(!in_array($field, ['body', 'body_2', 'body_3', 'body_4', 'img_paths','extra']))
 
-                                    @if($field == 'img_path')
-                                        <td><img width="100px" src="{{ asset('/') }}{{ $item->$field }}" alt=""></td>
+                        @if($field == 'img_path')
+                        <td><img width="100px" src="{{ asset('/') }}{{ $item->$field }}" alt=""></td>
 
-                                    @elseif($field == 'video_path')
-                                        <td>
-                                            @if($item->$field)
-                                                <video width="150px" controls>
-                                                    <source src="{{ asset('/') }}{{ $item->$field }}">
-                                                </video>
-                                            @else
-                                                <span class="text-muted">No video</span>
-                                            @endif
-                                        </td>
+                        @elseif($field == 'video_path')
+                        <td>
+                            @if($item->$field)
+                            <video width="150px" controls>
+                                <source src="{{ asset('/') }}{{ $item->$field }}">
+                            </video>
+                            @else
+                            <span class="text-muted">No video</span>
+                            @endif
+                        </td>
 
-                                    @elseif($field == 'parent')
-                                        <td>
-                                            @if($type == 'doctors')
-                                                {{ App\Models\Content::find($item->parent_id)?->title ?? 'N/A' }}
-                                            @elseif($type == 'gallery')
-                                                {{ App\Models\Content::find($item->parent_id)?->title ?? 'N/A' }}
-                                            @else
-                                                {{ $item->$field }}
-                                            @endif
-                                        </td>
+                        @elseif($field == 'parent')
+                        <td>
+                            @if($type == 'doctors')
+                            {{ App\Models\Content::find($item->parent_id)?->title ?? 'N/A' }}
+                            @elseif($type == 'gallery')
+                            {{ App\Models\Content::find($item->parent_id)?->title ?? 'N/A' }}
+                            @else
+                            {{ $item->$field }}
+                            @endif
+                        </td>
 
-                                    @elseif($field == 'status')
-                                        <td>
-                                            @if($item->status == 1)
-                                                <span class="badge bg-success">Active</span>
-                                            @else
-                                                <span class="badge bg-danger">Inactive</span>
-                                            @endif
-                                        </td>
+                        @elseif($field == 'status')
+                        <td>
+                            @if($item->status == 1)
+                            <span class="badge bg-success">Active</span>
+                            @else
+                            <span class="badge bg-danger">Inactive</span>
+                            @endif
+                        </td>
 
-                                    @else
-                                        <td>{{ $item->$field }}</td>
-                                    @endif
+                        @else
+                        <td>{{ Str::limit($item->$field, 50) }}</td> @endif
 
-                                @endif
-                            @endforeach
+                        @endif
+                        @endforeach
 
-                            <td>
-                                @if($type == 'albums')
-                                    <a href="{{ route('content.create', 'gallery') }}?parent={{ $item->id }}" class="btn btn-sm btn-success">Add</a>
-                                @endif
-                                @if($type == 'department-sliders')
-                                    <a href="{{ route('content.create', 'doctors') }}?parent={{ $item->id }}" class="btn btn-sm btn-success">Add Doctor</a>
-                                @endif
-                                <a href="{{ route('content.edit', [$type, $item->id]) }}" class="btn btn-sm btn-primary">Edit</a>
-                                <form action="{{ route('content.destroy', [$type, $item->id]) }}" method="POST" class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
+                        <td>
+                            @if($type == 'albums')
+                            <a href="{{ route('content.create', 'gallery') }}?parent={{ $item->id }}" class="btn btn-sm btn-success">Add</a>
+                            @endif
+                            @if($type == 'department-sliders')
+                            <a href="{{ route('content.create', 'doctors') }}?parent={{ $item->id }}" class="btn btn-sm btn-success">Add Doctor</a>
+                            @endif
+                            <a href="{{ route('content.edit', [$type, $item->id]) }}" class="btn btn-sm btn-primary">Edit</a>
+                            <form action="{{ route('content.destroy', [$type, $item->id]) }}" method="POST" class="d-inline">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
                     @endforeach
                 </tbody>
             </table>

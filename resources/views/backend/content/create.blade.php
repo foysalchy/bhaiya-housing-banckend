@@ -80,8 +80,74 @@
 <script src="{{ asset('backend/summernote/summernote.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('backend/summernote/summernote.css') }}">
 <script>
-    $(document).ready(function() {
-        $('.editor').summernote();
+ $(document).ready(function() {
+        $('.editor').summernote({
+            height: 300,
+            resizeable: true, // summernote built-in resize
+            callbacks: {
+                onKeyup: function(e) {
+                    updateTagInfo(e);
+                },
+                onMouseup: function(e) {
+                    updateTagInfo(e);
+                },
+            }
+        });
     });
+
+         const $tooltip = $('<div id="tag-tooltip" style="' +
+            'position:fixed;' +
+            'background:#333;' +
+            'color:#fff;' +
+            'padding:3px 8px;' +
+            'border-radius:4px;' +
+            'font-size:11px;' +
+            'font-family:monospace;' +
+            'pointer-events:none;' +
+            'z-index:99999;' +
+            'display:none;' +
+            '"></div>');
+        $('body').append($tooltip);
+
+        function updateTagInfo(e) {
+            const selection = window.getSelection();
+            if (!selection || selection.rangeCount === 0) return;
+
+            let node = selection.anchorNode;
+            if (node && node.nodeType === Node.TEXT_NODE) {
+                node = node.parentNode;
+            }
+
+            let tagName = null;
+            let current = node;
+
+            while (current && current !== document) {
+                const tag = current.tagName ? current.tagName.toLowerCase() : '';
+                if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'li'].includes(tag)) {
+                    tagName = tag.toUpperCase();
+                    break;
+                }
+                current = current.parentNode;
+            }
+
+            if (!tagName) {
+                $tooltip.hide();
+                return;
+            }
+
+            const x = e.clientX + 10;
+            const y = e.clientY - 30;
+
+            $tooltip
+                .html(`&lt;${tagName}&gt;`)
+                .css({
+                    left: x + 'px',
+                    top: y + 'px'
+                })
+                .show();
+
+            clearTimeout(window._tagTooltipTimer);
+            window._tagTooltipTimer = setTimeout(() => $tooltip.hide(), 2000);
+        }
 </script>
 @endpush

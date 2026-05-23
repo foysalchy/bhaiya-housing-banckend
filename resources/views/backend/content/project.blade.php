@@ -3,7 +3,7 @@
 @section('content')
 
 <div class="container mt-2">
-    <form action="{{ route('content.store') }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('content.store', $type) }}" method="POST" enctype="multipart/form-data">
         @csrf
         <input type="hidden" name="type" value="project">
 
@@ -17,7 +17,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label class="form-label fw-semibold">Project Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="title" required placeholder="e.g. Kazi Kuthi">
+                        <input type="text" class="form-control" name="title" required>
                     </div>
                     <div class="col-md-3 mb-3">
                         <label class="form-label fw-semibold">Project Type <span class="text-danger">*</span></label>
@@ -36,13 +36,13 @@
                     </div>
                 </div>
 
-                {{-- Row 2: Location --}}
+                {{-- Location --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Location / Address <span class="text-danger">*</span></label>
-                    <input type="text" class="form-control" name="location" required placeholder="e.g. Plot:8, Road:5, Bashundhara R/A, Dhaka">
+                    <input type="text" class="form-control" name="location" required>
                 </div>
 
-                {{-- Row 3: Extra JSON helper --}}
+                {{-- Extra JSON Builder --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Project Details</label>
                     <div class="card bg-light border">
@@ -50,100 +50,85 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Project Status</label>
-                                    <select id="extraStatus" class="form-select form-select-sm">
+                                    <select name="extra_status" class="form-select form-select-sm">
                                         <option value="ongoing">Ongoing</option>
                                         <option value="upcoming">Upcoming</option>
                                         <option value="complete">Complete</option>
                                     </select>
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    <label class="form-label small">Size (e.g. 2850 sft)</label>
-                                    <input type="text" id="extraSize" class="form-control form-control-sm" placeholder="2850 sft (Approx)">
+                                    <label class="form-label small">Size</label>
+                                    <input type="text" name="extra_size" class="form-control form-control-sm" placeholder="2850 sft (Approx)">
                                 </div>
                                 <div class="col-md-3 mb-3">
-                                    <label class="form-label small">Building Height (e.g. G+M+8)</label>
-                                    <input type="text" id="extraHeight" class="form-control form-control-sm" placeholder="G+M+8">
+                                    <label class="form-label small">Building Height</label>
+                                    <input type="text" name="extra_height" class="form-control form-control-sm" placeholder="G+M+8">
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Facing</label>
-                                    <select id="extraFacing" class="form-select form-select-sm">
+                                    <select name="extra_facing" class="form-select form-select-sm">
                                         <option value="">-- Select --</option>
-                                        <option value="North">North</option>
-                                        <option value="South">South</option>
-                                        <option value="East">East</option>
-                                        <option value="West">West</option>
-                                        <option value="North-East">North-East</option>
-                                        <option value="North-West">North-West</option>
+                                        @foreach(['North','South','East','West','North-East','North-West'] as $dir)
+                                            <option value="{{ $dir }}">{{ $dir }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small">Google Map Embed URL</label>
-                                    <input type="text" id="extraMap" class="form-control form-control-sm" placeholder="https://www.google.com/maps/embed?pb=...">
+                                    <input type="text" name="extra_map" class="form-control form-control-sm">
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Featured?</label>
-                                    <select id="extraFeatured" class="form-select form-select-sm">
+                                    <select name="extra_featured" class="form-select form-select-sm">
                                         <option value="false">No</option>
                                         <option value="true">Yes</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3 d-flex align-items-end">
-                                    <button type="button" class="btn btn-sm btn-outline-success w-100" onclick="buildExtra()">
-                                        ⚙️ Generate JSON
-                                    </button>
-                                </div>
-                            </div>
-                            {{-- Preview --}}
-                            <div class="mb-3">
-                                <label class="form-label small">Generated JSON <small class="text-muted">(auto-filled)</small></label>
-                                <textarea class="form-control form-control-sm font-monospace" name="extra" id="extraJson" rows="2" placeholder='{"status":"ongoing","size":"","building_height":"","facing":"","featured":false,"map_url":""}'></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {{-- Row 4: Descriptions --}}
+                {{-- Descriptions --}}
                 <div class="row">
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Description</label>
                         <textarea class="editor form-control" name="body" rows="4"></textarea>
                     </div>
-                    <div class="col-md-6 mb-3">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Description Box 2</label>
                         <textarea class="editor form-control" name="body_2" rows="4"></textarea>
                     </div>
                 </div>
 
-                {{-- Row 5: Images --}}
+                {{-- Thumbnail --}}
                 <div class="row">
-
-                    {{-- Thumbnail --}}
                     <div class="col-md-4 mb-3">
-                        <label class="form-label fw-semibold">Thumbnail Image <span class="text-danger">*</span></label>
-                        <input type="file" class="form-control" name="img_path" required accept="image/*"
-                            onchange="previewImage(this, 'thumbPreview')">
-                        <div class="mt-2" id="thumbPreview"></div>
+                        <label class="form-label fw-semibold">Thumbnail Image</label>
+                        <input type="file" class="form-control" name="img_path" accept="image/*"
+                            onchange="previewSingle(this, 'thumbPreview', 'img_path')">
+                        <div class="mt-2 d-flex gap-2 flex-wrap" id="thumbPreview"></div>
                     </div>
 
                     {{-- Video --}}
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-semibold">Video</label>
-                        <input type="file" class="form-control" name="video_path" accept="video/mp4">
-                        <small class="text-muted">MP4 format, max 50MB</small>
+                        <input type="file" class="form-control" name="video_path" accept="video/mp4"
+                            onchange="previewVideo(this)">
+                        <div class="mt-2" id="videoPreview"></div>
                     </div>
-
                 </div>
 
-                {{-- Multiple Images with hint --}}
+                {{-- Multiple Images --}}
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Multiple Images</label>
-                    <input type="file" multiple class="form-control" name="img_paths[]" accept="image/*"
+                    <input type="file" multiple class="form-control" id="multiInput" name="img_paths[]" accept="image/*"
                         onchange="previewMultiple(this)">
                     <div class="mt-1 d-flex gap-2 flex-wrap align-items-start">
-                        <span class="badge bg-primary">1st image → At a Glance (Right side)</span>
-                        <span class="badge bg-secondary">2nd image → Gallery Left</span>
-                        <span class="badge bg-secondary">3rd image → Gallery Right</span>
-                        <span class="badge bg-dark">4th+ images → Slider</span>
+                        <span class="badge bg-primary">1st → At a Glance</span>
+                        <span class="badge bg-secondary">2nd → Gallery Left</span>
+                        <span class="badge bg-secondary">3rd → Gallery Right</span>
+                        <span class="badge bg-dark">4th+ → Slider</span>
                     </div>
                     <div class="mt-2 d-flex gap-2 flex-wrap" id="multiPreview"></div>
                 </div>
@@ -151,22 +136,22 @@
                 {{-- SEO --}}
                 <div class="card border mt-3">
                     <div class="card-header bg-light py-2 cursor-pointer" data-bs-toggle="collapse" data-bs-target="#seoSection">
-                        <small class="fw-semibold">🔍 SEO (optional — click to expand)</small>
+                        <small class="fw-semibold"> SEO (optional)</small>
                     </div>
                     <div class="collapse" id="seoSection">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-6 mb-3">
                                     <label class="form-label small">Meta Title</label>
                                     <input type="text" class="form-control form-control-sm" name="meta_title">
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-6 mb-3">
                                     <label class="form-label small">Meta Keywords</label>
                                     <input type="text" class="form-control form-control-sm" name="meta_keywords">
                                 </div>
-                                <div class="col-md-4 mb-3">
+                                <div class="col-md-12 mb-3">
                                     <label class="form-label small">Meta Description</label>
-                                    <textarea class="form-control form-control-sm" name="meta_description" rows="2"></textarea>
+                                    <textarea class="form-control form-control-sm" name="meta_description" rows="4"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -175,14 +160,13 @@
 
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-success px-5">
-                    Save Project
-                </button>
+                <button type="submit" class="btn btn-success px-5">Create Project</button>
                 <a href="{{ url()->previous() }}" class="btn btn-secondary ms-2">Cancel</a>
             </div>
         </div>
     </form>
 </div>
+
 
 @endsection
 
@@ -242,6 +226,205 @@
             label.textContent = labels[i] ?? `Slider ${i - 2}`;
             wrap.appendChild(img);
             wrap.appendChild(label);
+            preview.appendChild(wrap);
+        });
+    }
+
+</script>
+<style>
+    .preview-wrap {
+        position: relative;
+        text-align: center;
+    }
+    .preview-wrap .remove-btn {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        background: red;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        font-size: 12px;
+        line-height: 18px;
+        cursor: pointer;
+        padding: 0;
+    }
+</style>
+
+<script>
+   $(document).ready(function() {
+        $('.editor').summernote({
+            height: 300,
+            resizeable: true, // summernote built-in resize
+            callbacks: {
+                onKeyup: function(e) {
+                    updateTagInfo(e);
+                },
+                onMouseup: function(e) {
+                    updateTagInfo(e);
+                },
+            }
+        });
+    });
+
+         const $tooltip = $('<div id="tag-tooltip" style="' +
+            'position:fixed;' +
+            'background:#333;' +
+            'color:#fff;' +
+            'padding:3px 8px;' +
+            'border-radius:4px;' +
+            'font-size:11px;' +
+            'font-family:monospace;' +
+            'pointer-events:none;' +
+            'z-index:99999;' +
+            'display:none;' +
+            '"></div>');
+        $('body').append($tooltip);
+
+        function updateTagInfo(e) {
+            const selection = window.getSelection();
+            if (!selection || selection.rangeCount === 0) return;
+
+            let node = selection.anchorNode;
+            if (node && node.nodeType === Node.TEXT_NODE) {
+                node = node.parentNode;
+            }
+
+            let tagName = null;
+            let current = node;
+
+            while (current && current !== document) {
+                const tag = current.tagName ? current.tagName.toLowerCase() : '';
+                if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'li'].includes(tag)) {
+                    tagName = tag.toUpperCase();
+                    break;
+                }
+                current = current.parentNode;
+            }
+
+            if (!tagName) {
+                $tooltip.hide();
+                return;
+            }
+
+            const x = e.clientX + 10;
+            const y = e.clientY - 30;
+
+            $tooltip
+                .html(`&lt;${tagName}&gt;`)
+                .css({
+                    left: x + 'px',
+                    top: y + 'px'
+                })
+                .show();
+
+            clearTimeout(window._tagTooltipTimer);
+            window._tagTooltipTimer = setTimeout(() => $tooltip.hide(), 2000);
+        }
+
+    // ── Single image (thumbnail) ───────────────────────────────
+    function previewSingle(input, previewId, inputName) {
+        const preview = document.getElementById(previewId);
+        preview.innerHTML = '';
+        if (!input.files || !input.files[0]) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'preview-wrap';
+
+        const img = document.createElement('img');
+        img.src = URL.createObjectURL(input.files[0]);
+        img.style.cssText = 'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'remove-btn';
+        btn.innerHTML = '&times;';
+        btn.onclick = () => {
+            input.value = '';
+            preview.innerHTML = '';
+        };
+
+        wrap.appendChild(img);
+        wrap.appendChild(btn);
+        preview.appendChild(wrap);
+    }
+
+    // ── Video preview ──────────────────────────────────────────
+    function previewVideo(input) {
+        const preview = document.getElementById('videoPreview');
+        preview.innerHTML = '';
+        if (!input.files || !input.files[0]) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'preview-wrap d-inline-block';
+
+        const video = document.createElement('video');
+        video.src = URL.createObjectURL(input.files[0]);
+        video.controls = true;
+        video.style.cssText = 'height:100px; border-radius:4px; border:1px solid #dee2e6;';
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'remove-btn';
+        btn.innerHTML = '&times;';
+        btn.onclick = () => {
+            input.value = '';
+            preview.innerHTML = '';
+        };
+
+        wrap.appendChild(video);
+        wrap.appendChild(btn);
+        preview.appendChild(wrap);
+    }
+
+    // ── Multiple images ────────────────────────────────────────
+    const multiInput = document.getElementById('multiInput');
+    let multiFiles = [];
+
+    function previewMultiple(input) {
+        multiFiles = Array.from(input.files);
+        renderMulti();
+    }
+
+    function renderMulti() {
+        const preview = document.getElementById('multiPreview');
+        preview.innerHTML = '';
+
+        const labels = ['1st: At a Glance', '2nd: Gallery Left', '3rd: Gallery Right'];
+
+        multiFiles.forEach((file, i) => {
+            const wrap = document.createElement('div');
+            wrap.className = 'preview-wrap';
+
+            const img = document.createElement('img');
+            img.src = URL.createObjectURL(file);
+            img.style.cssText = 'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
+
+            const label = document.createElement('div');
+            label.className = 'badge bg-secondary mt-1 d-block';
+            label.style.cssText = 'font-size:10px; max-width:100px;';
+            label.textContent = labels[i] ?? `Slider ${i - 2}`;
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = 'remove-btn';
+            btn.innerHTML = '&times;';
+            btn.onclick = () => {
+                multiFiles.splice(i, 1);
+
+                // Sync back to input.files via DataTransfer
+                const dt = new DataTransfer();
+                multiFiles.forEach(f => dt.items.add(f));
+                multiInput.files = dt.files;
+
+                renderMulti();
+            };
+
+            wrap.appendChild(img);
+            wrap.appendChild(label);
+            wrap.appendChild(btn);
             preview.appendChild(wrap);
         });
     }
