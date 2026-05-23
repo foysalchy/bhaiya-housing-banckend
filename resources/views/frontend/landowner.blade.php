@@ -130,18 +130,18 @@
 
  {{-- ===== HERO ===== --}}
  <section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
-                h-[600px] md:h-[700px] lg:h-[900px]">
+                h-[85vh]  ]">
      <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
          alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
      <div class="absolute inset-0 bg-black/50"></div>
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
-         <h2 class="text-white font-light pl-12 pt-32" style="font-size:3.85vw; line-height:1.2;">
+         <h2 class="text-white font-light pl-12 pt-32" style="font-size:3.85vw; line-height:1.2;  font-weight:500; letter-spacing: -4px;">
              We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
 
          </h2>
      </div>
  </section>
- <div class="h-[600px] md:h-[700px] lg:h-[900px] w-full pointer-events-none"
+ <div class="  h-[85vh] w-full pointer-events-none"
      style="position: relative; z-index: 2;"></div>
 
  {{-- ── Top Bar ── --}}
@@ -216,7 +216,7 @@
                  </div>
 
                  <!-- Image 2: front-right -->
-                 <div class="absolute overflow-hidden shadow-2xl "
+                 <div class="absolute overflow-hidden shadow-2xl ml-16"
                      style="width:260px; height:310px; left:250px; top:80px; z-index:2;">
                      <img src="{{ $contactImages[0]->img_path ?? asset('assets/images/contact-top.jpg') }}"
                          alt="{{ $contactImages[0]->title ?? 'Dining' }}"

@@ -179,8 +179,8 @@ $schema = [
         class="absolute inset-0 w-full h-full object-cover object-center" />
     <div class="absolute inset-0 bg-black/55"></div>
 
-    <div class="absolute inset-0 flex flex-col justify-center"
-        style="padding-top: 88px; padding-left: 5%; padding-right: 5%;">
+    <div class="container m-auto mx-auto absolute inset-0 flex flex-col justify-center"
+        style="padding-top: 88px;  ">
 
         <h2 data-aos="fade-up" data-aos-duration="1000"
             class="text-white leading-tight"
@@ -226,7 +226,7 @@ $schema = [
 
 
 <!-- ===== MISSION & VISION SECTION ===== -->
-<section class="relative w-full z-10 overflow-hidden py-16 md:py-20 lg:py-32">
+<section class="relative w-full z-10   py-16 md:py-20 lg:py-32">
 
     <!-- Split Background -->
     <div class="absolute inset-0 z-0 flex">
@@ -320,13 +320,13 @@ $schema = [
 
     <!-- Mission & Vision Text -->
     <div class="grid grid-cols-1 md:grid-cols-12 gap-10 relative z-40 mt-2
-                px-4 sm:px-[6%] md:pl-[8%] md:pr-[4%]">
+                px-4 sm:px-[6%] md:pl-[8%] md:pr-[4%] " style="margin-top: -100px;">
 
         <!-- Mission -->
         <div class="md:col-span-6 relative" data-aos="fade-right">
             <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
                         -top-10 md:-top-20 -left-1 md:-left-6
-                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
+                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] " style="font-family: 'Migra', serif;">
                 {{ $missionVision?->name ?? 'Mission' }}
             </h2>
             <div class="relative z-10 pt-4 md:pt-16">
@@ -340,7 +340,7 @@ $schema = [
         <div class="md:col-span-6 relative mt-12 md:mt-48" data-aos="fade-left">
             <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
                         -top-10 md:-top-20 -left-1 md:-left-6
-                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
+                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]" style="font-family: 'Migra', serif;">
                 {{ $missionVision?->short ?? 'Vision' }}
             </h2>
             <div class="relative z-10 pt-4 md:pt-16">
@@ -382,7 +382,7 @@ $schema = [
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
         <img src="{{ asset('images/timeline-bg.avif') }}" alt="Background"
-            class="w-full h-full object-cover grayscale">
+            class="w-full h-full object-cover  ">
     </div>
 
 
@@ -394,25 +394,25 @@ $schema = [
         <div class="relative flex items-center justify-center w-full md:w-auto">
             <div class="relative z-10" data-aos="zoom-in" data-aos-duration="1200">
                 <div class="transform -rotate-6">
-                    <div class="w-[220px] h-[280px] sm:w-[280px] sm:h-[350px] md:w-[400px] md:h-[500px] overflow-hidden shadow-2xl border-4 border-zinc-800 bg-zinc-900">
+                    <div class="w-[220px] h-[280px] sm:w-[280px] sm:h-[350px] md:w-[380px] md:h-[430px]  overflow-hidden shadow-2xl border-4 border-zinc-800 bg-zinc-900">
                         <img id="timeline-img"
                             src="{{ $timelineItems->first()?->img_path ? asset($timelineItems->first()->img_path) : '' }}"
                             alt="Timeline"
-                            class="w-full h-full object-cover">
+                            class="w-full h-full opacity-50 object-cover">
                     </div>
                 </div>
             </div>
 
             <h1 id="timeline-year"
-                class="absolute z-20 left-24 sm:left-32 md:left-48 lg:left-64 text-[4rem] sm:text-[6rem] md:text-[9rem] lg:text-[11rem] font-bold leading-none text-gray-300 opacity-90 select-none tracking-tighter transition-all duration-700 pointer-events-none">
+                class="absolute z-20 top-0 left-24 sm:left-32 md:left-48 lg:left-64 text-[4rem] sm:text-[6rem] md:text-[9rem] lg:text-[11rem] font-bold leading-none text-gray-300 opacity-90 select-none tracking-tighter transition-all duration-700 pointer-events-none">
                 {{ $timelineItems->first()?->title }}
             </h1>
         </div>
 
         <!-- Description -->
         <div id="content-wrap"
-            class="relative z-30 w-full md:max-w-lg md:mt-40 md:ml-40 lg:ml-60 px-2 md:px-0 transition-all duration-500">
-            <h2 id="timeline-title" class="text-2xl sm:text-3xl md:text-5xl font-semibold mb-4 md:mb-6 text-white leading-tight">
+            class="relative z-30 w-full md:max-w-[40%] md:mt-40  px-2 md:px-0 transition-all duration-500 ml-12">
+            <h2 id="timeline-title" class="text-2xl sm:text-3xl md:text-4xl   mb-1 md:mb-2 mt-16 text-white leading-tight">
                 {!! nl2br(e($timelineItems->first()?->name ?? '')) !!}
             </h2>
             <p id="timeline-desc" class="text-gray-400 text-sm sm:text-base md:text-lg leading-relaxed">
@@ -448,11 +448,11 @@ $schema = [
             class="w-full h-full object-cover">
     </div>
 
-    <div class="container mx-auto px-6 md:px-12 lg:px-24 relative z-10">
+    <div class="container mx-auto  relative z-10">
 
         <!-- Section Title -->
         <div class="mb-12 md:mb-16 lg:mb-24" data-aos="fade-up">
-            <h2 class="text-3xl sm:text-4xl md:text-6xl font-semibold tracking-tight">
+            <h2 class="text-4xl sm:text-4xl md:text-7xl font-semibold tracking-tight">
                 {{ $leadersMessage?->title ?? 'Message from leaders' }}
             </h2>
         </div>
@@ -460,14 +460,14 @@ $schema = [
         @foreach ($leaders as $index => $leader)
         @if ($index % 2 == 0)
         <!-- Image Left, Text Right -->
-        <div class="flex flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-20 mb-20 md:mb-32">
+        <div class="flex pl-16 flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-20 mb-20 md:mb-32">
 
             <div class="w-full md:w-1/2 relative" data-aos="fade-right">
                 <div class="relative z-10 overflow-hidden shadow-2xl">
                     <img src="{{ asset($leader->img_path ?? '') }}" alt="{{ $leader->title ?? '' }}"
-                        class="w-full h-auto grayscale hover:grayscale-0 transition-all duration-700 object-cover">
+                        class="w-full h-[650px]  grayscale hover:grayscale-0 transition-all duration-700 object-cover">
                 </div>
-                <div class="absolute -bottom-6 -left-6 w-12 h-12 z-20 scroll-move" data-axis="y">
+                <div class="absolute -bottom-[-30px] -left-6 w-12 h-12 z-20 scroll-move" data-axis="y">
                     <img src="{{ asset('images/stone-bg.svg') }}" alt="stone" class="w-full h-full opacity-80">
                 </div>
             </div>
@@ -501,9 +501,9 @@ $schema = [
             <div class="w-full md:w-1/2 relative" data-aos="fade-left">
                 <div class="relative z-10 overflow-hidden shadow-2xl border-l-4 border-emerald-900/30">
                     <img src="{{ asset($leader->img_path ?? '') }}" alt="{{ $leader->title ?? '' }}"
-                        class="w-full h-auto object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        class="w-full h-[650px]  object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
-                <div class="absolute -bottom-6 -left-6 w-12 h-12 z-20 transform rotate-180 scroll-move" data-axis="y">
+                <div class="absolute -bottom-[-40px] -left-6 w-12 h-12 z-20 transform rotate-180 scroll-move" data-axis="y">
                     <img src="{{ asset('images/stone-bg.svg') }}" alt="stone" class="w-full h-full opacity-80">
                 </div>
             </div>
@@ -551,11 +551,11 @@ $schema = [
     $aboutRightImg = $aboutImages[0] ?? null;
     @endphp
 
-    <div class="container mx-auto px-4 sm:px-6 md:px-6 lg:px-20 mb-10">
-
-        <div class="mb-10 md:mb-12 lg:mb-16">
-            <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] text-[#313131] leading-[0.9] tracking-tight">
-                {!! $aboutBhaiya?->title ?? 'About Bhaiya Housing' !!}
+    <div class="container mx-auto  mb-10 mt-16">
+<br>
+        <div class="mb-6 md:mb-8 lg:mb-12">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-[75px] text-[#313131] leading-[0.9] tracking-tight">
+               About  <span class="font-migra-italic">Bhaiya <br> Housing</span>
             </h2>
         </div>
 
@@ -590,11 +590,11 @@ $schema = [
     $groupOverflowImg = $groupImages[0] ?? null;
     @endphp
 
-    <div class="container mx-auto px-4 sm:px-6 md:px-12 lg:px-20">
+    <div class="container mx-auto  ">
 
         <div class="mb-10 md:mb-12 lg:mb-16 relative">
-            <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-[85px] text-[#313131] leading-tight tracking-tight">
-                {!! $aboutBhaiyaGroup?->title ?? 'About Bhaiya Housing Group' !!}
+           <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-[75px] text-[#313131] leading-tight tracking-tight">
+                <span style="font-weight:500">About</span>     <span class="italic font-light" style="font-family: 'Migra', serif;"> Bhaiya<br>  Group   </span>     <span style="font-weight:500" ></span>
             </h2>
 
         </div>
@@ -646,9 +646,7 @@ $schema = [
     });
 </script>
 <script>
-    const timelineData = {
-        !!json_encode($timelineData) !!
-    };
+    const timelineData = {!! json_encode($timelineData) !!};
     const total = timelineData.length;
     let currentIndex = 0;
 

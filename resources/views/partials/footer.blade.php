@@ -15,18 +15,21 @@
     .corp-address:hover, .corp-address:hover * {
       color: #C0A46F !important;
     }
+    .cc .text-sm{
+      font-size:17px !important
+    }
   </style>
 
   <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
     <div class="flex flex-col lg:flex-row lg:items-stretch gap-12 lg:gap-20">
 
       <!-- ── Left: Logo + Contact ── -->
-      <div class="w-full lg:max-w-sm">
+      <div class="w-full lg:max-w-sm cc">
 
         <!-- Logo -->
         <div class="mb-8">
           <img src="{{ $setting?->img_path ? asset($setting->img_path) : asset('images/logo-white.png') }}"
-            alt="{{ $setting?->title ?? 'Bhaiya Housing' }}" class="h-12 w-auto"
+            alt="{{ $setting?->title ?? 'Bhaiya Housing' }}" class="w-[180px]"
             onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
           <span class="hidden text-white text-2xl font-semibold tracking-widest">
             {{ strtoupper($setting?->title ?? 'BHAIYA HOUSING') }}

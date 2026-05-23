@@ -151,9 +151,9 @@
 
     <div class="absolute inset-0 bg-black/50"></div>
 
-    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
-        <h2 class="text-white pl-12 pt-32 font-light max-w-[90%] md:max-w-[70%] lg:max-w-[60%]"
-            style="font-size:3.85vw; line-height:1.2;">
+    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20" >
+        <h2 class="text-white pl-12 pt-32 font-light  "
+            style="font-size:3.85vw; line-height:1.2;letter-spacing: -4px;">
             Where <span class="font-migra-italic">innovation</span>
             meets <span class="font-migra-italic">quality & trust</span>
         </h2>
@@ -187,12 +187,12 @@
             onerror="this.style.display='none';" />
     </div>
 
-    <div class="relative z-10 container mx-auto px-4 sm:px-6 lg:px-14">
+    <div class="relative z-10 container mx-auto ">
 
         {{-- Heading --}}
         <h2 class="mb-8 md:mb-10 font-light text-gray-900"
-            style="font-size:clamp(24px,4vw,56px); line-height:1.15;">
-            <span style="font-weight:400;">Discover Our </span>
+            style="font-size:75px; line-height:1.15;letter-spacing: -0.02em;">
+            <span style="font-weight:500;">Discover Our </span>
             <span class="font-migra-italic">Signature Projects</span>
         </h2>
 
@@ -274,7 +274,7 @@
 
         {{-- Projects Grid --}}
         <div id="projectsGrid"
-             class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12">
+             class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12 px-20">
         </div>
 
         {{-- No results --}}
@@ -302,7 +302,7 @@
      // ── Project card HTML ──
      function projectCard(p) {
     return `
-    <a href="${p.url}" class="block group w-[500px]">
+    <a href="${p.url}" class="block group  ">
 
       <div class="group cursor-pointer pl-4 md:pl-10">
 

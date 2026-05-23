@@ -278,7 +278,7 @@ $setting->title ?? 'Bhaiya Housing',
             class="w-full h-full object-cover scale-[1.06] animate-[zoomOut_8s_ease_forwards]" />
         <div
             class="absolute inset-0"
-            style="background: linear-gradient(110deg, rgba(13,18,28,0.72) 0%, rgba(13,18,28,0.52) 55%, rgba(13,18,28,0.28) 100%)"></div>
+            style="background: rgba(14, 14, 14, 0.7)"></div>
     </div>
 
     {{-- Content --}}
@@ -293,7 +293,7 @@ $setting->title ?? 'Bhaiya Housing',
                     into addresses
                 </h1>
             </div>
-            <div class="mt-10 pl-8 sm:pl-12 md:pl-16 pb-[6vh] pr-4 sm:pr-6 md:pr-[40px] md:mt-28 max-w-[90%] sm:max-w-[70%] md:max-w-[50%] opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
+            <div class="mt-10 pl-8 sm:pl-12 md:pl-16 pb-[6vh] pr-4 sm:pr-6 md:pr-[40px] md:mt-28 max-w-[90%] sm:max-w-[70%] md:max-w-[60%] opacity-0 animate-[fadeUp_0.8s_0.55s_ease_forwards]">
 
     <p class="text-white text-sm sm:text-base md:text-[1vw] font-normal tracking-normal md:tracking-[-1px] leading-relaxed">
         {{ $hero->short ?? 'Immerse yourself in the artistry...' }}
@@ -490,17 +490,17 @@ $setting->title ?? 'Bhaiya Housing',
         ══════════════════════════════════ -->
 
         <!-- Row 1 -->
-        <div class="hidden lg:flex relative flex-wrap items-start">
+        <div class="hidden lg:flex relative flex-wrap items-start mt-8">
 
             <!-- Col 1: Heading -->
             <div class="w-full h-full lg:w-1/4 pt-6 z-10 fade-in delay-1">
 
-                <h2 class="font-display  text-[72px] font-light leading-tight text-gray-900  ">
-                    <span> Building <br>
-                        dreams for </span> <span style="font-family: Migra;">decades</span>
+                <h2 class="font-display  text-[3.8vw]   text-gray-900   " style="line-height:70px;letter-spacing: -3px;">
+                    <span class="" style="font-weight: 500;color:#484848"> Building <br>
+                        dreams for </span> <br><span style="font-family: Migra;color:#484848">decades</span>
                 </h2>
 
-                <div class="mt-8 float-down fade-in delay-2" style="position:relative; left:-60px;">
+                <div class="mt-32 float-down fade-in delay-2" style="position:relative; left:-60px;">
                     <img src="{{ $extraImages[0] ?? asset('assets/images/side.jpg') }}"
                         alt="Outdoor space"
                         class="img-shadow rounded-sm object-cover"
@@ -536,8 +536,8 @@ $setting->title ?? 'Bhaiya Housing',
                         onerror="this.style.background='#cdc5bb'; this.removeAttribute('src');" />
                 </div>
 
-                <p class="text-sm leading-relaxed fade-in delay-3 mb-8"
-                    style="color:#555; max-width:280px; line-height:1.9;">
+                <p class="text-sm leading-relaxed fade-in delay-3 mb-8  pt-[70px]"
+                    style="color:rgb(83, 83, 83);   line-height:25px;font-size:17px;font-weight: 500;">
                     {{ $dreams->short ?? 'Since 2012, Bhaiya Housing, a distinguished part of Bhaiya Group, has redefined modern infrastructure. Merging architectural brilliance with purposeful design, we craft exquisite homes and commercial spaces that embody aspirations, inspire ambition, and effortlessly adapt to the evolving rhythms of modern life.' }}
                 </p>
 
@@ -555,7 +555,7 @@ $setting->title ?? 'Bhaiya Housing',
                 <img src="{{ $extraImages[1] ?? asset('assets/images/sub.jpg') }}"
                     alt="Property"
                     class="img-shadow rounded-sm object-cover"
-                    style="width:400px; height:400px; object-position:center;"
+                    style="width:450px;  "
                     onerror="this.style.background='#c0b8ae'; this.removeAttribute('src');" />
                 <div class="scroll-move absolute pointer-events-none"
                     data-axis="Y"
@@ -1050,10 +1050,12 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 <h2 style="font-weight: 500; font-size: clamp(28px, 7vw, 48px);
                            color: #1a1a1a; line-height: 1.1;">
                     News
+                  
                     <em style="font-style: italic; font-weight: 300;
                                font-size: 0.85em; color: #3a3a3a; margin: 0 3px;">
-                        &amp;
+                        &amp; 
                     </em>
+                  
                     Events
                 </h2>
                 <a href="/events"
@@ -1091,7 +1093,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                                display: block; line-height: 1.1;
                                transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
                                will-change: transform;">
-                        &amp; Events
+                     <span style="font-family: 'Migra', serif;  ">     &amp;  </span> Events
                     </span>
 
                 </div>
@@ -1195,12 +1197,12 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             @if(count($titleParts) >= 2)
             @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[0]), $m1); @endphp
             <span class="font-normal">{{ trim($m1[1] ?? '') }}</span>
-            <em class="font-light italic">{{ trim($m1[2] ?? $titleParts[0]) }}</em>
+            <em class="font-light italic font-family: 'Migra', serif;">{{ trim($m1[2] ?? $titleParts[0]) }}</em>
             <span class="font-normal">,</span><br />
 
             @php preg_match('/^(.*?)(\w+)$/u', trim($titleParts[1]), $m2); @endphp
             <span class="font-normal">{{ trim($m2[1] ?? '') }}</span>
-            <em class="font-light italic">{{ trim($m2[2] ?? $titleParts[1]) }}</em>
+            <em class="font-light italic font-family: 'Migra', serif;">{{ trim($m2[2] ?? $titleParts[1]) }}</em>
             @else
             {{ $partnerTitle }}
             @endif
@@ -1213,7 +1215,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
             <a href="{{ $partners->url ?? '/landowner-contact' }}"
                 class="relative flex flex-col justify-between flex-1 cursor-pointer group
                        border rounded-none p-5 md:p-6
-                       min-h-[300px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px]
+                         min-h-[300px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px]
                        transition-all duration-300"
                 style="border-color: #c8bfb0; background: rgba(242,237,230,0.6); text-decoration: none;"
                 onmouseover="this.style.borderColor='#8a7a60';"
@@ -1237,7 +1239,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 {{-- Bottom text --}}
                 <div class="mt-auto pt-6 md:pt-8">
                     <h3 class="text-gray-900 font-normal mb-2"
-                        style="font-size: clamp(16px, 1.8vw, 24px);">
+                        style="font-size: 20px">
                         {{ $partners->short ?? 'Contact as Landowner' }}
                     </h3>
                     <p class="text-sm font-light leading-relaxed text-gray-500 max-w-xs">
@@ -1248,7 +1250,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
             {{-- Card 2: Customer --}}
             <a href="{{ $partners->extra ?? '/customer-contact' }}"
-                class="relative flex flex-col justify-between flex-1 cursor-pointer group
+                class="flex-shrink-0 scroll-move relative flex flex-col justify-between flex-1 cursor-pointer group
                        overflow-hidden p-5 md:p-6
                        min-h-[300px] sm:min-h-[380px] md:min-h-[460px] lg:min-h-[520px]
                        md:-mt-10"
@@ -1263,7 +1265,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
                 {{-- Dark overlay --}}
                 <div class="absolute inset-0 z-[1]"
-                    style="background: linear-gradient(to top, rgba(0,0,0,0.75) 40%, rgba(0,0,0,0.25) 100%);"></div>
+                    style="background: linear-gradient(to top, rgba(0, 0, 0, 0.39) 40%, rgba(0,0,0,0.25) 100%);"></div>
 
                 {{-- Arrow top right --}}
                 <div class="relative z-10 flex justify-end">
@@ -1282,11 +1284,11 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 {{-- Text --}}
                 <div class="relative z-10 flex flex-col items-start justify-center flex-1 mt-4">
                     <h3 class="text-white font-normal mb-2"
-                        style="font-size: clamp(16px, 1.8vw, 24px);">
+                        style="font-size: 30px;">
                         {{ $partners->location ?? 'Contact as Customer' }}
                     </h3>
-                    <p class="text-sm font-light leading-relaxed text-white/80 max-w-xs">
-                        {!! $partners->body_2 ?? 'Get in touch to find your dream home with Bhaiya Housing.' !!}
+                    <p class="text-sm font-light leading-relaxed text-white/80  " style="font-size: 18px;">
+                     Get in touch to find your dream home with Bhaiya Housing.
                     </p>
                 </div>
             </a>
@@ -1301,8 +1303,8 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
 
         {{-- Radar / pulse SVG — decorative, desktop only --}}
         <div class="absolute pointer-events-none hidden md:block"
-            style="width: 200px; bottom: 40px; left: 50px; z-index: 20;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 300 300">
+            style="width: 250; bottom: 40px; left: 50px; z-index: 20;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="250" height="250" viewBox="0 0 300 300">
                 <defs>
                     <style>
                         .ring1 {
