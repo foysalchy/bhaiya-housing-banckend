@@ -43,7 +43,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- Local CSS -->
-    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}?v=1111111111">
+    <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}?v=111111111111">
 
     <style>
         html.lenis { height: auto; }

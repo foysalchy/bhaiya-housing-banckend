@@ -176,8 +176,8 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
 
                 {{-- Left: Title --}}
                 <div>
-                    <h1 class="text-white mb-6"
-                        style="font-size:clamp(28px,5vw,72px); font-weight:300;">
+                    <h1 class="text-white mb-6 pt-32"
+                        style="font-size:3.85vw; font-weight:300;">
                         <span class="font-migra-italic">{{ $job->title }}</span>
                     </h1>
                     <div style="border-top:1px solid rgba(255,255,255,0.4); width:min(600px, 80vw);"></div>

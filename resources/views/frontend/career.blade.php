@@ -171,7 +171,7 @@ $jobSchemas[] = [
 
         <!-- Text -->
         <div class="absolute inset-0 flex items-center px-10 md:px-20">
-            <h2 class="text-white text-xl md:text-3xl lg:text-5xl font-semibold">
+            <h2 class="font-semibold pt-32 pl-12" style="font-size: 3.85vw;">
                 {!! $career->title ?? '' !!}
             </h2>
         </div>

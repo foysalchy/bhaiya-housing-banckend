@@ -3,17 +3,16 @@
     style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0); z-index: 50;">
 
     <!-- Logo -->
-    <a href="/" class="z-50 flex-shrink-0">
-        <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
-            alt="{{ $setting->title ?? 'Bhaiya' }}"
-            class="h-8 sm:h-10 md:h-12 w-auto"
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-        <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
-            style="font-family:'Jost',sans-serif;">
-            {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
-        </span>
-    </a>
-
+<a href="/" class="z-50 flex-shrink-0">
+    <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
+        alt="{{ $setting->title ?? 'Bhaiya' }}"
+        class="h-8 w-24 sm:h-10 sm:w-40 md:h-12 md:w-48 lg:w-64 object-contain"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+    <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
+        style="font-family:'Jost',sans-serif;">
+        {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
+    </span>
+</a>
     <!-- Hamburger -->
     <button id="menuToggle" onclick="openMenu()"
         class="z-50 flex flex-col gap-1.5 group cursor-pointer p-1" aria-label="Open menu">
@@ -26,7 +25,7 @@
 
 <!-- ── Full Screen Menu Overlay ── -->
 <div id="menuOverlay" class="fixed inset-0 z-[100] flex flex-col pointer-events-none"
-    style="background:#0f2018; opacity:0; transition: opacity 0.5s ease;">
+    style="background:#0f2018;">
 
     <!-- BG texture -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
@@ -37,7 +36,7 @@
 
     <!-- Right side bg image -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index:0;">
-        <div class="absolute right-0 top-0 w-1/3 h-full opacity-50"
+        <div class="absolute right-0 top-0 w-1/2 h-full opacity-50"
             style="background-image: url('/assets/images/bg-news.png'); background-repeat: repeat-y; background-size: 100% auto;">
         </div>
     </div>
@@ -80,8 +79,8 @@
         </div>
 
         <!-- Right: Nav links -->
-        <div class="flex flex-1 items-center justify-center md:justify-around">
-            <div class="flex flex-col justify-end gap-1 sm:gap-2 w-full max-w-xs md:max-w-none">
+        <div class="flex flex-1 items-center justify-center md:justify-end">
+            <div class="flex flex-col justify-end gap-1 sm:gap-2 w-full max-w-xs md:max-w-none nav-container">
 
                 @php
                 $staticLinks = [
@@ -96,7 +95,7 @@
 
                 @foreach($staticLinks as $link)
                 <a href="{{ $link['href'] }}"
-                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4"
+                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4 md:ml-32"
                     data-img="{{ isset($menuImages[$link['key']]) ? asset($menuImages[$link['key']]->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
@@ -107,7 +106,7 @@
 
                 <!-- Contact Us -->
                 <a href="#"
-                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4"
+                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4 md:ml-32"
                     data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
@@ -116,7 +115,7 @@
                 </a>
 
                 <!-- Sub links -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8 pl-1 mt-1">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8 pl-1 mt-1 md:ml-48">
                     <a href="/landowner-contact"
                         class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
                         style="font-family:'Jost',sans-serif; font-size:12px; font-weight:300; letter-spacing:0.08em;">
@@ -143,8 +142,50 @@
 </div>
 
 <style>
+    #menuOverlay {
+        clip-path: inset(0 0 100% 0);
+        transition: clip-path 0.8s cubic-bezier(0.77, 0, 0.175, 1);
+    }
+    #menuOverlay.is-open {
+        clip-path: inset(0 0 0 0);
+    }
+
+    .nav-container > a, 
+    .nav-container > div {
+        opacity: 0;
+        transform: translateY(80px); 
+        transition: opacity 0.3s ease, transform 0.3s ease; 
+    }
+
+    #menuOverlay.is-open .nav-container > a, 
+    #menuOverlay.is-open .nav-container > div {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    #menuOverlay.is-open .nav-container > a:nth-child(1) { transition-delay: 0.30s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(2) { transition-delay: 0.40s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(3) { transition-delay: 0.50s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(4) { transition-delay: 0.60s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(5) { transition-delay: 0.70s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(6) { transition-delay: 0.80s; }
+    #menuOverlay.is-open .nav-container > a:nth-child(7) { transition-delay: 0.90s; } /* Contact Us */
+    #menuOverlay.is-open .nav-container > div:nth-child(8) { transition-delay: 1.00s; } /* Sub-links */
+
+    #menuImageWrap {
+        opacity: 0;
+        transform: translateY(60px);
+        transition: all 0.4s ease;
+    }
+    #menuOverlay.is-open #menuImageWrap {
+        opacity: 1;
+        transform: translateY(0);
+        transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+        transition-delay: 0.4s;
+    }
+
     .header-menu-list {
-        font-family: 'Cormorant Garamond', 'Jost', serif;
         font-size: clamp(28px, 4.5vw, 58px);
         font-weight: 300;
         color: white;
@@ -161,15 +202,15 @@
 <script>
     function openMenu() {
         const overlay = document.getElementById('menuOverlay');
+        overlay.classList.add('is-open'); 
         overlay.style.pointerEvents = 'all';
-        overlay.style.opacity = '1';
         document.body.style.overflow = 'hidden';
     }
 
     function closeMenu() {
         const overlay = document.getElementById('menuOverlay');
+        overlay.classList.remove('is-open'); 
         overlay.style.pointerEvents = 'none';
-        overlay.style.opacity = '0';
         document.body.style.overflow = '';
     }
 

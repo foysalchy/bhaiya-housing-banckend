@@ -596,3 +596,12 @@ body {
     line-height: 120%;
     letter-spacing: -4px;
 }
+
+.main-hero-p {
+    color: rgb(255, 255, 255);
+    font-size: 1vw;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    letter-spacing: -1px;
+}

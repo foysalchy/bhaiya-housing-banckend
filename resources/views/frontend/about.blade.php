@@ -194,7 +194,10 @@ $schema = [
             @if ($about->body)
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                 <style>
-                    .about-body-1, .about-body-1 * { color: white !important; }
+                    .about-body-1,
+                    .about-body-1 * {
+                        color: white !important;
+                    }
                 </style>
                 <div class="about-body-1 leading-relaxed font-medium pl-0 sm:pl-8 md:pl-16"
                     style="font-size: clamp(12px, 1.2vw, 18px);">
@@ -205,7 +208,10 @@ $schema = [
             @if ($about->body_2)
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="400">
                 <style>
-                    .about-body-2, .about-body-2 * { color: white !important; }
+                    .about-body-2,
+                    .about-body-2 * {
+                        color: white !important;
+                    }
                 </style>
                 <div class="about-body-2 leading-relaxed font-medium"
                     style="font-size: clamp(12px, 1.2vw, 18px);">
@@ -235,10 +241,10 @@ $schema = [
 
     @php
     $mvImages = is_array($missionVision?->img_paths)
-        ? $missionVision->img_paths
-        : json_decode($missionVision?->img_paths ?? '[]', true);
-    $leftImg      = $mvImages[2] ?? null;
-    $topRightImg  = $mvImages[1] ?? null;
+    ? $missionVision->img_paths
+    : json_decode($missionVision?->img_paths ?? '[]', true);
+    $leftImg = $mvImages[2] ?? null;
+    $topRightImg = $mvImages[1] ?? null;
     $bottomRightImg = $mvImages[0] ?? null;
     @endphp
 
@@ -323,7 +329,7 @@ $schema = [
                         text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
                 {{ $missionVision?->name ?? 'Mission' }}
             </h2>
-            <div class="relative z-10 pt-12 md:pt-16">
+            <div class="relative z-10 pt-4 md:pt-16">
                 <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl">
                     {!! $missionVision->body ?? '' !!}
                 </p>
@@ -337,7 +343,7 @@ $schema = [
                         text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]">
                 {{ $missionVision?->short ?? 'Vision' }}
             </h2>
-            <div class="relative z-10 pt-12 md:pt-16">
+            <div class="relative z-10 pt-4 md:pt-16">
                 <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl
                            pl-0 sm:pl-6 md:pl-12">
                     {!! $missionVision->body_2 ?? '' !!}
@@ -348,10 +354,10 @@ $schema = [
     </div>
 
     <!-- "History" large text -->
-    <div class="relative md:absolute md:bottom-16 left-0 px-4 sm:px-6 md:left-20 lg:left-32
-                z-20 md:translate-y-1/2 leading-none pointer-events-none mt-12 md:mt-0">
+    <div class="hidden md:block relative md:absolute md:bottom-16 left-0 px-4 sm:px-6 md:left-20 lg:left-32
+            z-20 md:translate-y-1/2 leading-none pointer-events-none mt-12 md:mt-0">
         <span class="font-semibold tracking-tight leading-none text-[#262E35]
-                     text-[2.5rem] sm:text-[3.5rem] md:text-[80px] lg:text-[120px] xl:text-[153px]">
+                 text-[2.5rem] sm:text-[3.5rem] md:text-[80px] lg:text-[120px] xl:text-[153px]">
             History
         </span>
     </div>
@@ -360,11 +366,18 @@ $schema = [
 
 <!-- ===== TIMELINE SECTION ===== -->
 <section id="timeline-section" style="background: #20281D;"
-    class="relative w-full min-h-screen flex flex-col justify-between overflow-hidden bg-zinc-950 text-white py-12 md:py-16 px-4 sm:px-6 md:px-20 lg:px-32">
+    class="relative w-full min-h-screen flex flex-col justify-between overflow-hidden text-white py-12 md:py-16 px-4 sm:px-6 md:px-20 lg:px-32">
+
     <div class="relative z-10 w-full -mt-8 md:-mt-16 md:-mt-20" data-aos="fade-down">
-        <h2 class="text-5xl sm:text-7xl md:text-[120px] lg:text-[153px] font-semibold tracking-tight leading-none text-[#f6f6f6] opacity-90">
+        <h2 class="font-semibold tracking-tight leading-none text-[#f6f6f6] opacity-90
+                   text-5xl sm:text-7xl md:text-[120px] lg:text-[153px]">
+            <span class="block md:hidden  mt-1"> <br>
+                History
+            </span>
             Timeline
         </h2>
+
+       
     </div>
     <!-- Background Image -->
     <div class="absolute inset-0 z-0">
@@ -633,7 +646,9 @@ $schema = [
     });
 </script>
 <script>
-    const timelineData = {!!json_encode($timelineData) !!};
+    const timelineData = {
+        !!json_encode($timelineData) !!
+    };
     const total = timelineData.length;
     let currentIndex = 0;
 

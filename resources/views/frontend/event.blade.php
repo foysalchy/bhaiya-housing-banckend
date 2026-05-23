@@ -150,7 +150,7 @@
 
      <!-- Text -->
      <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20 ">
-         <h2 class="text-white font-light pl-10" style="font-size:clamp(20px,3.5vw,52px); line-height:1.2;">
+         <h2 class="text-white font-light pl-12 pt-32" style="font-size:3.85vw; line-height:1.2;">
              Stay informed with<br>
              <span class="font-migra-italic">Bhaiya Housing Ltd.
              </span>

@@ -134,7 +134,7 @@
          alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
      <div class="absolute inset-0 bg-black/50"></div>
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
-        <h2 class="text-white font-light" style="font-size:clamp(22px,3.5vw,52px); line-height:1.2;">
+         <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2;">
              We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
 
          </h2>
@@ -190,12 +190,12 @@
              class="w-1/3 h-full object-cover opacity-50"
              onerror="this.style.display='none';" />
      </div>
-   
+
      <div class="relative z-10 container mx-auto px-6 lg:px-14">
          <div class="flex flex-col md:flex-row gap-16 items-start">
 
              <!-- ── Left: Images ── -->
-           <div class="w-full md:w-5/12 relative" style="height:360px; flex-shrink:0;">
+             <div class="w-full md:w-5/12 relative" style="height:360px; flex-shrink:0;">
 
                  <!-- Image 1: back-left -->
                  <div class="absolute overflow-hidden shadow-xl"
@@ -227,7 +227,7 @@
 
              <!-- ── Right: Contact Form ── -->
              <div class="w-full md:flex-1 pt-2">
-     <div class="absolute -right-32 -top-32 inset-y-0 mt-32 font-migra-italic  opacity-80 scroll-move" data-axis="-X" style="z-index:0;">
+                 <div class="absolute -right-32 -top-32 inset-y-0 mt-32 font-migra-italic  opacity-80 scroll-move" data-axis="-X" style="z-index:0;">
                      <span style=" font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045);  letter-spacing: 4px; white-space:nowrap;">GetIn</span>
 
                  </div>
@@ -309,10 +309,10 @@
                          style="background:#152018; letter-spacing:0.08em;">
                          Submit
                      </button>
- <div class="absolute right-32 -bottom-64 mt-64 inset-y-0  font-migra-italic opacity-80 scroll-move" data-axis="X" style="z-index:0;">
+                     <div class="absolute right-32 -bottom-64 mt-64 inset-y-0  font-migra-italic opacity-80 scroll-move" data-axis="X" style="z-index:0;">
 
-                     <span style="font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
-                 </div>
+                         <span style="font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
+                     </div>
                  </form>
              </div>
          </div>
