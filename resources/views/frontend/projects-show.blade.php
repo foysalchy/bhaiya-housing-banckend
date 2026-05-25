@@ -165,6 +165,8 @@
 
  {{-- ===== AT A GLANCE ===== --}}
  <section class="relative z-10 w-full" style="background:#ffffff; font-family:'Jost',sans-serif;">
+
+
      <div class="absolute inset-0 pointer-events-none overflow-hidden" style="z-index:0;">
          <div class="absolute right-0 top-0 w-1/3 h-full opacity-50"
              style="background-image: url('/assets/images/bg-news.png'); background-repeat: repeat-y; background-size: 100% auto;">
@@ -175,8 +177,12 @@
 
              <!-- Left: Content -->
              <div class="w-full md:w-1/2">
-                 <p class="text-xs font-light text-gray-500 mb-6 tracking-wide">
-                     {{ $project->title }}
+                 <p class="text-sm font-light text-gray-500 mb-6 tracking-wide">
+                     @if($project->body_3)
+                     {{ $project->body_3 }}
+                     @else
+                 {{ $project->title }}
+                 @endif
                  </p>
                  <h2 class="font-light text-gray-700 mb-12"
                      style="font-size:clamp(36px,5vw,72px); font-family:'Jost',sans-serif; font-weight:300;">

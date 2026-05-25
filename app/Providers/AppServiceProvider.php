@@ -56,9 +56,12 @@ class AppServiceProvider extends ServiceProvider
             'project' => [
                 'title'            => ['label' => 'Project Name', 'required' => true],
                 'short'            => ['label' => 'Project Type (Residential/Commercial)', 'required' => true],
+                'body_3'           => ['label' => 'Short Description', 'required' => false],
                 'location'         => ['label' => 'Location/Address', 'required' => true],
                 'body'             => ['label' => 'Description', 'required' => false],
+
                 'body_2'           => ['label' => 'Description Box 2', 'required' => false],
+
                 'img_path'         => ['label' => 'Thumbnail Image',  'required' => true],
                 'img_paths'         => ['label' => 'Multiple Image(1 main image,2-3 Gallary,3+ Slider', 'required' => false],
                 'video_path'        => ['label' => 'Video', 'required' => false],

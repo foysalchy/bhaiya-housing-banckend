@@ -99,6 +99,13 @@
                 {{-- Descriptions --}}
                 <div class="row">
                     <div class="col-md-12 mb-3">
+                        <label class="form-label fw-semibold">ShortDescription</label>
+                        <textarea class=" form-control" name="body_3" rows="4"></textarea>
+                    </div>
+                   
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Description</label>
                         <textarea class="editor form-control" name="body" rows="4"></textarea>
                     </div>
