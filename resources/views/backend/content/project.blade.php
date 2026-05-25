@@ -50,36 +50,43 @@
                             <div class="row">
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Project Status</label>
-                                    <select name="extra_status" class="form-select form-select-sm">
+                                    <select name="extra_status" id="extraStatus" class="form-select form-select-sm">
                                         <option value="ongoing">Ongoing</option>
                                         <option value="upcoming">Upcoming</option>
                                         <option value="complete">Complete</option>
                                     </select>
                                 </div>
-                                <div class="col-md-3 mb-3">
-                                    <label class="form-label small">Size</label>
-                                    <input type="text" name="extra_size" class="form-control form-control-sm" placeholder="2850 sft (Approx)">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label small">Size / Apartment Types</label>
+                                    <div id="sizeRows">
+                                        <div class="size-row d-flex gap-2 mb-2 align-items-center">
+                                            <input type="text" name="extra_size[]" class="form-control form-control-sm"
+                                                placeholder="e.g. Type A - 1558 Sq. ft.">
+                                            <button type="button" class="btn btn-sm btn-outline-success" onclick="addSizeRow()" title="Add row">+</button>
+                                        </div>
+                                    </div>
+                                    <small class="text-muted">Multiple type  + press</small>
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Building Height</label>
-                                    <input type="text" name="extra_height" class="form-control form-control-sm" placeholder="G+M+8">
+                                    <input type="text" name="extra_height" id="extraHeight" class="form-control form-control-sm" placeholder="G+M+8">
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Facing</label>
-                                    <select name="extra_facing" class="form-select form-select-sm">
+                                    <select name="extra_facing" id="extraFacing" class="form-select form-select-sm">
                                         <option value="">-- Select --</option>
                                         @foreach(['North','South','East','West','North-East','North-West'] as $dir)
-                                            <option value="{{ $dir }}">{{ $dir }}</option>
+                                        <option value="{{ $dir }}">{{ $dir }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label class="form-label small">Google Map Embed URL</label>
-                                    <input type="text" name="extra_map" class="form-control form-control-sm">
+                                    <input type="text" name="extra_map" id="extraMap" class="form-control form-control-sm">
                                 </div>
                                 <div class="col-md-3 mb-3">
                                     <label class="form-label small">Featured?</label>
-                                    <select name="extra_featured" class="form-select form-select-sm">
+                                    <select name="extra_featured" id="extraFeatured" class="form-select form-select-sm">
                                         <option value="false">No</option>
                                         <option value="true">Yes</option>
                                     </select>
@@ -106,7 +113,7 @@
                     <div class="col-md-4 mb-3">
                         <label class="form-label fw-semibold">Thumbnail Image</label>
                         <input type="file" class="form-control" name="img_path" accept="image/*"
-                            onchange="previewSingle(this, 'thumbPreview', 'img_path')">
+                            onchange="previewSingle(this, 'thumbPreview')">
                         <div class="mt-2 d-flex gap-2 flex-wrap" id="thumbPreview"></div>
                     </div>
 
@@ -120,38 +127,38 @@
                 </div>
 
                 {{-- Multiple Images --}}
-              {{-- Multiple Images --}}
-<div class="mb-3">
-    <label class="form-label fw-semibold">Multiple Images</label>
-    <input type="file" id="multiInput" name="img_paths[]" multiple accept="image/*" style="display:none">
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Multiple Images</label>
+                    <input type="file" id="multiInput" name="img_paths[]" multiple accept="image/*" style="display:none">
 
-    {{-- Drop Zone --}}
-    <div id="dropZone" onclick="triggerMultiFile()"
-        style="border:1.5px dashed #ced4da; border-radius:8px; padding:1.5rem; text-align:center; cursor:pointer; background:#f8f9fa; transition:.2s;">
-        <i class="bi bi-cloud-upload fs-3 text-muted"></i>
-        <p class="text-muted small mb-2 mt-1">Drag &amp; drop images here, or click to browse</p>
-        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation();triggerMultiFile()">
-            Choose files
-        </button>
-    </div>
+                    {{-- Drop Zone --}}
+                    <div id="dropZone" onclick="triggerMultiFile()"
+                        style="border:1.5px dashed #ced4da; border-radius:8px; padding:1.5rem; text-align:center;
+                               cursor:pointer; background:#f8f9fa; transition:.2s;">
+                        <i class="bi bi-cloud-upload fs-3 text-muted"></i>
+                        <p class="text-muted small mb-2 mt-1">Drag &amp; drop images here, or click to browse</p>
+                        <button type="button" class="btn btn-outline-secondary btn-sm"
+                            onclick="event.stopPropagation(); triggerMultiFile()">
+                            Choose files
+                        </button>
+                    </div>
 
-    {{-- Badge legend --}}
-    <div class="mt-1 d-flex gap-2 flex-wrap align-items-start">
-        <span class="badge bg-primary">1st → At a Glance</span>
-        <span class="badge bg-secondary">2nd → Gallery Left</span>
-        <span class="badge bg-secondary">3rd → Gallery Right</span>
-        <span class="badge bg-dark">4th+ → Slider</span>
-        <span class="text-muted small ms-auto" id="imgCount"></span>
-    </div>
-
-    {{-- Preview Grid --}}
-    <div id="multiPreview" class="mt-2 d-flex gap-2 flex-wrap align-items-start"></div>
-</div>
+                    <div class="mt-1 d-flex gap-2 flex-wrap align-items-start">
+                        <span class="badge bg-primary">1st → Cover</span>
+                        <span class="badge bg-secondary">2nd → At a Glance</span>
+                        <span class="badge bg-secondary">3rd → Gallery Left</span>
+                        <span class="badge bg-secondary">4th → Gallery Right</span>
+                        <span class="badge bg-dark">5th+ → Slider</span>
+                        <span class="text-muted small ms-auto" id="imgCount"></span>
+                    </div>
+                    <div id="multiPreview" class="mt-2 d-flex gap-2 flex-wrap align-items-start"></div>
+                </div>
 
                 {{-- SEO --}}
                 <div class="card border mt-3">
-                    <div class="card-header bg-light py-2 cursor-pointer" data-bs-toggle="collapse" data-bs-target="#seoSection">
-                        <small class="fw-semibold"> SEO (optional)</small>
+                    <div class="card-header bg-light py-2 cursor-pointer"
+                        data-bs-toggle="collapse" data-bs-target="#seoSection">
+                        <small class="fw-semibold">⚙ SEO (optional)</small>
                     </div>
                     <div class="collapse" id="seoSection">
                         <div class="card-body">
@@ -182,188 +189,25 @@
     </form>
 </div>
 
-
 @endsection
 
 @push('scripts')
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="{{ asset('backend/summernote/summernote.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('backend/summernote/summernote.css') }}">
-<script>
-    $(document).ready(function () {
-        $('.editor').summernote({ height: 200 });
-        buildExtra(); // default JSON generate
-    });
 
-    // ── Extra JSON builder ──
-    function buildExtra() {
-        const json = {
-            status:           document.getElementById('extraStatus').value,
-            size:             document.getElementById('extraSize').value,
-            building_height:  document.getElementById('extraHeight').value,
-            facing:           document.getElementById('extraFacing').value,
-            featured:         document.getElementById('extraFeatured').value === 'true',
-            map_url:          document.getElementById('extraMap').value,
-        };
-        document.getElementById('extraJson').value = JSON.stringify(json, null, 2);
-    }
-
-    // Auto rebuild on change
-    ['extraStatus','extraSize','extraHeight','extraFacing','extraFeatured','extraMap']
-        .forEach(id => document.getElementById(id)
-            ?.addEventListener('input', buildExtra));
-
-    // ── Image preview ──
-    function previewImage(input, previewId) {
-        const preview = document.getElementById(previewId);
-        preview.innerHTML = '';
-        if (input.files && input.files[0]) {
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(input.files[0]);
-            img.style.cssText = 'height:100px; border-radius:4px; border:1px solid #dee2e6;';
-            preview.appendChild(img);
-        }
-    }
-
-// ── Multiple Images: drag-drop + reorder ──────────────────────────────
-const MULTI_LABELS = ['1st: At a Glance', '2nd: Gallery Left', '3rd: Gallery Right'];
-let multiFiles = [];
-let dragSrcIdx = null;
-const dropZone = document.getElementById('dropZone');
-const multiInput = document.getElementById('multiInput');
-
-function triggerMultiFile() { multiInput.click(); }
-
-multiInput.addEventListener('change', function () {
-    addFiles(this.files);
-    this.value = ''; // reset so same file can be re-added
-});
-
-dropZone.addEventListener('dragover', e => {
-    e.preventDefault();
-    dropZone.style.borderColor = '#0d6efd';
-    dropZone.style.background = '#e8f0fe';
-});
-dropZone.addEventListener('dragleave', () => {
-    dropZone.style.borderColor = '#ced4da';
-    dropZone.style.background = '#f8f9fa';
-});
-dropZone.addEventListener('drop', e => {
-    e.preventDefault();
-    dropZone.style.borderColor = '#ced4da';
-    dropZone.style.background = '#f8f9fa';
-    addFiles(e.dataTransfer.files);
-});
-
-function addFiles(incoming) {
-    Array.from(incoming).forEach(f => {
-        if (!f.type.startsWith('image/')) return;
-        multiFiles.push({ file: f, url: URL.createObjectURL(f) });
-    });
-    syncInput();
-    renderMulti();
-}
-
-function removeMultiFile(i) {
-    URL.revokeObjectURL(multiFiles[i].url);
-    multiFiles.splice(i, 1);
-    syncInput();
-    renderMulti();
-}
-
-function syncInput() {
-    const dt = new DataTransfer();
-    multiFiles.forEach(m => dt.items.add(m.file));
-    multiInput.files = dt.files;
-    document.getElementById('imgCount').textContent =
-        multiFiles.length ? multiFiles.length + ' image(s) selected' : '';
-}
-
-function renderMulti() {
-    const preview = document.getElementById('multiPreview');
-    preview.innerHTML = '';
-
-    multiFiles.forEach((item, i) => {
-        const card = document.createElement('div');
-        card.draggable = true;
-        card.dataset.index = i;
-        card.style.cssText = 'position:relative;width:110px;text-align:center;cursor:grab;border:1px solid #dee2e6;border-radius:6px;overflow:visible;background:#fff;';
-
-        // drag handles
-        card.addEventListener('dragstart', e => {
-            dragSrcIdx = i;
-            setTimeout(() => card.style.opacity = '.35', 0);
-            e.dataTransfer.effectAllowed = 'move';
-        });
-        card.addEventListener('dragend', () => {
-            card.style.opacity = '1';
-            document.querySelectorAll('#multiPreview [data-index]')
-                .forEach(c => c.style.outline = '');
-        });
-        card.addEventListener('dragover', e => {
-            e.preventDefault();
-            document.querySelectorAll('#multiPreview [data-index]')
-                .forEach(c => c.style.outline = '');
-            card.style.outline = '2px solid #0d6efd';
-        });
-        card.addEventListener('drop', e => {
-            e.preventDefault();
-            const dest = parseInt(card.dataset.index);
-            if (dragSrcIdx === null || dragSrcIdx === dest) return;
-            const moved = multiFiles.splice(dragSrcIdx, 1)[0];
-            multiFiles.splice(dest, 0, moved);
-            dragSrcIdx = null;
-            syncInput();
-            renderMulti();
-        });
-
-        const img = document.createElement('img');
-        img.src = item.url;
-        img.style.cssText = 'width:110px;height:80px;object-fit:cover;border-radius:5px 5px 0 0;display:block;pointer-events:none;';
-
-        const labelEl = document.createElement('div');
-        labelEl.className = 'badge mt-1 mb-1 d-block mx-1';
-        labelEl.style.cssText = 'font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
-        labelEl.classList.add(i < 3 ? (i === 0 ? 'bg-primary' : 'bg-secondary') : 'bg-dark');
-        labelEl.textContent = MULTI_LABELS[i] ?? `Slider ${i - 2}`;
-
-        const rem = document.createElement('button');
-        rem.type = 'button';
-        rem.innerHTML = '&times;';
-        rem.style.cssText = 'position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:red;color:#fff;border:none;font-size:13px;line-height:18px;cursor:pointer;padding:0;z-index:10;';
-        rem.onclick = e => { e.stopPropagation(); removeMultiFile(i); };
-
-        card.appendChild(img);
-        card.appendChild(labelEl);
-        card.appendChild(rem);
-        preview.appendChild(card);
-    });
-
-    // "+ Add more" button
-    const addBtn = document.createElement('div');
-    addBtn.style.cssText = 'width:110px;height:108px;border:1.5px dashed #ced4da;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#6c757d;font-size:12px;gap:4px;';
-    addBtn.innerHTML = '<span style="font-size:22px">+</span><span>Add more</span>';
-    addBtn.onclick = () => {
-        const inp = document.createElement('input');
-        inp.type = 'file'; inp.multiple = true; inp.accept = 'image/*';
-        inp.onchange = () => addFiles(inp.files);
-        inp.click();
-    };
-    preview.appendChild(addBtn);
-}
-
-</script>
 <style>
     .preview-wrap {
         position: relative;
         text-align: center;
     }
+
     .preview-wrap .remove-btn {
         position: absolute;
         top: -6px;
         right: -6px;
         background: red;
-        color: white;
+        color: #fff;
         border: none;
         border-radius: 50%;
         width: 20px;
@@ -376,10 +220,13 @@ function renderMulti() {
 </style>
 
 <script>
-   $(document).ready(function() {
+    // ════════════════════════════════════════════════════════
+    // Summernote
+    // ════════════════════════════════════════════════════════
+    $(document).ready(function() {
         $('.editor').summernote({
             height: 300,
-            resizeable: true, // summernote built-in resize
+            resizeable: true,
             callbacks: {
                 onKeyup: function(e) {
                     updateTagInfo(e);
@@ -391,63 +238,40 @@ function renderMulti() {
         });
     });
 
-         const $tooltip = $('<div id="tag-tooltip" style="' +
-            'position:fixed;' +
-            'background:#333;' +
-            'color:#fff;' +
-            'padding:3px 8px;' +
-            'border-radius:4px;' +
-            'font-size:11px;' +
-            'font-family:monospace;' +
-            'pointer-events:none;' +
-            'z-index:99999;' +
-            'display:none;' +
-            '"></div>');
-        $('body').append($tooltip);
+    const $tooltip = $('<div id="tag-tooltip" style="position:fixed;background:#333;color:#fff;padding:3px 8px;border-radius:4px;font-size:11px;font-family:monospace;pointer-events:none;z-index:99999;display:none;"></div>');
+    $('body').append($tooltip);
 
-        function updateTagInfo(e) {
-            const selection = window.getSelection();
-            if (!selection || selection.rangeCount === 0) return;
-
-            let node = selection.anchorNode;
-            if (node && node.nodeType === Node.TEXT_NODE) {
-                node = node.parentNode;
+    function updateTagInfo(e) {
+        const selection = window.getSelection();
+        if (!selection || selection.rangeCount === 0) return;
+        let node = selection.anchorNode;
+        if (node && node.nodeType === Node.TEXT_NODE) node = node.parentNode;
+        let tagName = null,
+            current = node;
+        while (current && current !== document) {
+            const tag = current.tagName ? current.tagName.toLowerCase() : '';
+            if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'li'].includes(tag)) {
+                tagName = tag.toUpperCase();
+                break;
             }
-
-            let tagName = null;
-            let current = node;
-
-            while (current && current !== document) {
-                const tag = current.tagName ? current.tagName.toLowerCase() : '';
-                if (['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'blockquote', 'li'].includes(tag)) {
-                    tagName = tag.toUpperCase();
-                    break;
-                }
-                current = current.parentNode;
-            }
-
-            if (!tagName) {
-                $tooltip.hide();
-                return;
-            }
-
-            const x = e.clientX + 10;
-            const y = e.clientY - 30;
-
-            $tooltip
-                .html(`&lt;${tagName}&gt;`)
-                .css({
-                    left: x + 'px',
-                    top: y + 'px'
-                })
-                .show();
-
-            clearTimeout(window._tagTooltipTimer);
-            window._tagTooltipTimer = setTimeout(() => $tooltip.hide(), 2000);
+            current = current.parentNode;
         }
+        if (!tagName) {
+            $tooltip.hide();
+            return;
+        }
+        $tooltip.html(`&lt;${tagName}&gt;`).css({
+            left: (e.clientX + 10) + 'px',
+            top: (e.clientY - 30) + 'px'
+        }).show();
+        clearTimeout(window._tagTooltipTimer);
+        window._tagTooltipTimer = setTimeout(() => $tooltip.hide(), 2000);
+    }
 
-    // ── Single image (thumbnail) ───────────────────────────────
-    function previewSingle(input, previewId, inputName) {
+    // ════════════════════════════════════════════════════════
+    // Thumbnail — single preview
+    // ════════════════════════════════════════════════════════
+    function previewSingle(input, previewId) {
         const preview = document.getElementById(previewId);
         preview.innerHTML = '';
         if (!input.files || !input.files[0]) return;
@@ -473,7 +297,9 @@ function renderMulti() {
         preview.appendChild(wrap);
     }
 
-    // ── Video preview ──────────────────────────────────────────
+    // ════════════════════════════════════════════════════════
+    // Video — preview
+    // ════════════════════════════════════════════════════════
     function previewVideo(input) {
         const preview = document.getElementById('videoPreview');
         preview.innerHTML = '';
@@ -501,54 +327,197 @@ function renderMulti() {
         preview.appendChild(wrap);
     }
 
-    // ── Multiple images ────────────────────────────────────────
-    const multiInput = document.getElementById('multiInput');
-    let multiFiles = [];
+    // ════════════════════════════════════════════════════════
+    // Multiple Images — drag-drop + reorder + remove
+    // ════════════════════════════════════════════════════════
+    const SLOT_LABELS = [
+        '1st: Cover',
+        '2nd: At a Glance',
+        '3rd: Gallery Left',
+        '4th: Gallery Right',
+    ];
 
-    function previewMultiple(input) {
-        multiFiles = Array.from(input.files);
+    function getSlotLabel(i) {
+        if (i < SLOT_LABELS.length) {
+            return {
+                text: SLOT_LABELS[i],
+                cls: i === 0 ? 'bg-primary' : 'bg-secondary'
+            };
+        }
+        return {
+            text: `Slider ${i - 3}`,
+            cls: 'bg-dark'
+        };
+    }
+
+    let multiFiles = [];
+    let dragSrc = null;
+
+    const dropZone = document.getElementById('dropZone');
+    const multiInput = document.getElementById('multiInput');
+
+    function triggerMultiFile() {
+        multiInput.click();
+    }
+
+    multiInput.addEventListener('change', function() {
+        addFiles(this.files);
+        this.value = '';
+    });
+
+    dropZone.addEventListener('dragover', e => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#0d6efd';
+        dropZone.style.background = '#e8f0fe';
+    });
+    dropZone.addEventListener('dragleave', () => {
+        dropZone.style.borderColor = '#ced4da';
+        dropZone.style.background = '#f8f9fa';
+    });
+    dropZone.addEventListener('drop', e => {
+        e.preventDefault();
+        dropZone.style.borderColor = '#ced4da';
+        dropZone.style.background = '#f8f9fa';
+        addFiles(e.dataTransfer.files);
+    });
+
+    function addFiles(incoming) {
+        Array.from(incoming).forEach(f => {
+            if (!f.type.startsWith('image/')) return;
+            multiFiles.push({
+                file: f,
+                url: URL.createObjectURL(f)
+            });
+        });
+        syncInput();
         renderMulti();
+    }
+
+    function removeFile(i) {
+        URL.revokeObjectURL(multiFiles[i].url);
+        multiFiles.splice(i, 1);
+        syncInput();
+        renderMulti();
+    }
+
+    function syncInput() {
+        const dt = new DataTransfer();
+        multiFiles.forEach(m => dt.items.add(m.file));
+        multiInput.files = dt.files;
+        const countEl = document.getElementById('imgCount');
+        if (countEl) countEl.textContent = multiFiles.length ? `${multiFiles.length} image(s) selected` : '';
     }
 
     function renderMulti() {
         const preview = document.getElementById('multiPreview');
         preview.innerHTML = '';
 
-        const labels = ['1st: At a Glance', '2nd: Gallery Left', '3rd: Gallery Right'];
+        multiFiles.forEach((item, i) => {
+            const slot = getSlotLabel(i);
 
-        multiFiles.forEach((file, i) => {
-            const wrap = document.createElement('div');
-            wrap.className = 'preview-wrap';
+            const card = document.createElement('div');
+            card.draggable = true;
+            card.dataset.index = i;
+            card.style.cssText = 'position:relative;width:110px;text-align:center;cursor:grab;' +
+                'border:1px solid #dee2e6;border-radius:6px;overflow:visible;background:#fff;';
+
+            card.addEventListener('dragstart', e => {
+                dragSrc = i;
+                setTimeout(() => card.style.opacity = '.35', 0);
+                e.dataTransfer.effectAllowed = 'move';
+            });
+            card.addEventListener('dragend', () => {
+                card.style.opacity = '1';
+                preview.querySelectorAll('[data-index]').forEach(c => c.style.outline = '');
+            });
+            card.addEventListener('dragover', e => {
+                e.preventDefault();
+                preview.querySelectorAll('[data-index]').forEach(c => c.style.outline = '');
+                card.style.outline = '2px solid #0d6efd';
+            });
+            card.addEventListener('drop', e => {
+                e.preventDefault();
+                const dest = parseInt(card.dataset.index);
+                if (dragSrc === null || dragSrc === dest) return;
+                const moved = multiFiles.splice(dragSrc, 1)[0];
+                multiFiles.splice(dest, 0, moved);
+                dragSrc = null;
+                syncInput();
+                renderMulti();
+            });
 
             const img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.style.cssText = 'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
+            img.src = item.url;
+            img.style.cssText = 'width:110px;height:80px;object-fit:cover;' +
+                'border-radius:5px 5px 0 0;display:block;pointer-events:none;';
 
             const label = document.createElement('div');
-            label.className = 'badge bg-secondary mt-1 d-block';
-            label.style.cssText = 'font-size:10px; max-width:100px;';
-            label.textContent = labels[i] ?? `Slider ${i - 2}`;
+            label.className = `badge ${slot.cls} mt-1 mb-1 d-block mx-1`;
+            label.style.cssText = 'font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+            label.textContent = slot.text;
 
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'remove-btn';
-            btn.innerHTML = '&times;';
-            btn.onclick = () => {
-                multiFiles.splice(i, 1);
-
-                // Sync back to input.files via DataTransfer
-                const dt = new DataTransfer();
-                multiFiles.forEach(f => dt.items.add(f));
-                multiInput.files = dt.files;
-
-                renderMulti();
+            const rem = document.createElement('button');
+            rem.type = 'button';
+            rem.innerHTML = '&times;';
+            rem.title = 'Remove';
+            rem.style.cssText = 'position:absolute;top:-7px;right:-7px;width:20px;height:20px;' +
+                'border-radius:50%;background:red;color:#fff;border:none;' +
+                'font-size:13px;line-height:18px;cursor:pointer;padding:0;z-index:10;';
+            rem.onclick = e => {
+                e.stopPropagation();
+                removeFile(i);
             };
 
-            wrap.appendChild(img);
-            wrap.appendChild(label);
-            wrap.appendChild(btn);
-            preview.appendChild(wrap);
+            card.appendChild(img);
+            card.appendChild(label);
+            card.appendChild(rem);
+            preview.appendChild(card);
         });
+
+        // "+ Add more" tile
+        const addBtn = document.createElement('div');
+        addBtn.title = 'Add more images';
+        addBtn.style.cssText = 'width:110px;height:108px;border:1.5px dashed #ced4da;border-radius:6px;' +
+            'display:flex;flex-direction:column;align-items:center;justify-content:center;' +
+            'cursor:pointer;color:#6c757d;font-size:12px;gap:4px;';
+        addBtn.innerHTML = '<span style="font-size:22px">+</span><span>Add more</span>';
+        addBtn.onclick = () => {
+            const inp = document.createElement('input');
+            inp.type = 'file';
+            inp.multiple = true;
+            inp.accept = 'image/*';
+            inp.onchange = () => addFiles(inp.files);
+            inp.click();
+        };
+        preview.appendChild(addBtn);
+    }
+    // ── Size rows ──────────────────────────────────────────────
+    function addSizeRow() {
+        const container = document.getElementById('sizeRows');
+        // "Add Type" button row এর আগে insert করো
+        const addBtnRow = container.querySelector('.size-row:last-child');
+
+        const row = document.createElement('div');
+        row.className = 'size-row d-flex gap-2 mb-2 align-items-center';
+        row.innerHTML = `
+        <input type="text" name="extra_size[]" class="form-control form-control-sm"
+            placeholder="e.g. Type B - 1552 Sq. ft.">
+        <button type="button" class="btn btn-sm btn-outline-danger" 
+            onclick="removeSizeRow(this)" title="Remove">−</button>
+    `;
+        container.insertBefore(row, addBtnRow);
+        row.querySelector('input').focus();
+    }
+
+    function removeSizeRow(btn) {
+        const row = btn.closest('.size-row');
+        // কমপক্ষে ১টা input row থাকবে
+        const inputRows = document.querySelectorAll('#sizeRows input[name="extra_size[]"]');
+        if (inputRows.length <= 1) {
+            row.querySelector('input').value = '';
+            return;
+        }
+        row.remove();
     }
 </script>
 @endpush

@@ -5,24 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Bhaiya Housing')</title>
-
+    <link rel="icon" type="image/webp" href="{{ asset('assets/images/fav.webp') }}">
     <!-- Facebook Pixel -->
     <script>
-        !function(f,b,e,v,n,t,s)
-        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-        n.queue=[];t=b.createElement(e);t.async=!0;
-        t.src=v;s=b.getElementsByTagName(e)[0];
-        s.parentNode.insertBefore(t,s)}(window, document,'script',
-        'https://connect.facebook.net/en_US/fbevents.js');
+        ! function(f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function() {
+                n.callMethod ?
+                    n.callMethod.apply(n, arguments) : n.queue.push(arguments)
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = '2.0';
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s)
+        }(window, document, 'script',
+            'https://connect.facebook.net/en_US/fbevents.js');
         fbq('init', '749680890686257');
         fbq('track', 'PageView');
         @stack('pixel_events')
     </script>
     <noscript>
         <img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=749680890686257&ev=PageView&noscript=1"/>
+            src="https://www.facebook.com/tr?id=749680890686257&ev=PageView&noscript=1" />
     </noscript>
 
     @yield('meta')
@@ -46,20 +56,29 @@
     <link rel="stylesheet" href="{{ asset('frontend/css/custom.css') }}?v=111111111111">
 
     <style>
-        html.lenis { height: auto; }
-        .lenis.lenis-smooth { scroll-behavior: auto; }
-        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        html.lenis {
+            height: auto;
+        }
+
+        .lenis.lenis-smooth {
+            scroll-behavior: auto;
+        }
+
+        .lenis.lenis-smooth [data-lenis-prevent] {
+            overscroll-behavior: contain;
+        }
 
         header {
             transition: transform 0.4s ease;
         }
+
         header.hide {
             transform: translateY(-100%);
         }
 
         /* ======= Custom Trailing Cursor CSS ======= */
         @media (pointer: fine) {
-            
+
             /* body, a, button { cursor: none !important; } */
 
             .cursor-dot {
@@ -80,25 +99,25 @@
             .cursor-dot.active {
                 width: 15px;
                 height: 15px;
-                background-color: rgba(0, 0, 0, 0.5); 
+                background-color: rgba(0, 0, 0, 0.5);
             }
 
             .cursor-dot.active-large {
                 width: 50px;
                 height: 50px;
                 background-color: #000;
-               
-                backdrop-filter: blur(2px); 
+
+                backdrop-filter: blur(2px);
             }
-            
+
         }
-        
+
         @media (pointer: coarse) {
             .cursor-dot {
                 display: none;
             }
         }
-        
+
         .test-circle {
             width: 150px;
             height: 150px;
@@ -111,6 +130,7 @@
             cursor: pointer;
             position: relative;
         }
+
         /* ========================================== */
     </style>
 
@@ -127,8 +147,8 @@
 
     <main>
         @yield('content')
-        
-       
+
+
     </main>
 
     @include('partials.floating')
@@ -148,7 +168,7 @@
         let lastScroll = 0;
         const header = document.querySelector('header');
 
-        window.addEventListener('load', function () {
+        window.addEventListener('load', function() {
 
             // ── GSAP ScrollTrigger register ──
             gsap.registerPlugin(ScrollTrigger);
@@ -164,7 +184,9 @@
                 gsap.ticker.lagSmoothing(0);
                 lenis.on('scroll', ScrollTrigger.update);
 
-                lenis.on('scroll', ({ scroll }) => {
+                lenis.on('scroll', ({
+                    scroll
+                }) => {
                     header.classList.toggle('hide', scroll > lastScroll && scroll > 80);
                     lastScroll = scroll;
                 });
@@ -209,16 +231,16 @@
         // ── Custom Trailing & Magnetic Cursor Logic ──
         // ==========================================
         const dot = document.getElementById('cursor-dot');
-        
+
         let mouseX = window.innerWidth / 2;
         let mouseY = window.innerHeight / 2;
         let dotX = window.innerWidth / 2;
         let dotY = window.innerHeight / 2;
-        
+
         let magneticElement = null; // ম্যাগনেটিক ইফেক্টের জন্য ভ্যারিয়েবল
 
         if (window.matchMedia("(pointer: fine)").matches) {
-            
+
             window.addEventListener('mousemove', (e) => {
                 mouseX = e.clientX;
                 mouseY = e.clientY;
@@ -238,9 +260,9 @@
                 // 0.15 হলো স্পিড
                 dotX += (targetX - dotX) * 0.15;
                 dotY += (targetY - dotY) * 0.15;
-                
+
                 dot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
-                
+
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();

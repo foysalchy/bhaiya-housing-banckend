@@ -808,7 +808,7 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
                     style="min-height: clamp(100px, 15vw, 180px); position: relative; z-index: 2; flex-shrink: 0;">
                     <p class="text-white text-sm leading-relaxed opacity-80"
                         style="line-height: 1.9; font-weight: 300;">
-                        {!! $expertise->body_2 ?? 'We deliver exceptional construction using first-rate materials.' !!}
+                        {!! $expertise->body ?? 'We deliver exceptional construction using first-rate materials.' !!}
                     </p>
                 </div>
 

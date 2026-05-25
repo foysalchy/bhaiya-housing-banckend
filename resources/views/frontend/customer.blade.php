@@ -142,7 +142,7 @@
      </div>
  
  </section>
- <div class="   h-[85vh] w-full pointer-events-none"
+ <div class="h-[85vh] w-full pointer-events-none"
      style="position: relative; z-index: 2;"></div>
 
  {{-- ── Top Bar ── --}}
