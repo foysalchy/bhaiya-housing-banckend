@@ -113,7 +113,7 @@
                      <div class="row">
                     <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Short Description</label>
-                        <textarea class=" form-control" name="body_3" rows="4">{!! $content->body !!}</textarea>
+                        <textarea class=" form-control" name="body_3" rows="4">{{ $content->body_3 }}</textarea>
                     </div>
                    
                 </div>
