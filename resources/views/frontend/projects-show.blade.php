@@ -485,7 +485,7 @@
      </div>
 
  </section>
- @if(!empty($project->body) || !empty($project->body_2))
+@if(!empty(strip_tags($project->body)) || !empty(strip_tags($project->body_2)))
  <section class="relative z-10 w-full overflow-hidden py-32 bg-[#F6F6F6]">
 
      <!-- Background Decoration Image -->

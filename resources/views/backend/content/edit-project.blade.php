@@ -113,7 +113,7 @@
                      <div class="row">
                     <div class="col-md-12 mb-3">
                         <label class="form-label fw-semibold">Short Description</label>
-                        <textarea class=" form-control" name="body_3" rows="4">{!! $content->body_3 ?? '' !!}</textarea>
+                        <textarea class=" form-control" name="body_3" rows="4">{!! $content->body !!}</textarea>
                     </div>
                    
                 </div>
@@ -570,15 +570,22 @@
     const newDropZone = document.getElementById('newDropZone');
     const multiInput = document.getElementById('multiInput');
 
-    function triggerMultiFile() {
-        multiInput.click();
-    }
+    // function triggerMultiFile() {
+    //     multiInput.click();
+    // }
 
-    multiInput.addEventListener('change', function() {
-        addNewFiles(this.files);
-        this.value = '';
-    });
-
+    // multiInput.addEventListener('change', function() {
+    //     addNewFiles(this.files);
+    //     this.value = '';
+    // });
+function triggerMultiFile() {
+    const tempInput = document.createElement('input');
+    tempInput.type = 'file';
+    tempInput.multiple = true;
+    tempInput.accept = 'image/*';
+    tempInput.onchange = () => addNewFiles(tempInput.files);
+    tempInput.click();
+}
     newDropZone.addEventListener('dragover', e => {
         e.preventDefault();
         newDropZone.style.borderColor = '#0d6efd';
