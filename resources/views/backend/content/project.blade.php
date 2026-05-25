@@ -120,18 +120,33 @@
                 </div>
 
                 {{-- Multiple Images --}}
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Multiple Images</label>
-                    <input type="file" multiple class="form-control" id="multiInput" name="img_paths[]" accept="image/*"
-                        onchange="previewMultiple(this)">
-                    <div class="mt-1 d-flex gap-2 flex-wrap align-items-start">
-                        <span class="badge bg-primary">1st → At a Glance</span>
-                        <span class="badge bg-secondary">2nd → Gallery Left</span>
-                        <span class="badge bg-secondary">3rd → Gallery Right</span>
-                        <span class="badge bg-dark">4th+ → Slider</span>
-                    </div>
-                    <div class="mt-2 d-flex gap-2 flex-wrap" id="multiPreview"></div>
-                </div>
+              {{-- Multiple Images --}}
+<div class="mb-3">
+    <label class="form-label fw-semibold">Multiple Images</label>
+    <input type="file" id="multiInput" name="img_paths[]" multiple accept="image/*" style="display:none">
+
+    {{-- Drop Zone --}}
+    <div id="dropZone" onclick="triggerMultiFile()"
+        style="border:1.5px dashed #ced4da; border-radius:8px; padding:1.5rem; text-align:center; cursor:pointer; background:#f8f9fa; transition:.2s;">
+        <i class="bi bi-cloud-upload fs-3 text-muted"></i>
+        <p class="text-muted small mb-2 mt-1">Drag &amp; drop images here, or click to browse</p>
+        <button type="button" class="btn btn-outline-secondary btn-sm" onclick="event.stopPropagation();triggerMultiFile()">
+            Choose files
+        </button>
+    </div>
+
+    {{-- Badge legend --}}
+    <div class="mt-1 d-flex gap-2 flex-wrap align-items-start">
+        <span class="badge bg-primary">1st → At a Glance</span>
+        <span class="badge bg-secondary">2nd → Gallery Left</span>
+        <span class="badge bg-secondary">3rd → Gallery Right</span>
+        <span class="badge bg-dark">4th+ → Slider</span>
+        <span class="text-muted small ms-auto" id="imgCount"></span>
+    </div>
+
+    {{-- Preview Grid --}}
+    <div id="multiPreview" class="mt-2 d-flex gap-2 flex-wrap align-items-start"></div>
+</div>
 
                 {{-- SEO --}}
                 <div class="card border mt-3">
@@ -210,25 +225,132 @@
         }
     }
 
-    function previewMultiple(input) {
-        const preview = document.getElementById('multiPreview');
-        preview.innerHTML = '';
-        const labels = ['1st: At a Glance', '2nd: Gallery Left', '3rd: Gallery Right'];
-        Array.from(input.files).forEach((file, i) => {
-            const wrap = document.createElement('div');
-            wrap.style.cssText = 'text-align:center;';
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(file);
-            img.style.cssText = 'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
-            const label = document.createElement('div');
-            label.className = 'badge bg-secondary mt-1 d-block';
-            label.style.cssText = 'font-size:10px; max-width:100px;';
-            label.textContent = labels[i] ?? `Slider ${i - 2}`;
-            wrap.appendChild(img);
-            wrap.appendChild(label);
-            preview.appendChild(wrap);
+// ── Multiple Images: drag-drop + reorder ──────────────────────────────
+const MULTI_LABELS = ['1st: At a Glance', '2nd: Gallery Left', '3rd: Gallery Right'];
+let multiFiles = [];
+let dragSrcIdx = null;
+const dropZone = document.getElementById('dropZone');
+const multiInput = document.getElementById('multiInput');
+
+function triggerMultiFile() { multiInput.click(); }
+
+multiInput.addEventListener('change', function () {
+    addFiles(this.files);
+    this.value = ''; // reset so same file can be re-added
+});
+
+dropZone.addEventListener('dragover', e => {
+    e.preventDefault();
+    dropZone.style.borderColor = '#0d6efd';
+    dropZone.style.background = '#e8f0fe';
+});
+dropZone.addEventListener('dragleave', () => {
+    dropZone.style.borderColor = '#ced4da';
+    dropZone.style.background = '#f8f9fa';
+});
+dropZone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropZone.style.borderColor = '#ced4da';
+    dropZone.style.background = '#f8f9fa';
+    addFiles(e.dataTransfer.files);
+});
+
+function addFiles(incoming) {
+    Array.from(incoming).forEach(f => {
+        if (!f.type.startsWith('image/')) return;
+        multiFiles.push({ file: f, url: URL.createObjectURL(f) });
+    });
+    syncInput();
+    renderMulti();
+}
+
+function removeMultiFile(i) {
+    URL.revokeObjectURL(multiFiles[i].url);
+    multiFiles.splice(i, 1);
+    syncInput();
+    renderMulti();
+}
+
+function syncInput() {
+    const dt = new DataTransfer();
+    multiFiles.forEach(m => dt.items.add(m.file));
+    multiInput.files = dt.files;
+    document.getElementById('imgCount').textContent =
+        multiFiles.length ? multiFiles.length + ' image(s) selected' : '';
+}
+
+function renderMulti() {
+    const preview = document.getElementById('multiPreview');
+    preview.innerHTML = '';
+
+    multiFiles.forEach((item, i) => {
+        const card = document.createElement('div');
+        card.draggable = true;
+        card.dataset.index = i;
+        card.style.cssText = 'position:relative;width:110px;text-align:center;cursor:grab;border:1px solid #dee2e6;border-radius:6px;overflow:visible;background:#fff;';
+
+        // drag handles
+        card.addEventListener('dragstart', e => {
+            dragSrcIdx = i;
+            setTimeout(() => card.style.opacity = '.35', 0);
+            e.dataTransfer.effectAllowed = 'move';
         });
-    }
+        card.addEventListener('dragend', () => {
+            card.style.opacity = '1';
+            document.querySelectorAll('#multiPreview [data-index]')
+                .forEach(c => c.style.outline = '');
+        });
+        card.addEventListener('dragover', e => {
+            e.preventDefault();
+            document.querySelectorAll('#multiPreview [data-index]')
+                .forEach(c => c.style.outline = '');
+            card.style.outline = '2px solid #0d6efd';
+        });
+        card.addEventListener('drop', e => {
+            e.preventDefault();
+            const dest = parseInt(card.dataset.index);
+            if (dragSrcIdx === null || dragSrcIdx === dest) return;
+            const moved = multiFiles.splice(dragSrcIdx, 1)[0];
+            multiFiles.splice(dest, 0, moved);
+            dragSrcIdx = null;
+            syncInput();
+            renderMulti();
+        });
+
+        const img = document.createElement('img');
+        img.src = item.url;
+        img.style.cssText = 'width:110px;height:80px;object-fit:cover;border-radius:5px 5px 0 0;display:block;pointer-events:none;';
+
+        const labelEl = document.createElement('div');
+        labelEl.className = 'badge mt-1 mb-1 d-block mx-1';
+        labelEl.style.cssText = 'font-size:9px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;';
+        labelEl.classList.add(i < 3 ? (i === 0 ? 'bg-primary' : 'bg-secondary') : 'bg-dark');
+        labelEl.textContent = MULTI_LABELS[i] ?? `Slider ${i - 2}`;
+
+        const rem = document.createElement('button');
+        rem.type = 'button';
+        rem.innerHTML = '&times;';
+        rem.style.cssText = 'position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:red;color:#fff;border:none;font-size:13px;line-height:18px;cursor:pointer;padding:0;z-index:10;';
+        rem.onclick = e => { e.stopPropagation(); removeMultiFile(i); };
+
+        card.appendChild(img);
+        card.appendChild(labelEl);
+        card.appendChild(rem);
+        preview.appendChild(card);
+    });
+
+    // "+ Add more" button
+    const addBtn = document.createElement('div');
+    addBtn.style.cssText = 'width:110px;height:108px;border:1.5px dashed #ced4da;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;color:#6c757d;font-size:12px;gap:4px;';
+    addBtn.innerHTML = '<span style="font-size:22px">+</span><span>Add more</span>';
+    addBtn.onclick = () => {
+        const inp = document.createElement('input');
+        inp.type = 'file'; inp.multiple = true; inp.accept = 'image/*';
+        inp.onchange = () => addFiles(inp.files);
+        inp.click();
+    };
+    preview.appendChild(addBtn);
+}
 
 </script>
 <style>
