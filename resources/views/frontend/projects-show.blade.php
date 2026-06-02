@@ -831,21 +831,55 @@
          </p>
      </div>
 
-     <div class="flex-1 relative">
-         @if(!empty($extra['map_url']))
-         <iframe src="{{ $extra['map_url'] }}"
-             title="Project Location Map"
-             class="w-full h-full border-0"
-             allowfullscreen=""
-             loading="lazy"
-             referrerpolicy="no-referrer-when-downgrade">
-         </iframe>
-         @else
-         <div class="w-full h-full flex items-center justify-center bg-gray-200">
-             <p class="text-gray-500 text-sm">Map unavailable</p>
-         </div>
-         @endif
-     </div>
+<div class="flex-1 relative">
+    @if(!empty($extra['map_url']))
+        <div id="map-loading"
+            class="absolute inset-0 flex items-center justify-center bg-gray-200 z-10">
+            <p class="text-gray-500 text-sm">Fetching map...</p>
+        </div>
+
+        <div id="map-error"
+            class="absolute inset-0 flex items-center justify-center bg-gray-200 z-10 hidden">
+            <p class="text-gray-500 text-sm">Map unavailable</p>
+        </div>
+
+        <iframe
+            id="project-map"
+            src="{{ $extra['map_url'] }}"
+            title="Project Location Map"
+            class="w-full h-full border-0"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const iframe = document.getElementById('project-map');
+                const loading = document.getElementById('map-loading');
+                const error = document.getElementById('map-error');
+
+                let loaded = false;
+
+                iframe.onload = function() {
+                    loaded = true;
+                    loading.classList.add('hidden');
+                };
+
+                setTimeout(() => {
+                    if (!loaded) {
+                        loading.classList.add('hidden');
+                        error.classList.remove('hidden');
+                    }
+                }, 10000); // 10 seconds timeout
+            });
+        </script>
+    @else
+        <div class="w-full h-full flex items-center justify-center bg-gray-200">
+            <p class="text-gray-500 text-sm">Map unavailable</p>
+        </div>
+    @endif
+</div>
 
  </section>
  @endif
