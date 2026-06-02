@@ -520,7 +520,7 @@ function openContact(id) {
     document.getElementById('dSubject').textContent = c.name;
     document.getElementById('dName').textContent    = c.name;
     document.getElementById('dEmail').textContent   = c.email || 'No email provided';
-    document.getElementById('dPhone').textContent   = (c.phone_code || '') + ' ' + (c.phone || '');
+    document.getElementById('dPhone').textContent   = c.phone || 'No phone provided';
     document.getElementById('dType').textContent    = c.type || '—';
 document.getElementById('dSub').textContent = c.subject
     ? 'Subject: ' + c.subject

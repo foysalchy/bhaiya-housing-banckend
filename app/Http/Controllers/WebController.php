@@ -526,9 +526,8 @@ class WebController extends Controller
             ]
         );
 
-        // সফলভাবে সাবমিট হলেও ফর্ম সেকশনেই ল্যান্ড করবে
         return redirect()->back()
-            ->withFragment('contact-section') // HTML ID
+            ->withFragment('contact-section') 
             ->with('success', 'Your message has been sent. We will contact you soon.');
     }
 
