@@ -979,7 +979,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
     </div>
 
     {{-- Desktop: side-by-side layout --}}
-    <div class="hidden md:flex relative container items-end mt-32"
+    <div class="hidden md:flex relative container mx-auto items-end mt-32"
         style="height: clamp(360px, 48vw, 580px);">
 
         {{-- Decorative stones --}}
@@ -1239,7 +1239,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 {{-- Bottom text --}}
                 <div class="mt-auto pt-6 md:pt-8">
                     <h3 class="text-gray-900 font-normal mb-2"
-                        style="font-size: 20px">
+                        style="font-size: 20px">        
                         {{ $partners->short ?? 'Contact as Landowner' }}
                     </h3>
                 
