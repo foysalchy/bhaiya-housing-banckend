@@ -197,27 +197,26 @@
          <div class="flex flex-col md:flex-row gap-16 items-start">
 
              <!-- ── Left: Images ── -->
-             <div class="w-full md:w-5/12 relative" style="height:360px; flex-shrink:0;">
+             <div class="w-full md:w-5/12 relative h-[280px] sm:h-[320px] md:h-[360px] flex-shrink-0">
 
-                 <!-- Image 1: back-left -->
-                 <div class="absolute overflow-hidden shadow-xl"
-                     style="width:260px; height:310px; left:0; top:30px; z-index:1;">
+                 <!-- Image 1: back-left (উইডথ, হাইট ও পজিশন রেসপন্সিভ ক্লাস দেওয়া হয়েছে) -->
+                 <div class="absolute overflow-hidden shadow-xl w-[170px] sm:w-[200px] md:w-[260px] h-[210px] sm:h-[250px] md:h-[310px] left-0 top-[20px] md:top-[30px] z-10">
                      <img src="{{ $contactImages[1]->img_path ?? asset('assets/images/contact-bottom.jpg') }}"
                          alt="{{ $contactImages[1]->title ?? 'Interior' }}"
                          class="w-full h-full object-cover"
                          onerror="this.parentElement.style.background='#b8b0a8'; this.style.display='none';" />
                  </div>
-                 <div class="absolute overflow-hidden shadow-xl scroll-move" data-axis="Y"
-                     style=" left:180px; top:80px; z-index:2;">
-                     <img src="{{  asset('assets/images/middle-stone.png') }}"
+                 
+                 <!-- Decorative Stone (মোবাইলে পজিশন ও সাইজ অ্যাডজাস্ট করা হয়েছে) -->
+                 <div class="absolute overflow-hidden shadow-xl scroll-move z-20 w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 left-[35%] sm:left-[40%] md:left-[180px] top-[50px] md:top-[80px]" data-axis="Y">
+                     <img src="{{  asset('assets/images/contact-stone-bg.png') }}"
                          alt="leaf"
                          class="w-full h-full object-cover"
                          onerror="this.parentElement.style.background='#b8b0a8'; this.style.display='none';" />
                  </div>
 
-                 <!-- Image 2: front-right -->
-                 <div class="absolute overflow-hidden shadow-2xl ml-16"
-                     style="width:260px; height:310px; left:250px; top:80px; z-index:2;">
+                 <!-- Image 2: front-right (ml-16 ও left:250px সরিয়ে মোবাইলের জন্য right-0 এবং ডেক্সটপে md:left-[250px] করা হয়েছে) -->
+                 <div class="absolute overflow-hidden shadow-2xl w-[170px] sm:w-[200px] md:w-[260px] h-[210px] sm:h-[250px] md:h-[310px] right-0 md:right-auto md:left-[220px] lg:left-[250px] top-[60px] md:top-[80px] z-20">
                      <img src="{{ $contactImages[0]->img_path ?? asset('assets/images/contact-top.jpg') }}"
                          alt="{{ $contactImages[0]->title ?? 'Dining' }}"
                          class="w-full h-full object-cover"

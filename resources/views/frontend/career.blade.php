@@ -204,7 +204,7 @@ $jobSchemas[] = [
                     <div class="text-lg font-normal text-gray-700 leading-relaxed pl-20">
                         {!! $careerOverview?->short ?? '' !!}
                     </div>
-                    <div class="text-md font-normal text-gray-700 leading-relaxed">
+                    <div class="text-md font-normal text-gray-700 leading-relaxed px-5">
                         {!! $careerOverview?->body ?? '' !!}
                     </div>
                 </div>
@@ -248,7 +248,7 @@ $jobSchemas[] = [
                 <!-- Row 3: Bottom paragraph - Align with the second image -->
                 @if($careerOverview?->body_2)
                 <div class="mt-12 md:ml-[36%] lg:ml-[35%]">
-                    <div class="text-[15px] font-normal text-gray-700 leading-relaxed max-w-[750px]">
+                    <div class="text-[15px] font-normal text-gray-700 leading-relaxed max-w-[750px] px-5">
                         {!! $careerOverview->body_2 !!}
                     </div>
                 </div>
