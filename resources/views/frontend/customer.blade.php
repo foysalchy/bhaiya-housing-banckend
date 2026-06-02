@@ -129,19 +129,19 @@
  @section('content')
 
  {{-- ===== HERO ===== --}}
- <section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden
-                h-[85vh]"> <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
-         alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
-     <div class="absolute inset-0 bg-black/50"></div>
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden h-[85vh]">
+    <img src="{{ $contactHero?->img_path ?? asset('assets/images/contact-customer.jpg') }}"
+        alt="Contact" class="absolute inset-0 w-full h-full object-cover" />
+    <div class="absolute inset-0 bg-black/50"></div>
 
-     <div class="absolute inset-0 flex items-center px-10 md:px-20">
-         <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2; font-weight:500;">
-             We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
+    <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20">
+        <h2 class="text-white font-light md:pl-12 pt-20 md:pt-32 tracking-normal md:tracking-[-3px]" 
+            style="font-size: clamp(32px, 3.85vw, 74px); line-height: 1.2; font-weight: 500;">
+            We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
+        </h2>
+    </div>
 
-         </h2>
-     </div>
-
- </section>
+</section>
  <div class="h-[85vh] w-full pointer-events-none"
      style="position: relative; z-index: 2;"></div>
 

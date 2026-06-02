@@ -451,11 +451,10 @@ $schema = [
             class="w-full h-full object-cover">
     </div>
 
-    <div class="container mx-auto  relative z-10">
+    <div class="container mx-auto px-0 md:px-6 lg:px-14 relative z-10">
 
-        <!-- Section Title -->
-        <div class="mb-12 md:mb-16 lg:mb-24" data-aos="fade-up">
-            <h2 class="text-4xl sm:text-4xl md:text-7xl font-semibold tracking-tight">
+        <div class="mb-12 md:mb-16 lg:mb-24 px-6 md:px-0" data-aos="fade-up">
+            <h2 class="text-3xl sm:text-4xl lg:text-7xl font-semibold tracking-tight">
                 {{ $leadersMessage?->title ?? 'Message from leaders' }}
             </h2>
         </div>
@@ -463,25 +462,25 @@ $schema = [
         @foreach ($leaders as $index => $leader)
         @if ($index % 2 == 0)
         <!-- Image Left, Text Right -->
-        <div class="flex pl-16 flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-20 mb-20 md:mb-32">
+        <div class="flex md:pl-12 lg:pl-16 flex-col md:flex-row items-center gap-10 md:gap-12 lg:gap-20 mb-20 md:mb-32">
 
-            <div class="w-full md:w-1/2 relative" data-aos="fade-right">
+            <div class="w-full md:w-1/2 relative px-0">
                 <div class="relative z-10 overflow-hidden shadow-2xl">
                     <img src="{{ asset($leader->img_path ?? '') }}" alt="{{ $leader->title ?? '' }}"
-                        class="w-full h-[650px]  grayscale hover:grayscale-0 transition-all duration-700 object-cover">
+                        class="w-full h-[380px] sm:h-[480px] md:h-[550px] lg:h-[650px] grayscale hover:grayscale-0 transition-all duration-700 object-cover">
                 </div>
-                <div class="absolute -bottom-[-30px] -left-6 w-12 h-12 z-20 scroll-move" data-axis="y">
+                <div class="absolute -bottom-6 left-4 md:-left-6 w-10 h-10 md:w-12 md:h-12 z-20 scroll-move" data-axis="y">
                     <img src="{{ asset('images/stone-bg.svg') }}" alt="stone" class="w-full h-full opacity-80">
                 </div>
             </div>
 
-            <div class="w-full md:w-1/2 scroll-move" data-axis="y" data-aos="fade-left">
+            <div class="w-full md:w-1/2 scroll-move px-6 md:px-0" data-axis="y" data-aos="fade-left">
                 <div class="mb-4 md:mb-6">
-                    <img src="{{ asset('images/comma.svg') }}" alt="comma">
+                    <img src="{{ asset('images/comma.svg') }}" alt="comma" class="w-8 md:w-12">
                 </div>
                 <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">{{ $leader->title }}</h3>
-                <p class="text-base md:text-lg tracking-widest text-gray-200 mb-6 md:mb-8">{{ $leader->name }}</p>
-                <div class="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-base md:text-lg lg:text-xl font-light">
+                <p class="text-sm md:text-lg tracking-widest text-gray-200 mb-4 md:mb-8">{{ $leader->name }}</p>
+                <div class="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-sm md:text-lg lg:text-xl font-light">
                     {!! $leader->body ?? '' !!}
                 </div>
             </div>
@@ -490,23 +489,24 @@ $schema = [
         <!-- Text Left, Image Right -->
         <div class="flex flex-col-reverse md:flex-row items-center gap-10 md:gap-12 lg:gap-20 mb-20 md:mb-32">
 
-            <div class="w-full md:w-1/2" data-aos="fade-right">
+            <!-- টেক্সট কন্টেন্ট -->
+            <div class="w-full md:w-1/2 px-6 md:px-0" data-aos="fade-right">
                 <div class="mb-4 md:mb-6">
-                    <img src="{{ asset('images/comma.svg') }}" alt="comma">
+                    <img src="{{ asset('images/comma.svg') }}" alt="comma" class="w-8 md:w-12">
                 </div>
                 <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold mb-1">{{ $leader->title ?? '' }}</h3>
-                <p class="text-base md:text-lg tracking-widest text-gray-200 mb-6 md:mb-8">{{ $leader->name ?? '' }}</p>
-                <div class="space-y-4 md:space-y-6 text-gray-200 leading-relaxed text-base md:text-lg lg:text-xl font-light">
+                <p class="text-sm md:text-lg tracking-widest text-gray-200 mb-4 md:mb-8">{{ $leader->name ?? '' }}</p>
+                <div class="space-y-4 md:space-y-6 text-gray-300 leading-relaxed text-sm md:text-lg lg:text-xl font-light">
                     {!! $leader->body ?? '' !!}
                 </div>
             </div>
 
-            <div class="w-full md:w-1/2 relative" data-aos="fade-left">
+            <div class="w-full md:w-1/2 relative px-0">
                 <div class="relative z-10 overflow-hidden shadow-2xl border-l-4 border-emerald-900/30">
                     <img src="{{ asset($leader->img_path ?? '') }}" alt="{{ $leader->title ?? '' }}"
-                        class="w-full h-[650px]  object-cover grayscale hover:grayscale-0 transition-all duration-700">
+                        class="w-full h-[380px] sm:h-[480px] md:h-[550px] lg:h-[650px] object-cover grayscale hover:grayscale-0 transition-all duration-700">
                 </div>
-                <div class="absolute -bottom-[-40px] -left-6 w-12 h-12 z-20 transform rotate-180 scroll-move" data-axis="y">
+                <div class="absolute -bottom-8 left-4 md:-left-6 w-10 h-10 md:w-12 md:h-12 z-20 transform rotate-180 scroll-move" data-axis="y">
                     <img src="{{ asset('images/stone-bg.svg') }}" alt="stone" class="w-full h-full opacity-80">
                 </div>
             </div>

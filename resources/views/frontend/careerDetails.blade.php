@@ -159,7 +159,7 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
 @section('content')
 
 <!-- HERO -->
-<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden  h-[600px] md:h-[700px] lg:h-[800px]"
+<section class="hero-fixed fixed top-0 left-0 w-full overflow-hidden h-[600px] md:h-[700px] lg:h-[800px]"
     style="z-index:1; transform-origin:top center; will-change:transform;">
 
     {{-- Background --}}
@@ -172,12 +172,14 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
     {{-- Content --}}
     <div class="absolute inset-0 flex items-center">
         <div class="container mx-auto px-6 lg:px-14">
-            <div class="flex flex-col md:flex-row justify-between items-end">
+            <!-- items-end কে items-start md:items-end এবং gap-y-8 করা হয়েছে যাতে মোবাইলে সুন্দরভাবে এলাইনড থাকে -->
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-y-8 md:gap-y-0">
 
                 {{-- Left: Title --}}
                 <div>
-                    <h1 class="text-white mb-6 pt-32"
-                        style="font-size:3.85vw; font-weight:300;">
+                    <!-- pt-32 কে pt-20 md:pt-32 এবং font-size এ clamp ব্যবহার করা হয়েছে -->
+                    <h1 class="text-white mb-6 pt-20 md:pt-32 tracking-normal md:tracking-[-3px]"
+                        style="font-size: clamp(32px, 3.85vw, 74px); font-weight: 300; line-height: 1.2;">
                         <span class="font-migra-italic">{{ $job->title }}</span>
                     </h1>
                     <div style="border-top:1px solid rgba(255,255,255,0.4); width:min(600px, 80vw);"></div>
@@ -200,13 +202,13 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
                     @if($job->body_2)
                     <div>
                         <p class="text-white/50 text-xs font-medium uppercase tracking-wider">Job Type</p>
-                        <p class="text-white  ">{!! $job->body_2 !!}</p>
+                        <p class="text-white ">{!! $job->body_2 !!}</p>
                     </div>
                     @endif
                     @if($job->body_3)
                     <div>
                         <p class="text-white/50 text-xs font-medium uppercase tracking-wider">Experience</p>
-                        <p class="text-white  text-sm">{!! $job->body_3 !!}</p>
+                        <p class="text-white text-sm">{!! $job->body_3 !!}</p>
                     </div>
                     @endif
 

@@ -80,7 +80,7 @@
 
         <!-- Right: Nav links -->
         <div class="flex flex-1 items-center justify-center md:justify-end">
-            <div class="flex flex-col justify-end gap-1 sm:gap-2 w-full max-w-xs md:max-w-none nav-container">
+    <div class="flex flex-col justify-end gap-4 md:gap-6 w-full max-w-xs md:max-w-none nav-container">
 
                 @php
                 $staticLinks = [
@@ -106,7 +106,7 @@
 
                 <!-- Contact Us -->
                 <a href="#"
-                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-3 md:gap-4 md:ml-32"
+                    class="header-menu-list group transition-opacity duration-300 hover:opacity-100 flex items-center gap-4 md:gap-6 md:ml-32"
                     data-img="{{ isset($menuImages['contact']) ? asset($menuImages['contact']->img_path) : asset('assets/images/m1.jpg') }}"
                     onmouseover="hoverLink(this)"
                     onmouseout="unhoverLink(this)">
@@ -115,7 +115,7 @@
                 </a>
 
                 <!-- Sub links -->
-                <div class="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-8 pl-1 mt-1 md:ml-48">
+                <div class="flex flex-col sm:flex-row items-start sm:items-center  gap-4 md:gap-6 pl-1 mt-1 md:ml-48">
                     <a href="/landowner-contact"
                         class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
                         style="font-family:'Jost',sans-serif; font-size:12px; font-weight:300; letter-spacing:0.08em;">

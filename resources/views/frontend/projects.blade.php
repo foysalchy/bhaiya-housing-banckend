@@ -151,16 +151,13 @@
 
     <div class="absolute inset-0 bg-black/50"></div>
 
- 
     <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20" >
-        <h2 class="text-white pl-12 pt-32 font-light"
-    style="font-size:3.85vw; line-height:1.2;"
-    :style="{ letterSpacing: window.innerWidth >= 768 ? '-4px' : '0px' }">
-    Where <span class="font-migra-italic">innovation</span>
-    meets <span class="font-migra-italic">quality & trust</span>
-</h2>
+        <h2 class="text-white md:pl-12 pt-20 md:pt-32 font-light tracking-normal md:tracking-[-4px]"
+            style="font-size: clamp(32px, 3.85vw, 74px); line-height: 1.2;">
+            Where <span class="font-migra-italic">innovation</span>
+            meets <span class="font-migra-italic">quality & trust</span>
+        </h2>
     </div>
- 
 
 </section>
 
@@ -190,11 +187,12 @@
             onerror="this.style.display='none';" />
     </div>
 
-    <div class="relative z-10 container mx-auto ">
+    <!-- কন্টেইনারে রেসপন্সিভ সাইড প্যাডিং (px-6 md:px-12 lg:px-14) যোগ করা হয়েছে -->
+    <div class="relative z-10 container mx-auto px-6 md:px-12 lg:px-14">
 
-        {{-- Heading --}}
+        {{-- Heading (মোবাইলে ফন্ট-সাইজ সুন্দর দেখানোর জন্য clamp ব্যবহার করা হয়েছে) --}}
         <h2 class="mb-8 md:mb-10 font-light text-gray-900"
-            style="font-size:75px; line-height:1.15;letter-spacing: -0.02em;">
+            style="font-size: clamp(34px, 5.5vw, 75px); line-height:1.15; letter-spacing: -0.02em;">
             <span style="font-weight:500;">Discover Our </span>
             <span class="font-migra-italic">Signature Projects</span>
         </h2>
@@ -266,7 +264,7 @@
 
         </div>
 
-        {{-- Ghost BG text: PROJECTS — desktop only (already had hidden md:block) --}}
+        {{-- Ghost BG text: PROJECTS — desktop only --}}
         <div class="absolute pointer-events-none select-none overflow-hidden scroll-move mt-32 hidden md:block"
             data-axis="X" style="z-index:0;">
             <span class="font-migra-italic"
@@ -275,10 +273,8 @@
             </span>
         </div>
 
-        {{-- Projects Grid --}}
-     <div id="projectsGrid"
-     class="grid grid-cols-2 gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12 px-4 md:px-20">
-</div>
+        <div id="projectsGrid" class="grid grid-cols-2 gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12">
+        </div>
 
         {{-- No results --}}
         <p id="noResults" class="text-center text-gray-500 py-16 hidden" style="font-weight:300;">
