@@ -10,10 +10,16 @@ use App\Models\EventRegistration;
 use App\Models\InvestorForm;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Validator;
-
+use App\Services\FacebookConversionApi;
 
 class WebController extends Controller
 {
+
+    protected $facebook;
+    public function __construct(FacebookConversionApi $facebook)
+    {
+        $this->facebook = $facebook;
+    }
 
 
     // $all   = $this->fetchContent('slider'); get all
@@ -106,6 +112,13 @@ class WebController extends Controller
 
     public function about()
     {
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         $about = Content::where('type', 'hero')
             ->where('name', 'about-hero')
             ->where('status', 1)
@@ -146,6 +159,13 @@ class WebController extends Controller
     }
     public function career()
     {
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         $career = Content::where('type', 'hero')
             ->where('name', 'career-hero')
             ->where('status', 1)
@@ -165,12 +185,24 @@ class WebController extends Controller
     }
     public function jobDetail($slug)
     {
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         $job = Content::where('type', 'job-position')
             ->where('name', $slug)
             ->where('status', 1)
             ->firstOrFail();
 
         return view('frontend.careerDetails', compact('job'));
+    }
+   public   function trackFacebook($event, $userData = [], $customData = [])
+    {
+        return app(FacebookConversionApi::class)
+            ->sendEvent($event, $userData, $customData);
     }
 
     public function applyJob(Request $request)
@@ -183,6 +215,7 @@ class WebController extends Controller
             'resume'     => 'required|file|mimes:pdf|max:2048',
             'content_id' => 'required|exists:contents,id',
         ]);
+        
 
         if ($request->hasFile('resume')) {
             $file = $request->file('resume');
@@ -200,6 +233,16 @@ class WebController extends Controller
             'subject'    => $request->subject,
             'resume'     => $finalPath,
         ]);
+        $this->trackFacebook(
+            'Lead',
+            [
+                'em' => [hash('sha256', strtolower($request->email))]
+            ],
+            [
+                'lead_type' => 'Job Application',
+                'job_id' => $request->content_id
+            ]
+        );
 
         return back()->with('success', 'Application submitted successfully!');
     }
@@ -207,6 +250,14 @@ class WebController extends Controller
 
     public function pageShow($slug)
     {
+         $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
+
         $page = Content::where('type', 'pages')->where('name', $slug)->firstOrFail();
         return view('frontend.page', compact('page'));
     }
@@ -238,7 +289,13 @@ class WebController extends Controller
             ->take(6)
             ->get();
         $partners = $this->fetchContent('partners', 1);
-
+         $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
 
         return view('frontend.index', compact('hero', 'dreams', 'extraImages', 'featuredProjects', 'expertise', 'storiesSection', 'storiesItems', 'newsEvents', 'partners'));
     }
@@ -271,6 +328,13 @@ class WebController extends Controller
             ->pluck('location')
             ->unique()
             ->values();
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.projects', compact('projectHero', 'allProjects', 'projectLocations'));
     }
 
@@ -288,6 +352,19 @@ class WebController extends Controller
 
         $sliderImages = array_slice($imgPaths, 3);
         $sliderTotal  = count($sliderImages);
+        $this->trackFacebook(
+            'ViewContent',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ],
+            [
+                'content_type' => 'project',
+                'content_id'   => $project->id,
+                'content_name'  => $project->title ?? null,
+            ]
+        );
+
         return view('frontend.projects-show', compact('project', 'extra', 'imgPaths', 'sliderImages', 'sliderTotal'));
     }
 
@@ -311,6 +388,13 @@ class WebController extends Controller
                     : null,
                 'url' => '/' . $item->type . '/' . $item->id,
             ])->values();
+             $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.event', compact('eventHero', 'newsEvents'));
     }
     public function show($id)
@@ -328,7 +412,13 @@ class WebController extends Controller
             ->orderBy('start_date', 'desc')
             ->take(3)
             ->get();
-
+ $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.news-event-detail', compact('item', 'imgPaths', 'related'));
     }
     public function customerContact()
@@ -343,7 +433,13 @@ class WebController extends Controller
             ->latest()
             ->take(2)
             ->get();
-
+ $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.customer', compact('contactHero', 'contactImages'));
     }
 
@@ -371,7 +467,19 @@ class WebController extends Controller
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
 
         Contact::create(array_merge($validated, ['type' => 'customer']));
-
+        $this->trackFacebook(
+            'Lead',
+            [
+                'em' => $validated['email']
+                    ? [hash('sha256', strtolower($validated['email']))]
+                    : [],
+                'ph' => [hash('sha256', preg_replace('/\D/', '', $validated['phone']))],
+            ],
+            [
+                'lead_type' => 'customer_contact',
+                'subject'   => $validated['subject'],
+            ]
+        );
         return back()
             ->with('success', 'Your message has been sent. We will contact you soon.')
             ->withInput(['_scrollTo' => 'contactForm']);
@@ -389,7 +497,13 @@ class WebController extends Controller
             ->latest()
             ->take(2)
             ->get();
-
+ $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.landowner', compact('hero', 'contactImages'));
     }
     public function landownerStore(Request $request)
@@ -449,7 +563,13 @@ class WebController extends Controller
             $i        += $chunkSize;
             $rowNum++;
         }
-
+ $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
         return view('frontend.concerns', compact('concern', 'rows', 'concernHero'));
     }
 }
