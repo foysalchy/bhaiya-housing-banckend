@@ -6,7 +6,7 @@
 <a href="/" class="z-50 flex-shrink-0">
     <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}"
         alt="{{ $setting->title ?? 'Bhaiya' }}"
-        class="  w-[180px] object-contain"
+        class="w-[130px] md:w-[180px] object-contain"
         onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
     <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
         style="font-family:'Jost',sans-serif;">
