@@ -153,11 +153,12 @@
 
  
     <div class="absolute inset-0 flex items-center px-6 sm:px-10 md:px-20" >
-        <h2 class="text-white pl-12 pt-32 font-light  "
-            style="font-size:3.85vw; line-height:1.2;letter-spacing: -4px;">
-            Where <span class="font-migra-italic">innovation</span>
-            meets <span class="font-migra-italic">quality & trust</span>
-        </h2>
+        <h2 class="text-white pl-12 pt-32 font-light"
+    style="font-size:3.85vw; line-height:1.2;"
+    :style="{ letterSpacing: window.innerWidth >= 768 ? '-4px' : '0px' }">
+    Where <span class="font-migra-italic">innovation</span>
+    meets <span class="font-migra-italic">quality & trust</span>
+</h2>
     </div>
  
 
@@ -210,58 +211,58 @@
 
         <div class="filter-bar flex flex-col sm:flex-row">
 
-            {{-- Status --}}
-            <div class="filter-item flex-1 relative">
-                <label for="filterStatus" class="sr-only">Filter by Status</label>
-                <select id="filterStatus" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
-                    style="border:none;">
-                    <option value="all">All Status</option>
-                    <option value="upcoming">Upcoming</option>
-                    <option value="ongoing">Ongoing</option>
-                    <option value="complete">Complete</option>
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                {{-- Status --}}
+                <div class="filter-item flex-1 relative">
+                    <label for="filterStatus" class="sr-only">Filter by Status</label>
+                    <select id="filterStatus" onchange="applyFilters()"
+                        class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
+                        style="border:none;">
+                        <option value="all">All Status</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="ongoing">Ongoing</option>
+                        <option value="complete">Complete</option>
+                    </select>
+                    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
 
-            {{-- Type --}}
-            <div class="filter-item flex-1 relative">
-                <label for="filterType" class="sr-only">Filter by Type</label>
-                <select id="filterType" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
-                    style="border:none;">
-                    <option value="all">All Types</option>
-                    <option value="residential">Residential</option>
-                    <option value="commercial">Commercial</option>
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                {{-- Type --}}
+                <div class="filter-item flex-1 relative">
+                    <label for="filterType" class="sr-only">Filter by Type</label>
+                    <select id="filterType" onchange="applyFilters()"
+                        class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
+                        style="border:none;">
+                        <option value="all">All Types</option>
+                        <option value="residential">Residential</option>
+                        <option value="commercial">Commercial</option>
+                    </select>
+                    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
 
-            {{-- Location --}}
-            <div class="filter-item flex-1 relative">
-                <label for="filterLocation" class="sr-only">Filter by Location</label>
-                <select id="filterLocation" onchange="applyFilters()"
-                    class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
-                    style="border:none;">
-                    <option value="all">All Locations</option>
-                    @foreach($projectLocations as $loc)
-                        <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
-                    @endforeach
-                </select>
-                <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                        <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
+                {{-- Location --}}
+                <div class="filter-item flex-1 relative">
+                    <label for="filterLocation" class="sr-only">Filter by Location</label>
+                    <select id="filterLocation" onchange="applyFilters()"
+                        class="w-full bg-transparent appearance-none text-sm font-light text-gray-700 py-3 md:py-4 pr-10 pl-4 sm:pl-6 cursor-pointer outline-none"
+                        style="border:none;">
+                        <option value="all">All Locations</option>
+                        @foreach($projectLocations as $loc)
+                            <option value="{{ strtolower($loc) }}">{{ $loc }}</option>
+                        @endforeach
+                    </select>
+                    <div class="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-gray-500">
+                        <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                            <path d="M3 5l4 4 4-4" stroke="#666" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
                 </div>
-            </div>
 
         </div>
 
@@ -275,9 +276,9 @@
         </div>
 
         {{-- Projects Grid --}}
-        <div id="projectsGrid"
-             class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12 px-20">
-        </div>
+     <div id="projectsGrid"
+     class="grid grid-cols-2 gap-x-4 lg:gap-x-8 gap-y-8 md:gap-y-12 mt-10 md:mt-12 px-4 md:px-20">
+</div>
 
         {{-- No results --}}
         <p id="noResults" class="text-center text-gray-500 py-16 hidden" style="font-weight:300;">
@@ -296,89 +297,163 @@
     </div>
 </section>
  <script>
-     const ALL_PROJECTS = @json($allProjects);
-     const PER_PAGE = 4;
-     let visibleCount = PER_PAGE;
-     let filtered = [...ALL_PROJECTS];
+    const ALL_PROJECTS = @json($allProjects);
+    const PER_PAGE = 4;
+    let visibleCount = PER_PAGE;
+    let filtered = [...ALL_PROJECTS];
 
-     // ── Project card HTML ──
-     function projectCard(p) {
-    return `
-    <a href="${p.url}" class="block group  ">
+    // ── Helper to safely extract project Status ──
+    function getStatus(p) {
+        // যদি সরাসরি p.status এ টেক্সট থাকে (যেমন 'ongoing')
+        if (typeof p.status === 'string' && p.status !== '1' && p.status !== '0') {
+            return p.status;
+        }
+        // নতুবা JSON extra ফিল্ড চেক করবে
+        let extra = {};
+        if (typeof p.extra === 'string') {
+            try { extra = JSON.parse(p.extra); } catch(e) {}
+        } else if (p.extra) {
+            extra = p.extra;
+        }
+        return extra.status || '';
+    }
 
-      <div class="group cursor-pointer pl-4 md:pl-10">
+    // ── Helper to safely extract project Type ──
+    function getType(p) {
+        if (p.type) return p.type;
+        return p.short || ''; // 'short' কলামে Residential/Commercial টাইপ থাকলে
+    }
 
-    <!-- Image Wrapper -->
-    <div class="overflow-hidden mb-4 h-[350px] md:h-[600px] w-full">
+    // ── Project card HTML ──
+    function projectCard(p) {
+        return `
+        <a href="${p.url}" class="block group">
+            <div class="group cursor-pointer pl-4 md:pl-10">
+                <!-- Image Wrapper -->
+                <div class="overflow-hidden mb-4 h-[350px] md:h-[600px] w-full">
+                    <img
+                        src="${p.img}"
+                        alt="${p.title}"
+                        class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
+                        onerror="this.parentElement.style.background='#c8bfb0'; this.style.display='none';"
+                    />
+                </div>
+                
+                <!-- Text -->
+                <div class="px-2 md:px-0">
+                    <h3 class="text-lg md:text-xl font-medium text-gray-900">
+                        ${p.title}
+                    </h3>
+                    <p class="text-sm text-gray-500 mt-1">
+                        ${p.location ?? ''}
+                    </p>
+                </div>
+            </div>
+        </a>`;
+    }
 
-        <img
-            src="${p.img}"
-            alt="${p.title}"
-            class="w-full h-full object-cover transition-transform duration-700 ease-in-out group-hover:scale-105"
-            onerror="this.parentElement.style.background='#c8bfb0'; this.style.display='none';"
-        />
+    // ── Grid render ──
+    function renderGrid() {
+        const grid = document.getElementById('projectsGrid');
+        const noRes = document.getElementById('noResults');
+        const loadWrap = document.getElementById('loadMoreWrap');
 
-    </div>
-     
-    <!-- Text (optional) -->
-    <div class="px-2 md:px-0">
-        <h3 class="text-lg md:text-xl font-medium text-gray-900">
-            ${p.title}
-        </h3>
+        const slice = filtered.slice(0, visibleCount);
 
-        <p class="text-sm text-gray-500 mt-1">
-            ${p.location ?? ''}
-        </p>
-    </div>
+        if (filtered.length === 0) {
+            grid.innerHTML = '';
+            noRes.classList.remove('hidden');
+            loadWrap.classList.add('hidden');
+            return;
+        }
 
-</div>
+        noRes.classList.add('hidden');
+        grid.innerHTML = slice.map(projectCard).join('');
+        loadWrap.classList.toggle('hidden', visibleCount >= filtered.length);
+    }
 
-    </a>`;
-}
-     // ── Grid render ──
-     function renderGrid() {
-         const grid = document.getElementById('projectsGrid');
-         const noRes = document.getElementById('noResults');
-         const loadWrap = document.getElementById('loadMoreWrap');
+    // ── Update Location Dropdown options dynamically ──
+    function updateLocationDropdown() {
+        const selectedStatus = document.getElementById('filterStatus').value.toLowerCase();
+        const selectedType = document.getElementById('filterType').value.toLowerCase();
+        const locationSelect = document.getElementById('filterLocation');
+        const currentlySelectedLocation = locationSelect.value.toLowerCase();
 
-         const slice = filtered.slice(0, visibleCount);
+        const filteredLocations = new Set();
 
-         if (filtered.length === 0) {
-             grid.innerHTML = '';
-             noRes.classList.remove('hidden');
-             loadWrap.classList.add('hidden');
-             return;
-         }
+        ALL_PROJECTS.forEach(project => {
+            const projectStatus = getStatus(project).toLowerCase();
+            const projectType = getType(project).toLowerCase();
 
-         noRes.classList.add('hidden');
-         grid.innerHTML = slice.map(projectCard).join('');
-         loadWrap.classList.toggle('hidden', visibleCount >= filtered.length);
-     }
+            // স্ট্যাটাস এবং টাইপ ম্যাচ করছে কিনা যাচাই
+            const matchesStatus = (selectedStatus === 'all' || projectStatus === selectedStatus);
+            const matchesType = (selectedType === 'all' || projectType.includes(selectedType));
 
-     // ── Filter apply ──
-     function applyFilters() {
-         const status = document.getElementById('filterStatus').value;
-         const type = document.getElementById('filterType').value;
-         const location = document.getElementById('filterLocation').value;
+            if (matchesStatus && matchesType && project.location) {
+                filteredLocations.add(project.location);
+            }
+        });
 
-         filtered = ALL_PROJECTS.filter(p => {
-             const matchStatus = status === 'all' || p.status === status;
-             const matchType = type === 'all' || p.type.includes(type);
-             const matchLocation = location === 'all' || p.location.toLowerCase().includes(location);
-             return matchStatus && matchType && matchLocation;
-         });
+        // ড্রপডাউন খালি করে "All Locations" এবং রি-ফিল্টার করা লোকেশনগুলো সেট করা
+        locationSelect.innerHTML = '<option value="all">All Locations</option>';
 
-         visibleCount = PER_PAGE;
-         renderGrid();
-     }
+        let locationStillExists = false;
 
-     // ── Load More ──
-     function loadMore() {
-         visibleCount += PER_PAGE;
-         renderGrid();
-     }
+        filteredLocations.forEach(loc => {
+            const locValue = loc.toLowerCase();
+            const option = document.createElement('option');
+            option.value = locValue;
+            option.textContent = loc;
 
-     // ── Page load-এ প্রথমবার render ──
-     renderGrid();
- </script>
+            // যদি আগের সিলেক্ট করা লোকেশনটি এখনও ফিল্টারে থাকে, সেটি সিলেক্টেড থাকবে
+            if (locValue === currentlySelectedLocation) {
+                option.selected = true;
+                locationStillExists = true;
+            }
+            locationSelect.appendChild(option);
+        });
+
+        // যদি আগের সিলেক্ট করা লোকেশনটি ফিল্টারে না থাকে, তবে ড্রপডাউন 'all' এ রিসেট হবে
+        if (!locationStillExists && currentlySelectedLocation !== 'all') {
+            locationSelect.value = 'all';
+        }
+    }
+
+    // ── Filter apply (ডুপ্লিকেট রিমুভ করে দুটিকে মার্জ করা হয়েছে) ──
+    function applyFilters() {
+        // ১. আগে স্ট্যাটাস ও টাইপ অনুযায়ী লোকেশন ড্রপডাউন পরিবর্তন করা হবে
+        updateLocationDropdown();
+
+        // ২. ড্রপডাউনের বর্তমান সিলেক্টেড ভ্যালুগুলো সংগ্রহ করা
+        const status = document.getElementById('filterStatus').value.toLowerCase();
+        const type = document.getElementById('filterType').value.toLowerCase();
+        const location = document.getElementById('filterLocation').value.toLowerCase();
+
+        // ৩. ফাইনাল প্রোজেক্ট ফিল্টারিং
+        filtered = ALL_PROJECTS.filter(p => {
+            const projectStatus = getStatus(p).toLowerCase();
+            const projectType = getType(p).toLowerCase();
+            const projectLoc = (p.location || '').toLowerCase();
+
+            const matchStatus = status === 'all' || projectStatus === status;
+            const matchType = type === 'all' || projectType.includes(type);
+            const matchLocation = location === 'all' || projectLoc.includes(location);
+
+            return matchStatus && matchType && matchLocation;
+        });
+
+        visibleCount = PER_PAGE;
+        renderGrid();
+    }
+
+    // ── Load More ──
+    function loadMore() {
+        visibleCount += PER_PAGE;
+        renderGrid();
+    }
+
+    // ── Page load-এ প্রথমবার ড্রপডাউন ও গ্রিড সিঙ্ক করা ──
+    updateLocationDropdown();
+    renderGrid();
+</script>
  @endsection

@@ -1,5 +1,5 @@
 <!-- ── Header ── -->
-<header id="site-header" class="fixed top-0 left-0 w-full z-50  py-4 md:py-6"
+<header id="site-header" class="fixed top-0 left-0 w-full z-50  py-4 md:py-6 p-4 md:p-0"
     style="transition: transform 0.4s ease, background 0.4s ease; transform: translateZ(0); z-index: 50;">
     <div class="container  flex items-center justify-between mx-auto m-auto">
     <!-- Logo -->

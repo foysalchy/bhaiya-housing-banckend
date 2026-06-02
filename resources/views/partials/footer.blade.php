@@ -1,27 +1,166 @@
 <footer class="w-full relative z-10 mt-0 pt-0" style="background:#0f2018;">
 
   <style>
-    .head-office-address, .head-office-address * {
-      color: white !important;
-      transition: color 0.3s ease;
+    /* ─── ১. মোবাইল ভিউ সিএসএস (শুধুমাত্র মোবাইলের জন্য) ─── */
+    @media (max-width: 1023px) {
+      .mobile-nav-link {
+        font-size: 24px !important;
+        font-weight: 300 !important;
+        color: #ffffff !important;
+        text-decoration: none !important;
+        transition: color 0.3s ease, padding-left 0.3s ease;
+      }
+      .mobile-nav-link:hover {
+        color: #C0A46F !important;
+        padding-left: 6px;
+      }
+      .mobile-corp-address,
+      .mobile-corp-address *,
+      .mobile-head-office-address,
+      .mobile-head-office-address * {
+        color: #C0A46F !important; /* গোল্ডেন কালার */
+        font-size: 18px !important;
+        font-weight: 300 !important;
+        line-height: 1.7 !important;
+        transition: color 0.3s ease;
+      }
+      .mobile-corp-address:hover,
+      .mobile-corp-address:hover *,
+      .mobile-head-office-address:hover,
+      .mobile-head-office-address:hover * {
+        color: #ffffff !important;
+      }
+      
+      /* আইকনের শেইপ নিখুঁত রাখার জন্য fill: currentColor রিমুভ করা হয়েছে */
+      .mobile-social-link svg, 
+      .mobile-social-link i {
+        width: 24px !important;
+        height: 24px !important;
+        font-size: 24px !important;
+        display: inline-block;
+        vertical-align: middle;
+        transition: transform 0.3s ease, color 0.3s ease;
+      }
+      .mobile-social-link:hover svg,
+      .mobile-social-link:hover i {
+        color: #C0A46F !important;
+        transform: scale(1.15);
+      }
     }
-    .head-office-address:hover, .head-office-address:hover * {
-      color: #C0A46F !important;
-    }
-    .corp-address, .corp-address * {
-      color: white !important;
-      transition: color 0.3s ease;
-    }
-    .corp-address:hover, .corp-address:hover * {
-      color: #C0A46F !important;
-    }
-    .cc .text-sm{
-      font-size:17px !important
+
+    /* ─── ২. ডেস্কটপ ভিউ সিএসএস (প্রথম প্রম্পটের অরিজিনাল স্টাইল) ─── */
+    @media (min-width: 1024px) {
+      .desktop-corp-address,
+      .desktop-corp-address *,
+      .desktop-head-office-address,
+      .desktop-head-office-address * {
+        color: white !important;
+        transition: color 0.3s ease;
+      }
+      .desktop-corp-address:hover,
+      .desktop-corp-address:hover *,
+      .desktop-head-office-address:hover,
+      .desktop-head-office-address:hover * {
+        color: #C0A46F !important;
+      }
+      .cc .text-sm {
+        font-size: 17px !important;
+      }
+      .desktop-social-link svg,
+      .desktop-social-link i {
+        width: 20px !important;
+        height: 20px !important;
+        font-size: 20px !important;
+        display: inline-block;
+        vertical-align: middle;
+        transition: opacity 0.2s;
+      }
     }
   </style>
 
   <div class="container mx-auto px-6 lg:px-14 pt-16 pb-10">
-    <div class="flex flex-col lg:flex-row lg:items-stretch gap-12 lg:gap-20">
+    
+    <!-- ================================================================= -->
+    <!-- ─── ১. মোবাইল ভিউ (lg:hidden) ─── -->
+    <!-- ================================================================= -->
+    <div class="lg:hidden">
+      
+      <!-- Top Row: Navigation Left + Socials Right -->
+      <div class="flex justify-between items-start gap-6 mb-10">
+        <!-- Navigation Menu -->
+        <nav class="flex flex-col gap-6">
+          <a href="/about" class="mobile-nav-link">About Us</a>
+          <a href="/projects" class="mobile-nav-link">Projects</a>
+          <a href="/news" class="mobile-nav-link">Events &amp; News</a>
+          <a href="/contact" class="mobile-nav-link">Contacts</a>
+          @foreach($pages as $page)
+          <a href="{{ route('page.show', $page->name) }}" class="mobile-nav-link">
+            {{ $page->title }}
+          </a>
+          @endforeach
+        </nav>
+
+        <!-- Social Icons (ডান পাশে ফাঁকা অংশসহ অরিজিনাল আইকন শেইপ দেখাবে) -->
+        @if($socials->isNotEmpty())
+        <div class="flex flex-col gap-8 pt-2 items-center">
+          @foreach($socials as $social)
+          <a href="{{ $social->url }}" target="_blank" rel="noopener"
+            aria-label="{{ $social->title ?? $social->name }}"
+            class="mobile-social-link text-white opacity-85 hover:opacity-100">
+            {!! $social->short !!}
+          </a>
+          @endforeach
+        </div>
+        @endif
+      </div>
+
+      <!-- Horizontal Divider Line -->
+      <div class="w-full h-[1px] bg-white/20 mb-10"></div>
+
+      <!-- Contact Info Section -->
+      <div class="space-y-8 text-left">
+        @if($setting?->extra)
+        <p class="text-white text-[20px] font-normal tracking-wide transition-colors duration-300 hover:text-[#C0A46F]">
+          <a href="tel:{{ preg_replace('/[^0-9+]/', '', $setting->extra) }}" class="no-underline text-white hover:text-[#C0A46F]">
+            {{ $setting->extra }}
+          </a>
+        </p>
+        @endif
+
+        @if($setting?->short)
+        <p class="text-white text-[20px] font-light transition-colors duration-300 hover:text-[#C0A46F]">
+          <a href="mailto:{{ $setting->short }}" class="no-underline text-white hover:text-[#C0A46F]">
+            {{ $setting->short }}
+          </a>
+        </p>
+        @endif
+
+        @if($setting?->body_2)
+        <div>
+          <p class="text-white text-lg font-medium mb-1.5">Corporate Office:</p>
+          <div class="mobile-corp-address">
+            {!! $setting->body_2 !!}
+          </div>
+        </div>
+        @endif
+
+        @if($setting?->body)
+        <div>
+          <p class="text-white text-lg font-medium mb-1.5">Head Office:</p>
+          <div class="mobile-head-office-address">
+            {!! $setting->body !!}
+          </div>
+        </div>
+        @endif
+      </div>
+
+    </div>
+
+
+    <!-- ================================================================= -->
+    <!-- ─── ২. ডেস্কটপ ভিউ (hidden lg:flex) ─── -->
+    <!-- ================================================================= -->
+    <div class="hidden lg:flex lg:flex-row lg:items-stretch gap-12 lg:gap-20">
 
       <!-- ── Left: Logo + Contact ── -->
       <div class="w-full lg:max-w-sm cc">
@@ -57,7 +196,7 @@
         @if($setting?->body_2)
         <div class="mb-5">
           <p class="text-white text-sm font-medium mb-1">Corporate Office:</p>
-          <div class="corp-address text-sm font-light leading-relaxed">
+          <div class="desktop-corp-address text-sm font-light leading-relaxed">
             {!! $setting->body_2 !!}
           </div>
         </div>
@@ -67,19 +206,20 @@
         @if($setting?->body)
         <div class="mb-8">
           <p class="text-white text-sm font-medium mb-1">Head Office:</p>
-          <div class="head-office-address text-sm font-light leading-relaxed">
+          <div class="desktop-head-office-address text-sm font-light leading-relaxed">
             {!! $setting->body !!}
           </div>
         </div>
         @endif
 
-        <!-- Social Icons -->
+        <!-- Social Icons (Desktop: Horizontal) -->
         @if($socials->isNotEmpty())
         <div class="flex items-center gap-5 mt-2">
           @foreach($socials as $social)
           <a href="{{ $social->url }}" target="_blank" rel="noopener"
             aria-label="{{ $social->title ?? $social->name }}"
-            class="text-white opacity-60 hover:opacity-100 transition-opacity duration-200">
+            class="desktop-social-link text-white opacity-60 hover:opacity-100 transition-opacity duration-200">
+            {!! $social->short !!}
           </a>
           @endforeach
         </div>
@@ -104,10 +244,18 @@
           <a href="/projects" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Projects</a>
           <a href="/news" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Events &amp; News</a>
           <a href="/contact" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Contacts</a>
+          @foreach($pages as $page)
+          <a href="{{ route('page.show', $page->name) }}"
+            class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">
+            {{ $page->title }}
+          </a>
+          @endforeach
         </nav>
 
       </div>
+
     </div>
+
   </div>
 
   <!-- ── Bottom Bar ── -->
@@ -117,12 +265,7 @@
         &copy; {{ date('Y') }} {{ $setting?->title ?? 'Bhaiya Housing Ltd.' }}
       </p>
       <p class="flex items-center gap-2 text-white text-xs font-light">
-        Site by Bhaiya Digital
-        <span class="w-4 h-4 rounded-full bg-indigo-600 flex items-center justify-center">
-          <svg width="6" height="6" viewBox="0 0 10 10" fill="white">
-            <circle cx="5" cy="5" r="4" />
-          </svg>
-        </span>
+        Site by <a href="https://www.bhaiya.digital/" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#C0A46F]">Bhaiya Digital</a>
       </p>
     </div>
   </div>

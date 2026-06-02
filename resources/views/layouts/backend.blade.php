@@ -10,6 +10,7 @@
   <meta name="color-scheme" content="light dark" />
   <meta name="theme-color" content="#007bff" media="(prefers-color-scheme: light)" />
   <meta name="theme-color" content="#1a1a1a" media="(prefers-color-scheme: dark)" />
+  <link rel="icon" type="image/webp" href="{{ asset('assets/images/fav.webp') }}">
 
   <link rel="preload" href="{{asset('/')}}backend/css/adminlte.css" as="style" />
   <!--end::Accessibility Features-->
@@ -92,7 +93,7 @@
 
           <!--end::Brand Image-->
           <!--begin::Brand Text-->
-          <span class="brand-text fw-light">Saltbay Admin Portal</span>
+          <span class="brand-text fw-light">Bhaiya Housing </span>
           <!--end::Brand Text-->
         </a>
         <!--end::Brand Link-->
@@ -202,7 +203,13 @@
                 <p>Contact</p>
               </a>
             </li>
-            
+            <li class="nav-item">
+              <a href="{{route('job.applications.index')}}" class="nav-link">
+                <i class="nav-icon bi bi-circle text-info"></i>
+                <p>Job Applications</p>
+              </a>
+            </li>
+
 
             <li class="nav-item">
               <a href="#" class="nav-link" href="{{ route('logout') }}" onclick="event.preventDefault();  document.getElementById('logout-form').submit();">

@@ -312,107 +312,140 @@ $jobSchemas[] = [
     </section>
    
     <!-- Apply For A Role Section -->
-    <section class="relative w-full overflow-hidden py-20" style="background:#1B281F;">
+<!-- Apply For A Role Section (id="apply-job-section" যোগ করা হয়েছে) -->
+<section id="apply-job-section" class="relative w-full overflow-hidden py-20" style="background:#1B281F;">
 
-        <div class="absolute inset-0 pointer-events-none z-0">
-            <img src="{{ asset('images/form-bg.png') }}" alt=""
-                class="w-full h-full object-cover opacity-20"
-                onerror="this.style.display='none';">
+    <div class="absolute inset-0 pointer-events-none z-0">
+        <img src="{{ asset('images/form-bg.png') }}" alt=""
+            class="w-full h-full object-cover opacity-20"
+            onerror="this.style.display='none';">
+    </div>
+
+    <div class="relative z-10 container mx-auto px-6 lg:px-14">
+
+        <h2 class="text-white font-semibold mb-14"
+            style="font-size:clamp(36px,6vw,80px); font-weight:600; letter-spacing:-0.01em;">
+            Apply For A Role
+        </h2>
+
+        <!-- Success Message -->
+        @if(session('success'))
+        <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded mb-8">
+            {{ session('success') }}
         </div>
+        @endif
 
-        <div class="relative z-10 container mx-auto px-6 lg:px-14">
+        <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data" class="space-y-10">
+            @csrf
 
-            <h2 class="text-white font-semibold mb-14"
-                style="font-size:clamp(36px,6vw,80px); font-weight:600; letter-spacing:-0.01em;">
-                Apply For A Role
-            </h2>
+            <!-- Row 1: Full Name + Mobile -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                <!-- Name -->
+                <div>
+                    <div style="border-bottom:1px solid {{ $errors->has('name') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                        <input type="text" name="name" placeholder="Your Full Name*" value="{{ old('name') }}"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                    @error('name')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
+                </div>
 
-            @if(session('success'))
-            <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded mb-8">
-                {{ session('success') }}
+                <!-- Phone -->
+                <div>
+                    <div style="border-bottom:1px solid {{ $errors->has('phone') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                        <input type="tel" name="phone" placeholder="Your Mobile Number*" value="{{ old('phone') }}"
+                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+                    </div>
+                    @error('phone')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
+                </div>
             </div>
-            @endif
 
-            <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data"
-                class="space-y-10">
-                @csrf
-
-                <!-- Row 1: Full Name + Mobile -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-                        <input type="text" name="name" placeholder="Your Full Name*"
+            <!-- Row 2: Email + Subject -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
+                <!-- Email -->
+                <div>
+                    <div style="border-bottom:1px solid {{ $errors->has('email') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                        <input type="email" name="email" placeholder="Your Email Address*" value="{{ old('email') }}"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-                        <input type="tel" name="phone" placeholder="Your Mobile Number*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
+                    @error('email')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
-                <!-- Row 2: Email + Subject -->
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-10">
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-                        <input type="email" name="email" placeholder="Your Email Address*"
+                <!-- Subject -->
+                <div>
+                    <div style="border-bottom:1px solid {{ $errors->has('subject') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                        <input type="text" name="subject" placeholder="Write Your Subject*" value="{{ old('subject') }}"
                             class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
                     </div>
-                    <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
-                        <input type="text" name="subject" placeholder="Write Your Subject*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
+                    @error('subject')
+                        <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
+            </div>
 
-                <!-- Row 3: Job Select -->
-                <div style="border-bottom:1px solid rgba(255,255,255,0.25);">
+            <!-- Row 3: Job Select -->
+            <div>
+                <div style="border-bottom:1px solid {{ $errors->has('content_id') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
                     <label for="job_position" class="sr-only">Select a Position</label>
                     <select id="job_position" name="content_id"
                         class="w-full bg-transparent text-white text-sm font-light py-3 outline-none appearance-none cursor-pointer"
                         style="background-color: transparent;">
                         <option value="" class="bg-[#1B281F] text-white/40">Select a Position*</option>
                         @foreach($jobList as $job)
-                        <option value="{{ $job->id }}" class="bg-[#1B281F] text-white">
+                        <option value="{{ $job->id }}" class="bg-[#1B281F] text-white" {{ old('content_id') == $job->id ? 'selected' : '' }}>
                             {{ $job->title }}
                         </option>
                         @endforeach
                     </select>
                 </div>
+                @error('content_id')
+                    <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                @enderror
+            </div>
 
-                <!-- Row 4: Upload Resume -->
-                <div>
-                    <div class="flex items-center gap-4 mb-4">
-                        <p class="text-white text-sm font-normal">Upload Your Resume</p>
-                        <p class="text-white/40 text-xs font-light">PDF Files Only || Max 2MB</p>
-                    </div>
-                    <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
-                        <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center transition-all duration-300 hover:border-white hover:bg-white/10">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                                <polyline points="17 8 12 3 7 8" />
-                                <line x1="12" y1="3" x2="12" y2="15" />
-                            </svg>
-                        </div>
-                        <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
-                    </label>
-                    <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
-                        onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
+            <!-- Row 4: Upload Resume -->
+            <div>
+                <div class="flex items-center gap-4 mb-4">
+                    <p class="text-white text-sm font-normal">Upload Your Resume</p>
+                    <p class="text-white/40 text-xs font-light">PDF Files Only || Max 2MB</p>
                 </div>
-
-                <!-- Submit -->
-                <div class="pt-2">
-                    <button type="submit"
-                        class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
-                        Apply Now
-                    </button>
-                </div>
-
-            </form>
-        </div>
-          <div class=" absolute pointer-events-none scroll-move z-[1000]" data-axis="Y"
-
-                        style="left:-140px; bottom:-60px;">
-                        <img src="/assets/images/overview-stone.png" alt=""
-                            style="height:220px;width: 220px; " />
+                <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
+                    <div class="w-12 h-12 rounded-full border {{ $errors->has('resume') ? 'border-red-500' : 'border-white/40' }} flex items-center justify-center transition-all duration-300 hover:border-white hover:bg-white/10">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                            <polyline points="17 8 12 3 7 8" />
+                            <line x1="12" y1="3" x2="12" y2="15" />
+                        </svg>
                     </div>
-    </section>
+                    <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
+                </label>
+                <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
+                    onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
+                @error('resume')
+                    <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <!-- Submit Button -->
+            <div class="pt-2">
+                <button type="submit"
+                    class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
+                    Apply Now
+                </button>
+            </div>
+
+        </form>
+    </div>
+    
+    <div class="absolute pointer-events-none scroll-move z-[1000]" data-axis="Y" style="left:-140px; bottom:-60px;">
+        <img src="/assets/images/overview-stone.png" alt="" style="height:220px; width: 220px;" />
+    </div>
+</section>
 
 
 </main>

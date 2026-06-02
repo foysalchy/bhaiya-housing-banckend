@@ -1,11 +1,10 @@
 <div class="relative mt-0 pt-0">
     <div>
 
-        {{-- Phone Button — $setting->extra থেকে --}}
+        {{-- Phone Button — (বাম পাশে নিচে) --}}
         @if($setting?->extra)
-        <div class="fixed lg:bottom-10 bottom-8 lg:left-20 right-2 z-40 w-fit">
+        <div class="fixed lg:bottom-10 bottom-8 lg:left-20 left-4 z-40 w-fit">
             <a href="tel:{{ preg_replace('/[^0-9+]/', '', $setting->extra) }}"
-                class="ml-[2%] md:ml-[4%]"
                 aria-label="Call: {{ $setting->extra }}">
                 <div class="relative w-12 h-12 flex items-center justify-center bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] rounded-full shadow-lg cursor-pointer overflow-hidden">
                     <svg class="text-white relative z-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
@@ -19,9 +18,9 @@
         </div>
         @endif
 
-        {{-- Chat Toggle + Socials --}}
+        {{-- Chat Toggle + Socials — (বাম পাশে, ফোনের ঠিক উপরে) --}}
         @if($socials->isNotEmpty())
-        <div class="fixed bottom-24 lg:bottom-10 lg:right-20 right-2 z-40">
+        <div class="fixed lg:bottom-26 bottom-24 lg:left-20 left-4 z-40">
             <div class="relative flex flex-col items-center gap-2">
 
                 {{-- Dynamic Social Icons --}}
@@ -66,44 +65,81 @@
         </div>
         @endif
 
+        {{-- Scroll to Top Button — (ডান পাশে নিচে) --}}
+        <button
+            id="scroll-to-top-btn"
+            type="button"
+            aria-label="Scroll to top"
+            class="fixed lg:bottom-10 bottom-8 lg:right-20 right-4 z-40 w-12 h-12 flex items-center justify-center bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] rounded-full shadow-lg border-0 p-0 cursor-pointer overflow-hidden opacity-0 translate-y-6 pointer-events-none transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2">
+            <svg class="text-white relative z-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
+                viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                <polyline points="18 15 12 9 6 15"></polyline>
+            </svg>
+            <span class="absolute inset-0 before:absolute before:top-0 before:left-[-75%] before:h-full before:w-[50%] before:bg-gradient-to-r before:from-transparent before:via-white/50 before:to-transparent before:skew-x-12 before:animate-shine" aria-hidden="true"></span>
+        </button>
+
     </div>
 </div>
 
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // --- Chat Toggle Logic ---
         const toggleBtn = document.getElementById('chat-toggle-btn');
         const chatIcons = document.getElementById('chat-icons');
-        if (!toggleBtn || !chatIcons) return;
+        if (toggleBtn && chatIcons) {
+            const chatLinks = chatIcons.querySelectorAll('a');
+            let isOpen = false;
 
-        const chatLinks = chatIcons.querySelectorAll('a');
-        let isOpen = false;
+            toggleBtn.addEventListener('click', function() {
+                isOpen = !isOpen;
+                if (isOpen) {
+                    chatIcons.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    chatIcons.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    chatIcons.setAttribute('aria-hidden', 'false');
+                    toggleBtn.setAttribute('aria-expanded', 'true');
+                    toggleBtn.setAttribute('aria-label', 'Close chat options');
+                    chatLinks.forEach(link => link.removeAttribute('tabindex'));
+                } else {
+                    chatIcons.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    chatIcons.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    chatIcons.setAttribute('aria-hidden', 'true');
+                    toggleBtn.setAttribute('aria-expanded', 'false');
+                    toggleBtn.setAttribute('aria-label', 'Open chat options');
+                    chatLinks.forEach(link => link.setAttribute('tabindex', '-1'));
+                }
+            });
 
-        toggleBtn.addEventListener('click', function() {
-            isOpen = !isOpen;
-            if (isOpen) {
-                chatIcons.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
-                chatIcons.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
-                chatIcons.setAttribute('aria-hidden', 'false');
-                toggleBtn.setAttribute('aria-expanded', 'true');
-                toggleBtn.setAttribute('aria-label', 'Close chat options');
-                chatLinks.forEach(link => link.removeAttribute('tabindex'));
-            } else {
-                chatIcons.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
-                chatIcons.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
-                chatIcons.setAttribute('aria-hidden', 'true');
-                toggleBtn.setAttribute('aria-expanded', 'false');
-                toggleBtn.setAttribute('aria-label', 'Open chat options');
-                chatLinks.forEach(link => link.setAttribute('tabindex', '-1'));
-            }
-        });
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Escape' && isOpen) {
+                    toggleBtn.click();
+                    toggleBtn.focus();
+                }
+            });
+        }
 
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape' && isOpen) {
-                toggleBtn.click();
-                toggleBtn.focus();
-            }
-        });
+        // --- Scroll to Top Logic ---
+        const scrollTopBtn = document.getElementById('scroll-to-top-btn');
+        if (scrollTopBtn) {
+            // স্ক্রল ৩০০ পিক্সেল অতিক্রম করলে বাটনটি দেখাবে
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    scrollTopBtn.classList.remove('opacity-0', 'translate-y-6', 'pointer-events-none');
+                    scrollTopBtn.classList.add('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                } else {
+                    scrollTopBtn.classList.remove('opacity-100', 'translate-y-0', 'pointer-events-auto');
+                    scrollTopBtn.classList.add('opacity-0', 'translate-y-6', 'pointer-events-none');
+                }
+            });
+
+            // বাটনে ক্লিক করলে স্মুথ স্ক্রল হয়ে উপরে যাবে
+            scrollTopBtn.addEventListener('click', function() {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
     });
 </script>
 @endpush

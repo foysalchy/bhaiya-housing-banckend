@@ -236,74 +236,112 @@ $schema['jobPosting']['experienceRequirements'] = strip_tags($job->body_3);
             </div>
 
             <!-- Right: Apply Form -->
-            <div class="relative bg-[#1B281F] p-6 sm:p-8 md:p-10">
+<div id="apply-job-section" class="relative bg-[#1B281F] p-6 sm:p-8 md:p-10">
 
-                <h2 class="text-white mb-8 md:mb-10 pl-0 sm:pl-8 md:pl-16"
-                    style="font-family: Migra, serif; font-size: clamp(24px, 4vw, 56px); font-weight: 300;">
-                    Apply For A Role
-                </h2>
+    <h2 class="text-white mb-8 md:mb-10 pl-0 sm:pl-8 md:pl-16"
+        style="font-family: Migra, serif; font-size: clamp(24px, 4vw, 56px); font-weight: 300;">
+        Apply For A Role
+    </h2>
 
-                @if(session('success'))
-                <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded mb-6">
-                    {{ session('success') }}
+    <!-- Success Message -->
+    @if(session('success'))
+    <div class="bg-green-100 text-green-700 text-sm px-4 py-3 rounded mb-6">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    <!-- General Error Message (Optional: সব ভুল একসাথে উপরে দেখানোর জন্য) -->
+    @if ($errors->any())
+    <div class="bg-red-100 text-red-700 text-sm px-4 py-3 rounded mb-6">
+        <ul class="list-disc list-inside">
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+    @endif
+
+    <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data"
+        class="space-y-6 md:space-y-8 pl-0 sm:pl-8 md:pl-16">
+        @csrf
+        <input type="hidden" name="content_id" value="{{ $job->id }}">
+        <input type="hidden" name="job_title" value="{{ $job->title }}">
+
+        <!-- Name Input -->
+        <div>
+            <div style="border-bottom: 1px solid {{ $errors->has('name') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                <input type="text" name="name" placeholder="Your Full Name*" value="{{ old('name') }}"
+                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+            </div>
+            @error('name')
+                <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Phone Input -->
+        <div>
+            <div style="border-bottom: 1px solid {{ $errors->has('phone') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                <input type="tel" name="phone" placeholder="Your Mobile Number*" value="{{ old('phone') }}"
+                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+            </div>
+            @error('phone')
+                <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Email Input -->
+        <div>
+            <div style="border-bottom: 1px solid {{ $errors->has('email') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                <input type="email" name="email" placeholder="Your Email Address*" value="{{ old('email') }}"
+                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+            </div>
+            @error('email')
+                <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Subject Input -->
+        <div>
+            <div style="border-bottom: 1px solid {{ $errors->has('subject') ? '#ef4444' : 'rgba(255,255,255,0.25)' }};">
+                <input type="text" name="subject" placeholder="Write Your Subject*" value="{{ old('subject') }}"
+                    class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
+            </div>
+            @error('subject')
+                <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <!-- Resume Upload -->
+        <div>
+            <p class="text-white text-sm font-normal mb-3">Upload Your Resume</p>
+            <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
+                <div class="w-12 h-12 rounded-full border {{ $errors->has('resume') ? 'border-red-500' : 'border-white/40' }} flex items-center justify-center hover:border-white hover:bg-white/10 transition-all flex-shrink-0">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                        <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
+                        <polyline points="17 8 12 3 7 8" />
+                        <line x1="12" y1="3" x2="12" y2="15" />
+                    </svg>
                 </div>
-                @endif
+                <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
+            </label>
+            <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
+                onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
+            <p class="text-white/60 text-xs mt-2">PDF Files Only || Max 2MB</p>
+            @error('resume')
+                <span class="text-red-400 text-xs mt-1 block">{{ $message }}</span>
+            @enderror
+        </div>
 
-                <form action="{{ route('job.apply') }}" method="POST" enctype="multipart/form-data"
-                    class="space-y-6 md:space-y-8 pl-0 sm:pl-8 md:pl-16">
-                    @csrf
-                    <input type="hidden" name="content_id" value="{{ $job->id }}">
-                    <input type="hidden" name="job_title" value="{{ $job->title }}">
+        <button type="submit"
+            class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
+            Apply Now
+        </button>
 
-                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
-                        <input type="text" name="name" placeholder="Your Full Name*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
-                        <input type="tel" name="phone" placeholder="Your Mobile Number*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
-                        <input type="email" name="email" placeholder="Your Email Address*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
-
-                    <div style="border-bottom: 1px solid rgba(255,255,255,0.25);">
-                        <input type="text" name="subject" placeholder="Write Your Subject*"
-                            class="w-full bg-transparent text-white text-sm font-light py-3 outline-none placeholder-white/40">
-                    </div>
-
-                    <!-- Resume Upload -->
-                    <div>
-                        <p class="text-white text-sm font-normal mb-3">Upload Your Resume</p>
-                        <label for="resumeUpload" class="flex items-center gap-3 cursor-pointer w-fit">
-                            <div class="w-12 h-12 rounded-full border border-white/40 flex items-center justify-center hover:border-white hover:bg-white/10 transition-all flex-shrink-0">
-                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
-                                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4" />
-                                    <polyline points="17 8 12 3 7 8" />
-                                    <line x1="12" y1="3" x2="12" y2="15" />
-                                </svg>
-                            </div>
-                            <span id="fileLabel" class="text-white text-sm font-light opacity-70">Attach Your Resume*</span>
-                        </label>
-                        <input type="file" id="resumeUpload" name="resume" accept=".pdf" class="hidden"
-                            onchange="document.getElementById('fileLabel').textContent = this.files[0]?.name || 'Attach Your Resume*'">
-                        <p class="text-white/60 text-xs mt-2">PDF Files Only || Max 2MB</p>
-                    </div>
-
-                    <button type="submit"
-                        class="px-10 py-3 border border-white text-white text-sm font-light tracking-widest transition-all duration-300 hover:bg-white hover:text-gray-900">
-                        Apply Now
-                    </button>
-
-                    <p class="text-white/60 text-xs leading-relaxed">
-                        By applying for this job listing, you agree to our Data Privacy Policy for recruitment and job applications.
-                    </p>
-                </form>
-
-            </div>{{-- /form card — NO overflow-hidden here --}}
+        <p class="text-white/60 text-xs leading-relaxed">
+            By applying for this job listing, you agree to our Data Privacy Policy for recruitment and job applications.
+        </p>
+    </form>
+</div>{{-- /form card — NO overflow-hidden here --}}
 
         </div>
     </div>

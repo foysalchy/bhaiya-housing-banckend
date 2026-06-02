@@ -135,7 +135,7 @@
      <div class="absolute inset-0 bg-black/50"></div>
  
      <div class="absolute inset-0 flex items-center px-10 md:px-20">
-         <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2; font-weight:500; letter-spacing: -4px;">
+         <h2 class="text-white font-light md:pl-12 md:pt-32" style="font-size:3.85vw; line-height:1.2; font-weight:500;" >
              We're here to assist you <br> with <span class="font-migra-italic">any inquiries</span>
 
          </h2>
@@ -233,17 +233,7 @@
                      <span style=" font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045);  letter-spacing: 4px; white-space:nowrap;">GetIn</span>
 
                  </div>
-                 {{-- ── Success Message ── --}}
-                 @if(session('success'))
-                 <div id="successMsg"
-                     class="flex items-center gap-3 mb-6 px-5 py-4 text-sm font-light"
-                     style="background:#e6f0e7; border-left:3px solid #152018; color:#152018;">
-                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                         <polyline points="20 6 9 17 4 12" />
-                     </svg>
-                     {{ session('success') }}
-                 </div>
-                 @endif
+            
 
                  <form id="contactForm"
                      action="{{ route('contact.store') }}"
@@ -316,6 +306,17 @@
                          <span style="font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>
                      </div>
                  </form>
+                      {{-- ── Success Message ── --}}
+                 @if(session('success'))
+                 <div id="successMsg"
+                     class="flex items-center gap-3 mt-6 px-5 py-4 text-sm font-light"
+                     style="background:#e6f0e7; border-left:3px solid #152018; color:#152018;">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                         <polyline points="20 6 9 17 4 12" />
+                     </svg>
+                     {{ session('success') }}
+                 </div>
+                 @endif
              </div>
          </div>
      </div>

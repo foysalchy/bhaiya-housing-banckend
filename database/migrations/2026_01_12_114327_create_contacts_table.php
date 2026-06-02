@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('phone');
             $table->string('locality')->nullable();
             $table->string('land_category')->nullable();
+            $table->string('subject')->nullable();
             $table->string('address')->nullable();
             $table->text('message');
             $table->boolean('is_read')->default(false); 

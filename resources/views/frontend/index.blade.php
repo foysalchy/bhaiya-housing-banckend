@@ -1242,7 +1242,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                         style="font-size: 20px">
                         {{ $partners->short ?? 'Contact as Landowner' }}
                     </h3>
-                    <p class="text-sm font-light leading-relaxed text-gray-500 max-w-xs">
+                    <p class="text-sm font-light leading-relaxed text-[#6A6A6A]" style="font-size: 18px;">
                         {!! $partners->body ?? 'Partner with us to transform your property into a landmark development.' !!}
                     </p>
                 </div>

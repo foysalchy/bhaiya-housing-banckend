@@ -174,23 +174,26 @@ $schema = [
     }
 </style>
 
-<section class="relative w-full" style="min-height: 400px; height: clamp(400px, 45vw, 560px); margin: 0; padding: 0; left: 0; position: relative;">
+<section class="relative w-full" style="min-height: 500px; height: clamp(400px, 45vw, 560px); margin: 0; padding: 0; left: 0; position: relative;">
     <img src="{{ asset($about->img_path ?? '') }}" alt="{{ $about->title ?? 'About' }}"
         class="absolute inset-0 w-full h-full object-cover object-center" />
     <div class="absolute inset-0 bg-black/55"></div>
 
-    <div class="container m-auto mx-auto absolute inset-0 flex flex-col justify-center"
-        style="padding-top: 88px;  ">
+    <div class="container m-auto mx-auto absolute inset-0 flex flex-col justify-center p-4 md:p-0"
+        style="padding-top: 88px;" >
 
         <h2 data-aos="fade-up" data-aos-duration="1000"
             class="text-white leading-tight"
-            style="font-size: clamp(22px, 4.5vw, 72px);">
+            style="font-size: clamp(22px, 4.5vw, 72px);"
+                :style="{ letterSpacing: window.innerWidth >= 768 ? '-4px' : '0px' }">
+
+            
             Building <span class="font-migra-italic">quality</span> spaces with
             <span class="font-migra-italic">excellence & dedication</span>
         </h2>
 
         @if ($about->body || $about->body_2)
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-12 mb-8 md:mb-16">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-12 mb-8 md:mb-16 p-4 md:p-0">
             @if ($about->body)
             <div data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
                 <style>

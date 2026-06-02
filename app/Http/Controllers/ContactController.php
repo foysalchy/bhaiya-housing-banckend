@@ -14,17 +14,24 @@ class ContactController extends Controller
 
         $contacts = Contact::query()
             ->when($type !== 'all', fn($q) => $q->where('type', $type))
+              ->orderBy('is_read', 'asc') 
             ->latest()
             ->get();
 
         return view('backend.contactList', compact('contacts', 'type'));
     }
 
-    public function toggleRead(Contact $contact)
-    {
-        $contact->update(['is_read' => !$contact->is_read]);
+// ContactController.php
 
-        return back()->with('success', 'Contact status updated.');
+    public function markAsRead($id)
+    {
+       $contact = Contact::find($id);
+    
+    if ($contact && !$contact->is_read) {
+        $contact->update(['is_read' => true]);
+    }
+
+    return response()->json(['success' => true]);
     }
 
     public function destroy(Contact $contact)

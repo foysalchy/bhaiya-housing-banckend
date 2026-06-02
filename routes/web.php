@@ -5,6 +5,7 @@ use Spatie\Sitemap\Tags\Url;
 use App\Models\Content;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\JobApplicationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\HomeController;
@@ -33,9 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/contents/update', [App\Http\Controllers\ContentController::class, 'update'])->name('content.update');
     Route::delete('/contents/destroy/{type}/{id}', [App\Http\Controllers\ContentController::class, 'destroy'])->name('content.destroy');
     Route::get('contacts',              [ContactController::class, 'index'])->name('contacts.index');
-    Route::patch('contacts/{contact}/toggle-read', [ContactController::class, 'toggleRead'])->name('contacts.toggle-read');
+    Route::post('/contacts/{id}/mark-read', [ContactController::class, 'markAsRead'])->name('contacts.mark-read');
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
-
+    Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job.applications.index');
+    Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('job.applications.destroy');
 });
 
 
@@ -47,6 +49,7 @@ Route::post('/career/apply', [WebController::class, 'applyJob'])->name('job.appl
 Route::get('/projects', [WebController::class, 'projects'])->name('projects');
 Route::get('/projects/{id}', [WebController::class, 'showProject'])->name('projects.show');
 Route::get('/events', [WebController::class, 'events'])->name('events');
+Route::get('/page/{slug}', [WebController::class, 'page'])->name('page.show');
 
 Route::get('/customer-contact',        [WebController::class, 'customerContact'])->name('contact');
 Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store');
@@ -55,5 +58,3 @@ Route::post('/landowner-contact/store', [WebController::class, 'landownerStore']
 Route::get('/concerns', [WebController::class, 'concerns'])->name('concerns');
 Route::get('/news/{id}',   [WebController::class, 'show'])->name('news.show');
 Route::get('/events/{id}', [WebController::class, 'show'])->name('events.show');
-
-

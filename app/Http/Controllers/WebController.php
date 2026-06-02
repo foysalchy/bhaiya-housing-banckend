@@ -199,23 +199,34 @@ class WebController extends Controller
 
         return view('frontend.careerDetails', compact('job'));
     }
-   public   function trackFacebook($event, $userData = [], $customData = [])
+    public   function trackFacebook($event, $userData = [], $customData = [])
     {
         return app(FacebookConversionApi::class)
             ->sendEvent($event, $userData, $customData);
     }
 
+
     public function applyJob(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'       => 'required|string|max:100',
-            'phone'      => 'required|string|max:20',
+            'phone'      =>  [
+                'required',
+                'string',
+                'regex:/^(?:\+?880|0)1[3-9]\d{8}$/',
+            ],
             'email'      => 'required|email|max:100',
             'subject'    => 'required|string|max:200',
             'resume'     => 'required|file|mimes:pdf|max:2048',
             'content_id' => 'required|exists:contents,id',
         ]);
-        
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('apply-job-section');
+        }
 
         if ($request->hasFile('resume')) {
             $file = $request->file('resume');
@@ -233,6 +244,7 @@ class WebController extends Controller
             'subject'    => $request->subject,
             'resume'     => $finalPath,
         ]);
+
         $this->trackFacebook(
             'Lead',
             [
@@ -244,13 +256,15 @@ class WebController extends Controller
             ]
         );
 
-        return back()->with('success', 'Application submitted successfully!');
+        return redirect()->back()
+            ->withFragment('apply-job-section')
+            ->with('success', 'Application submitted successfully!');
     }
 
 
     public function pageShow($slug)
     {
-         $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -272,7 +286,7 @@ class WebController extends Controller
         $dreams = $this->fetchContent('building-dreams-for-decades', 1);
         // img_paths JSON decode
         $extraImages = json_decode($dreams->img_paths ?? '[]', true);
-        $featuredProjects = $this->fetchContent('project');
+        $featuredProjects = $this->fetchContent('project', 5);
         $expertise = $this->fetchContent('years-of-expertise', 1);
         $storiesSection = $this->fetchContent('stories-of-satisfaction', 1);
         $storiesItems = Content::where('type', 'stories-item')->where('status', 1)->get()
@@ -289,7 +303,7 @@ class WebController extends Controller
             ->take(6)
             ->get();
         $partners = $this->fetchContent('partners', 1);
-         $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -388,7 +402,7 @@ class WebController extends Controller
                     : null,
                 'url' => '/' . $item->type . '/' . $item->id,
             ])->values();
-             $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -396,6 +410,23 @@ class WebController extends Controller
             ]
         );
         return view('frontend.event', compact('eventHero', 'newsEvents'));
+    }
+    public function page($slug)
+    {
+        $page = Content::where('type', 'pages')
+            ->where('name', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
+
+        return view('frontend.page', compact('page'));
     }
     public function show($id)
     {
@@ -412,7 +443,7 @@ class WebController extends Controller
             ->orderBy('start_date', 'desc')
             ->take(3)
             ->get();
- $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -433,7 +464,7 @@ class WebController extends Controller
             ->latest()
             ->take(2)
             ->get();
- $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -497,7 +528,7 @@ class WebController extends Controller
             ->latest()
             ->take(2)
             ->get();
- $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
@@ -563,7 +594,7 @@ class WebController extends Controller
             $i        += $chunkSize;
             $rowNum++;
         }
- $this->facebook->sendEvent(
+        $this->facebook->sendEvent(
             'PageView',
             [
                 'client_ip_address' => request()->ip(),
