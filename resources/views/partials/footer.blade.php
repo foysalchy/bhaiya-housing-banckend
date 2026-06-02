@@ -265,7 +265,7 @@
         &copy; {{ date('Y') }} {{ $setting?->title ?? 'Bhaiya Housing Ltd.' }}
       </p>
       <p class="flex items-center gap-2 text-white text-xs font-light">
-        Site by <a href="https://www.bhaiya.digital/" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#C0A46F]">Bhaiya Digital</a>
+    Design & Develop By  <a href="https://www.bhaiya.digital/" target="_blank" rel="noopener noreferrer" class="text-white hover:text-[#C0A46F]">Bhaiya Digital</a>
       </p>
     </div>
   </div>

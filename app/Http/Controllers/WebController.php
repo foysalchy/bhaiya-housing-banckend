@@ -307,6 +307,7 @@ class WebController extends Controller
             ->take(6)
             ->get();
         $partners = $this->fetchContent('partners', 1);
+        
         $this->facebook->sendEvent(
             'PageView',
             [

@@ -321,41 +321,39 @@ $schema = [
         </div><!-- end image grid -->
     </div>
 
-    <!-- Mission & Vision Text -->
-    <div class="grid grid-cols-1 md:grid-cols-12 gap-10 relative z-40 mt-2
-                px-4 sm:px-[6%] md:pl-[8%] md:pr-[4%] " style="margin-top: -100px;">
+<!-- Mission & Vision Text -->
+<!-- পুরানো inline style টি সম্পূর্ণ মুছে ফেলা হয়েছে এবং মোবাইলে নিরাপদ দূরত্বের জন্য mt-28 করা হয়েছে -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-10 relative z-40 px-6 md:px-12 lg:px-14 mt-16 md:-mt-[50px]">
 
-        <!-- Mission -->
-        <div class="md:col-span-6 relative" data-aos="fade-right">
-            <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
-                        -top-10 md:-top-20 -left-1 md:-left-6
-                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem] " style="font-family: 'Migra', serif;">
-                {{ $missionVision?->name ?? 'Mission' }}
-            </h2>
-            <div class="relative z-10 pt-4 md:pt-16">
-                <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl">
-                    {!! $missionVision->body ?? '' !!}
-                </p>
-            </div>
+    <!-- Mission -->
+    <div class="md:col-span-6 relative" data-aos="fade-right">
+        <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
+                    -top-8 md:-top-20 -left-1 md:-left-6
+                    text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] lg:text-[6rem]" style="font-family: 'Migra', serif;">
+            {{ $missionVision?->name ?? 'Mission' }}
+        </h2>
+        <div class="relative z-10 pt-4 md:pt-16">
+            <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl">
+                {!! $missionVision->body ?? '' !!}
+            </p>
         </div>
-
-        <!-- Vision -->
-        <div class="md:col-span-6 relative mt-12 md:mt-48" data-aos="fade-left">
-            <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
-                        -top-10 md:-top-20 -left-1 md:-left-6
-                        text-[2rem] sm:text-[2.5rem] md:text-[4rem] lg:text-[6rem]" style="font-family: 'Migra', serif;">
-                {{ $missionVision?->short ?? 'Vision' }}
-            </h2>
-            <div class="relative z-10 pt-4 md:pt-16">
-                <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl
-                           pl-0 sm:pl-6 md:pl-12">
-                    {!! $missionVision->body_2 ?? '' !!}
-                </p>
-            </div>
-        </div>
-
     </div>
 
+    <!-- Vision -->
+    <div class="md:col-span-6 relative mt-20 md:mt-48" data-aos="fade-left">
+        <h2 class="italic leading-none text-[#1520187D] absolute z-0 opacity-40
+                    -top-8 md:-top-20 -left-1 md:-left-6
+                    text-[2.2rem] sm:text-[3rem] md:text-[4.5rem] lg:text-[6rem]" style="font-family: 'Migra', serif;">
+            {{ $missionVision?->short ?? 'Vision' }}
+        </h2>
+        <div class="relative z-10 pt-4 md:pt-16">
+            <p class="text-gray-700 font-light text-sm md:text-lg leading-relaxed max-w-2xl pl-0 md:pl-12">
+                {!! $missionVision->body_2 ?? '' !!}
+            </p>
+        </div>
+    </div>
+
+</div>
     <!-- "History" large text -->
     <div class="hidden md:block relative md:absolute md:bottom-16 left-0 px-4 sm:px-6 md:left-20 lg:left-32
             z-20 md:translate-y-1/2 leading-none pointer-events-none mt-12 md:mt-0">
@@ -557,7 +555,7 @@ $schema = [
     <div class="container mx-auto  mb-10 mt-16">
 <br>
         <div class="mb-6 md:mb-8 lg:mb-12">
-            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-[75px] text-[#313131] leading-[0.9] tracking-tight">
+            <h2 class="text-4xl sm:text-5xl md:text-6xl lg:text-[75px] text-[#313131] leading-[0.9] tracking-tight px-5">
                About  <span class="font-migra-italic">Bhaiya <br> Housing</span>
             </h2>
         </div>
@@ -566,7 +564,7 @@ $schema = [
             <div class="text-[#595959] text-sm md:text-lg leading-relaxed pl-16 scroll-move" data-axis="Y">
                 {{ $aboutBhaiya?->short ?? '' }}
             </div>
-            <div class="text-[#595959] text-sm md:text-lg leading-relaxed">
+            <div class="text-[#595959] text-sm md:text-lg leading-relaxed px-5">
                 {{ $aboutBhaiya?->extra ?? '' }}
             </div>
         </div>
@@ -596,7 +594,7 @@ $schema = [
     <div class="container mx-auto  ">
 
         <div class="mb-10 md:mb-12 lg:mb-16 relative">
-           <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-[75px] text-[#313131] leading-tight tracking-tight">
+           <h2 class="text-4xl sm:text-5xl md:text-7xl lg:text-[75px] text-[#313131] leading-tight tracking-tight px-5">
                 <span style="font-weight:500">About</span>     <span class="italic font-light" style="font-family: 'Migra', serif;"> Bhaiya<br>  Group   </span>     <span style="font-weight:500" ></span>
             </h2>
 
@@ -606,7 +604,7 @@ $schema = [
             <div class="text-[#595959] text-sm md:text-[15px] leading-relaxed pl-16">
                 {!! $aboutBhaiyaGroup?->body !!}
             </div>
-            <div class="text-[#595959] text-sm md:text-[15px] leading-relaxed scroll-move" data-axis="Y">
+            <div class="text-[#595959] text-sm md:text-[15px] leading-relaxed scroll-move px-5" data-axis="Y">
                 {!! $aboutBhaiyaGroup?->body_2 !!}
             </div>
         </div>
