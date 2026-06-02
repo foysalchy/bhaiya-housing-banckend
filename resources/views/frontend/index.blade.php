@@ -602,7 +602,7 @@ $setting->title ?? 'Bhaiya Housing',
         style="background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.25) 50%, rgba(0,0,0,0.3) 100%)"></div>
 
     {{-- Learn More circle button — desktop only --}}
-    <div class="hidden md:block absolute z-20" style="top: 200px; right: 350px">
+    <div class="hidden md:block absolute z-20 right-[50px] lg:right-[300px] top-[100px]" >
         <a
             id="heroLearnMore"
             href="/projects/{{ $first->id }}"

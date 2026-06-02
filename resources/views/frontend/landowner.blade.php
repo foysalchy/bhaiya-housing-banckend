@@ -229,14 +229,24 @@
              </div>
 
              <!-- ── Right: Contact Form ── -->
-             <div class="w-full md:flex-1 pt-2">
+             <div id="landowner-section" class="w-full md:flex-1 pt-2">
                  <div class="absolute -right-32 -top-32 inset-y-0 mt-32 font-migra-italic  opacity-80 scroll-move" data-axis="-X" style="z-index:0;">
                      <span style=" font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045);  letter-spacing: 4px; white-space:nowrap;">GetIn</span>
 
                  </div>
 
 
-      
+        {{-- ── Success Message ── --}}
+                 @if(session('success'))
+                 <div id="successMsg"
+                     class="flex items-center gap-3 mt-6 px-5 py-4 text-sm font-light"
+                     style="background:#e6f0e7; border-left:3px solid #152018; color:#152018;">
+                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                         <polyline points="20 6 9 17 4 12" />
+                     </svg>
+                     {{ session('success') }}
+                 </div>
+                 @endif
 
                  <form id="contactForm" action="{{ route('landowner.store') }}" method="POST" novalidate>
                      @csrf
@@ -309,17 +319,7 @@
                      </button>
 
                  </form>
-                            {{-- ── Success Message ── --}}
-                 @if(session('success'))
-                 <div id="successMsg"
-                     class="flex items-center gap-3 mt-6 px-5 py-4 text-sm font-light"
-                     style="background:#e6f0e7; border-left:3px solid #152018; color:#152018;">
-                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                         <polyline points="20 6 9 17 4 12" />
-                     </svg>
-                     {{ session('success') }}
-                 </div>
-                 @endif
+                          
                  <div class="absolute right-32 -bottom-64 mt-64 inset-y-0  font-migra-italic opacity-80 scroll-move" data-axis="X" style="z-index:0;">
 
                      <span style="font-size:clamp(80px,15vw,220px); font-weight:700; color:rgba(0,0,0,0.045); line-height:0.9; white-space:nowrap;">Touch</span>

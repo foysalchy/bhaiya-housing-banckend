@@ -85,7 +85,11 @@ class WebController extends Controller
         $request->validate([
             'name'          => 'required|string|max:255',
             'email'         => 'nullable|email|max:255',
-            'phone'         => 'required|string|max:20',
+          'phone'   => [
+            'required',
+            'string',
+            'regex:/^\+?[0-9\s\-()]{7,18}$/', 
+        ],
             'interested_in' => 'required|string',
             'message'       => 'required|string|max:2000',
         ], [
@@ -210,11 +214,11 @@ class WebController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name'       => 'required|string|max:100',
-            'phone'      =>  [
-                'required',
-                'string',
-                'regex:/^(?:\+?880|0)1[3-9]\d{8}$/',
-            ],
+       'phone'   => [
+            'required',
+            'string',
+            'regex:/^\+?[0-9\s\-()]{7,18}$/', 
+        ],
             'email'      => 'required|email|max:100',
             'subject'    => 'required|string|max:200',
             'resume'     => 'required|file|mimes:pdf|max:2048',
@@ -476,28 +480,38 @@ class WebController extends Controller
 
     public function customerContactStore(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'    => 'required|string|max:255',
             'email'   => 'nullable|email|max:255',
-            'phone'   => [
-                'required',
-                'string',
-                'regex:/^(?:\+?880|0)1[3-9]\d{8}$/',
-            ],
+      'phone'   => [
+            'required',
+            'string',
+            'regex:/^\+?[0-9\s\-()]{7,18}$/', 
+        ],
             'subject' => 'required|string|max:255',
             'message' => 'required|string|max:2000',
         ], [
             'name.required'    => 'Please enter your name.',
             'email.email'      => 'Please enter a valid email address.',
             'phone.required'   => 'Please enter your phone number.',
-            'phone.regex'      => 'Please enter a valid  phone number (e.g. 01XXXXXXXXX).',
+            'phone.regex'      => 'Please enter a valid phone number (e.g. 01XXXXXXXXX).',
             'subject.required' => 'Please enter a subject.',
             'message.required' => 'Please write your message.',
         ]);
 
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('contact-section');
+        }
+
+        $validated = $validator->validated();
+
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
 
         Contact::create(array_merge($validated, ['type' => 'customer']));
+
         $this->trackFacebook(
             'Lead',
             [
@@ -511,9 +525,11 @@ class WebController extends Controller
                 'subject'   => $validated['subject'],
             ]
         );
-        return back()
-            ->with('success', 'Your message has been sent. We will contact you soon.')
-            ->withInput(['_scrollTo' => 'contactForm']);
+
+        // সফলভাবে সাবমিট হলেও ফর্ম সেকশনেই ল্যান্ড করবে
+        return redirect()->back()
+            ->withFragment('contact-section') // HTML ID
+            ->with('success', 'Your message has been sent. We will contact you soon.');
     }
 
     public function landowner()
@@ -537,16 +553,17 @@ class WebController extends Controller
         );
         return view('frontend.landowner', compact('hero', 'contactImages'));
     }
+
     public function landownerStore(Request $request)
     {
-        $validated = $request->validate([
+        $validator = Validator::make($request->all(), [
             'name'          => 'required|string|max:255',
             'email'         => 'nullable|email|max:255',
-            'phone'         => [
-                'required',
-                'string',
-                'regex:/^(?:\+?880|0)1[3-9]\d{8}$/',
-            ],
+    'phone'   => [
+            'required',
+            'string',
+            'regex:/^\+?[0-9\s\-()]{7,18}$/', 
+        ],
             'locality'      => 'required|string|max:255',
             'address'       => 'nullable|string|max:500',
             'land_category' => 'required|string|max:255',
@@ -555,20 +572,28 @@ class WebController extends Controller
             'name.required'          => 'Please enter your name.',
             'email.email'            => 'Please enter a valid email address.',
             'phone.required'         => 'Please enter your phone number.',
-            'phone.regex'            => 'Please enter a valid  phone number (e.g. 01XXXXXXXXX).',
+            'phone.regex'            => 'Please enter a valid phone number (e.g. 01XXXXXXXXX).',
             'locality.required'      => 'Please enter your locality.',
             'land_category.required' => 'Please select a land category.',
             'message.required'       => 'Please write your message.',
         ]);
 
-        // Store phone in clean format (strip spaces/dashes)
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('landowner-section'); 
+        }
+
+        $validated = $validator->validated();
+
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
 
         Contact::create(array_merge($validated, ['type' => 'landowner']));
 
-        return back()
-            ->with('success', 'Your message has been sent. We will contact you soon.')
-            ->withInput(['_scrollTo' => 'contactForm']);
+        return redirect()->back()
+            ->withFragment('landowner-section')
+            ->with('success', 'Your message has been sent. We will contact you soon.');
     }
 
     public function concerns()
