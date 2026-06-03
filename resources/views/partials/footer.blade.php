@@ -93,6 +93,7 @@
           <a href="/projects" class="mobile-nav-link">Projects</a>
           <a href="/event" class="mobile-nav-link">Events &amp; News</a>
           <a href="/customer-contact" class="mobile-nav-link">Contacts</a>
+          <a href="/blog" class="mobile-nav-link">Blog</a>
           @foreach($pages as $page)
           <a href="{{ route('page.show', $page->name) }}" class="mobile-nav-link">
             {{ $page->title }}
