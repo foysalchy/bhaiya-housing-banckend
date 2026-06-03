@@ -86,7 +86,7 @@
                 $staticLinks = [
                     ['href' => '/',          'label' => 'Home',           'key' => 'home'],
                     ['href' => '/about',     'label' => 'About Us',       'key' => 'about'],
-                    ['href' => '/project',  'label' => 'Projects',       'key' => 'projects'],
+                    ['href' => '/projects',  'label' => 'Projects',       'key' => 'projects'],
                     ['href' => '/concerns',  'label' => 'Other Concerns', 'key' => 'concerns'],
                     ['href' => '/career',    'label' => 'Career',         'key' => 'career'],
                     ['href' => '/event',    'label' => 'News & Events',  'key' => 'events'],

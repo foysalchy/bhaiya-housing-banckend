@@ -338,7 +338,7 @@ class WebController extends Controller
                 'location' => $p->location ?? '',
                 'img'      => $p->img_path ?? asset('assets/images/placeholder.jpg'),
                 'status'   => strtolower(json_decode($p->extra ?? '{}', true)['status'] ?? 'ongoing'),
-                'url'      => '/project/' . $p->id,
+                'url'      => '/projects/' . $p->id,
             ])->values();
 
         $projectLocations = Content::where('type', 'project')
