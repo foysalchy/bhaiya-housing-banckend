@@ -90,7 +90,7 @@
         <!-- Navigation Menu -->
         <nav class="flex flex-col gap-6">
           <a href="/about" class="mobile-nav-link">About Us</a>
-          <a href="/project" class="mobile-nav-link">Projects</a>
+          <a href="/projects" class="mobile-nav-link">Projects</a>
           <a href="/event" class="mobile-nav-link">Events &amp; News</a>
           <a href="/customer-contact" class="mobile-nav-link">Contacts</a>
           @foreach($pages as $page)
@@ -241,7 +241,7 @@
         <nav class="flex flex-wrap gap-x-8 gap-y-4">
           <a href="/" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Home</a>
           <a href="/about" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">About Us</a>
-          <a href="/project" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Projects</a>
+          <a href="/projects" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Projects</a>
           <a href="/event" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Events &amp; News</a>
           <a href="/customer-contact" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Contacts</a>
           <a href="/blog" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Blog</a>

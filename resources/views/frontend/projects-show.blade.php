@@ -97,7 +97,7 @@
  "@type" => "BreadcrumbList",
  "itemListElement" => [
  ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
- ["@type" => "ListItem", "position" => 2, "name" => "Projects", "item" => url('/project')],
+ ["@type" => "ListItem", "position" => 2, "name" => "Projects", "item" => url('/projects')],
  ["@type" => "ListItem", "position" => 3, "name" => $projectName, "item" => $pageUrl],
  ],
  ],
@@ -272,7 +272,7 @@
                      onerror="this.parentElement.style.background='#c0b8b0'; this.style.display='none';" />
 
                  <!-- Left stone -->
-                 <img src="/assets/images/projectDetailsLeft-stone.png" alt=""
+                 <img src="/assets/images/project/DetailsLeft-stone.png" alt=""
                      class="absolute pointer-events-none float-down scroll-move"
                      data-axis="Y"
                      style="width: clamp(60px, 8vw, 150px);
