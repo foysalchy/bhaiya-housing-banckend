@@ -96,7 +96,7 @@ $setting->title ?? 'Bhaiya Housing',
 "@type" => "SearchAction",
 "target" => [
 "@type" => "EntryPoint",
-"urlTemplate" => url('/projects') . '?search={search_term_string}',
+"urlTemplate" => url('/project') . '?search={search_term_string}',
 ],
 "query-input" => "required name=search_term_string",
 ],
@@ -123,7 +123,7 @@ $setting->title ?? 'Bhaiya Housing',
 "@context" => "https://schema.org",
 "@type" => "ItemList",
 "name" => "Featured Real Estate Projects",
-"url" => url('/projects'),
+"url" => url('/project'),
 "numberOfItems" => isset($featuredProjects) ? $featuredProjects->count() : 0,
 "itemListElement" => isset($featuredProjects) ? $featuredProjects->map(fn($project, $i) => [
 "@type" => "ListItem",
@@ -131,7 +131,7 @@ $setting->title ?? 'Bhaiya Housing',
 "item" => [
 "@type" => "ApartmentComplex",
 "name" => $project->title ?? '',
-"url" => url('/projects/' . $project->id),
+"url" => url('/project/' . $project->id),
 "image" => $project->img_path ? asset($project->img_path) : $pageImage,
 "address" => [
 "@type" => "PostalAddress",
@@ -144,7 +144,7 @@ $setting->title ?? 'Bhaiya Housing',
 "@context" => "https://schema.org",
 "@type" => "ItemList",
 "name" => "News and Events",
-"url" => url('/events'),
+"url" => url('/event'),
 "itemListElement" => isset($newsEvents) ? collect($newsEvents)->map(fn($item, $i) => [
 "@type" => "ListItem",
 "position" => $i + 1,
@@ -605,7 +605,7 @@ $setting->title ?? 'Bhaiya Housing',
     <div class="hidden md:block absolute z-20 right-[50px] lg:right-[300px] top-[100px]" >
         <a
             id="heroLearnMore"
-            href="/projects/{{ $first->id }}"
+            href="/project/{{ $first->id }}"
             class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white tracking-widest transition-all duration-300 hover-lg hover:text-black"
             style="width: 10vw; height: 10vw;  font-weight: 400; letter-spacing: 0.1em; font-size: 13px">
             Learn More
@@ -635,7 +635,7 @@ $setting->title ?? 'Bhaiya Housing',
         {{-- Learn More — mobile only --}}
         <a
             id="heroLearnMoreMobile"
-            href="/projects/{{ $first->id }}"
+            href="/project/{{ $first->id }}"
             class="md:hidden inline-block mt-4 text-xs tracking-[2px] uppercase border border-white/60 text-white px-5 py-2 hover:bg-white hover:text-black transition-all duration-300"
             style=" font-weight: 400">
             Learn More
@@ -657,7 +657,7 @@ $setting->title ?? 'Bhaiya Housing',
                 data-video="{{ $project->video_path ?? asset('assets/video/1.mp4') }}"
                 data-title="{{ $project->title }}"
                 data-address="{{ $project->location }}"
-                data-url="/projects/{{ $project->id }}"
+                data-url="/project/{{ $project->id }}"
                 onclick="switchVideo(this)">
                 <img
                     src="{{ $project->img_path ?? asset('assets/images/video-thumb' . ($i + 1) . '.jpg') }}"
@@ -1058,7 +1058,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                   
                     Events
                 </h2>
-                <a href="/events"
+                <a href="/event"
                     class="flex items-center justify-center rounded-full flex-shrink-0 text-center"
                     style="width: clamp(70px, 18vw, 90px); height: clamp(70px, 18vw, 90px);
                            border: 1.5px solid #1a1a1a; font-size: 11px;
@@ -1099,7 +1099,7 @@ $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
                 </div>
 
                 {{-- View All circle --}}
-                <a href="/events"
+                <a href="/event"
                     class="flex items-center justify-center rounded-full text-center flex-shrink-0"
                     style="width: clamp(90px, 9vw, 130px); height: clamp(90px, 9vw, 130px);
                            border: 1.5px solid #1a1a1a;

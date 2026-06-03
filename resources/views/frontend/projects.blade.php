@@ -85,7 +85,7 @@
  // Dynamic schema type based on residential vs commercial, fallback to ApartmentComplex
  "@type" => (isset($project['type']) && str_contains(strtolower($project['type']), 'commercial')) ? "CommercialEvent" : "ApartmentComplex",
  "name" => $project['title'] ?? ($project->title ?? ''),
- "url" => $project['url'] ?? url('/projects/' . ($project['id'] ?? '')),
+ "url" => $project['url'] ?? url('/project/' . ($project['id'] ?? '')),
  "image" => $project['img'] ?? ($project->img_path ? asset($project->img_path) : $pageImage),
  "address" => [
  "@type" => "PostalAddress",

@@ -338,7 +338,7 @@ class WebController extends Controller
                 'location' => $p->location ?? '',
                 'img'      => $p->img_path ?? asset('assets/images/placeholder.jpg'),
                 'status'   => strtolower(json_decode($p->extra ?? '{}', true)['status'] ?? 'ongoing'),
-                'url'      => '/projects/' . $p->id,
+                'url'      => '/project/' . $p->id,
             ])->values();
 
         $projectLocations = Content::where('type', 'project')
@@ -432,6 +432,44 @@ class WebController extends Controller
         );
 
         return view('frontend.page', compact('page'));
+    }
+    public function blog()
+    {
+        $blogs = Content::where('type', 'blogs')
+          
+            ->where('status', 1)
+            ->get();
+
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
+
+        return view('frontend.blogs', compact('blogs'));
+    }
+    public function blogDetail($slug)
+    {
+         $blogs = Content::where('type', 'blogs')
+          
+            ->where('status', 1)
+            ->get();
+        $blog = Content::where('type', 'blogs')
+            ->where('name', $slug)
+            ->where('status', 1)
+            ->firstOrFail();
+
+        $this->facebook->sendEvent(
+            'PageView',
+            [
+                'client_ip_address' => request()->ip(),
+                'client_user_agent' => request()->userAgent(),
+            ]
+        );
+
+        return view('frontend.blog-detail', compact('blog', 'blogs'));
     }
     public function show($id)
     {

@@ -97,7 +97,7 @@
  "@type" => "BreadcrumbList",
  "itemListElement" => [
  ["@type" => "ListItem", "position" => 1, "name" => "Home", "item" => url('/')],
- ["@type" => "ListItem", "position" => 2, "name" => "Projects", "item" => url('/projects')],
+ ["@type" => "ListItem", "position" => 2, "name" => "Projects", "item" => url('/project')],
  ["@type" => "ListItem", "position" => 3, "name" => $projectName, "item" => $pageUrl],
  ],
  ],
