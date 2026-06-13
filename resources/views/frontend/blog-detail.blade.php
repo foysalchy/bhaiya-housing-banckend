@@ -128,7 +128,7 @@
         }
     </style>
     <!-- ১. Hero Section (Olive Background) -->
-     
+
     <section class="  bg-white" style="border: 1px solid gainsboro; margin-top:150px">
         <div class="container mx-auto px-6 md:px-10  ">
             <!-- Image Overlap using Negative Margin -->
@@ -174,7 +174,7 @@
                             </a>
                         @endforeach
 
-                     
+
 
 
                     </div>
@@ -201,9 +201,9 @@
                     <div
                         class="text-gray-700 leading-[1.9] text-base space-y-8 blog-content
                                 [&_ul]:list-none [&_ul]:pl-0 [&_ul]:my-8
-                                [&_li]:relative [&_li]:pl-10 [&_li]:mb-4 [&_li]:font-medium
-                                [&_li::before]:content-['\f058'] [&_li::before]:font-['Font_Awesome_6_Free'] [&_li::before]:font-black
-                                [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:text-black [&_li::before]:text-xl
+                                {{-- [&_li]:relative [&_li]:pl-10 [&_li]:mb-4 [&_li]:font-medium --}}
+                                {{-- [&_li::before]:content-['\f058'] [&_li::before]:font-['Font_Awesome_6_Free'] [&_li::before]:font-black
+                                [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:text-black [&_li::before]:text-xl --}}
                                 [&_p]:mb-6 [&_img]:rounded-md [&_img]:shadow-sm">
 
                         <div>{!! $blog->short !!}</div>

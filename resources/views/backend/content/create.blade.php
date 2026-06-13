@@ -57,7 +57,7 @@
                             <textarea class="form-control" id="{{ $field }}" name="{{ $field }}" rows="3" {{ $isRequired }}></textarea>
 
                         @elseif($field == 'body' || $field == 'body_2' || $field == 'body_3' || $field == 'body_4' || $field == 'meta_description')
-                            <textarea class="editor form-control" name="{{ $field }}" id="{{ $field }}" rows="4" {{ $isRequired }}></textarea>
+                            <textarea class="form-control ckeditor" name="{{ $field }}" id="{{ $field }}" rows="6" {{ $isRequired }}></textarea>
 
                         @else
                             <input type="text" class="form-control" id="{{ $field }}" name="{{ $field }}" {{ $isRequired }}>
@@ -79,20 +79,39 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 <script src="{{ asset('backend/summernote/summernote.js') }}"></script>
 <link rel="stylesheet" href="{{ asset('backend/summernote/summernote.css') }}">
+<script src="{{ asset('backend/tinymce/js/tinymce/tinymce.min.js') }}"></script>
 <script>
  $(document).ready(function() {
-        $('.editor').summernote({
-            height: 300,
-            resizeable: true, // summernote built-in resize
-            callbacks: {
-                onKeyup: function(e) {
-                    updateTagInfo(e);
-                },
-                onMouseup: function(e) {
-                    updateTagInfo(e);
-                },
-            }
-        });
+       tinymce.init({
+                selector: '.ckeditor',
+                license_key: 'gpl',
+                height: 380,
+                menubar: false,
+                plugins: ['advlist', 'autolink', 'lists', 'link', 'image', 'charmap', 'preview', 'anchor',
+                    'searchreplace', 'visualblocks', 'code', 'fullscreen', 'insertdatetime', 'media',
+                    'table', 'help', 'wordcount'
+                ],
+                // 👇 এখানে image কে backcolor এর ঠিক পরে নিয়ে আসা হয়েছে
+                toolbar: 'undo redo | blocks fontsize | bold italic backcolor image | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link media code removeformat',
+                paste_data_images: true,
+                automatic_uploads: false,
+                file_picker_types: 'image',
+                file_picker_callback: function(cb) {
+                    var inp = document.createElement('input');
+                    inp.setAttribute('type', 'file');
+                    inp.setAttribute('accept', 'image/*');
+                    inp.onchange = function() {
+                        var reader = new FileReader();
+                        reader.onload = function() {
+                            cb(reader.result, {
+                                title: inp.files[0].name
+                            });
+                        };
+                        reader.readAsDataURL(inp.files[0]);
+                    };
+                    inp.click();
+                }
+            });
     });
 
          const $tooltip = $('<div id="tag-tooltip" style="' +
