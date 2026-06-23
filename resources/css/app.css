@@ -29,7 +29,7 @@
         format("woff2");
     font-weight: 400;
     font-style: normal;
-    font-display: block;
+    font-display: swap;
 }
 
 html {
@@ -601,6 +601,7 @@ body {
     font-weight: 100;
     line-height: 120%;
     letter-spacing: -4px;
+    padding: 10px 0;
 }
 
 .main-hero-p {
@@ -615,7 +616,17 @@ section {
     content-visibility: auto;
     contain-intrinsic-size: 1px 1000px;
 }
-
-#home, header {
+#home,
+#site-header {
     content-visibility: visible;
+}
+#menuToggle,
+#menuOverlay button,
+.header-menu-list,
+footer nav a {
+    min-width: 44px;
+    min-height: 44px;
+    padding: 8px;
+    display: inline-flex;
+    align-items: center;
 }

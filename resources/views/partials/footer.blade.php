@@ -239,7 +239,7 @@
         @endif
 
         <!-- Nav -->
-        <nav class="flex flex-wrap gap-x-8 gap-y-4">
+        <nav class="flex flex-wrap gap-x-8 gap-y-6">
           <a href="/" aria-label="Home page" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Home</a>
           <a href="/about" aria-label="Learn more about us" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">About Us</a>
           <a href="/projects" aria-label="project page" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Projects</a>

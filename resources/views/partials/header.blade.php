@@ -5,9 +5,8 @@
         <!-- Logo -->
         <a href="/" class="z-50 flex-shrink-0">
 
-            <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}" alt="{{ $setting->title ?? 'Bhaiya' }}"
-                width="180" height="60" class="w-[130px] md:w-[180px] h-auto object-contain" fetchpriority="high"
-                loading="eager" decoding="async" />
+            <img src="{{ asset($setting->img_path) }}" alt="Bhaiya Logo" width="180" height="60"
+                style="aspect-ratio: 3 / 1;" fetchpriority="high">
 
             <span class="hidden text-white font-semibold tracking-widest text-base md:text-xl"
                 style="font-family:'Jost',sans-serif;">
@@ -16,7 +15,7 @@
 
         </a>
         <!-- Hamburger -->
-        <button id="menuToggle" onclick="openMenu()" class="z-50 flex flex-col gap-1.5 group cursor-pointer p-1"
+        <button id="menuToggle" onclick="openMenu()" class="z-50 flex flex-col gap-1.5 group cursor-pointer p-3 -m-3"
             aria-label="Open menu">
             <span
                 class="w-7 md:w-8 h-px bg-white transition-all duration-300 group-hover:w-9 md:group-hover:w-10"></span>
@@ -33,7 +32,7 @@
 
     <!-- BG texture -->
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
-        <img src="/images/dynamic/menu/menu-bg.png" alt="bg menu" width="1920" height="1080"
+        <img src="{{ asset('assets/images/menu-bg.webp') }}" alt="bg menu" width="1920" height="1080"
             class="w-full h-full object-cover opacity-15" loading="lazy" />
     </div>
 
@@ -47,15 +46,15 @@
     <!-- Top bar -->
     <div class="relative z-10 flex items-center justify-between px-6 sm:px-8 md:px-14 py-5 md:py-7 flex-shrink-0">
         <a href="/">
-            <img src="{{ asset($setting->img_path ?? 'images/logo.svg') }}" alt="{{ $setting->title ?? 'Bhaiya' }}"
-                width="120" height="40" class="h-8 md:h-10 w-auto object-contain" loading="lazy" />
+            <img src="{{ asset($setting->img_path ?? '') }}" alt="{{ $setting->title ?? 'Bhaiya' }}" width="120"
+                height="40" class="h-8 md:h-10 w-auto object-contain" loading="lazy" />
             <span class="hidden text-white font-semibold text-lg tracking-widest"
                 style="font-family:'Jost',sans-serif;">
                 {{ strtoupper($setting->title ?? 'BHAIYA HOUSING') }}
             </span>
         </a>
         <button onclick="closeMenu()" aria-label="Close menu"
-            class="text-white opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer p-1">
+            class="text-white opacity-70 hover:opacity-100 transition-opacity duration-300 cursor-pointer p-4 -m-4">
             <svg width="24" height="24" viewBox="0 0 28 28" fill="none" stroke="white" stroke-width="1.5"
                 stroke-linecap="round" aria-hidden="true">
                 <line x1="4" y1="4" x2="24" y2="24" />
@@ -73,7 +72,7 @@
             <div class="overflow-hidden" style="height:clamp(220px,38vw,500px);" id="menuImageWrap">
                 <img id="menuImage" src="{{ asset('assets/images/m3.jpg') }}" alt="navigation preview" width="600"
                     height="800" class="w-full h-full object-cover transition-all duration-500"
-                    style="transform:scale(1.05);" loading="lazy" decoding="async"/>
+                    style="transform:scale(1.05);" loading="lazy" decoding="async" />
             </div>
         </div>
 

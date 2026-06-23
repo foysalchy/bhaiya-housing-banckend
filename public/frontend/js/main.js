@@ -17,28 +17,17 @@ function closeMenu() {
 
 // ── Hover Image Swap ──
 function hoverLink(el) {
-  allLinks.forEach(l => l.style.opacity = '0.25');
-  el.style.opacity = '1';
-
+  const menuImg = document.getElementById('menuImage');
   const newSrc = el.dataset.img;
+
   if (!newSrc || !menuImg) return;
 
   menuImg.style.opacity = '0';
-  menuImg.style.transform = 'scale(1.08)';
-  menuImg.style.transition = 'opacity 0.3s ease, transform 0.5s ease';
 
   const tempImg = new Image();
   tempImg.onload = () => {
-    setTimeout(() => {
-      menuImg.src = newSrc;
-      menuImg.style.opacity = '1';
-      menuImg.style.transform = 'scale(1.03)';
-    }, 200);
-  };
-  tempImg.onerror = () => {
-
-    document.getElementById('menuImageWrap').style.background = '#1e3525';
-    menuImg.style.display = 'none';
+    menuImg.src = newSrc;
+    menuImg.style.opacity = '1';
   };
   tempImg.src = newSrc;
 }
@@ -65,7 +54,7 @@ function unhoverLink(el) {
         dots[current].classList.add('h-8', 'opacity-100');
     }
 
-   
+
 
 // ESC key close
 document.addEventListener('keydown', (e) => {
