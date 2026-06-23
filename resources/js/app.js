@@ -1,45 +1,59 @@
-import "./bootstrap";
-import AOS from "aos";
-import "aos/dist/aos.css";
+import './bootstrap';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+// ১. গ্লোবাল এক্সেস (সবার আগে)
+window.gsap = gsap;
+window.ScrollTrigger = ScrollTrigger;
+window.AOS = AOS;
+window.isMobile = window.innerWidth < 1024;
 gsap.registerPlugin(ScrollTrigger);
 
-document.addEventListener("DOMContentLoaded", () => {
-    // 1. AOS
-    AOS.init({
-        duration: 800,
-        once: true,
-        disable: window.innerWidth < 768,
-    });
+const initApp = () => {
+    // ২. AOS ও Parallax (মোবাইলে অফ)
+    AOS.init({ duration: 800, once: true, disable: window.isMobile });
 
-    const initHeavyTools = async () => {
-        if (document.querySelector(".swiper")) {
-            const { default: Swiper } = await import("swiper/bundle");
-            await import("swiper/css/bundle");
-            // স্লাইডার কোড এখানে লিখুন
-        }
-
-        if (document.querySelector("[data-speed]")) {
-            const { gsap } = await import("gsap");
-            const { ScrollTrigger } = await import("gsap/ScrollTrigger");
-            gsap.registerPlugin(ScrollTrigger);
-
-            gsap.utils.toArray("[data-speed]").forEach((el) => {
-                gsap.to(el, {
-                    y: (i, target) =>
-                        (1 - parseFloat(target.dataset.speed || 1)) *
-                        ScrollTrigger.maxScroll(window) *
-                        0.1,
-                    ease: "none",
-                    scrollTrigger: { trigger: el, scrub: true },
-                });
+    if (!window.isMobile) {
+        // ডেক্সটপ Parallax
+        gsap.utils.toArray("[data-speed]").forEach((el) => {
+            gsap.to(el, {
+                y: (i, target) => (1 - parseFloat(target.dataset.speed || 1)) * 100,
+                scrollTrigger: { trigger: el, scrub: true }
             });
-        }
-    };
-    initHeavyTools();
+        });
 
-    // 2. Optimized Scroll & Header
-     const header = document.getElementById("site-header");
+        // ৩. Quality Image Hover Zoom (যেটা কাজ করছিল না)
+        document.querySelectorAll('.quality-col').forEach(col => {
+            const wrap = col.querySelector('.quality-img-wrap');
+            const img = col.querySelector('.quality-img');
+            if (wrap && img) {
+                col.addEventListener('mouseenter', () => {
+                    wrap.style.width = '100%';
+                    img.style.transform = 'scale(1.06)';
+                });
+                col.addEventListener('mouseleave', () => {
+                    wrap.style.width = '75%';
+                    img.style.transform = 'scale(1)';
+                });
+            }
+        });
+    }
+
+    // ৪. Quality Border Line (Home Page)
+    if (document.querySelector('.quality-border-line')) {
+        gsap.to('.quality-border-line', {
+            width: '100%',
+            duration: 1.4,
+            scrollTrigger: { trigger: '#quality-grid', start: 'top 80%', once: true }
+        });
+    }
+};
+
+// ৫. হেডার লজিক
+const initHeader = () => {
+    const header = document.getElementById("site-header");
     let lastScroll = 0;
     window.addEventListener("scroll", () => {
         const s = window.scrollY;
@@ -47,41 +61,26 @@ document.addEventListener("DOMContentLoaded", () => {
         else header?.classList.remove("hide");
         lastScroll = s;
     }, { passive: true });
+};
 
-    // 3. GSAP Logic (Optimized)
-    gsap.utils.toArray("[data-speed]").forEach((el) => {
-        gsap.to(el, {
-            y: (i, target) =>
-                (1 - parseFloat(target.dataset.speed || 1)) *
-                ScrollTrigger.maxScroll(window) *
-                0.1,
-            ease: "none",
-            scrollTrigger: { trigger: el, scrub: true },
-        });
-    });
-
-    // 4. Cursor Logic (Use translate3d for GPU)
-    const dot = document.getElementById("cursor-dot");
-    if (dot && window.matchMedia("(pointer: fine)").matches) {
-        let mX = 0,
-            mY = 0,
-            dX = 0,
-            dY = 0;
-        window.addEventListener(
-            "mousemove",
-            (e) => {
-                mX = e.clientX;
-                mY = e.clientY;
-            },
-            { passive: true },
-        );
-
-        const anim = () => {
-            dX += (mX - dX) * 0.15;
-            dY += (mY - dY) * 0.15;
-            dot.style.transform = `translate3d(${dX}px, ${dY}px, 0) translate(-50%, -50%)`;
-            requestAnimationFrame(anim);
-        };
-        anim();
-    }
+window.addEventListener('load', () => {
+    initApp();
+    initHeader();
 });
+
+// ৬. ভিডিও মোডাল ফাংশন (গ্লোবাল)
+window.openVideoModal = () => {
+    const modal = document.getElementById('videoModal');
+    const video = document.getElementById('modalVideo');
+    if (!video.src) {
+        video.src = video.getAttribute('data-src');
+        video.load();
+    }
+    modal.style.display = 'flex';
+    video.play();
+};
+window.closeVideoModal = () => {
+    const video = document.getElementById('modalVideo');
+    if (video) video.pause();
+    document.getElementById('videoModal').style.display = 'none';
+};
