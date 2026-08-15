@@ -302,4 +302,12 @@ class ContentController extends Controller
 
         return 'videos/' . $videoName;
     }
+    public function reorder(Request $request)
+    {
+        $order = $request->order;
+        foreach ($order as $index => $id) {
+            Content::where('id', $id)->update(['sort_order' => $index + 1]);
+        }
+        return response()->json(['status' => 'success']);
+    }
 }

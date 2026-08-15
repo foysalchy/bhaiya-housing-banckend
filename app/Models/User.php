@@ -6,6 +6,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\URL;
 
 class User extends Authenticatable
 {
@@ -21,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'email_verified_at',
     ];
 
     /**
@@ -44,5 +48,33 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+    public function sendEmailVerificationNotification()
+    {
+        $verificationLink = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $this->getKey(), 'hash' => sha1($this->getEmailForVerification())]
+        );
+
+        try {
+            Http::withHeaders([
+                'X-API-Key' => config('services.mailer.key'),
+            ])->post(config('services.mailer.url'), [
+                'type'    => 'verification',
+                'to'      => $this->email,
+                'subject' => 'Verify Your Email Address',
+                'data'    => [
+                    'eyebrow'           => 'Verification',
+                    'heading'           => 'Confirm your email',
+                    'name'              => $this->name,
+                    'message'           => 'Thanks for signing up! Please click the button below to verify your email address.',
+                    'button_text'       => 'Verify Email',
+                    'verification_link' => $verificationLink,
+                ],
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Verification Mailer Error: ' . $e->getMessage());
+        }
     }
 }

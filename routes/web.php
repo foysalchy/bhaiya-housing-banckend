@@ -26,7 +26,24 @@ Route::get('/cc', function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+//password reset
+Route::get('password/reset', [HomeController::class, 'showLinkRequestForm'])->name('password.request');
+Route::post('password/email', [HomeController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('password/reset/{token}', [HomeController::class, 'showResetForm'])->name('password.reset');
+Route::post('password/reset', [HomeController::class, 'resetPassword'])->name('password.update');
+
 Route::middleware(['auth'])->group(function () {
+    // user management routes
+    Route::get('/admin/users', [HomeController::class, 'userIndex'])->name('admin.users.index');
+    Route::get('/admin/users/create', [HomeController::class, 'userForm'])->name('admin.users.create');
+    Route::get('/admin/users/{id}', [HomeController::class, 'userForm'])->name('admin.users.show');
+    Route::get('/admin/users/{id}/edit', [HomeController::class, 'userForm'])->name('admin.users.edit');
+    Route::post('/admin/users/store', [HomeController::class, 'adminStoreUser'])->name('admin.users.store');
+    Route::put('/admin/users/{id}/update', [HomeController::class, 'userUpdate'])->name('admin.users.update');
+    Route::delete('/admin/users/{id}', [HomeController::class, 'userDestroy'])->name('admin.users.destroy');
+     Route::get('/change-password', [HomeController::class, 'changePasswordView'])->name('user.password.change');
+    Route::post('/change-password', [HomeController::class, 'updatePasswordLoggedIn'])->name('user.password.update_logged_in');
+
     Route::get('/contents/{type}', [ContentController::class, 'index'])->name('content.index');
     Route::get('/contents/{type}/create', [ContentController::class, 'create'])->name('content.create');
     Route::get('/contents/{type}/edit/{id}', [ContentController::class, 'edit'])->name('content.edit');
@@ -38,6 +55,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job.applications.index');
     Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('job.applications.destroy');
+     Route::post('/contents/reorder', [App\Http\Controllers\ContentController::class, 'reorder'])->name('content.reorder');
 });
 
 
