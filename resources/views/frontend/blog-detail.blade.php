@@ -133,14 +133,14 @@
 @endpush
 @section('content')
 @section('content')
-@php
-    $extra = json_decode($blog->extra, true) ?? [];
-    $isAdmin = auth()->check();
+    @php
+        $extra = json_decode($blog->extra, true) ?? [];
+        $isAdmin = auth()->check();
 
-    $canSeeBody  = (!empty(trim(strip_tags($blog->body))))   && (($extra['status_body']   ?? '1') == '1' || $isAdmin);
-    $canSeeBody2 = (!empty(trim(strip_tags($blog->body_2)))) && (($extra['status_body_2'] ?? '1') == '1' || $isAdmin);
-    $canSeeBody3 = (!empty(trim(strip_tags($blog->body_3)))) && (($extra['status_body_3'] ?? '1') == '1' || $isAdmin);
-@endphp
+        $canSeeBody = (!empty(trim(strip_tags($blog->body)))) && (($extra['status_body'] ?? '1') == '1' || $isAdmin);
+        $canSeeBody2 = (!empty(trim(strip_tags($blog->body_2)))) && (($extra['status_body_2'] ?? '1') == '1' || $isAdmin);
+        $canSeeBody3 = (!empty(trim(strip_tags($blog->body_3)))) && (($extra['status_body_3'] ?? '1') == '1' || $isAdmin);
+    @endphp
     <!-- ১. Hero Section (Olive Background) -->
 
     <section class="  bg-white" style="border: 1px solid gainsboro; margin-top:150px">
@@ -193,14 +193,30 @@
 
                 <!-- Middle: Article Body (Col 7) -->
                 <div class="col-span-12 lg:col-span-7">
-                    <div class="flex flex-wrap justify-between items-center pb-6  gap-4">
-                        <span
-                            class="bg-[#1A1A1A] text-white px-5 py-2 text-base font-bold uppercase tracking-[0.2em] rounded-sm">
-                            {{ $blog->project->title ?? 'ARTICLE' }}
-                        </span>
+                    <div class="flex flex-wrap justify-between items-center pb-6 gap-4">
+                        <!-- Left side: Label + Edit Button -->
+                        <div class="flex items-center gap-3">
+                            <span
+                                class="bg-[#1A1A1A] text-white px-5 py-2 text-base font-semibold uppercase tracking-[0.2em] rounded-sm">
+                                {{ $blog->project->title ?? 'Blog' }}
+                            </span>
+
+                            @auth
+                                <a href="{{ route('content.edit', ['type' => 'blogs', 'id' => $blog->id]) }}"
+                                    class="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 text-gray-800 text-base uppercase tracking-widest border border-gray-300 rounded shadow-sm hover:bg-black hover:text-white transition-all duration-300">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24"
+                                        stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                                    </svg>
+                                    Edit Content
+                                </a>
+                            @endauth
+                        </div>
+
+                        <!-- Right side: Date -->
                         <div class="text-gray-500 text-sm font-bold uppercase tracking-widest flex items-center">
                             {{ $blog->start_date ? \Carbon\Carbon::parse($blog->start_date)->format('F d, Y') : $blog->created_at->format('F d, Y') }}
-
                         </div>
                     </div>
                     <img src="{{ asset($blog->img_path) }}" class="w-full " alt="{{ $blog->title }}" />
@@ -209,13 +225,12 @@
                     </h1>
 
                     <!-- WYSIWYG Content with Tailwind Arbitrary Variants for List Icons -->
-                    <div
-                        class="text-gray-700 leading-[1.9] text-base space-y-8 blog-content
-                                [&_ul]:list-none [&_ul]:pl-0 [&_ul]:my-8
-                                {{-- [&_li]:relative [&_li]:pl-10 [&_li]:mb-4 [&_li]:font-medium --}}
-                                {{-- [&_li::before]:content-['\f058'] [&_li::before]:font-['Font_Awesome_6_Free'] [&_li::before]:font-black
-                                [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:text-black [&_li::before]:text-xl --}}
-                                [&_p]:mb-6 [&_img]:rounded-md [&_img]:shadow-sm">
+                    <div class="text-gray-700 leading-[1.9] text-base space-y-8 blog-content
+                                    [&_ul]:list-none [&_ul]:pl-0 [&_ul]:my-8
+                                    {{-- [&_li]:relative [&_li]:pl-10 [&_li]:mb-4 [&_li]:font-medium --}}
+                                    {{-- [&_li::before]:content-['\f058'] [&_li::before]:font-['Font_Awesome_6_Free'] [&_li::before]:font-black
+                                    [&_li::before]:absolute [&_li::before]:left-0 [&_li::before]:text-black [&_li::before]:text-xl --}}
+                                    [&_p]:mb-6 [&_img]:rounded-md [&_img]:shadow-sm">
 
                         {{-- Short Description --}}
                         <div class="blog-content-area prose prose-slate max-w-none mb-8">
@@ -291,4 +306,24 @@
             </div>
         </div>
     </section>
+
 @endsection
+@push('scripts')
+<script>
+    (function() {
+        function trackBlog() {
+            if (typeof fbq === 'function') {
+                fbq('track', 'ViewContent', {
+                    content_name: '{{ $blog->title }}',
+                    content_category: 'Blog',
+                    content_type: 'article',
+                    content_ids: ['{{ $blog->id }}']
+                });
+            } else {
+                setTimeout(trackBlog, 500); // পিক্সেল রেডি না হওয়া পর্যন্ত অপেক্ষা করবে
+            }
+        }
+        trackBlog();
+    })();
+</script>
+@endpush

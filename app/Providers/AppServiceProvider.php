@@ -5,7 +5,9 @@ namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\View;
 use App\Models\Content;
+use App\Models\User;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Gate;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -398,6 +400,11 @@ class AppServiceProvider extends ServiceProvider
         View::share('contents', $contents);
         View::share('setting', $setting);
         View::share('socials', $socials);
-        View::share('pages', $pages);}
+        View::share('pages', $pages);
+        }
+        Gate::define('admin-only', function (User $user) {
+            return $user->email === 'admin@gmail.com';
+        });
+
     }
 }

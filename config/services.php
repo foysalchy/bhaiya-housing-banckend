@@ -38,5 +38,9 @@ return [
         'pixel_id' => env('FACEBOOK_PIXEL_ID'),
         'access_token' => env('FACEBOOK_ACCESS_TOKEN'),
     ],
+    'mailer' => [
+        'url' => env('MAILER_API_URL'),
+        'key' => env('MAILER_API_KEY'),
+    ],
 
 ];

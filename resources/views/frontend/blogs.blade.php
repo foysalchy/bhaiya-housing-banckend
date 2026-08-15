@@ -48,7 +48,7 @@
                                         {{ $blog->short }}
                                     </p>
                                     <div class="flex items-center justify-between">
-                                        <span class="text-xs text-gray-500">By SALTBAY</span>
+                                        <span class="text-xs text-gray-500"></span>
                                         <span
                                             class="px-4 py-2 text-sm font-medium text-white bg-black rounded-md
                      group-hover:bg-gray-800 transition duration-300">
