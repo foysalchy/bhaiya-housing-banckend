@@ -1,3 +1,14 @@
+<style>
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+        display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+</style>
 <div class="relative mt-0 pt-0">
     <div>
 
@@ -129,7 +140,7 @@
             <div id="inquiry-card"
                 class="hidden opacity-0 scale-95 pointer-events-none origin-bottom-right transition-all duration-300
                        fixed lg:absolute inset-x-4 bottom-24 lg:inset-auto lg:bottom-16 lg:right-0
-                       lg:w-80 w-auto max-h-[80vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
+                       lg:w-80 w-auto max-h-[80vh] overflow-y-auto no-scrollbar bg-white rounded-2xl shadow-2xl"
                 role="dialog" aria-modal="false" aria-labelledby="inquiry-card-title">
 
                 <div class="flex items-start justify-between gap-3 p-4 rounded-t-2xl bg-[#0F2018] text-white">
