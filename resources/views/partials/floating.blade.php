@@ -33,7 +33,7 @@
         @if($setting?->extra)
         <div class="fixed lg:bottom-10 bottom-8 lg:left-20 left-4 z-40 w-fit">
             <a href="tel:{{ preg_replace('/[^0-9+]/', '', $setting->extra) }}"
-                aria-label="Call: {{ $setting->extra }}">
+                aria-label="Call: 01922-030303">
                 <div class="relative w-12 h-12 flex items-center justify-center bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] rounded-full shadow-lg cursor-pointer overflow-hidden">
                     <svg class="text-white relative z-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
@@ -132,9 +132,9 @@
                        lg:w-80 w-auto max-h-[80vh] overflow-y-auto bg-white rounded-2xl shadow-2xl"
                 role="dialog" aria-modal="false" aria-labelledby="inquiry-card-title">
 
-                <div class="flex items-start justify-between gap-3 p-4 rounded-t-2xl bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] text-white">
+                <div class="flex items-start justify-between gap-3 p-4 rounded-t-2xl bg-[#0F2018] text-white">
                     <h3 id="inquiry-card-title" class="font-semibold leading-snug">
-                        Are you interested to buy an apartment?
+                        Are you interested in buying an apartment?
                     </h3>
                     <button id="inquiry-close-btn" type="button" aria-label="Close form"
                         class="shrink-0 w-7 h-7 flex items-center justify-center rounded-full bg-white/20 hover:bg-white/30 border-0 cursor-pointer">
@@ -171,9 +171,16 @@
                     </div>
 
                     <div>
-                        <label for="inquiry-designation" class="block text-sm font-medium text-gray-700 mb-1">Designation <span class="text-gray-400 text-xs">(optional)</span></label>
-                        <input id="inquiry-designation" name="designation" type="text"
-                            class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#0088CD]">
+                        <div>
+    <label for="inquiry-designation" class="block text-sm font-medium text-gray-700 mb-1">Your Profession <span class="text-gray-400 text-xs">(optional)</span></label>
+    <input id="inquiry-designation" name="designation" type="text"
+        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#0088CD]">
+</div>
+<div>
+    <label for="inquiry-estimate-budget" class="block text-sm font-medium text-gray-700 mb-1">Estimate Budget <span class="text-gray-400 text-xs">(optional)</span></label>
+    <input id="inquiry-estimate-budget" name="estimate_budget" type="text"
+        class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm text-gray-900 placeholder-gray-400 bg-white focus:outline-none focus:ring-2 focus:ring-[#0088CD]">
+</div>
                     </div>
 
                     <div>
@@ -185,7 +192,7 @@
                     <p id="inquiry-error" class="hidden text-sm text-red-500"></p>
 
                     <button type="button" id="inquiry-submit-btn"
-                        class="w-full mt-1 py-2.5 rounded-lg font-medium text-white bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] cursor-pointer border-0 disabled:opacity-60">
+                        class="w-full mt-1 py-2.5 rounded-lg font-medium text-white bg-[#0F2018] cursor-pointer border-0 disabled:opacity-60">
                         Submit
                     </button>
 
@@ -202,16 +209,20 @@
 
         {{-- Centered "submitted" success overlay --}}
         <div id="inquiry-success-overlay"
-            class="hidden opacity-0 fixed inset-0 z-[60] flex items-center justify-center pointer-events-none transition-opacity duration-300 bg-black/20">
-            <div class="bg-white rounded-2xl shadow-2xl px-8 py-6 flex flex-col items-center gap-3 mx-4">
-                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-                    <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                        <polyline points="20 6 9 17 4 12"></polyline>
-                    </svg>
-                </div>
-                <p class="font-medium text-gray-800 text-center">Form submitted successfully!</p>
-            </div>
+    class="hidden opacity-0 fixed inset-0 z-[60] flex items-center justify-center pointer-events-none transition-opacity duration-300 bg-black/20">
+    <div class="bg-white rounded-2xl shadow-2xl px-8 py-6 flex flex-col items-center gap-3 mx-4 relative">
+                <button id="inquiry-success-close-btn" class="absolute top-2 right-2 text-gray-500 hover:text-gray-600 text-3xl leading-none cursor-pointer">×</button>
+        <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
         </div>
+        <p class="font-medium text-gray-800 text-center">
+            Thank you! Your information has been submitted successfully. Our team will contact you shortly.
+        </p>
+        <a href="tel:01922-030303" class="mt-2 px-4 py-2 bg-[#0F2018] text-white rounded hover:bg-[#0F2018]/90">Call us : 01922-030303</a>
+    </div>
+</div>
 
     </div>
 </div>
@@ -481,14 +492,23 @@
         }
 
         function showSuccessOverlay() {
-            if (!successOverlay) return;
-            successOverlay.classList.remove('hidden');
-            requestAnimationFrame(() => successOverlay.classList.add('opacity-100'));
-            setTimeout(function() {
-                successOverlay.classList.remove('opacity-100');
-                setTimeout(() => successOverlay.classList.add('hidden'), 300);
-            }, 2000);
-        }
+    if (!successOverlay) return;
+    // Make overlay interactive
+    successOverlay.classList.remove('hidden', 'pointer-events-none');
+    requestAnimationFrame(() => successOverlay.classList.add('opacity-100'));
+
+    // Close button handling – hides overlay when X is clicked
+    const closeBtn = document.getElementById('inquiry-success-close-btn');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            successOverlay.classList.remove('opacity-100');
+            // after transition, hide element and restore pointer-events-none
+            setTimeout(() => {
+                successOverlay.classList.add('hidden', 'pointer-events-none');
+            }, 300);
+        });
+    }
+}
     });
 </script>
 @endpush

@@ -624,6 +624,7 @@ class WebController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'nullable|string|max:2000',
             'designation' => 'nullable|string|max:255',
+            'estimate_budget' => 'nullable|string|max:255',
             'g-recaptcha-response' => 'required',
         ]);
 
@@ -654,7 +655,7 @@ class WebController extends Controller
             ['lead_type' => 'customer_contact', 'subject' => $validated['subject']]
         );
 
-        return response()->json(['success' => 'Your message has been sent.']);
+        return response()->json(['message' => 'Thank you! Your information has been submitted successfully. Our team will contact you shortly.']);
     }
     public function landowner(Request $request)
     {

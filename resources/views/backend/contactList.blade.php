@@ -451,6 +451,7 @@ padding: 0 24px 24px 24px;    flex: 1;
                 <div class="meta-chip" id="dTypeChip">🏷 <strong id="dType">—</strong></div>
                 <div class="meta-chip" id="dLocalityChip" style="display:none;">📍 <strong id="dLocality">—</strong></div>
                 <div class="meta-chip" id="dCategoryChip" style="display:none;">🏗 <strong id="dCategory">—</strong></div>
+                <div class="meta-chip" id="dEstimateBudgetChip">Budget <strong id="dEstimateBudget">—</strong></div>
             </div>
 
             <div class="detail-sub" id="dSub">—</div>
@@ -524,6 +525,7 @@ function openContact(id) {
     document.getElementById('dEmail').textContent   = c.email || 'No email provided';
     document.getElementById('dPhone').textContent   = c.phone || 'No phone provided';
     document.getElementById('dType').textContent    = c.type || '—';
+    document.getElementById('dEstimateBudget').textContent    = c.estimate_budget || '—';
 document.getElementById('dSub').textContent = c.subject
     ? 'Subject: ' + c.subject
     : '';    document.getElementById('dBody').textContent    = c.message || '';
