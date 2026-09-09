@@ -441,6 +441,7 @@ padding: 0 24px 24px 24px;    flex: 1;
                 <div class="sender-info">
                     <div class="sender-name" id="dName">—</div>
                     <div class="sender-email" id="dEmail">—</div>
+                    <div class="sender-designation" id="dDesignation">—</div>
                 </div>
                 <div class="sender-date" id="dDate">—</div>
             </div>
@@ -519,6 +520,7 @@ function openContact(id) {
 
     document.getElementById('dSubject').textContent = c.name;
     document.getElementById('dName').textContent    = c.name;
+    document.getElementById('dDesignation').textContent   = c.designation || '-';
     document.getElementById('dEmail').textContent   = c.email || 'No email provided';
     document.getElementById('dPhone').textContent   = c.phone || 'No phone provided';
     document.getElementById('dType').textContent    = c.type || '—';
