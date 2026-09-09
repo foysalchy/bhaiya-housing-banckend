@@ -11,6 +11,7 @@ use App\Models\InvestorForm;
 use App\Models\JobApplication;
 use Illuminate\Support\Facades\Validator;
 use App\Services\FacebookConversionApi;
+use Illuminate\Support\Facades\Http;
 use Spatie\Sitemap\Sitemap;
 use Spatie\Sitemap\Tags\Url;
 
@@ -614,7 +615,71 @@ class WebController extends Controller
             ->withFragment('contact-section')
             ->with('success', 'Your message has been sent. We will contact you soon.');
     }
+   public function contactInquiry(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name'    => 'required|string|max:255',
+            'email'   => 'nullable|email|max:255',
+            'phone'   => [
+                'required',
+                'string',
+                'regex:/^\+?[0-9\s\-()]{7,18}$/',
+            ],
+            'subject' => 'required|string|max:255',
+            'message' => 'nullable|string|max:2000',
+            'designation' => 'nullable|string|max:255',
+            'g-recaptcha-response' => 'required',
 
+        ], [
+            'name.required'    => 'Please enter your name.',
+            'email.email'      => 'Please enter a valid email address.',
+            'phone.required'   => 'Please enter your phone number.',
+            'phone.regex'      => 'Please enter a valid phone number (e.g. 01XXXXXXXXX).',
+            'subject.required' => 'Please enter a subject.',
+            'message.nullable' => 'Please write your message.',
+            'designation.nullable' => 'Please enter your designation.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput()
+                ->withFragment('contact-section');
+        }
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+            'secret' => config('services.recaptcha.secret_key'),
+            'response' => $request->input('g-recaptcha-response'),
+            'remoteip' => $request->ip(),
+        ])->json();
+
+        if (!($response['success'] ?? false) || ($response['score'] ?? 0) < 0.5) {
+            return response()->json(['errors' => ['g-recaptcha-response' => ['reCAPTCHA verification failed. Please try again.']]], 422);
+        }
+
+        $validated = $validator->validated();
+
+        $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
+
+        Contact::create(array_merge($validated, ['type' => 'customer']));
+
+        $this->trackFacebook(
+            'Lead',
+            [
+                'em' => $validated['email']
+                    ? [hash('sha256', strtolower($validated['email']))]
+                    : [],
+                'ph' => [hash('sha256', preg_replace('/\D/', '', $validated['phone']))],
+            ],
+            [
+                'lead_type' => 'customer_contact',
+                'subject'   => $validated['subject'],
+            ]
+        );
+
+        return redirect()->back()
+            ->withFragment('contact-section')
+            ->with('success', 'Your message has been sent. We will contact you soon.');
+    }
     public function landowner(Request $request)
     {
         $hero = Content::where('type', 'hero')

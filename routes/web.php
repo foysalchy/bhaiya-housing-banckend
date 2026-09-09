@@ -71,6 +71,7 @@ Route::get('/page/{slug}', [WebController::class, 'page'])->name('page.show');
 
 Route::get('/customer-contact',        [WebController::class, 'customerContact'])->name('contact');
 Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store');
+Route::post('/contact-inquiry', [WebController::class, 'contactInquiry'])->name('contact.inquiry');
 Route::get('/landowner-contact',        [WebController::class, 'landowner'])->name('landowner');
 Route::post('/landowner-contact/store', [WebController::class, 'landownerStore'])->name('landowner.store');
 Route::get('/concerns', [WebController::class, 'concerns'])->name('concerns');
