@@ -44,7 +44,7 @@
         @if($setting?->extra)
         <div class="fixed lg:bottom-10 bottom-8 lg:left-20 left-4 z-40 w-fit">
             <a href="tel:{{ preg_replace('/[^0-9+]/', '', $setting->extra) }}"
-                aria-label="Call: 01922-030303">
+                aria-label="Call: 01938-886333">
                 <div class="relative w-12 h-12 flex items-center justify-center bg-[linear-gradient(180deg,#0088CD_0%,#A855F7_100%)] rounded-full shadow-lg cursor-pointer overflow-hidden">
                     <svg class="text-white relative z-10" xmlns="http://www.w3.org/2000/svg" width="24" height="24"
                         viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
@@ -228,10 +228,11 @@
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
         </div>
-        <p class="font-medium text-gray-800 text-center">
-            Thank you! Your information has been submitted successfully. Our team will contact you shortly.
+        <p class="text-center">
+            <span class="block font-semibold text-gray-900 text-xl">Thank you!</span>
+            <span class="block text-gray-800 mt-1">Your information has been submitted successfully. Our team will contact you shortly.</span>
         </p>
-        <a href="tel:01922-030303" class="mt-2 px-4 py-2 bg-[#0F2018] text-white rounded hover:bg-[#0F2018]/90">Call us : 01922-030303</a>
+        <a href="tel:01938-886333" class="mt-2 px-4 py-2 bg-[#0F2018] text-white rounded hover:bg-[#0F2018]/90">Call us : 01938-886333</a>
     </div>
 </div>
 
