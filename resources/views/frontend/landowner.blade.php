@@ -227,6 +227,39 @@
                  content_category: 'Landowner'
              });
          }
+
+         const contactForm = document.getElementById('contactForm');
+         if (contactForm) {
+             contactForm.addEventListener('submit', function(e) {
+                 e.preventDefault();
+                 const fbEventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                 
+                 let input = document.createElement('input');
+                 input.type = 'hidden';
+                 input.name = 'fb_event_id';
+                 input.value = fbEventId;
+                 this.appendChild(input);
+
+                 if (typeof fbq === 'function') {
+                     const name = document.querySelector('input[name="name"]')?.value || '';
+                     const phone = document.querySelector('input[name="phone"]')?.value || '';
+                     const email = document.querySelector('input[name="email"]')?.value || '';
+                     const locality = document.querySelector('input[name="locality"]')?.value || '';
+                     
+                     fbq('track', 'Lead', {
+                         content_name: 'landowner_contact',
+                         em: email,
+                         ph: phone,
+                         fn: name,
+                         locality: locality
+                     }, {eventID: fbEventId});
+                 }
+
+                 setTimeout(() => {
+                     HTMLFormElement.prototype.submit.call(this);
+                 }, 400);
+             });
+         }
      });
  </script>
  @endpush

@@ -10,10 +10,6 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
 
 
-    <noscript>
-        <img height="1" width="1" style="display:none"
-            src="https://www.facebook.com/tr?id=1810581886992684&ev=PageView&noscript=1" />
-    </noscript>
 
     @yield('meta')
     <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
@@ -155,7 +151,11 @@
                     s.parentNode.insertBefore(t, s)
                 }(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
                 fbq('init', '1810581886992684');
+                @if(isset($fbEventId))
+                fbq('track', 'PageView', {}, {eventID: '{{ $fbEventId }}'});
+                @else
                 fbq('track', 'PageView');
+                @endif
                 window.fbLoaded = true;
             }
             ['mouseover', 'scroll', 'touchstart'].forEach(event => {
@@ -165,6 +165,11 @@
             });
         }, 1500);
     </script>
+        <noscript>
+        <img height="1" width="1" style="display:none"
+            src="https://www.facebook.com/tr?id=1810581886992684&ev=PageView&noscript=1" />
+    </noscript>
+
     @include('partials.scripts')
     @stack('scripts')
 

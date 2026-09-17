@@ -451,6 +451,23 @@
                             formData.append('g-recaptcha-response', token);
                         }
 
+                        // Add fb_event_id for CAPI deduplication
+                        const fbEventId = 'lead_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+                        formData.append('fb_event_id', fbEventId);
+
+                        // Fire the Pixel event
+                        if (typeof fbq === 'function') {
+                            const name = document.getElementById('inquiry-name')?.value || '';
+                            const phone = document.getElementById('inquiry-phone')?.value || '';
+                            const email = document.getElementById('inquiry-email')?.value || '';
+                            fbq('track', 'Lead', {
+                                content_name: 'contact_inquiry',
+                                em: email,
+                                ph: phone,
+                                fn: name
+                            }, {eventID: fbEventId});
+                        }
+
                         return fetch(inquiryForm.dataset.action, {
                             method: 'POST',
                             headers: {
