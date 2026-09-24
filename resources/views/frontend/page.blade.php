@@ -2,8 +2,8 @@
 @section('meta')
     @include('partials.meta', [
         'pageKey' => 'pages',
-        'title' => $page->meta_title ?? $project->title,
-        'description' => $page->meta_description ?? $project->short,
+        'title' => $page->meta_title ?? $page->title,
+        'description' => $page->meta_description,
         'keywords' => $page->meta_keywords,
         'image' => asset($page->img_path),
     ])
