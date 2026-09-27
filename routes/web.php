@@ -53,6 +53,11 @@ Route::middleware(['auth'])->group(function () {
     Route::get('contacts',              [ContactController::class, 'index'])->name('contacts.index');
     Route::post('/contacts/{id}/mark-read', [ContactController::class, 'markAsRead'])->name('contacts.mark-read');
     Route::delete('contacts/{contact}', [ContactController::class, 'destroy'])->name('contacts.destroy');
+    Route::post('contacts/block', [ContactController::class, 'blockIp'])->name('contacts.block');
+    Route::post('contacts/unblock', [ContactController::class, 'unblockIp'])->name('contacts.unblock');
+    Route::post('contacts/bulk-delete', [ContactController::class, 'bulkDelete'])->name('contacts.bulk-delete');
+    Route::post('contacts/bulk-block', [ContactController::class, 'bulkBlock'])->name('contacts.bulk-block');
+    Route::post('contacts/export-csv', [ContactController::class, 'exportCsv'])->name('contacts.export-csv');
     Route::get('/job-applications', [JobApplicationController::class, 'index'])->name('job.applications.index');
     Route::delete('/job-applications/{id}', [JobApplicationController::class, 'destroy'])->name('job.applications.destroy');
      Route::post('/contents/reorder', [App\Http\Controllers\ContentController::class, 'reorder'])->name('content.reorder');
@@ -70,10 +75,10 @@ Route::get('/event', [WebController::class, 'events'])->name('events');
 Route::get('/page/{slug}', [WebController::class, 'page'])->name('page.show');
 
 Route::get('/customer-contact',        [WebController::class, 'customerContact'])->name('contact');
-Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store');
-Route::post('/contact-inquiry', [WebController::class, 'contactInquiry'])->name('contact.inquiry');
+Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store')->middleware(\App\Http\Middleware\CheckBlockedIp::class);
+Route::post('/contact-inquiry', [WebController::class, 'contactInquiry'])->name('contact.inquiry')->middleware(\App\Http\Middleware\CheckBlockedIp::class);
 Route::get('/landowner-contact',        [WebController::class, 'landowner'])->name('landowner');
-Route::post('/landowner-contact/store', [WebController::class, 'landownerStore'])->name('landowner.store');
+Route::post('/landowner-contact/store', [WebController::class, 'landownerStore'])->name('landowner.store')->middleware(\App\Http\Middleware\CheckBlockedIp::class);
 Route::get('/concerns', [WebController::class, 'concerns'])->name('concerns');
 Route::get('/news/{slug}',   [WebController::class, 'show'])->name('news.show');
 Route::get('/event/{slug}', [WebController::class, 'show'])->name('events.show');

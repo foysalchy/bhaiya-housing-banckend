@@ -109,7 +109,7 @@ class WebController extends Controller
             'phone_code'    => '+880',
             'phone'         => $request->phone,
             'interested_in' => $request->interested_in,
-            'message'       => $request->message,
+            'message' => $request->message, 'ip_address' => $request->ip(),
             'is_read'       => false,
         ]);
 
@@ -526,7 +526,7 @@ class WebController extends Controller
 
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
 
-        Contact::create(array_merge($validated, ['type' => 'customer']));
+        Contact::create(array_merge($validated, ['type' => 'customer', 'ip_address' => $request->ip()]));
 
         $eventId = $request->input('fb_event_id') ?? 'lead_' . time() . '_' . \Illuminate\Support\Str::random(10);
 
@@ -576,7 +576,7 @@ class WebController extends Controller
 
         $validated = $validator->validated();
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
-        Contact::create(array_merge($validated, ['type' => 'customer']));
+        Contact::create(array_merge($validated, ['type' => 'customer', 'ip_address' => $request->ip()]));
 
         $eventId = $request->input('fb_event_id') ?? 'lead_' . time() . '_' . \Illuminate\Support\Str::random(10);
 
@@ -643,7 +643,7 @@ class WebController extends Controller
 
         $validated['phone'] = preg_replace('/[\s\-]/', '', $validated['phone']);
 
-        Contact::create(array_merge($validated, ['type' => 'landowner']));
+        Contact::create(array_merge($validated, ['type' => 'landowner', 'ip_address' => $request->ip()]));
 
         $eventId = $request->input('fb_event_id') ?? 'lead_' . time() . '_' . \Illuminate\Support\Str::random(10);
 

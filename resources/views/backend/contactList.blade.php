@@ -338,6 +338,16 @@ padding: 0 24px 24px 24px;    flex: 1;
 }
 </style>
 
+@if(session('success'))
+    <div style="margin: 10px; padding: 12px 20px; background: #e6f4ea; color: #188038; border: 1px solid #ceead6; border-radius: 8px; font-weight: 500;">
+        {{ session('success') }}
+    </div>
+@endif
+@if($errors->any())
+    <div style="margin: 10px; padding: 12px 20px; background: #fce8e6; color: #d93025; border: 1px solid #fad2cf; border-radius: 8px; font-weight: 500;">
+        {{ $errors->first() }}
+    </div>
+@endif
 <div class="gmail-wrap">
 
     {{-- ════ LEFT: Message List ════ --}}
@@ -350,32 +360,58 @@ padding: 0 24px 24px 24px;    flex: 1;
             @endif
         </div>
 
-        {{-- RADIO FILTER BUTTONS --}}
-        <div class="inbox-filters">
-            <label class="filter-chip">
-                <input type="radio" name="filter_type" value="all" checked onchange="filterContacts()">
-                All
-            </label>
-            <label class="filter-chip">
-                <input type="radio" name="filter_type" value="landowner" onchange="filterContacts()">
-                Landowner
-            </label>
-            <label class="filter-chip">
-                <input type="radio" name="filter_type" value="customer" onchange="filterContacts()">
-                Customer
-            </label>
-        </div>
 
-        {{-- SEARCH BAR --}}
-        <div class="inbox-search">
-            <div class="search-input-wrapper">
+        <div style="padding: 12px 16px; border-bottom: 1px solid #e8eaed; display: flex; flex-direction: column; gap: 12px;">
+            <div class="search-input-wrapper" style="width: 100%;">
                 <svg viewBox="0 0 24 24" fill="none">
                     <path d="M15.5 14h-.79l-.28-.27a6.5 6.5 0 001.48-5.34c-.47-2.78-2.79-5-5.59-5.34a6.505 6.505 0 00-7.27 7.27c.34 2.8 2.56 5.12 5.34 5.59a6.5 6.5 0 005.34-1.48l.27.28v.79l4.25 4.25c.41.41 1.08.41 1.49 0 .41-.41.41-1.08 0-1.49L15.5 14zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" fill="currentColor"/>
                 </svg>
                 <input type="text" id="searchInput" placeholder="Search by name, phone, message..." onkeyup="filterContacts()">
             </div>
-        </div>
 
+            <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
+                <div class="inbox-filters" style="padding: 0; margin: 0; border: none; display: flex; gap: 8px;">
+                    <label class="filter-chip">
+                        <input type="radio" name="filter_type" value="all" checked onchange="filterContacts()">
+                        All
+                    </label>
+                    <label class="filter-chip">
+                        <input type="radio" name="filter_type" value="landowner" onchange="filterContacts()">
+                        Landowner
+                    </label>
+                    <label class="filter-chip">
+                        <input type="radio" name="filter_type" value="customer" onchange="filterContacts()">
+                        Customer
+                    </label>
+                </div>
+
+
+            </div>
+            
+        </div>
+        
+
+                <div class="bulk-actions" style="padding: 10px 16px; display: flex; gap: 8px; align-items: center; border-bottom: 1px solid #e8eaed; background: #fafafa;">
+            <div style="display:flex; align-items:center; gap: 6px; margin-right: auto;">
+                <input type="checkbox" id="selectAllCheckbox" onchange="toggleSelectAll()" title="Select All" style="cursor: pointer; width: 16px; height: 16px;">
+                <label for="selectAllCheckbox" style="font-size: 13px; font-weight: 500; color: #3c4043; cursor: pointer; margin-bottom: 0;">Select All</label>
+            </div>
+            
+            <button onclick="submitBulkAction('bulk-delete')" style="background: #fce8e6; color: #d93025; border: 1px solid #fad2cf; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#fad2cf'" onmouseout="this.style.background='#fce8e6'" title="Delete Selected">
+                Delete
+            </button>
+            <button onclick="submitBulkAction('bulk-block')" style="background: #fef7e0; color: #ea8600; border: 1px solid #fce8b2; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#fce8b2'" onmouseout="this.style.background='#fef7e0'" title="Block IPs of Selected">
+                Block IPs
+            </button>
+            <button onclick="submitBulkAction('export-csv')" style="background: #e6f4ea; color: #188038; border: 1px solid #ceead6; padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 500; cursor: pointer; transition: 0.2s;" onmouseover="this.style.background='#ceead6'" onmouseout="this.style.background='#e6f4ea'" title="Export Selected to Excel">
+                Export Excel
+            </button>
+            
+            <form id="bulkForm" method="POST" style="display:none;">
+                @csrf
+                <input type="hidden" name="ids" id="bulkIdsInput">
+            </form>
+        </div>
         <div class="inbox-scroll" id="inboxScroll">
             @forelse($contacts as $contact)
             @php
@@ -384,7 +420,7 @@ padding: 0 24px 24px 24px;    flex: 1;
             @endphp
             <div class="msg-row {{ $contact->is_read ? 'read' : 'unread' }}"
                  id="row-{{ $contact->id }}"
-                 onclick="openContact({{ $contact->id }})">
+                 onclick="openContact({{ $contact->id }})">                 <div style="margin-right: 10px;" onclick="event.stopPropagation()">                     <input type="checkbox" class="row-checkbox" value="{{ $contact->id }}" onchange="updateSelectAll()">                 </div>
 
                 @if(!$contact->is_read)
                     <div class="unread-dot" id="dot-{{ $contact->id }}"></div>
@@ -425,7 +461,16 @@ padding: 0 24px 24px 24px;    flex: 1;
             <div class="detail-topbar">
                 <div class="detail-subject" id="dSubject">—</div>
                 <div class="detail-actions">
-                    <form id="deleteForm" method="POST" style="display:inline;" onsubmit="return confirm('Delete this message?')">
+                    <form id="blockForm" method="POST" action="{{ route('contacts.block') }}" style="display:none;" onsubmit="return confirm('Block this IP address?')">
+                        @csrf
+                        <input type="hidden" name="ip_address" id="blockIpInput">
+                        <button type="submit" class="d-action-btn" title="Block IP">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm5 11H7v-2h10v2z" fill="#d32f2f"/>
+                            </svg>
+                        </button>
+                    </form>
+                    <form id="unblockForm" method="POST" action="{{ route('contacts.unblock') }}" style="display:none;" onsubmit="return confirm('Unblock this IP address?')">                        @csrf                        <input type="hidden" name="ip_address" id="unblockIpInput">                        <button type="submit" class="d-action-btn" title="Unblock IP">                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm3 0h-2v-2h2v2zm-2-4H9V7h4v5z" fill="#4caf50"/>                            </svg>                        </button>                    </form>                    <form id="deleteForm" method="POST" style="display:inline;" onsubmit="return confirm('Delete this message?')">
                         @csrf @method('DELETE')
                         <button type="submit" class="d-action-btn" title="Delete">
                             <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
@@ -442,6 +487,7 @@ padding: 0 24px 24px 24px;    flex: 1;
                     <div class="sender-name" id="dName">—</div>
                     <div class="sender-email" id="dEmail">—</div>
                     <div class="sender-designation" id="dDesignation">—</div>
+                    <div class="sender-ip" id="dIp" style="font-size:12px;color:#5f6368;margin-top:2px;"></div>
                 </div>
                 <div class="sender-date" id="dDate">—</div>
             </div>
@@ -463,11 +509,55 @@ padding: 0 24px 24px 24px;    flex: 1;
 @push('scripts')
 <script>
 const CONTACTS = @json($contacts->keyBy('id')->toArray());
+const BLOCKED_IPS = @json($blockedIps);
 let currentId = null;
 
 const avColors = ['#1a73e8','#34a853','#ea4335','#9334e6','#00897b','#e37400'];
 
+function toggleSelectAll() {
+    const isChecked = document.getElementById('selectAllCheckbox').checked;
+    document.querySelectorAll('.row-checkbox').forEach(cb => {
+        if (cb.closest('.msg-row').style.display !== 'none') {
+            cb.checked = isChecked;
+        }
+    });
+}
+
+function updateSelectAll() {
+    const visibleCheckboxes = Array.from(document.querySelectorAll('.row-checkbox')).filter(cb => cb.closest('.msg-row').style.display !== 'none');
+    const allChecked = visibleCheckboxes.length > 0 && visibleCheckboxes.every(cb => cb.checked);
+    document.getElementById('selectAllCheckbox').checked = allChecked;
+}
+
+function submitBulkAction(actionType) {
+    const selected = Array.from(document.querySelectorAll('.row-checkbox:checked')).map(cb => cb.value);
+    
+    // For export, if none selected, export all visible
+    if (actionType === 'export-csv' && selected.length === 0) {
+        if (!confirm('No contacts selected. Export all visible contacts?')) return;
+        const visible = Array.from(document.querySelectorAll('.row-checkbox')).filter(cb => cb.closest('.msg-row').style.display !== 'none').map(cb => cb.value);
+        if (visible.length === 0) { alert('No contacts to export.'); return; }
+        document.getElementById('bulkIdsInput').value = JSON.stringify(visible);
+    } else {
+        if (selected.length === 0) { alert('Please select at least one contact.'); return; }
+        
+        let msg = 'Proceed with selected contacts?';
+        if (actionType === 'bulk-delete') msg = 'Delete selected contacts?';
+        if (actionType === 'bulk-block') msg = 'Block IPs of selected contacts?';
+        if (actionType === 'export-csv') msg = 'Export selected contacts?';
+        
+        if (!confirm(msg)) return;
+        
+        document.getElementById('bulkIdsInput').value = JSON.stringify(selected);
+    }
+
+    const form = document.getElementById('bulkForm');
+    form.action = '/contacts/' + actionType;
+    form.submit();
+}
+
 // Combine Radio Button + Search Input filter
+
 function filterContacts() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const typeFilter = document.querySelector('input[name="filter_type"]:checked').value; // 'all', 'landowner', 'customer'
@@ -524,6 +614,7 @@ function openContact(id) {
     document.getElementById('dDesignation').textContent   = c.designation || '-';
     document.getElementById('dEmail').textContent   = c.email || 'No email provided';
     document.getElementById('dPhone').textContent   = c.phone || 'No phone provided';
+    document.getElementById('dIp').textContent   = c.ip_address ? 'IP: ' + c.ip_address : '';
     document.getElementById('dType').textContent    = c.type || '—';
     document.getElementById('dEstimateBudget').textContent    = c.estimate_budget || '—';
 document.getElementById('dSub').textContent = c.subject
@@ -551,6 +642,22 @@ document.getElementById('dSub').textContent = c.subject
 
     // Set delete action
     document.getElementById('deleteForm').action = `/contacts/${id}`; 
+    
+    // Set block/unblock action if IP exists
+    if (c.ip_address) {
+        if (BLOCKED_IPS.includes(c.ip_address)) {
+            document.getElementById('unblockIpInput').value = c.ip_address;
+            document.getElementById('unblockForm').style.display = 'inline';
+            document.getElementById('blockForm').style.display = 'none';
+        } else {
+            document.getElementById('blockIpInput').value = c.ip_address;
+            document.getElementById('blockForm').style.display = 'inline';
+            document.getElementById('unblockForm').style.display = 'none';
+        }
+    } else {
+        document.getElementById('blockForm').style.display = 'none';
+        document.getElementById('unblockForm').style.display = 'none';
+    }
 
     // Show Detail pane
     document.getElementById('detailEmpty').style.display   = 'none';
@@ -608,3 +715,13 @@ function markRead(id) {
 @endpush
 
 @endsection
+
+
+
+
+
+
+
+
+
+
