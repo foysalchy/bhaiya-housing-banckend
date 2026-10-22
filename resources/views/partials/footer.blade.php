@@ -93,6 +93,7 @@
           <a href="/projects" aria-label="learn about projects" class="mobile-nav-link">Projects</a>
           <a href="/event" aria-label="Learn about events" class="mobile-nav-link">Events &amp; News</a>
           <a href="/customer-contact" aria-label="customer contact" class="mobile-nav-link">Contacts</a>
+          <a href="{{ route('office.locations') }}" aria-label="office locations" class="mobile-nav-link">Office Locations</a>
           <a href="/blog" aria-label="blog pages" class="mobile-nav-link">Blog</a>
           @foreach($pages as $page)
           <a href="{{ route('page.show', $page->name) }}" aria-label="other pages" class="mobile-nav-link">
