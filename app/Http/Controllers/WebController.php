@@ -494,6 +494,23 @@ class WebController extends Controller
         return view('frontend.customer', compact('contactHero', 'contactImages'));
     }
 
+    public function officeLocations(\Illuminate\Http\Request $request)
+    {
+        $contactHero = \App\Models\Content::where('type', 'hero')
+            ->where('name', 'contact')
+            ->where('status', 1)
+            ->first();
+
+        $offices = \App\Models\Content::where('type', 'office_location')
+            ->where('status', 1)
+            ->orderBy('sort_order', 'asc')->orderBy('id', 'asc')
+            ->get();
+
+        $cities = $offices->pluck('name')->filter()->unique()->values();
+
+        return view('frontend.office-locations', compact('contactHero', 'offices', 'cities'));
+    }
+
     public function customerContactStore(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -762,5 +779,7 @@ class WebController extends Controller
         return response($sitemap->render(), 200, ['Content-Type' => 'application/xml']);
     }
 }
+
+
 
 

@@ -10,7 +10,12 @@
 
             <div class="card card-success card-outline mb-4">
                 <div class="card-header">
-                    <div class="card-title">Edit {{ ucwords(str_replace(['-', '_'], ' ', $type)) }}</div>
+                    <h3 class="card-title">Edit {{ ucwords(str_replace(['-', '_'], ' ', $type)) }}</h3>
+                    <div class="card-tools">
+                        <a href="{{ route('content.index', $type) }}" class="btn btn-sm btn-outline-secondary">
+                            <i class="bi bi-arrow-left"></i> Back to List
+                        </a>
+                    </div>
                 </div>
                 <div class="card-body">
 
@@ -137,7 +142,7 @@
                             @elseif($field == 'url')
                                 <textarea class="form-control" id="{{ $field }}" name="{{ $field }}" rows="3"
                                     {{ $isRequired }}>{{ $content->$field }}</textarea>
-                            @elseif(in_array($field, ['body', 'body_2', 'body_3', 'body_4']))
+                            @elseif(in_array($field, ['body', 'body_2', 'body_3', 'body_4']) && ($data['type'] ?? '') !== 'text')
                                 @php
                                     $collapsibleTypes = [
                                         'project',
@@ -547,3 +552,7 @@
         });
     </script>
 @endpush
+
+
+
+

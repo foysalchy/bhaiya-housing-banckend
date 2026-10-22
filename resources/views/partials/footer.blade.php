@@ -245,6 +245,7 @@
           <a href="/projects" aria-label="project page" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Projects</a>
           <a href="/event" aria-label="Learn more about event" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Events &amp; News</a>
           <a href="/customer-contact" aria-label="contact us" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Contacts</a>
+          <a href="{{ route('office.locations') }}" aria-label="office locations" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Office Locations</a>
           <a href="/blog" aria-label="Learn more about blog" class="text-white text-xl font-light transition-colors duration-300 no-underline hover:text-[#C0A46F]">Blog</a>
           @foreach($pages as $page)
           <a href="{{ route('page.show', $page->name) }}" aria-label="page name"

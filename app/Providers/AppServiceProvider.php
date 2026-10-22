@@ -338,6 +338,20 @@ class AppServiceProvider extends ServiceProvider
                 'status' => ['label' => 'Status', 'required' => true],
             ],
 
+            'office_location' => [
+                'title'            => ['label' => 'Branch Name (e.g. Sylhet Branch)', 'required' => true],
+                'name'             => ['label' => 'City (e.g. Sylhet, Dhaka, Narayanganj)', 'required' => true],
+                'location'         => ['label' => 'Office Address', 'required' => true],
+                'short'            => ['label' => 'Phone Numbers (e.g. 01700000000)', 'required' => false],
+                'body'             => ['label' => 'Alternative Phone (e.g. 01800000000)', 'type' => 'text', 'required' => false],
+                'body_2'           => ['label' => 'WhatsApp Number', 'type' => 'text', 'required' => false],
+                'body_3'           => ['label' => 'Email Address', 'type' => 'text', 'required' => false],
+                'body_4'           => ['label' => 'Office Hours (e.g. 10 AM - 7 PM)', 'type' => 'text', 'required' => false],
+                'meta_title'       => ['label' => 'Off Day (e.g. Friday)', 'type' => 'text', 'required' => false],
+                'url'              => ['label' => 'Google Maps Link (Get Direction)', 'required' => false],
+                'status'           => ['label' => 'Status', 'required' => true],
+            ],
+
             'social' => [
                 'title'  => ['label' => 'Platform Name (e.g. WhatsApp)', 'required' => true],
                 'url'    => ['label' => 'Social Link', 'required' => true],
@@ -408,3 +422,6 @@ class AppServiceProvider extends ServiceProvider
 
     }
 }
+
+
+

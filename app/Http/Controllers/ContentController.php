@@ -278,7 +278,7 @@ class ContentController extends Controller
     }
     public function index($type)
     {
-        $datas = Content::where('type', $type)->get();
+        $datas = Content::where('type', $type)->orderBy('sort_order', 'asc')->orderBy('id', 'asc')->get();
         Log::info('Fetched ' . count($datas) . ' items of type ' . $datas);
         return view('backend.content.index', compact('datas', 'type'));
     }
@@ -311,3 +311,4 @@ class ContentController extends Controller
         return response()->json(['status' => 'success']);
     }
 }
+

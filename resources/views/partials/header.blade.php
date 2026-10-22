@@ -128,6 +128,13 @@
                             class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
                         As A Customer
                     </a>
+                    <a href="{{ route('office.locations') }}" aria-label="office locations"
+                        class="group text-white/50 hover:text-white transition-colors duration-200 flex items-center gap-2"
+                        style="font-family:'Jost',sans-serif; font-size:12px; font-weight:300; letter-spacing:0.08em;">
+                        <span
+                            class="block h-px bg-white/40 w-0 group-hover:w-6 transition-all duration-300 ease-out flex-shrink-0"></span>
+                        Office Locations
+                    </a>
                 </div>
 
             </div>

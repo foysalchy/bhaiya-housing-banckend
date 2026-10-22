@@ -11,7 +11,12 @@
     <div class="container mt-2">
         <div class="card card-success card-outline mb-4">
             <div class="card-header">
-                <div class="card-title">List of {{ ucwords(str_replace(['-', '_'], ' ', $type)) }}</div>
+                <h3 class="card-title">List of {{ ucwords(str_replace(['-', '_'], ' ', $type)) }}</h3>
+                <div class="card-tools">
+                    <a href="{{ route('content.create', $type) }}" class="btn btn-sm btn-success">
+                        <i class="bi bi-plus-circle"></i> Create New
+                    </a>
+                </div>
             </div>
             <div class="card-body">
                 <table class="table table-bordered datatable">
@@ -147,3 +152,6 @@
 </script>
 
 @endpush
+
+
+

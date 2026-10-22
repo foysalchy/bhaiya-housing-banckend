@@ -75,6 +75,7 @@ Route::get('/event', [WebController::class, 'events'])->name('events');
 Route::get('/page/{slug}', [WebController::class, 'page'])->name('page.show');
 
 Route::get('/customer-contact',        [WebController::class, 'customerContact'])->name('contact');
+Route::get('/office-locations',        [WebController::class, 'officeLocations'])->name('office.locations');
 Route::post('/customer-contact/store', [WebController::class, 'customerContactStore'])->name('contact.store')->middleware(\App\Http\Middleware\CheckBlockedIp::class);
 Route::post('/contact-inquiry', [WebController::class, 'contactInquiry'])->name('contact.inquiry')->middleware(\App\Http\Middleware\CheckBlockedIp::class);
 Route::get('/landowner-contact',        [WebController::class, 'landowner'])->name('landowner');
