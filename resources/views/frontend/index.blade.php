@@ -440,11 +440,11 @@
 
             {{-- Learn More circle button — desktop only --}}
             <div class="hidden md:block absolute z-20 right-[50px] lg:right-[300px] top-[100px]">
-                <a id="heroLearnMore" href="/project/{{ $first->id }}"
+                <a id="heroLearnMore" href="/projects/{{ $first->name }}"
                     aria-label="View details and amenities of {{ $first->title }}"
                     class="circle-learn-btn flex items-center justify-center rounded-full border border-white text-white tracking-widest transition-all duration-300 hover-lg hover:text-black"
                     style="width: 10vw; height: 10vw;  font-weight: 400; letter-spacing: 0.1em; font-size: 13px">
-                    Learn More
+                    View More
                 </a>
             </div>
 
@@ -462,11 +462,11 @@
                 </p>
 
                 {{-- Learn More — mobile only --}}
-                <a id="heroLearnMoreMobile" href="/project/{{ $first->id }}"
+                <a id="heroLearnMoreMobile" href="/projects/{{ $first->name }}"
                     aria-label="Detailed information about the featured project {{ $first->title }}"
                     class="md:hidden inline-flex items-center justify-center mt-4 text-xs tracking-[2px] uppercase border border-white/60 text-white px-6 py-4 min-h-[48px] min-w-[140px] hover:bg-white hover:text-black transition-all duration-300"
                     style="font-weight: 400">
-                    Learn More
+                    View More
                 </a>
             </div>
 
@@ -480,7 +480,7 @@
                     height: clamp(90px, 15vw, 140px);
                     border: 1px solid {{ $i === 0 ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.2)' }};"
                             data-video="{{ $project->video_path ?? '' }}" data-title="{{ $project->title }}"
-                            data-address="{{ $project->location }}" data-url="/project/{{ $project->id }}"
+                            data-address="{{ $project->location }}" data-url="/projects/{{ $project->name }}"
                             onclick="switchVideo(this)">
 
                             <div class="w-full h-full overflow-hidden bg-neutral-800">
@@ -1312,6 +1312,8 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
             document.getElementById('heroTitle').textContent = el.dataset.title;
             document.getElementById('heroAddress').textContent = el.dataset.address;
             document.getElementById('heroLearnMore').href = el.dataset.url;
+            const heroLearnMoreMobile = document.getElementById('heroLearnMoreMobile');
+            if (heroLearnMoreMobile) heroLearnMoreMobile.href = el.dataset.url;
 
             document.querySelectorAll('.thumb-item').forEach(t => {
                 t.style.border = '2px solid rgba(255,255,255,0.3)';
@@ -1420,3 +1422,4 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
         });
     </script>
 @endpush
+
