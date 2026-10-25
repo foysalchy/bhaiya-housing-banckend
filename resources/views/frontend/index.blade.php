@@ -212,8 +212,8 @@
                     <line x1="24" y1="4" x2="4" y2="24" />
                 </svg>
             </button>
-            <video id="modalVideo" preload="none" class="w-full" controls playsinline style="max-height: 80vh">
-                <source src="{{ $hero->video_path ?? '' }}" type="video/mp4" />
+            <video id="modalVideo" preload="none" class="w-full" controls playsinline style="max-height: 80vh"
+                src="{{ !empty($hero?->video_path) ? asset($hero->video_path) : '' }}">
             </video>
         </div>
     </div>
@@ -1408,17 +1408,15 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
         });
     </script>
     <script>
-        // পেজ লোড হওয়ার ২ সেকেন্ড পর ভিডিও সোর্স লোড হবে
-        window.addEventListener('load', function() {
-            setTimeout(function() {
-                const v = document.getElementById('lazyHeroVideo');
-                if (v) {
-                    const s = v.querySelector('source');
-                    s.src = s.dataset.src;
-                    v.load();
-                    v.play();
-                }
-            }, 2000);
+        document.addEventListener('DOMContentLoaded', function() {
+            const v = document.getElementById('lazyHeroVideo');
+            if (v) {
+                v.loop = true;
+                v.addEventListener('ended', function() {
+                    this.currentTime = 0;
+                    this.play().catch(() => {});
+                });
+            }
         });
     </script>
 @endpush

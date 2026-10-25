@@ -95,19 +95,17 @@ window.openVideoModal = () => {
     const modal = document.getElementById("videoModal");
     const video = document.getElementById("modalVideo");
     if (modal && video) {
-        if (!video.src) {
-            video.src = video.getAttribute("data-src");
-            video.load();
-        }
         modal.style.display = "flex";
-        video.play();
+        video.currentTime = 0;
+        video.play().catch(() => {});
     }
 };
 
 window.closeVideoModal = () => {
+    const modal = document.getElementById("videoModal");
     const video = document.getElementById("modalVideo");
     if (video) video.pause();
-    document.getElementById("videoModal").style.display = "none";
+    if (modal) modal.style.display = "none";
 };
 // ৪. হেডার লজিক (অপ্টিমাইজড)
 const initHeader = () => {
