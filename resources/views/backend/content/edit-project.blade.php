@@ -239,25 +239,33 @@
                     {{-- Thumbnail --}}
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label class="form-label fw-semibold">Thumbnail Image</label>
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <label class="form-label fw-semibold mb-0">Thumbnail Image</label>
+                                <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                    <i class="bi bi-aspect-ratio me-1"></i>800 × 500 px (16:10, Max: 500 KB)
+                                </span>
+                            </div>
                             @if ($content->img_path)
-                                <div class="mb-2 d-flex align-items-center gap-2">
+                                <div class="mb-2 d-flex align-items-center gap-3 p-2 border rounded bg-light" style="max-width: fit-content;">
                                     <img src="{{ asset($content->img_path) }}" id="thumbCurrent"
-                                        style="height:80px; border-radius:4px; border:1px solid #dee2e6;">
+                                        style="height:80px; border-radius:4px; border:1px solid #dee2e6;"
+                                        onload="displayImageDimensions(this, 'thumbCurrentDim')">
                                     <div>
-                                        <div class="badge bg-secondary d-block mb-1">Current</div>
+                                        <span class="badge bg-light text-dark border p-1 px-2 mb-1 d-inline-block" id="thumbCurrentDim" style="font-size: 11px; font-weight: 600;">
+                                            <i class="bi bi-arrows-fullscreen me-1 text-primary"></i>Measuring...
+                                        </span>
                                         <div class="form-check mb-0">
                                             <input class="form-check-input border-danger" type="checkbox"
                                                 name="delete_img_path" id="deleteThumb" value="1"
                                                 onchange="toggleShade('thumbCurrent', this)">
-                                            <label class="form-check-label text-danger small"
+                                            <label class="form-check-label text-danger small fw-semibold"
                                                 for="deleteThumb">Delete</label>
                                         </div>
                                     </div>
                                 </div>
                             @endif
                             <input type="file" class="form-control" name="img_path" accept="image/*"
-                                onchange="previewSingle(this, 'thumbPreview')">
+                                onchange="previewSingleWithDimensions(this, 'thumbPreview')">
                             <div class="mt-2 d-flex gap-2 flex-wrap" id="thumbPreview"></div>
                         </div>
 
@@ -296,7 +304,12 @@
                      Multiple Images — existing reorder/delete + new drag-drop
                 ════════════════════════════════════════════════════════════ --}}
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Multiple Images</label>
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <label class="form-label fw-semibold mb-0">Multiple Images</label>
+                            <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                <i class="bi bi-aspect-ratio me-1"></i>1200 × 800 px (3:2 Landscape)
+                            </span>
+                        </div>
 
                         {{-- ── Existing images ── --}}
                         @if (!empty($imgPaths) && count($imgPaths) > 0)
@@ -323,9 +336,15 @@
                                         style="position:relative; width:110px; text-align:center; cursor:grab;
                                    border:1px solid #dee2e6; border-radius:6px; background:#fff; overflow:visible;">
 
-                                        <img src="{{ asset($img) }}" id="existingImg{{ $i }}"
-                                            style="width:110px; height:80px; object-fit:cover;
-                                       border-radius:5px 5px 0 0; display:block; pointer-events:none;">
+                                        <div style="position: relative;">
+                                            <img src="{{ asset($img) }}" id="existingImg{{ $i }}"
+                                                style="width:110px; height:80px; object-fit:cover;
+                                           border-radius:5px 5px 0 0; display:block; pointer-events:none;"
+                                                onload="displayCompactDimensions(this, 'exDim{{ $i }}')">
+                                            <span id="exDim{{ $i }}" class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1" style="font-size: 8px; font-weight: 500;">
+                                                ...
+                                            </span>
+                                        </div>
 
                                         <div class="existing-label badge bg-{{ $i === 0 ? 'primary' : ($i < 3 ? 'secondary' : 'dark') }} mt-1 mb-1 d-block mx-1"
                                             style="font-size:9px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">
@@ -551,6 +570,64 @@
         function toggleShade(elemId, checkbox) {
             const el = document.getElementById(elemId);
             if (el) el.classList.toggle('img-shaded', checkbox.checked);
+        }
+
+        // ════════════════════════════════════════════════════════
+        // Helper functions for image dimension measurement
+        // ════════════════════════════════════════════════════════
+        function displayImageDimensions(imgEl, badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge) return;
+            if (imgEl.naturalWidth && imgEl.naturalHeight) {
+                badge.innerHTML = `<i class="bi bi-arrows-fullscreen me-1 text-primary"></i>Current: ${imgEl.naturalWidth} × ${imgEl.naturalHeight} px`;
+            }
+        }
+
+        function displayCompactDimensions(imgEl, badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge) return;
+            if (imgEl.naturalWidth && imgEl.naturalHeight) {
+                badge.textContent = `${imgEl.naturalWidth} × ${imgEl.naturalHeight}`;
+            }
+        }
+
+        function previewSingleWithDimensions(input, previewId) {
+            const preview = document.getElementById(previewId);
+            preview.innerHTML = '';
+            if (!input.files || !input.files[0]) return;
+
+            const file = input.files[0];
+            const sizeFormatted = file.size > 1024 * 1024
+                ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                : (file.size / 1024).toFixed(1) + ' KB';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    preview.innerHTML = `
+                        <div class="card p-2 border shadow-sm position-relative" style="max-width: 220px; background: #fff;">
+                            <img src="${e.target.result}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 4px;" class="border">
+                            <div class="mt-2 text-center">
+                                <span class="badge bg-primary text-white p-1 px-2 mb-1 d-inline-block" style="font-size: 11px;">
+                                    <i class="bi bi-arrows-fullscreen me-1"></i>New: ${this.naturalWidth} × ${this.naturalHeight} px
+                                </span>
+                                <div class="text-muted small" style="font-size: 11px;">${file.name.substring(0, 18)} (${sizeFormatted})</div>
+                            </div>
+                            <button type="button" class="remove-btn" style="position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:red;color:#fff;border:none;font-size:13px;line-height:18px;cursor:pointer;padding:0;z-index:10;" onclick="clearEditSingleInput('${input.name}', '${previewId}')">&times;</button>
+                        </div>
+                    `;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function clearEditSingleInput(inputName, previewId) {
+            const inp = document.querySelector(`input[name="${inputName}"]`);
+            if (inp) inp.value = '';
+            const prev = document.getElementById(previewId);
+            if (prev) prev.innerHTML = '';
         }
 
         // ════════════════════════════════════════════════════════
@@ -851,10 +928,27 @@
                 });
 
                 // ── image ──
+                const imgContainer = document.createElement('div');
+                imgContainer.style.position = 'relative';
+
                 const img = document.createElement('img');
                 img.src = item.url;
                 img.style.cssText = 'width:110px;height:80px;object-fit:cover;' +
                     'border-radius:5px 5px 0 0;display:block;pointer-events:none;';
+
+                const dimBadge = document.createElement('span');
+                dimBadge.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1';
+                dimBadge.style.cssText = 'font-size: 8px; font-weight: 500;';
+                dimBadge.textContent = '...';
+
+                const probeImg = new Image();
+                probeImg.onload = function() {
+                    dimBadge.textContent = `${this.naturalWidth} × ${this.naturalHeight}`;
+                };
+                probeImg.src = item.url;
+
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(dimBadge);
 
                 // ── label badge — existing count বুঝে slot দেখায় ──
                 const label = document.createElement('div');
@@ -875,7 +969,7 @@
                     removeNewFile(i);
                 };
 
-                card.appendChild(img);
+                card.appendChild(imgContainer);
                 card.appendChild(label);
                 card.appendChild(rem);
                 preview.appendChild(card);
@@ -961,6 +1055,18 @@
 
             // যদি ইউজার নতুন কিছু টাইপ করে তবেই আপডেট হবে
             // slugInput.value = slug;
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check pre-existing images in case onload already fired
+            const thumb = document.getElementById('thumbCurrent');
+            if (thumb && thumb.complete && thumb.naturalWidth) {
+                displayImageDimensions(thumb, 'thumbCurrentDim');
+            }
+            document.querySelectorAll('#existingGrid img').forEach((img, idx) => {
+                if (img.complete && img.naturalWidth) {
+                    displayCompactDimensions(img, 'exDim' + idx);
+                }
+            });
         });
     </script>
 @endpush

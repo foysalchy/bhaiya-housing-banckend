@@ -27,7 +27,14 @@
                     @endphp
                     @foreach ($contents[$type] as $field => $data)
                         <div class="mb-3">
-                            <label for="{{ $field }}" class="form-label">{{ $data['label'] }}</label>
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <label for="{{ $field }}" class="form-label mb-0 fw-semibold">{{ $data['label'] }}</label>
+                                @if(!empty($data['recommended_size']))
+                                    <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                        <i class="bi bi-aspect-ratio me-1"></i>{{ $data['recommended_size'] }}
+                                    </span>
+                                @endif
+                            </div>
                             @php $isRequired = $data['required'] ? 'required' : ''; @endphp
                             @if ($field == 'title')
                                 <div class="{{ in_array($type, $slugTypes) ? 'input-group' : '' }}">
@@ -51,20 +58,28 @@
                                 @endif
                             @elseif($field == 'img_path')
                                 @if ($content->$field)
-                                    <div class="mb-2 d-flex align-items-center gap-2" id="thumbWrapper">
-                                        <img width="100px" src="{{ asset('/') }}{{ $content->$field }}"
-                                            class="border rounded p-1" id="thumbCurrent">
-                                        <div class="form-check mb-0">
-                                            <input class="form-check-input border-danger" type="checkbox"
-                                                name="delete_img_path" id="deleteThumb" value="1"
-                                                onchange="toggleDeleteShade('thumbCurrent', this)">
-                                            <label class="form-check-label text-danger small"
-                                                for="deleteThumb">Delete</label>
+                                    <div class="mb-2 d-flex align-items-center gap-3 p-2 border rounded bg-light" id="thumbWrapper" style="max-width: fit-content;">
+                                        <div class="position-relative">
+                                            <img width="110px" src="{{ asset('/') }}{{ $content->$field }}"
+                                                class="border rounded p-1 bg-white" id="thumbCurrent"
+                                                onload="displayImageDimensions(this, 'thumbCurrentDim')">
+                                        </div>
+                                        <div>
+                                            <span class="badge bg-light text-dark border p-1 px-2 mb-2 d-inline-block" id="thumbCurrentDim" style="font-size: 11px; font-weight: 600;">
+                                                <i class="bi bi-arrows-fullscreen me-1 text-primary"></i>Measuring...
+                                            </span>
+                                            <div class="form-check mb-0">
+                                                <input class="form-check-input border-danger" type="checkbox"
+                                                    name="delete_img_path" id="deleteThumb" value="1"
+                                                    onchange="toggleDeleteShade('thumbCurrent', this)">
+                                                <label class="form-check-label text-danger small fw-semibold"
+                                                    for="deleteThumb">Delete Image</label>
+                                            </div>
                                         </div>
                                     </div>
                                 @endif
                                 <input type="file" class="form-control" id="{{ $field }}"
-                                    name="{{ $field }}" onchange="previewNewImage(this, 'thumbNewPreview')">
+                                    name="{{ $field }}" accept="image/*" onchange="previewNewImageWithDimensions(this, 'thumbNewPreview')">
                                 <div id="thumbNewPreview" class="mt-2 d-flex gap-2 flex-wrap"></div>
                             @elseif($field == 'video_path')
                                 @if ($content->$field)
@@ -93,10 +108,16 @@
                                     @endphp
                                     <div class="mb-2 d-flex gap-2 flex-wrap" id="multiImgWrapper">
                                         @foreach ($images as $i => $img)
-                                            <div class="text-center" id="imgItem{{ $i }}">
-                                                <img width="100px" src="{{ asset('/') }}{{ $img }}"
-                                                    class="border rounded p-1" id="existingImg{{ $i }}">
-                                                <div class="form-check mt-1">
+                                            <div class="card p-1 border shadow-sm text-center position-relative" id="imgItem{{ $i }}" style="width: 120px; background: #fff;">
+                                                <div style="position: relative;">
+                                                    <img style="width: 100%; height: 80px; object-fit: cover;" src="{{ asset('/') }}{{ $img }}"
+                                                        class="border rounded p-1" id="existingImg{{ $i }}"
+                                                        onload="displayCompactDimensions(this, 'dimExisting{{ $i }}')">
+                                                    <span id="dimExisting{{ $i }}" class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1" style="font-size: 9px; font-weight: 500;">
+                                                        ...
+                                                    </span>
+                                                </div>
+                                                <div class="form-check mt-1 mb-1">
                                                     <input class="form-check-input border-danger" type="checkbox"
                                                         name="delete_images[]" value="{{ $i }}"
                                                         id="delImg{{ $i }}"
@@ -111,7 +132,7 @@
                                         images.</small>
                                 @endif
                                 <input type="file" multiple class="form-control" id="{{ $field }}"
-                                    name="{{ $field }}[]" {{ $isRequired }} onchange="previewMultiNew(this)">
+                                    name="{{ $field }}[]" accept="image/*" {{ $isRequired }} onchange="previewMultiNewWithDimensions(this)">
                                 <div id="multiNewPreview" class="mt-2 d-flex gap-2 flex-wrap"></div>
                             @elseif($field == 'parent')
                                 <select name="parent_id" id="parent_id" class="form-select" {{ $isRequired }}>
@@ -480,23 +501,95 @@
         }
 
         // Preview multiple new images — each with individual remove button
-        function previewMultiNew(input) {
+        // Helper functions for image dimension measurement
+        function displayImageDimensions(imgEl, badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge) return;
+            if (imgEl.naturalWidth && imgEl.naturalHeight) {
+                badge.innerHTML = `<i class="bi bi-arrows-fullscreen me-1 text-primary"></i>Current: ${imgEl.naturalWidth} × ${imgEl.naturalHeight} px`;
+            }
+        }
+
+        function displayCompactDimensions(imgEl, badgeId) {
+            const badge = document.getElementById(badgeId);
+            if (!badge) return;
+            if (imgEl.naturalWidth && imgEl.naturalHeight) {
+                badge.textContent = `${imgEl.naturalWidth} × ${imgEl.naturalHeight}`;
+            }
+        }
+
+        function previewNewImageWithDimensions(input, previewContainerId) {
+            const container = document.getElementById(previewContainerId);
+            if (!container) return;
+            container.innerHTML = '';
+            if (!input.files || !input.files[0]) return;
+
+            const file = input.files[0];
+            const sizeFormatted = file.size > 1024 * 1024
+                ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                : (file.size / 1024).toFixed(1) + ' KB';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    container.innerHTML = `
+                        <div class="card p-2 border shadow-sm position-relative" style="max-width: 220px; background: #fff;">
+                            <img src="${e.target.result}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 4px;" class="border">
+                            <div class="mt-2 text-center">
+                                <span class="badge bg-primary text-white p-1 px-2 mb-1 d-inline-block" style="font-size: 11px;">
+                                    <i class="bi bi-arrows-fullscreen me-1"></i>New: ${this.naturalWidth} × ${this.naturalHeight} px
+                                </span>
+                                <div class="text-muted small" style="font-size: 11px;">${file.name.substring(0, 20)} (${sizeFormatted})</div>
+                            </div>
+                        </div>
+                    `;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function previewMultiNewWithDimensions(input) {
             const preview = document.getElementById('multiNewPreview');
             preview.innerHTML = '';
-
-            // Convert FileList to mutable array
             let files = Array.from(input.files);
 
             function render() {
                 preview.innerHTML = '';
                 files.forEach((file, i) => {
                     const wrap = document.createElement('div');
-                    wrap.className = 'new-preview-wrap';
+                    wrap.className = 'new-preview-wrap position-relative card p-1 border shadow-sm mb-2';
+                    wrap.style.cssText = 'width: 140px; background: #fff;';
+
+                    const sizeFormatted = file.size > 1024 * 1024
+                        ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                        : (file.size / 1024).toFixed(1) + ' KB';
 
                     const img = document.createElement('img');
                     img.src = URL.createObjectURL(file);
-                    img.style.cssText =
-                        'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
+                    img.style.cssText = 'height:85px; width:100%; object-fit:cover; border-radius:4px;';
+                    img.className = 'border';
+
+                    const dimBadge = document.createElement('span');
+                    dimBadge.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1';
+                    dimBadge.style.cssText = 'font-size: 9px; font-weight: 500;';
+                    dimBadge.textContent = 'Measuring...';
+
+                    img.onload = function() {
+                        dimBadge.textContent = `${this.naturalWidth} × ${this.naturalHeight}`;
+                    };
+
+                    const imgContainer = document.createElement('div');
+                    imgContainer.style.position = 'relative';
+                    imgContainer.appendChild(img);
+                    imgContainer.appendChild(dimBadge);
+
+                    const fileLabel = document.createElement('div');
+                    fileLabel.className = 'text-muted text-truncate text-center mt-1';
+                    fileLabel.style.fontSize = '10px';
+                    fileLabel.title = file.name;
+                    fileLabel.textContent = `${file.name.substring(0, 15)} (${sizeFormatted})`;
 
                     const btn = document.createElement('button');
                     btn.className = 'remove-btn';
@@ -504,16 +597,14 @@
                     btn.innerHTML = '&times;';
                     btn.onclick = () => {
                         files.splice(i, 1);
-
-                        // Rebuild DataTransfer to update input.files
                         const dt = new DataTransfer();
                         files.forEach(f => dt.items.add(f));
                         input.files = dt.files;
-
                         render();
                     };
 
-                    wrap.appendChild(img);
+                    wrap.appendChild(imgContainer);
+                    wrap.appendChild(fileLabel);
                     wrap.appendChild(btn);
                     preview.appendChild(wrap);
                 });
@@ -521,6 +612,18 @@
 
             render();
         }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const thumb = document.getElementById('thumbCurrent');
+            if (thumb && thumb.complete && thumb.naturalWidth) {
+                displayImageDimensions(thumb, 'thumbCurrentDim');
+            }
+            document.querySelectorAll('#multiImgWrapper img').forEach((img, idx) => {
+                if (img.complete && img.naturalWidth) {
+                    displayCompactDimensions(img, 'dimExisting' + idx);
+                }
+            });
+        });
     </script>
     <script>
         function generateSlug() {

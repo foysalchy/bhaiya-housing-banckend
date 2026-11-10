@@ -23,7 +23,14 @@
                     @endphp
                     @foreach ($contents[$type] as $field => $data)
                         <div class="mb-3">
-                            <label for="{{ $field }}" class="form-label">{{ $data['label'] }}</label>
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <label for="{{ $field }}" class="form-label mb-0 fw-semibold">{{ $data['label'] }}</label>
+                                @if(!empty($data['recommended_size']))
+                                    <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                        <i class="bi bi-aspect-ratio me-1"></i>{{ $data['recommended_size'] }}
+                                    </span>
+                                @endif
+                            </div>
                             @php $isRequired = $data['required'] ? 'required' : ''; @endphp
 
                             @if ($field == 'title')
@@ -46,10 +53,12 @@
                                 @endif
                             @elseif ($field == 'img_path')
                                 <input type="file" class="form-control" id="{{ $field }}"
-                                    name="{{ $field }}" {{ $isRequired }}>
+                                    name="{{ $field }}" accept="image/*" {{ $isRequired }} onchange="measureLiveImage(this, 'createSinglePreview')">
+                                <div id="createSinglePreview" class="mt-2 d-flex gap-2 flex-wrap"></div>
                             @elseif($field == 'img_paths')
                                 <input type="file" multiple class="form-control" id="{{ $field }}"
-                                    name="{{ $field }}[]" {{ $isRequired }}>
+                                    name="{{ $field }}[]" accept="image/*" {{ $isRequired }} onchange="measureLiveMultiImages(this, 'createMultiPreview')">
+                                <div id="createMultiPreview" class="mt-2 d-flex gap-2 flex-wrap"></div>
                             @elseif($field == 'video_path')
                                 <input type="file" class="form-control" id="{{ $field }}"
                                     name="{{ $field }}" {{ $isRequired }}>
@@ -283,6 +292,77 @@
                 });
             }
         });
+
+        // Live Dimension Measurement
+        function measureLiveImage(input, previewContainerId) {
+            const container = document.getElementById(previewContainerId);
+            if (!container) return;
+            container.innerHTML = '';
+            if (!input.files || !input.files[0]) return;
+
+            const file = input.files[0];
+            const sizeFormatted = file.size > 1024 * 1024
+                ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                : (file.size / 1024).toFixed(1) + ' KB';
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    container.innerHTML = `
+                        <div class="card p-2 border shadow-sm position-relative" style="max-width: 220px; background: #fff;">
+                            <img src="${e.target.result}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 4px;" class="border">
+                            <div class="mt-2 text-center">
+                                <span class="badge bg-primary text-white p-1 px-2 mb-1 d-inline-block" style="font-size: 11px;">
+                                    <i class="bi bi-arrows-fullscreen me-1"></i>${this.naturalWidth} × ${this.naturalHeight} px
+                                </span>
+                                <div class="text-muted small" style="font-size: 11px;">${file.name.substring(0, 20)} (${sizeFormatted})</div>
+                            </div>
+                        </div>
+                    `;
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function measureLiveMultiImages(input, previewContainerId) {
+            const container = document.getElementById(previewContainerId);
+            if (!container) return;
+            container.innerHTML = '';
+            if (!input.files || input.files.length === 0) return;
+
+            Array.from(input.files).forEach(file => {
+                const sizeFormatted = file.size > 1024 * 1024
+                    ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                    : (file.size / 1024).toFixed(1) + ' KB';
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        const item = document.createElement('div');
+                        item.className = 'card p-1 border shadow-sm position-relative mb-2';
+                        item.style.width = '140px';
+                        item.style.background = '#fff';
+                        item.innerHTML = `
+                            <div style="position: relative;">
+                                <img src="${e.target.result}" style="width: 100%; height: 85px; object-fit: cover; border-radius: 4px;" class="border">
+                                <span class="badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1" style="font-size: 9px; font-weight: 500;">
+                                    ${this.naturalWidth} × ${this.naturalHeight}
+                                </span>
+                            </div>
+                            <div class="text-muted text-truncate text-center mt-1" style="font-size: 10px;" title="${file.name}">
+                                ${file.name} (${sizeFormatted})
+                            </div>
+                        `;
+                        container.appendChild(item);
+                    };
+                    img.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            });
+        }
     </script>
 @endpush
 

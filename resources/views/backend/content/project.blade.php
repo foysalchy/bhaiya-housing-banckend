@@ -182,9 +182,14 @@
                     {{-- Thumbnail --}}
                     <div class="row">
                         <div class="col-md-4 mb-3">
-                            <label class="form-label fw-semibold">Thumbnail Image</label>
+                            <div class="d-flex align-items-center justify-content-between mb-1">
+                                <label class="form-label fw-semibold mb-0">Thumbnail Image</label>
+                                <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                    <i class="bi bi-aspect-ratio me-1"></i>800 × 500 px (16:10, Max: 500 KB)
+                                </span>
+                            </div>
                             <input type="file" class="form-control" name="img_path" accept="image/*"
-                                onchange="previewSingle(this, 'thumbPreview')">
+                                onchange="previewSingleWithDimensions(this, 'thumbPreview')">
                             <div class="mt-2 d-flex gap-2 flex-wrap" id="thumbPreview"></div>
                         </div>
 
@@ -199,7 +204,12 @@
 
                     {{-- Multiple Images --}}
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Multiple Images</label>
+                        <div class="d-flex align-items-center justify-content-between mb-1">
+                            <label class="form-label fw-semibold mb-0">Multiple Images</label>
+                            <span class="badge bg-light text-primary border" style="font-size: 11px; font-weight: 600;" title="Recommended aspect ratio and dimensions">
+                                <i class="bi bi-aspect-ratio me-1"></i>1200 × 800 px (3:2 Landscape)
+                            </span>
+                        </div>
                         <input type="file" id="multiInput" name="img_paths[]" multiple accept="image/*"
                             style="display:none">
 
@@ -382,32 +392,45 @@
         }
 
         // ════════════════════════════════════════════════════════
-        // Thumbnail — single preview
+        // Thumbnail — single preview with Live Dimensions
         // ════════════════════════════════════════════════════════
-        function previewSingle(input, previewId) {
+        function previewSingleWithDimensions(input, previewId) {
             const preview = document.getElementById(previewId);
             preview.innerHTML = '';
             if (!input.files || !input.files[0]) return;
 
-            const wrap = document.createElement('div');
-            wrap.className = 'preview-wrap';
+            const file = input.files[0];
+            const sizeFormatted = file.size > 1024 * 1024
+                ? (file.size / (1024 * 1024)).toFixed(2) + ' MB'
+                : (file.size / 1024).toFixed(1) + ' KB';
 
-            const img = document.createElement('img');
-            img.src = URL.createObjectURL(input.files[0]);
-            img.style.cssText = 'height:80px; width:100px; object-fit:cover; border-radius:4px; border:1px solid #dee2e6;';
-
-            const btn = document.createElement('button');
-            btn.type = 'button';
-            btn.className = 'remove-btn';
-            btn.innerHTML = '&times;';
-            btn.onclick = () => {
-                input.value = '';
-                preview.innerHTML = '';
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    preview.innerHTML = `
+                        <div class="card p-2 border shadow-sm position-relative" style="max-width: 220px; background: #fff;">
+                            <img src="${e.target.result}" style="width: 100%; height: 110px; object-fit: cover; border-radius: 4px;" class="border">
+                            <div class="mt-2 text-center">
+                                <span class="badge bg-primary text-white p-1 px-2 mb-1 d-inline-block" style="font-size: 11px;">
+                                    <i class="bi bi-arrows-fullscreen me-1"></i>${this.naturalWidth} × ${this.naturalHeight} px
+                                </span>
+                                <div class="text-muted small" style="font-size: 11px;">${file.name.substring(0, 18)} (${sizeFormatted})</div>
+                            </div>
+                            <button type="button" class="remove-btn" style="position:absolute;top:-7px;right:-7px;width:20px;height:20px;border-radius:50%;background:red;color:#fff;border:none;font-size:13px;line-height:18px;cursor:pointer;padding:0;z-index:10;" onclick="clearSingleInput('${input.name}', '${previewId}')">&times;</button>
+                        </div>
+                    `;
+                };
+                img.src = e.target.result;
             };
+            reader.readAsDataURL(file);
+        }
 
-            wrap.appendChild(img);
-            wrap.appendChild(btn);
-            preview.appendChild(wrap);
+        function clearSingleInput(inputName, previewId) {
+            const inp = document.querySelector(`input[name="${inputName}"]`);
+            if (inp) inp.value = '';
+            const prev = document.getElementById(previewId);
+            if (prev) prev.innerHTML = '';
         }
 
         // ════════════════════════════════════════════════════════
@@ -559,10 +582,28 @@
                     renderMulti();
                 });
 
+                const imgContainer = document.createElement('div');
+                imgContainer.style.position = 'relative';
+
                 const img = document.createElement('img');
                 img.src = item.url;
                 img.style.cssText = 'width:110px;height:80px;object-fit:cover;' +
                     'border-radius:5px 5px 0 0;display:block;pointer-events:none;';
+
+                const dimBadge = document.createElement('span');
+                dimBadge.className = 'badge bg-dark bg-opacity-75 text-white position-absolute bottom-0 start-0 m-1';
+                dimBadge.style.cssText = 'font-size: 8px; font-weight: 500;';
+                dimBadge.textContent = '...';
+
+                // Read natural resolution
+                const probeImg = new Image();
+                probeImg.onload = function() {
+                    dimBadge.textContent = `${this.naturalWidth} × ${this.naturalHeight}`;
+                };
+                probeImg.src = item.url;
+
+                imgContainer.appendChild(img);
+                imgContainer.appendChild(dimBadge);
 
                 const label = document.createElement('div');
                 label.className = `badge ${slot.cls} mt-1 mb-1 d-block mx-1`;
@@ -581,7 +622,7 @@
                     removeFile(i);
                 };
 
-                card.appendChild(img);
+                card.appendChild(imgContainer);
                 card.appendChild(label);
                 card.appendChild(rem);
                 preview.appendChild(card);
