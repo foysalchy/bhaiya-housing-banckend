@@ -434,7 +434,7 @@
                     {{ $aboutBhaiya?->short ?? '' }}
                 </div>
                 <div class="text-[#595959] text-sm md:text-lg leading-relaxed px-5">
-                    {{ $aboutBhaiya?->extra ?? '' }}
+                    {!! $aboutBhaiya?->body ?? '' !!}
                 </div>
             </div>
 

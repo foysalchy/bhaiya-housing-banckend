@@ -226,7 +226,7 @@ class AppServiceProvider extends ServiceProvider
             'about-bhaiya' => [
                 'title'            => ['label' => 'Title (e.g. About Bhaiya Housing)',  'required' => true],
                 'short'             => ['label' => 'Paragraph 1', 'required' => true],
-                'extra'           => ['label' => 'Paragraph 2', 'required' => false],
+                'body'             => ['label' => 'Paragraph 2', 'required' => false],
                 'img_path'         => ['label' => 'Left Image', 'recommended_size' => '800 × 1000 px (Portrait 4:5)', 'required' => false],
                 'img_paths'        => ['label' => 'Other Images ([0] Right)', 'recommended_size' => '1000 × 700 px (Landscape)', 'required' => false],
                 'meta_title'       => ['label' => 'Meta Title', 'required' => false],
