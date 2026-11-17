@@ -1,9 +1,9 @@
 @extends('layouts.front')
 @section('meta')
     @include('partials.meta', [
-        'pageKey'     => 'blogs',
-        'title'       => $job->meta_title ?? $blog->title,
-        'description' => $job->meta_description ?? $blog->short,
+        'pageKey'     => 'career',
+        'title'       => $job->meta_title ?? $job->title,
+        'description' => $job->meta_description ?? $job->short,
         'keywords'    => $job->meta_keywords,
     ])
 @endsection
