@@ -678,6 +678,7 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
     </section>
 
     <!-- ===== TESTIMONIALS ===== -->
+    @if ($storiesSection || (isset($storiesItems) && count($storiesItems) > 0))
     @php
         $sectionImages = json_decode($storiesSection->img_paths ?? '[]', true);
     @endphp
@@ -685,6 +686,7 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
     <section class="w-full relative z-10 overflow-hidden pt-16 pb-0" aria-label="testimonial image"
         style="background: url('{{ asset('images/testimonial-bg.webp') }}') center center / cover no-repeat, #F6F6F6;">
 
+        @if (isset($storiesItems) && count($storiesItems) > 0)
         <div class="container mx-auto px-6 lg:px-14 pt-16 pb-0">
 
             {{-- Heading --}}
@@ -771,6 +773,7 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
                 </div>
             </div>
         </div>
+        @endif
 
         {{-- Bottom Images --}}
 
@@ -826,6 +829,7 @@ font-size: clamp(150px, 14vw, 320px);                    font-weight:bolder;
         </div>
 
     </section>
+    @endif
 
     <!-- ===== NEWS & EVENTS ===== -->
     <section class="py-16 md:py-20 px-4 sm:px-6 md:px-12 lg:px-24 overflow-hidden relative z-10"
